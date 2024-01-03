@@ -133,7 +133,7 @@ if (isset($_POST['button_urut'])) {
       text: 'Data Akan Dihapus Secara Permanen',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Ya , Hapus ',
+      confirmButtonText: 'Ya , Hapus',
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
