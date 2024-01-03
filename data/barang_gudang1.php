@@ -105,7 +105,9 @@ error_reporting(0);
                                 <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
                         <?php } else { ?>
-                            <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
+                            <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
+                            <a href="javascript:void()" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
+                            <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
                         <?php } ?>
                     </td>
                     <?php if (!isset($_SESSION['user_admin_gudang'])) { ?>
@@ -137,8 +139,9 @@ error_reporting(0);
                     <td align="center">
                         <?php if ($json[$i]['status_po_batal'] == 0) { ?>
                             <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['user_admin_gudang']) or isset($_SESSION['user_manajer_gudang'])) { ?>
-                                <!--<a href="index.php?page=barang_gudang1&id=<?php echo $json[$i]['idd']; ?>#openLunas"><small data-toggle="tooltip" title="Tgl Masuk Gudang" class="label bg-green">Tgl Masuk Gudang</small></a>-->
-                                <a href="#" data-toggle="modal" data-target="#modal-tglmasuk<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Tgl Masuk Gudang" class="label bg-green">Tgl Masuk Gudang</small></a>
+                                <!-- <a href="#" data-toggle="modal" data-target="#modal-tglmasuk<?php //echo $json[$i]['idd']; ?>"> -->
+                                <a href="javascript:void();" onclick="modalTanggalMasuk('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['tgl_masuk_gudang'] ?>')">
+                                <small data-toggle="tooltip" title="Tgl Masuk Gudang" class="label bg-green">Tgl Masuk Gudang</small></a>
                                 <br />
                                 <?php if ($json[$i]['status_lunas'] == 1 or $json[$i]['tgl_masuk_gudang'] != '0000-00-00') { ?>
                                     <a href="index.php?page=mutasi&id=<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Mutasi Ke Gudang" class="label bg-yellow">Mutasi</small></a><br />
@@ -155,71 +158,6 @@ error_reporting(0);
                         } ?>
                     </td>
                 </tr>
-                <div class="modal fade" id="modal-tglmasuk<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Tanggal Masuk Gudang</h4>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <input type="hidden" name="id_tgl" value="<?php echo $json[$i]['idd'] ?>" />
-                                    <input id="input<?php echo $json[$i]['idd'] ?>" value="<?php echo $json['tgl_masuk_gudang']; ?>" onchange="ubahTgl(this.value)" type="date" class="form-control" name="tgl_lunas">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                    <button name="lunasin" type="submit" class="btn btn-success" onclick="simpanTgl(<?php echo $json[$i]['idd'] ?>)">Simpan</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-
-                <div class="modal fade" id="modal-detailbarang<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" align="center">Detail Barang</h4>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <p align="justify">
-
-                                        <?php
-                                        $q = mysqli_query($koneksi, "select * from barang_pesan,barang_pesan_detail,barang_gudang where barang_gudang.id=barang_pesan_detail.barang_gudang_id and barang_pesan.id=barang_pesan_detail.barang_pesan_id and barang_pesan_detail.barang_pesan_id=" . $json[$i]['idd'] . "");
-                                        $n = 0;
-                                        while ($d1 = mysqli_fetch_array($q)) {
-                                            $n++;
-
-                                        ?>
-                                            <?php echo $n . ". " . $d1['nama_brg'] . "     |    "; ?></td>
-                                            <?php echo $d1['tipe_brg'] . "  |  " ?></td>
-                                            <?php echo $d1['qty'] . "  |  "; ?>
-                                            <?php $stok_sudah_mutasi = mysqli_fetch_array(mysqli_query($koneksi, "select stok as stok_sudah from barang_gudang_po where no_po_gudang='" . $d1['no_po_pesan'] . "' and barang_gudang_id=" . $d1['barang_gudang_id'] . ""));
-                                            if ($d1['qty'] - $stok_sudah_mutasi['stok_sudah'] == 0) { ?>
-                                                <span class="fa fa-share"></span>
-                                            <?php } ?>
-                                            <hr />
-                                        <?php } ?>
-
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
             <?php } ?>
         </table>
     </div>

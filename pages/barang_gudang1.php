@@ -1,14 +1,4 @@
 <?php
-
-if (isset($_GET['id_tgl'])) {
-  $q_lunas = mysqli_query($koneksi, "update barang_pesan set tgl_masuk_gudang='" . $_GET['tgl'] . "' where id=$_GET[id_tgl]");
-  if ($q_lunas) {
-    echo "<script type='text/javascript'>
-		window.location='index.php?page=barang_gudang1';
-		</script>";
-  }
-}
-
 if (isset($_POST['lihat'])) {
   echo "<script>
 	window.location='index.php?page=barang_gudang1&tgldari=$_POST[tgl1]&tglsampai=$_POST[tgl2]&mutasi=$_POST[mutasi]';
@@ -138,15 +128,6 @@ if (isset($_POST['print'])) {
 </div>
 
 
-<div id="openPilihan" class="modalDialog">
-  <div>
-    <a href="#" title="Close" class="close">X</a>
-    <br />
-    <a href="index.php?page=jual_barang2&id=<?php echo $_GET['id']; ?>"><button id="buttonn">Data Dinas/RS/Puskesmas/Klinik Baru</button></a>
-    <a href="index.php?page=jual_barang3&id=<?php echo $_GET['id']; ?>"><button id="buttonn">Dari Data Dinas/RS/Puskesmas/Klinik<br />Yang Sudah Terinput</button></a>
-  </div>
-</div>
-
 <section class="col-lg-2">
   <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
@@ -184,12 +165,92 @@ if (isset($_POST['print'])) {
   </div>
   <!-- /.modal -->
 </section>
+
+<div class="modal fade" id="modal-detailbarang">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Detail Barang</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="modal-data-barang"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-tglmasuk">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Tanggal Masuk Gudang</h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" onsubmit="simpanTgl(); return false;">
+        <div class="modal-body">
+          <input type="hidden" name="id_tgl" id="id_tgl" />
+          <input id="input" type="date" class="form-control" name="tgl_lunas">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="lunasin" type="submit" class="btn btn-success">Simpan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function modalBarang(id) {
+    $('#modal-detailbarang').modal('show');
+    $.get("data/modal-barang-gudang1.php", {
+        id: id
+      },
+      function(data) {
+        $('#modal-data-barang').html(data)
+      }
+    );
+  }
+
+  function modalTanggalMasuk(id, tgl) {
+    $('#id_tgl').val(id);
+    $('#input').val(tgl);
+    $('#modal-tglmasuk').modal('show');
+  }
+
   let tgl_masuk = '';
+
   function ubahTgl(tgl) {
     tgl_masuk = tgl
   }
-  function simpanTgl(id) {
-    window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_tgl=' + id + '&tgl=' + tgl_masuk;
+
+  function simpanTgl() {
+    $.post("data/simpan-tanggal-masuk.php", {
+        id: $('#id_tgl').val(),
+        tgl: $('#input').val()
+      },
+      function(data) {
+        if (data == 'S') {
+          $('#modal-tglmasuk').modal('hide');
+          loadMore(load_flag, key, status_b)
+          alertSimpan('S');
+        } else {
+          alertSimpan('F');
+        }
+      }
+    );
   }
 </script>
