@@ -15,18 +15,18 @@ header("Access-Control-Allow-Credentials: true");
 require("../config/koneksi.php");
 
 $sql = "select DISTINCT 
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '1' and year(tgl_po_pesan) = '$_GET[tahun]') as jan,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '2' and year(tgl_po_pesan) = '$_GET[tahun]') as feb,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '3' and year(tgl_po_pesan) = '$_GET[tahun]') as mar,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '4' and year(tgl_po_pesan) = '$_GET[tahun]') as apr,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '5' and year(tgl_po_pesan) = '$_GET[tahun]') as mei,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '6' and year(tgl_po_pesan) = '$_GET[tahun]') as jun,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '7' and year(tgl_po_pesan) = '$_GET[tahun]') as jul,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '8' and year(tgl_po_pesan) = '$_GET[tahun]') as agu,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '9' and year(tgl_po_pesan) = '$_GET[tahun]') as sep,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '10' and year(tgl_po_pesan) = '$_GET[tahun]') as okt,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '11' and year(tgl_po_pesan) = '$_GET[tahun]') as nov,
-(SELECT COUNT(*) from barang_pesan where month(tgl_po_pesan) = '12' and year(tgl_po_pesan) = '$_GET[tahun]') as des 
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '1' and year(tgl_po_pesan) = '$_GET[tahun]') as jan,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '2' and year(tgl_po_pesan) = '$_GET[tahun]') as feb,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '3' and year(tgl_po_pesan) = '$_GET[tahun]') as mar,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '4' and year(tgl_po_pesan) = '$_GET[tahun]') as apr,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '5' and year(tgl_po_pesan) = '$_GET[tahun]') as mei,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '6' and year(tgl_po_pesan) = '$_GET[tahun]') as jun,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '7' and year(tgl_po_pesan) = '$_GET[tahun]') as jul,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '8' and year(tgl_po_pesan) = '$_GET[tahun]') as agu,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '9' and year(tgl_po_pesan) = '$_GET[tahun]') as sep,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '10' and year(tgl_po_pesan) = '$_GET[tahun]') as okt,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '11' and year(tgl_po_pesan) = '$_GET[tahun]') as nov,
+(SELECT COUNT(DISTINCT no_po_pesan) from barang_pesan where month(tgl_po_pesan) = '12' and year(tgl_po_pesan) = '$_GET[tahun]') as des 
 from barang_pesan where status_po_batal=0";
 
 $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));

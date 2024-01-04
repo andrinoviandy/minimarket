@@ -183,6 +183,48 @@ if (isset($_POST['kirim_pengganti'])) {
   <!-- /.content -->
 </div>
 
+<div class="modal fade" id="modal-cetak-surat-jalan">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cetak Surat Jalan</h4>
+      </div>
+      <div class="modal-body">
+        <a id="cetak1" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Print</a>
+        <a id="cetak2" class="btn btn-app"><i class="fa fa-file-word-o"></i> Word</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-kirim">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Data Pengiriman</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="data-modal-kirim"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 <div class="modal fade" id="kirim-barang-pengganti">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -317,6 +359,23 @@ if (isset($_POST['kirim_pengganti'])) {
 </div>
 
 <script>
+  function modal_cetak_surat_jalan(id) {
+    $('#cetak1').prop('href', 'cetak_surat_jalan.php?id=' + id)
+    $('#cetak2').prop('href', 'cetak_surat_jalan_word.php?id=' + id)
+    $('#modal-cetak-surat-jalan').modal('show');
+  }
+
+  function modal_kirim(id) {
+    $.get("data/data-modal-kirim.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-modal-kirim').html(data);
+        $('#modal-kirim').modal('show');
+      }
+    );
+  }
+
   function simpanSampai() {
     $.post("data/simpan-sampai.php", {
         id: $('#id_status').val(),

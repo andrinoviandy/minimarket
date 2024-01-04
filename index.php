@@ -344,7 +344,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
     </script>
   </head>
 
-  <body class="hold-transition skin-blue sidebar-mini fixed" onload="SetFocus()">
+  <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
 
       <header class="main-header">
@@ -700,9 +700,6 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
     <!-- jQuery UI 1.11.4 -->
     <!-- <script src="bower_components/jquery-ui/jquery-ui.min.js"></script> -->
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-      $.widget.bridge('uibutton', $.ui.button);
-    </script>
     <script src="bower_components/Chart.js/Chart.js"></script>
 
     <!-- Bootstrap 3.3.7 -->

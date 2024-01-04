@@ -125,83 +125,35 @@ error_reporting(0);
                     <td><?php echo $json[$i]['kontak_rs']; ?></td>
                     <td align="center"><?php echo $json[$i]['keterangan_spk']; ?></td>
                     <td align="center">
-                        <?php if (!isset($_SESSION['id_b'])) { ?>
-                            <!-- <a href="pages/delete_spk_masuk.php?id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
-                            <a href="#" onclick="hapus(<?php echo $json[$i]['idd']; ?>)">
-                                <button class="btn btn-xs btn-danger">
-                                    <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                                </button>
-                            </a>
-                            &nbsp;
-                            <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $json[$i]['idd']; ?>">
-                                <button class="btn btn-xs btn-warning">
-                                    <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                                </button>
-                            </a>
-                        <?php } ?>
-                        <?php
-                        if ($ada == 0) { ?>
-                            &nbsp;
-                            <a data-toggle="modal" data-target="#modal-cetak-spi<?php echo $json[$i]['idd']; ?>">
-                                <button class="btn btn-xs btn-primary">
-                                    <span data-toggle="tooltip" title="Cetak SPI" class="glyphicon glyphicon-print"></span>
-                                </button>
-                            </a>
-                        <?php } ?>
+                        <div class="row">
+
+                            <?php if (!isset($_SESSION['id_b'])) { ?>
+                                <!-- <a href="pages/delete_spk_masuk.php?id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
+                                <a href="javascript:void();" onclick="hapus(<?php echo $json[$i]['idd']; ?>)">
+                                    <button class="btn btn-xs btn-danger">
+                                        <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                                    </button>
+                                </a>
+                                &nbsp;
+                                <!-- <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $json[$i]['idd']; ?>"> -->
+                                <a href="javascript:void();" onclick="modal_ubah('<?php echo $json[$i]['idd']; ?>')">
+                                    <button class="btn btn-xs btn-warning">
+                                        <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
+                                    </button>
+                                </a>
+                            <?php } ?>
+                            <?php
+                            if ($ada == 0) { ?>
+                                &nbsp;
+                                <a href="javascript:void()" onclick="modal_cetak_spi('<?php echo $json[$i]['idd']; ?>','<?php echo $json[$i]['barang_dikirim_id']; ?>')">
+                                    <button class="btn btn-xs btn-primary">
+                                        <span data-toggle="tooltip" title="Cetak SPI" class="glyphicon glyphicon-print"></span>
+                                    </button>
+                                </a>
+                            <?php } ?>
+                        </div>
                     </td>
                 </tr>
-                <div class="modal fade" id="modal-cetak-spi<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Cetak Surat Perintah Instalasi</h4>
-                            </div>
-                            <div class="modal-body">
-                                <a href="cetak_surat_perintah_instalasi.php?id=<?php echo $json[$i]['idd']; ?>&id_kirim=<?php echo $json[$i]['barang_dikirim_id']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Print</a>
-                                <a href="cetak_surat_perintah_instalasi_word.php?id=<?php echo $json[$i]['idd']; ?>&id_kirim=<?php echo $json[$i]['barang_dikirim_id']; ?>" class="btn btn-app"><i class="fa fa-file-word-o"></i> Word</a>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-                
-                <div class="modal fade" id="modal-ubah<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" align="center">Ubah SPI</h4>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <p align="justify">
-                                        <input type="hidden" value="<?php echo $json[$i]['idd']; ?>" name="id_spk" />
-                                        <label>Tanggal SPI</label>
-                                        <input id="input" type="date" placeholder="" name="tgl_spk" value="<?php echo $json[$i]['tgl_spk']; ?>" required>
-                                        <label>Nomor SPI</label>
-                                        <input id="input" type="text" value="<?php echo $json[$i]['no_spk']; ?>" placeholder="No SPI" name="no_spk" required>
-                                        <label>Deskripsi</label>
-                                        <textarea rows="4" class="form-control" name="keterangan_spk"><?php echo $json[$i]['keterangan_spk']; ?></textarea>
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                    <button class="btn btn-success" name="jual" type="submit">Simpan Perubahan</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
             <?php } ?>
         </table>
     </div>

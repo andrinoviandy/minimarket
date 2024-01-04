@@ -1,59 +1,3 @@
-<?php
-if (isset($_POST['jual'])) {
-  $q = mysqli_query($koneksi, "update barang_teknisi set tgl_spk='" . $_POST['tgl_spk'] . "', no_spk='" . $_POST['no_spk'] . "', keterangan_spk='" . $_POST['keterangan_spk'] . "' where id=" . $_POST['id_spk'] . "");
-  if ($q) {
-    echo "<script>
-      Swal.fire({
-        customClass: {
-          confirmButton: 'bg-green',
-          cancelButton: 'bg-white',
-        },
-        title: 'Data Berhasil Diubah',
-        icon: 'success',
-        confirmButtonText: 'OK',
-      }).then(() => {
-        window.location = '?page=$_GET[page]'
-      })
-      </script>";
-  }
-}
-
-if (isset($_GET['id_hapus'])) {
-  $up = mysqli_query($koneksi, "update barang_dikirim_detail,barang_teknisi_detail set status_spi=0 where barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_teknisi_id=" . $_GET['id_hapus'] . "");
-  $hapus2 = mysqli_query($koneksi, "delete from barang_teknisi_detail where barang_teknisi_id=" . $_GET['id_hapus'] . "");
-  $hapus = mysqli_query($koneksi, "delete from barang_teknisi where id=" . $_GET['id_hapus'] . "");
-  if ($up and $hapus2 and $hapus) {
-    echo "<script>
-      Swal.fire({
-        customClass: {
-          confirmButton: 'bg-green',
-          cancelButton: 'bg-white',
-        },
-        title: 'Data Berhasil Dihapus',
-        icon: 'success',
-        confirmButtonText: 'OK',
-      }).then(() => {
-        window.location = '?page=$_GET[page]'
-      })
-      </script>";
-  } else {
-    echo "<script>
-      Swal.fire({
-        customClass: {
-          confirmButton: 'bg-yellow',
-          cancelButton: 'bg-white',
-        },
-        title: 'Data Tidak Dapat Dihapus',
-        icon: 'warning',
-        confirmButtonText: 'OK',
-      }).then(() => {
-        window.location = '?page=$_GET[page]'
-      })
-      </script>";
-  }
-}
-
-?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -342,18 +286,72 @@ $d_t = mysqli_fetch_array(mysqli_query($koneksi, "select * from tb_teknisi where
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-cetak-spi">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cetak Surat Perintah Instalasi</h4>
+      </div>
+      <div class="modal-body">
+        <a target="_blank" id="cetak1" class="btn btn-app"><i class="fa fa-print"></i> Print</a>
+        <a class="btn btn-app" id="cetak2"><i class="fa fa-file-word-o"></i> Word</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-ubah">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Ubah SPI</h4>
+      </div>
+      <div id="modal-ubah-spi"></div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
-  function modalBarang(id) {
-    $.get("data/modal-detailbarang.php", {
-      id: id
-    },
-      function (data) {
-         $('#data-detailbarang').html(data);
-         $('#modal-detailbarang').modal('show');
+  function modal_ubah(id) {
+    $.get("data/modal-ubah-spi.php", {
+        id: id
+      },
+      function(data) {
+        $('#modal-ubah-spi').html(data)
+        $('#modal-ubah').modal('show');
       }
     );
   }
-  
+
+  function modal_cetak_spi(id, id_kirim) {
+    $('#cetak1').prop('href', 'cetak_surat_perintah_instalasi.php?id=' + id + '&id_kirim=' + id_kirim)
+    $('#cetak2').prop('href', 'cetak_surat_perintah_instalasi_word.php?id=' + id + '&id_kirim=' + id_kirim)
+    $('#modal-cetak-spi').modal('show');
+  }
+
+  function modalBarang(id) {
+    $.get("data/modal-detailbarang.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-detailbarang').html(data);
+        $('#modal-detailbarang').modal('show');
+      }
+    );
+  }
+
   function hapus(id) {
     Swal.fire({
       customClass: {
@@ -367,7 +365,18 @@ $d_t = mysqli_fetch_array(mysqli_query($koneksi, "select * from tb_teknisi where
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id;
+        $.get("data/hapus_spi.php", {
+            id_hapus: id
+          },
+          function(data) {
+            if (data == 'S') {
+              alertHapus('S');
+              loadMore(load_flag, key, status_b);
+            } else {
+              alertHapus('F');
+            }
+          }
+        );
       }
     })
   }

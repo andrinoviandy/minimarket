@@ -13,6 +13,7 @@ $q2 = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_spi,status_keru
                 <th>Nama Barang</th>
                 <th>Tipe Barang</th>
                 <th>No Seri</th>
+                <th></th>
             </tr>
         </thead>
         <?php
@@ -27,6 +28,10 @@ $q2 = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_spi,status_keru
                     <?php if ($d1['status_batal'] == 1) { ?>
                         <font class="pull pull-right" size="+1">Batal</font>
                     <?php } ?>
+                </td>
+                <td><?php echo $d1['tipe_brg']; ?></td>
+                <td><?php echo $d1['no_seri_brg']; ?></td>
+                <td>
                     <font class="pull pull-right" size="+2">
                         <?php
                         if ($d1['status_spi'] == 1) {
@@ -35,8 +40,6 @@ $q2 = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_spi,status_keru
                         ?>
                     </font>
                 </td>
-                <td><?php echo $d1['tipe_brg']; ?></td>
-                <td><?php echo $d1['no_seri_brg']; ?></td>
             </tr>
         <?php } ?>
     </table>

@@ -1,7 +1,3 @@
-var stok_tersedia = document.getElementById("stok_tersedia")
-var stok_terjual = document.getElementById("stok_terjual")
-var stok_rusak = document.getElementById("stok_rusak")
-var stok_tidak_layak = document.getElementById("stok_tidak_layak")
 var id = parseInt(getVars("id"));
 // status_b = 'Tersedia';
 
@@ -62,57 +58,3 @@ async function loadMore(start, keyword, status_brg) {
         }
     }
 }
-
-stok_tersedia.addEventListener('click', function () {
-    // hitungBaris(key = '', status_b = 'Tersedia')
-    search.value = '';
-    stok_tersedia.className = 'btn btn-primary';
-    stok_terjual.className = 'btn btn-default';
-    stok_rusak.className = 'btn btn-default';
-    stok_tidak_layak.className = 'btn btn-default';
-    loading()
-    // setTimeout(function () {
-        loadMore(load_flag = 0, key = search.value, status_b = 'Tersedia')
-        
-    // }, 500);
-})
-
-stok_terjual.addEventListener('click', function () {
-    // hitungBaris(key = '', status_b = 'Terjual')
-    search.value = '';
-    stok_tersedia.className = 'btn btn-default';
-    stok_terjual.className = 'btn btn-primary';
-    stok_rusak.className = 'btn btn-default';
-    stok_tidak_layak.className = 'btn btn-default';
-    loading()
-    // setTimeout(function () {
-        loadMore(load_flag = 0, key = search.value, status_b = 'Terjual')
-        
-    // }, 500);
-})
-
-stok_rusak.addEventListener('click', function () {
-    // hitungBaris(key = '', status_b = 'Rusak')
-    search.value = '';
-    stok_tersedia.className = 'btn btn-default';
-    stok_terjual.className = 'btn btn-default';
-    stok_rusak.className = 'btn btn-primary';
-    stok_tidak_layak.className = 'btn btn-default';
-    loading()
-    // setTimeout(function () {
-        loadMore(load_flag = 0, key = search.value, status_b = 'Rusak')
-    // }, 500);
-})
-
-stok_tidak_layak.addEventListener('click', function () {
-    // hitungBaris(key = '', status_b = 'Tidak_Layak')
-    search.value = '';
-    stok_tersedia.className = 'btn btn-default';
-    stok_terjual.className = 'btn btn-default';
-    stok_rusak.className = 'btn btn-default';
-    stok_tidak_layak.className = 'btn btn-primary';
-    loading()
-    // setTimeout(function () {
-        loadMore(load_flag = 0, key = search.value, status_b = 'Tidak_Layak')
-    // }, 500);
-})

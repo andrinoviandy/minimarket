@@ -30,16 +30,16 @@ $akse = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from b
 <label>No Seri</label>
 <div class="form-group" id="metode-pilih">
     <label class="col-lg-6 no-padding">
-        <input type="radio" name="r3" id="manual" onclick="metodePilihAkse()" value="0" class="flat-red" checked style="width: 20px;">
+        <input type="radio" name="r3" id="manual" onclick="metodePilihAkse()" value="0" class="flat-red" style="width: 20px;">
         Manual
     </label>
     <label class="col-lg-6">
-        <input type="radio" name="r3" id="otomatis" onclick="metodePilihAkse()" value="1" class="flat-red" style="width: 20px;">
+        <input type="radio" name="r3" id="otomatis" onclick="metodePilihAkse()" value="1" class="flat-red" checked style="width: 20px;">
         Dipilih Sistem
     </label>
     <br>
 </div>
-<div id="Ifmanual">
+<div id="Ifmanual" style="display: none;">
     <select name="no_seri" id="no_seri" class="form-control select2" multiple="multiple" data-placeholder="Cari No Seri" style="width:100%;" required onchange="hitungJumlahAkse()">
         <?php
         $file = file_get_contents($API . "json/isi_no_seri_satuan.php?id=$_GET[idd]");
@@ -53,7 +53,7 @@ $akse = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from b
         <?php } ?>
     </select>
 </div>
-<div id="Ifotomatis" style="display: none;">
+<div id="Ifotomatis">
     <input id="jumlah_kirim" name="jumlah_kirim" class="form-control" onchange="cekJumlahKirimAkse();" placeholder="Jumlah Kirim" type="number" />
 </div>
 <input type="hidden" id="jumlah_aksesoris" value="<?php echo $akse['jml'] ?>" />

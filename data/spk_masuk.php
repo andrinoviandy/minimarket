@@ -137,22 +137,22 @@ error_reporting(0);
                     <td><?php echo $json[$i]['keterangan_spk']; ?></td>
                     <td align="center">
                         <?php if (!isset($_SESSION['id_b'])) { ?>
-                            <a href="index.php?page=pilih_teknisi&id=<?php echo $json[$i]['idd']; ?>">
-                                <button class="label bg-red" data-toggle="tooltip" title="Teknisi, Estimasi, Tgl Berangkat">Teknisi, Estimasi, Tgl Berangkat</button>
+                            <a href="index.php?page=pilih_teknisi&id=<?php echo $json[$i]['idd']; ?>" data-toggle="tooltip" title="Teknisi, Estimasi, Tgl Berangkat">
+                                <button class="btn btn-xs btn-danger">Teknisi, Estimasi, Tgl Berangkat</button>
                             </a>
-                            <br />
+                            <br /><br>
                             <!-- <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $json[$i]['idd'] ?>" class="label label-warning"> -->
-                            <a href="#" onclick="modalDeskripsi(<?php echo $json[$i]['idd'] ?>, '<?php echo $json[$i]['keterangan_spk']; ?>')" class="label label-warning">
-                                <span class="fa fa-edit" data-toggle="tooltip" title="Ubah Deskripsi"> Desk.</span>
+                            <a href="javascript:void()" onclick="modalDeskripsi('<?php echo $json[$i]['idd'] ?>', '<?php echo $json[$i]['keterangan_spk']; ?>')" data-toggle="tooltip" title="Ubah Deskripsi">
+                                <button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Desk.</button>
                             </a>
-                            <br />
+                            <br /><br>
                         <?php } ?>
 
                         <?php
                         //if ($json[$i]['status_uji']==0 and $json[$i]['status_teknisi']==1) {
                         { ?>
-                            <a href="index.php?page=simpan_tambah_uji&id=<?php echo $json[$i]['idd']; ?>">
-                                <button data-toggle="tooltip" title="Instalasi & Uji Fungsi" class="label bg-blue">Instalasi & Uji Fungsi</button>
+                            <a data-toggle="tooltip" title="Instalasi & Uji Fungsi" href="index.php?page=simpan_tambah_uji&id=<?php echo $json[$i]['idd']; ?>">
+                                <button class="btn btn-info btn-xs">Instalasi & Uji Fungsi</button>
                             </a>
                         <?php } ?>
                     </td>

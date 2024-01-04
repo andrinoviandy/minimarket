@@ -123,7 +123,10 @@ error_reporting(0);
                         </a>
                     </td>
                     <td><?php echo $data3['kontak_rs']; ?></td>
-                    <td><a href="#" data-toggle="modal" data-target="#modal-kirim<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Detail Pengiriman" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a></td>
+                    <td>
+                        <!-- <a href="#" data-toggle="modal" data-target="#modal-kirim<?php //echo $json[$i]['idd']; ?>"> -->
+                        <a href="javascript:void()" onclick="modal_kirim('<?php echo $json[$i]['idd']; ?>');">
+                        <small data-toggle="tooltip" title="Detail Pengiriman" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a></td>
                     <?php
                     if ($json[$i]['tgl_sampai'] != 0000 - 00 - 00) {
                         $bg = "#99FFCC";
@@ -173,7 +176,10 @@ error_reporting(0);
                                             <span data-toggle="tooltip" title="Status : Belum Sampai" class="fa fa-calendar-times-o"></span> Status : Belum Sampai</a>
                                     </li>
                                     <li><a href="index.php?page=kartu_garansi&id=<?php echo $json[$i]['idd']; ?>"><span data-toggle="tooltip" title="Cetak Kartu Garansi" class="fa fa-print"></span> Cet. Kartu Garansi</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#modal-cetak-surat-jalan<?php echo $json[$i]['idd']; ?>"><span data-toggle="tooltip" title="Cetak Surat Jalan" class="fa fa-print"></span> Cet. Surat Jalan</a>
+                                    <li>
+                                        <!-- <a href="#" data-toggle="modal" data-target="#modal-cetak-surat-jalan<?php //echo $json[$i]['idd']; ?>"> -->
+                                        <a href="javascript:void()" onclick="modal_cetak_surat_jalan('<?php echo $json[$i]['idd']; ?>')">
+                                        <span data-toggle="tooltip" title="Cetak Surat Jalan" class="fa fa-print"></span> Cet. Surat Jalan</a>
                                     </li>
                                     <?php if (isset($_SESSION['user_admin_keuangan']) or isset($_SESSION['user_manajer_keuangan']) or isset($_SESSION['user_administrator'])) { ?><li><a target="blank" href="cetak_faktur_penjualan.php?id=<?php echo $json[$i]['idd']; ?>"><span data-toggle="tooltip" title="Cetak Faktur Penjualan" class="glyphicon glyphicon-print"></span> Cet. Faktur Penjualan</a></li><?php } ?>
                                 <?php } else { ?>
@@ -188,64 +194,6 @@ error_reporting(0);
                         </div>
                     </td>
                 </tr>
-                <div class="modal fade" id="modal-cetak-surat-jalan<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Cetak Surat Jalan</h4>
-                            </div>
-                            <div class="modal-body">
-                                <a href="cetak_surat_jalan.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Print</a>
-                                <a href="cetak_surat_jalan_word.php?id=<?php echo $json[$i]['idd']; ?>" class="btn btn-app"><i class="fa fa-file-word-o"></i> Word</a>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-
-                <div class="modal fade" id="modal-kirim<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" align="center">Data Pengiriman</h4>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <p align="justify">
-                                        <?php
-                                        echo "<b>Ekspedisi :</b> <br/>" . $json[$i]['ekspedisi']; ?>
-                                        <hr />
-                                        <?php echo "<b>Pengiriman Via :</b> <br/>" . $json[$i]['via_pengiriman']; ?>
-                                        <hr />
-                                        <?php echo "<b>Estimasi Barang Sampai :</b> <br/>"; ?>
-                                        <?php
-                                        if ($json[$i]['estimasi_barang_sampai'] != 0000 - 00 - 00) {
-                                            echo date("d/m/Y", strtotime($json[$i]['estimasi_barang_sampai']));
-                                        } ?>
-                                        <hr />
-                                        <?php echo "<b>Biaya Jasa Pengiriman :</b> <br/>" . number_format($json[$i]['biaya_pengiriman'], 0, ',', '.'); ?>
-
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
             <?php } ?>
         </table>
     </div>

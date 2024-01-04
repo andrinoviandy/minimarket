@@ -359,14 +359,14 @@
     }
   }
 
-  async function ambilDataNoSeri(param) {
+  function ambilDataNoSeri(param) {
     var kategori = param.split("-");
     var id_gudang = kategori[1];
     var id_qty = kategori[2];
     $('#simpanNoSeri').prop('disabled', false)
     if (kategori[0] == 'Set') {
       loading_data('#isi_no_seri');
-      await $.get("data/isi_no_seri_set.php", {
+      $.get("data/isi_no_seri_set.php", {
           idd: id_gudang,
           id_qty: id_qty,
           kategori: 'Set'
@@ -377,7 +377,7 @@
       );
     } else if (kategori[0] == 'Satuan') {
       loading_data('#isi_no_seri');
-      await $.get("data/isi_no_seri_satuan.php", {
+      $.get("data/isi_no_seri_satuan.php", {
           idd: id_gudang,
           id_qty: id_qty,
           kategori: 'Satuan'
@@ -388,7 +388,7 @@
       );
     } else if (kategori[0] == 'Aksesoris') {
       loading_data('#isi_no_seri');
-      await $.get("data/isi_no_seri_akse.php", {
+      $.get("data/isi_no_seri_akse.php", {
           idd: id_gudang,
           id_qty: id_qty,
           kategori: 'Aksesoris'
