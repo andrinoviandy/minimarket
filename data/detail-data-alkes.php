@@ -7,7 +7,7 @@ session_start();
 <div>
     <button class="btn btn-primary" id="stok_tersedia" onclick="stok_tersedia(); return false;">Tersedia :
         <?php
-        $stok = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kirim=0 and status_kerusakan=0 and status_kembali_ke_gudang=0 and barang_gudang_id=" . $_GET['id'] . ""));
+        $stok = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kirim=0 and status_kerusakan=0 and status_kembali_ke_gudang=0 and (TIMESTAMPDIFF(DAY, NOW(), tgl_expired) > 0 or tgl_expired = '0000-00-00') and barang_gudang_id=" . $_GET['id'] . ""));
         echo $stok; ?>
     </button>
     <button class="btn btn-default" id="stok_terjual" onclick="stok_terjual(); return false;">Terjual :
@@ -17,12 +17,12 @@ session_start();
     </button>
     <button class="btn btn-default" id="stok_rusak" onclick="stok_rusak(); return false;">Rusak :
         <?php
-        $stok_rusak = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kerusakan!=0 and barang_gudang_id=" . $_GET['id'] . ""));
+        $stok_rusak = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kerusakan=1 and barang_gudang_id=" . $_GET['id'] . ""));
         echo $stok_rusak; ?>
     </button>
     <button class="btn btn-default" id="stok_tidak_layak" onclick="stok_tidak_layak(); return false;">Tidak Layak Jual :
         <?php
-        $stok_tl = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kerusakan=2 and barang_gudang_id=" . $_GET['id'] . ""));
+        $stok_tl = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where (status_kerusakan=2 or (TIMESTAMPDIFF(DAY, NOW(), tgl_expired) < 0 and status_kirim = 0)) and barang_gudang_id=" . $_GET['id'] . ""));
         echo $stok_tl ?>
     </button>
 </div>

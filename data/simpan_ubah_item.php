@@ -4,6 +4,9 @@ include("../include/API.php");
 session_start();
 // error_reporting(0);
 $cek = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where no_seri_brg='" . $_POST['no_seri'] . "' and id !=" . $_POST['id_ubah'] . ""));
+if ($_POST['no_seri'] == '') {
+    die('S');
+}
 // echo $cek; die;
 if ($cek > 0) {
     echo "SA";

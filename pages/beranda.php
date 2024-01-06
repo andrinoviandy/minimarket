@@ -104,7 +104,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Grafik Transaksi Penjualan</h3>
@@ -162,7 +162,7 @@
             <!-- /.box-body -->
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Grafik Transaksi Pembelian</h3>

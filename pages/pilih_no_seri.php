@@ -182,7 +182,9 @@
     }).then((result) => {
       if (result.isConfirmed) {
         showLoading(1);
-        $.post("data/simpan_kirim.php", {id: '<?php echo $_GET['id']; ?>'},
+        $.post("data/simpan_kirim.php", {
+            id: '<?php echo $_GET['id']; ?>'
+          },
           function(data) {
             if (data == 'S') {
               showLoading(0);
@@ -228,9 +230,19 @@
     }
   }
 
-  function hitungJumlahAkse() {
+  function hitungJumlahAkse(id) {
     var sisaKirim = parseInt($('#sisa_kirim').val());
     let data = $('#no_seri').val();
+    // let index = data.length - 1;
+    // $.get("data/cek_no_seri.php", {
+    //     id: id
+    //   },
+    //   function(data) {
+    //     if (data == 'Y') {
+    //       alertCustom('W', 'Expired < 6 Bulan !', 'Anda Tetap Dapat Memilih No Seri Ini');
+    //     }
+    //   }
+    // );
     // var mySelect = $('#no_seri').select2();
     // var unselectedOptions = $('#no_seri').children('option:not(:selected)');
 
@@ -314,8 +326,11 @@
           } else {
             var cek = data.split('&');
             if (cek[0]) {
+              alert(cek[1]);
               if (cek[0] == 'DEL') {
                 alertCustom('F', 'Stok Aksesoris\n' + cek[1] + '\nTidak Mencukupi !', '' + cek[2] + ', ' + cek[3]);
+              } else {
+                alertCustom('F', 'Stok Barang\n' + cek[1] + '\nTidak Mencukupi !', '' + cek[2] + ', ' + cek[3]);
               }
             } else {
               alertSimpan('F')

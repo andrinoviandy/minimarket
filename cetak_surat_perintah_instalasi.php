@@ -22,6 +22,8 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as
         <link href='logo.png' rel='icon'>
     </head>
     <body onLoad="window.print();">
+    <font style="float: right">Pry : <?php echo $data['marketing']; ?></font>
+    <br>
     <center><font size="+2" style="font-family:Arial, Helvetica, sans-serif"><b>SURAT PERINTAH INSTALASI</b></font></font></center><br>
     <table width="100%">
       <tr>
@@ -128,7 +130,8 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as
     <td width="25%" align="center"><hr>
       Tri Tinitah Kusumastuti</td>
     <td width="16%" align="center">&nbsp;</td>
-    <td width="24%" align="center"><hr>Slamet Imam Santoso</td>
+    <!-- <td width="24%" align="center"><hr>Slamet Imam Santoso</td> -->
+    <td width="24%" align="center"><hr>Irdiyanto</td>
   </tr>
 </table>
 <br><br><br><br><br><br><br><br>

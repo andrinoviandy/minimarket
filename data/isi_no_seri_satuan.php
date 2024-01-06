@@ -40,7 +40,7 @@ $akse = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from b
     <br>
 </div>
 <div id="Ifmanual" style="display: none;">
-    <select name="no_seri" id="no_seri" class="form-control select2" multiple="multiple" data-placeholder="Cari No Seri" style="width:100%;" required onchange="hitungJumlahAkse()">
+    <select name="no_seri" id="no_seri" class="form-control select2" multiple="multiple" data-placeholder="Cari No Seri" style="width:100%;" onchange="hitungJumlahAkse(this.value)">
         <?php
         $file = file_get_contents($API . "json/isi_no_seri_satuan.php?id=$_GET[idd]");
         $json = json_decode($file, true);
@@ -49,12 +49,20 @@ $akse = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from b
         <?php
         for ($i = 0; $i < $jml; $i++) {
         ?>
-            <option value="<?php echo $json[$i]['idd']; ?>"><?php echo $json[$i]['no_seri_brg']; ?></option>
+            <option <?php if ($json[$i]['selisih_hari'] < 0 && $json[$i]['tgl_expired'] != '0000-00-00') {echo "disabled";} ?> value="<?php echo $json[$i]['idd']; ?>"><?php echo $json[$i]['no_seri_brg']; 
+            if ($json[$i]['selisih_hari'] < 180 && $json[$i]['tgl_expired'] != '0000-00-00' && $json[$i]['selisih_hari'] >= 0) {
+                echo " @ Expired < 6 Bulan (".date('d/m/Y', strtotime($json[$i]['tgl_expired'])).")";
+            } else {
+                if ($json[$i]['selisih_hari'] < 0) {
+                    echo " @ Sudah Expired (".date('d/m/Y', strtotime($json[$i]['tgl_expired'])).")";
+                }
+            }
+            ?></option>
         <?php } ?>
     </select>
 </div>
 <div id="Ifotomatis">
-    <input id="jumlah_kirim" name="jumlah_kirim" class="form-control" onchange="cekJumlahKirimAkse();" placeholder="Jumlah Kirim" type="number" />
+    <input id="jumlah_kirim" required name="jumlah_kirim" class="form-control" onchange="cekJumlahKirimAkse();" placeholder="Jumlah Kirim" type="number" />
 </div>
 <input type="hidden" id="jumlah_aksesoris" value="<?php echo $akse['jml'] ?>" />
 <?php if ($akse['jml'] > 0) { ?>
