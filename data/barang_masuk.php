@@ -69,7 +69,9 @@ $jml2 = $file2;
                         <?php echo "[" . $json[$i]['nie_brg'] . "]-[" . $json[$i]['negara_asal'] . "]"; ?>
                         <hr style="margin:0px; border-top:1px double; width:100%" />
                     <?php } else { ?>
-                        <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
+                        <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php //echo $json[$i]['idd']; ?>"> -->
+                        <a href="javascript:void();" onclick="modalDetailBarang('<?php echo $json[$i]['idd']; ?>');">
+                        <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
                     <?php } ?>
                 </td>
                 <td>
@@ -80,16 +82,16 @@ $jml2 = $file2;
                     ?>
                 </td>
                 <td align="center"><?php
-                                    $stok_total = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kirim=0 and status_kerusakan=0 and status_kembali_ke_gudang=0 and barang_gudang_id=" . $json[$i]['idd'] . ""));
-                                    echo $stok_total; ?></td>
+                                    $stok_total = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_gudang_detail where status_kirim=0 and status_kerusakan=0 and status_kembali_ke_gudang=0 and barang_gudang_id=" . $json[$i]['idd'] . ""));
+                                    echo $stok_total['jml']; ?></td>
                 <td align="center"><?php
                                     $stok_po1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual) as stok_po from barang_dijual_qty where barang_gudang_id=" . $json[$i]['idd'] . ""));
-                                    $stok_po2 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_dijual_qty where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty.id=barang_dikirim_detail.barang_dijual_qty_id and barang_dijual_qty.barang_gudang_id=" . $json[$i]['idd'] . ""));
-                                    if ($stok_po1['stok_po'] - $stok_po2 != 0) {
-                                        echo $stok_po1['stok_po'] - $stok_po2;
+                                    $stok_po2 = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail,barang_gudang_detail,barang_dijual_qty where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty.id=barang_dikirim_detail.barang_dijual_qty_id and barang_dijual_qty.barang_gudang_id=" . $json[$i]['idd'] . ""));
+                                    if ($stok_po1['stok_po'] - $stok_po2['jml'] != 0) {
+                                        echo $stok_po1['stok_po'] - $stok_po2['jml'];
                                     }
                                     ?>
-                    <?php if ($stok_total - ($stok_po1['stok_po'] - $stok_po2) <= 0) {
+                    <?php if ($stok_total['jml'] - ($stok_po1['stok_po'] - $stok_po2['jml']) <= 0) {
                         $color = "red";
                     } else {
                         $color = "";
@@ -97,29 +99,29 @@ $jml2 = $file2;
                 </td>
 
                 <td style="background-color:<?php echo $color; ?>"><?php
-                                                                    echo $stok_total - ($stok_po1['stok_po'] - $stok_po2);
+                                                                    echo $stok_total['jml'] - ($stok_po1['stok_po'] - $stok_po2['jml']);
                                                                     ?></td>
                 <td align="center"><?php
-                                    $cek_stok1 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kirim=1 and barang_gudang_id=" . $json[$i]['idd'] . ""));
-                                    if ($cek_stok1 != 0) {
-                                        echo $cek_stok1;
+                                    $cek_stok1 = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_gudang_detail where status_kirim=1 and barang_gudang_id=" . $json[$i]['idd'] . ""));
+                                    if ($cek_stok1['jml'] != 0) {
+                                        echo $cek_stok1['jml'];
                                     } else {
                                         echo "-";
                                     } ?></td>
                 <td align="center">
                     <?php
-                    $cek_stok2 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where status_kerusakan=1 and barang_gudang_id=" . $json[$i]['idd'] . ""));
-                    if ($cek_stok2 != 0) {
-                        echo $cek_stok2;
+                    $cek_stok2 = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_gudang_detail where status_kerusakan=1 and barang_gudang_id=" . $json[$i]['idd'] . ""));
+                    if ($cek_stok2['jml'] != 0) {
+                        echo $cek_stok2['jml'];
                     } else {
                         echo "-";
                     } ?>
                 </td>
                 <td align="center"><?php
                                     $cek_stok_demo = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty) as total_demo from barang_demo_qty where barang_gudang_id=" . $json[$i]['idd'] . ""));
-                                    $cek_stok_kembali = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_demo_kirim_detail,barang_gudang_detail,barang_demo_kembali where barang_demo_kirim_detail.id=barang_demo_kembali.barang_demo_kirim_detail_id and barang_gudang_detail.id=barang_demo_kirim_detail.barang_gudang_detail_id and barang_gudang_id=" . $json[$i]['idd'] . ""));
-                                    if ($cek_stok_demo['total_demo'] - $cek_stok_kembali != 0) {
-                                        echo $cek_stok_demo['total_demo'] - $cek_stok_kembali;
+                                    $cek_stok_kembali = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_demo_kirim_detail,barang_gudang_detail,barang_demo_kembali where barang_demo_kirim_detail.id=barang_demo_kembali.barang_demo_kirim_detail_id and barang_gudang_detail.id=barang_demo_kirim_detail.barang_gudang_detail_id and barang_gudang_id=" . $json[$i]['idd'] . ""));
+                                    if ($cek_stok_demo['total_demo'] - $cek_stok_kembali['jml'] != 0) {
+                                        echo $cek_stok_demo['total_demo'] - $cek_stok_kembali['jml'];
                                     } else {
                                         echo "-";
                                     } ?></td>
@@ -226,109 +228,6 @@ $jml2 = $file2;
                     <?php } ?>
                 </td>
             </tr>
-            <div class="modal fade" id="modal-detailbarang<?php echo $json[$i]['idd']; ?>">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" align="center">Data Lengkap Alkes</h4>
-                        </div>
-                        <form method="post">
-                            <div class="modal-body">
-                                <p align="justify">
-                                    <?php
-                                    // $nm_brg = mysqli_fetch_array(mysqli_query($koneksi, "select nama_brg from barang_gudang where id=".$json[$i]['idd'].""));
-                                    echo "<b>Nama Barang :</b> <br/>" . $json[$i]['nama_brg']; ?>
-                                    <hr />
-                                    <?php echo "<b>NIE Barang :</b> <br/>" . $json[$i]['nie_brg']; ?>
-                                    <hr />
-
-                                    <?php echo "<b>Negara Asal :</b> <br/>" . $json[$i]['negara_asal']; ?>
-                                    <hr />
-                                    <?php
-                                    if ($json[$i]['jenis_barang'] == 1) {
-                                        $jb = "E-Katalog";
-                                    } else {
-                                        $jb = "Bukan E-Katalog";
-                                    }
-                                    echo "<b>Jenis Barang :</b> <br/>" . $jb; ?>
-                                    <hr />
-                                    <?php echo "<b>Deskripsi Alkes :</b> <br/>" . $json[$i]['deskripsi_alat']; ?>
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-
-            <div class="modal fade" id="barcode<?php echo $json[$i]['idd']; ?>">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" align="center">Jumlah QRCode Yang Ingin Di Cetak
-                                <br />
-                                "<?php echo $json[$i]['nama_brg']; ?>"
-                            </h4>
-                        </div>
-                        <form method="post" action="cetak_barcode_jenis.php" target="_blank">
-                            <div class="modal-body">
-                                <p align="justify">
-                                    <input type="hidden" name="kode_barcode" value="<?php if ($json[$i]['kode_qrcode'] == '') {
-                                                                                        echo $json[$i]['nie_brg'];
-                                                                                    } else {
-                                                                                        echo $json[$i]['kode_qrcode'];
-                                                                                    } ?>" />
-                                    <input type="number" name="jml" class="form-control" placeholder="Jumlah QRCode Yang Ingin Di Cetak" />
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger" name="print_barcode"><i class="fa fa-print"></i> Print</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-
-            <div class="modal fade" id="buatbarcode<?php echo $json[$i]['idd']; ?>">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" align="center">Buat QRCode
-                                <br />
-                                "<?php echo $json[$i]['nama_brg']; ?>"
-                            </h4>
-                        </div>
-                        <form method="post" action="">
-                            <div class="modal-body">
-                                <p align="justify">
-                                    <input type="hidden" name="idd" value="<?php echo $json[$i]['idd'] ?>" />
-                                    <input type="text" name="kode_qrcode" class="form-control" value="<?php echo $json[$i]['kode_qrcode'] ?>" placeholder="Kode QRCode" />
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-info" name="simpan_qrcode"><i class="fa fa-save"></i> Simpan</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
         <?php } ?>
     </table>
 </div>

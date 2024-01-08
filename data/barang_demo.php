@@ -52,14 +52,13 @@ error_reporting(0);
                 <tr>
                     <th valign="top">No</th>
 
-                    <th valign="top">Tanggal Pinjam</th>
+                    <th valign="top">Tanggal_Pinjam</th>
                     <th valign="top">Supplier</th>
                     <th valign="top">Kegiatan</th>
-                    <th valign="top">Rumah Sakit/Dinas/Dll</th>
+                    <th valign="top">Rumah_Sakit/Dinas/Dll</th>
                     <th valign="top">Barang</th>
-                    <th valign="top">Sisa Kirim</th>
-
-                    <th valign="top"><strong>Estimasi Kembali</strong></th>
+                    <th valign="top">Sisa_Kirim</th>
+                    <th valign="top"><strong>Estimasi_Kembali</strong></th>
                     <th valign="top">Subdis</th>
                     <th valign="top">PIC</th>
 
@@ -143,34 +142,36 @@ error_reporting(0);
                       <a href="index.php?page=spi&id_tek=<?php echo $json[$i]['teknisi_id']; ?>#open_teknisi"><span data-toggle="tooltip" title="Detail Teknisi" class="fa fa-eye pull pull-left"></span></a>
                       </td>-->
                     <td align="center">
-                        <?php if ($json[$i]['status'] == 0) { ?>
-                            <!-- <a href="index.php?page=barang_demo&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
-                            <a href="#" onclick="hapus(<?php echo $json[$i]['idd']; ?>)">
-                            <button class="btn btn-xs btn-danger">
-                                <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                            </button>    
-                            </a>
-                            &nbsp;
-                            <a href="index.php?page=ubah_barang_demo&id_ubah=<?php echo $json[$i]['idd']; ?>">
-                            <button class="btn btn-xs btn-warning">
-                                <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                            </button>    
-                            </a>
-                            <br />
-                            <?php
-                            $q_cek = mysqli_query($koneksi, "select *,barang_demo_qty.id as id_det_jual from barang_demo_qty,barang_demo,barang_gudang where barang_demo.id=barang_demo_qty.barang_demo_id and barang_gudang.id=barang_demo_qty.barang_gudang_id and barang_demo_qty.barang_demo_id=" . $json[$i]['idd'] . "");
-                            $n_cek = 0;
-                            while ($d1 = mysqli_fetch_array($q_cek)) {
-                                $q4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_demo_kirim_detail where barang_demo_qty_id=" . $d1['id_det_jual'] . ""));
-                                $n_cek = $n_cek + $d1['qty'] - $q4;
-                            }
-                            if ($n_cek != 0) {
-                            ?>
-                                <a href="#" data-toggle="modal" data-target="#modal-kirim<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Kirim" class="label bg-green">Kirim</small></a>
-                            <?php  } ?>
-                        <?php } else {
-                            echo "Sudah Masuk Stok";
-                        } ?>
+                        <div class="row">
+                            <?php if ($json[$i]['status'] == 0) { ?>
+                                <!-- <a href="index.php?page=barang_demo&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
+                                <a href="javascript:void()" onclick="hapus(<?php echo $json[$i]['idd']; ?>)">
+                                    <button class="btn btn-xs btn-danger">
+                                        <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                                    </button>
+                                </a>
+                                &nbsp;
+                                <a href="index.php?page=ubah_barang_demo&id_ubah=<?php echo $json[$i]['idd']; ?>">
+                                    <button class="btn btn-xs btn-warning">
+                                        <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
+                                    </button>
+                                </a>
+                                <br />
+                                <?php
+                                $q_cek = mysqli_query($koneksi, "select *,barang_demo_qty.id as id_det_jual from barang_demo_qty,barang_demo,barang_gudang where barang_demo.id=barang_demo_qty.barang_demo_id and barang_gudang.id=barang_demo_qty.barang_gudang_id and barang_demo_qty.barang_demo_id=" . $json[$i]['idd'] . "");
+                                $n_cek = 0;
+                                while ($d1 = mysqli_fetch_array($q_cek)) {
+                                    $q4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_demo_kirim_detail where barang_demo_qty_id=" . $d1['id_det_jual'] . ""));
+                                    $n_cek = $n_cek + $d1['qty'] - $q4;
+                                }
+                                if ($n_cek != 0) {
+                                ?>
+                                    <a href="#" data-toggle="modal" data-target="#modal-kirim<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Kirim" class="label bg-green">Kirim</small></a>
+                                <?php  } ?>
+                            <?php } else {
+                                echo "Sudah Masuk Stok";
+                            } ?>
+                        </div>
                     </td>
                 </tr>
                 <div class="modal fade" id="modal-detailbarang<?php echo $json[$i]['idd']; ?>">

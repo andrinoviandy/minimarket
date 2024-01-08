@@ -41,9 +41,10 @@
             </a>
             <ul class="treeview-menu">
               <li class="<?php echo $pil1; ?>"><a href="index.php?page=pembelian_alkes" class=""><i class="fa fa-circle-o"></i> PO Dalam Negeri</a></li>
-              <li class="treeview <?php echo $pil2; ?>">
-                <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-                <a href="#" class=""><i class="fa fa-circle-o"></i> PO Luar Negeri
+              <li class="<?php echo $po_no_seri; ?>"><a href="index.php?page=pembelian_alkes2" class=""><i class="fa fa-circle-o"></i> PO Luar Negeri</a></li>
+              <!-- <li class="treeview <?php echo $pil2; ?>"> -->
+              <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+              <!-- <a href="#" class=""><i class="fa fa-circle-o"></i> PO Luar Negeri
                   <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
@@ -53,13 +54,13 @@
 
                   <li class="<?php echo $po_set; ?>"><a href="index.php?page=pembelian_alkes2_set" class=""><i class="fa fa-circle-o"></i> Alkes Ber Set</a></li>
                 </ul>
-              </li>
+              </li> -->
               <!--
                 <li class="<?php echo $admin_jual_alkes; ?>"><a href="index.php?page=admin_jual_alkes"><i class="fa fa-circle-o"></i> Admin Jual Alkes</a></li>-->
 
             </ul>
           </li>
-          <li class="treeview <?php echo $po_aksesoris; ?>">
+          <!-- <li class="treeview <?php echo $po_aksesoris; ?>">
             <a href="#"><i class="fa fa-cube"></i> <span class="">Pembelian Aksesoris</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -71,12 +72,11 @@
               </li>
               <li class="<?php echo $po_aksesoris2; ?>">
                 <a href="index.php?page=pembelian_akse2" class=""><i class="fa fa-circle-o"></i> PO Luar Negeri</a>
-              </li>
-              <!--
+              </li> -->
+          <!--
                 <li class="<?php echo $admin_jual_alkes; ?>"><a href="index.php?page=admin_jual_alkes"><i class="fa fa-circle-o"></i> Admin Jual Alkes</a></li>-->
-
-            </ul>
-          </li>
+          <!-- </ul>
+          </li> -->
           <li class="treeview <?php echo $po_inventory; ?>">
             <a href="#"><i class="fa fa-cube"></i> <span class="">Pembelian Inventory</span>
               <span class="pull-right-container">
@@ -103,16 +103,16 @@
             </a>
             <ul class="treeview-menu">
               <li class="<?php echo $list_barang1; ?>">
-                <a href="index.php?page=barang_masuk" class=""><i class="fa fa-circle-o"></i> Alkes Ber No Seri</a>
+                <a href="index.php?page=barang_masuk" class=""><i class="fa fa-circle-o"></i> Alkes</a>
               </li>
-              <li class="<?php echo $list_barang2; ?>">
+              <!-- <li class="<?php echo $list_barang2; ?>">
                 <a href="index.php?page=barang_set" class=""><i class="fa fa-circle-o"></i> Alkes Ber Set</a>
               </li>
               <li class="<?php echo $list_barang3; ?>">
                 <a href="index.php?page=aksesoris" class=""><i class="fa fa-circle-o"></i> Aksesoris</a>
-              </li>
+              </li> -->
               <li class="<?php echo $list_barang4; ?>">
-                <a href="index.php?page=barang_inventory" class=""><i class="fa fa-circle-o"></i> Barang Inventory</a>
+                <a href="index.php?page=barang_inventory" class=""><i class="fa fa-circle-o"></i> Inventory</a>
               </li>
             </ul>
           </li>
@@ -166,11 +166,15 @@
             </a>
             <ul class="treeview-menu">
               <li class="treeview <?php echo $dagang; ?>">
-                <a href="#"><i class="fa fa-circle-o"></i>Dagang<span class="pull-right-container">
+                <a href="#"><i class="fa fa-circle-o"></i>Alkes<span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span></a>
                 <ul class="treeview-menu">
-                  <li class="treeview <?php echo $utang_piutang1; ?>">
+                  <li class="<?php echo $utang; ?>"><a href="index.php?page=utang" class=""><i class="fa fa-circle-o"></i> Hutang</a></li>
+                  <li class="<?php echo $piutang; ?>">
+                    <a href="index.php?page=piutang" class=""><i class="fa fa-circle-o"></i> Piutang</a>
+                  </li>
+                  <!-- <li class="treeview <?php echo $utang_piutang1; ?>">
                     <a href="#"><i class="fa fa-circle-o"></i>Alkes Ber No Seri<span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                       </span></a>
@@ -202,7 +206,7 @@
                         <a href="index.php?page=piutang_aksesoris" class=""><i class="fa fa-circle-o"></i> Piutang</a>
                       </li>
                     </ul>
-                  </li>
+                  </li> -->
                 </ul>
               </li>
               <li class="treeview <?php echo $inventoris; ?>">
@@ -254,7 +258,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="treeview <?php echo $sub_act2_1_1; ?>">
+              <li class="<?php echo $sub_act2_1_1_0; ?>"><a href="index.php?page=barang_masuk" class=""><i class="fa fa-cube"></i> Alkes</a></li>
+              <!-- <li class="treeview <?php echo $sub_act2_1_1; ?>">
                 <a href="#"><i class="fa fa-cube"></i> <span class="">Alkes</span>
                   <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
@@ -267,7 +272,7 @@
                 </ul>
               </li>
 
-              <li class="<?php echo $sub_act2_1_2; ?>"> <a href="index.php?page=aksesoris"> <i class="fa fa-cube"></i> <span class="">Aksesoris</span> <span class="pull-right-container"> </span> </a> </li>
+              <li class="<?php echo $sub_act2_1_2; ?>"> <a href="index.php?page=aksesoris"> <i class="fa fa-cube"></i> <span class="">Aksesoris</span> <span class="pull-right-container"> </span> </a> </li> -->
               <li class="<?php echo $sub_act2_1_3; ?>"> <a href="index.php?page=barang_inventory"> <i class="fa fa-cube"></i> <span class="">Barang Inventory</span> <span class="pull-right-container"> </span> </a> </li>
               <!--
             <li class="<?php echo $sub_act2_1_3; ?>"> <a href="index.php?page=barang_set"> <i class="fa fa-cube"></i> <span class="">Barang Set</span> <span class="pull-right-container"> </span> </a> </li>
@@ -282,21 +287,20 @@
               </span>
             </a>
             <ul class="treeview-menu">
-
-              <li class="treeview <?php echo $pembelian1; ?>"> <a href="#"> <i class="fa fa-circle-o"></i> <span class=""> Alkes</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span> </a>
+              <li class="<?php echo $pembelian1_1; ?>"><a href="index.php?page=barang_gudang1" class=""><i class="fa fa-circle-o"></i> Alkes</a></li>
+              <!-- <li class="treeview <?php echo $pembelian1; ?>"> <a href="#"> <i class="fa fa-circle-o"></i> <span class=""> Alkes</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span> </a>
                 <ul class="treeview-menu">
                   <li class="<?php echo $pembelian1_1; ?>"><a href="index.php?page=barang_gudang1" class=""><i class="fa fa-circle-o"></i> Alkes Ber No Seri</a></li>
 
                   <li class="<?php echo $pembelian1_2; ?>"><a href="index.php?page=barang_set1" class=""><i class="fa fa-circle-o"></i> Alkes Ber Set</a></li>
                 </ul>
-              </li>
-              <li class="<?php echo $pembelian2; ?>">
-                <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-                <a href="index.php?page=aksesoris1" class=""><i class="fa fa-circle-o"></i> Aksesoris</a>
-              </li>
-              <li class="<?php echo $pembelian3; ?>">
-                <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-                <a href="index.php?page=barang_inventory1" class=""><i class="fa fa-circle-o"></i> Barang Inventory</a>
+              </li> -->
+              <!-- <li class="<?php echo $pembelian2; ?>"> -->
+              <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+              <!-- <a href="index.php?page=aksesoris1" class=""><i class="fa fa-circle-o"></i> Aksesoris</a> -->
+              <!-- </li> -->
+              <li class="<?php echo $pembelian3; ?>"><!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+                <a href="index.php?page=barang_inventory1" class=""><i class="fa fa-circle-o"></i> Inventory</a>
               </li>
 
             </ul>
@@ -305,20 +309,20 @@
               <i class="fa fa-cart-plus"></i>
               <span>Penjualan</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
             <ul class="treeview-menu">
-
-              <li class="treeview <?php echo $sub_act2_2; ?>"> <a href="#"> <i class="fa fa-circle-o"></i> <span class="">Penjualan Alkes</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span> </a>
+              <li class="<?php echo $sub_act2_2_1; ?>"><a href="index.php?page=jual_barang_uang" class=""><i class="fa fa-circle-o"></i> Alkes</a></li>
+              <!-- <li class="treeview <?php echo $sub_act2_2; ?>"> <a href="#"> <i class="fa fa-circle-o"></i> <span class="">Penjualan Alkes</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span> </a>
                 <ul class="treeview-menu">
                   <li class="<?php echo $sub_act2_2_1; ?>"><a href="index.php?page=jual_barang_uang" class=""><i class="fa fa-circle-o"></i> Alkes Ber No Seri</a></li>
 
                   <li class="<?php echo $sub_act2_2_2; ?>"><a href="index.php?page=penjualan_barang_set" class=""><i class="fa fa-circle-o"></i> Alkes Ber Set</a></li>
                 </ul>
-              </li>
-              <li class="<?php echo $sub_act2_3; ?>">
-                <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-                <a href="index.php?page=penjualan_aksesoris_uang" class=""><i class="fa fa-circle-o"></i> Penjualan Aksesoris</a>
-              </li>
+              </li> -->
+              <!-- <li class="<?php echo $sub_act2_3; ?>"> -->
+              <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+              <!-- <a href="index.php?page=penjualan_aksesoris_uang" class=""><i class="fa fa-circle-o"></i> Penjualan Aksesoris</a>
+              </li> -->
               <li class="<?php echo $sub_act2_4; ?>">
-                <a href="index.php?page=penjualan_inventory" class=""><i class="fa fa-circle-o"></i> Penjualan Bar. Inventory</a>
+                <a href="index.php?page=penjualan_inventory" class=""><i class="fa fa-circle-o"></i> Inventory</a>
               </li>
               <!--
                 <li class="<?php echo $sub_act2_4; ?>">
@@ -334,21 +338,20 @@
               </span>
             </a>
             <ul class="treeview-menu">
-
-              <li class="treeview <?php echo $kirim_barang_uang1; ?>"> <a href="#"> <i class="fa fa-circle-o"></i> <span class="">Pengiriman Alkes</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span> </a>
+              <li class="<?php echo $kirim_barang_uang1_1; ?>"><a href="index.php?page=kirim_barang" class=""><i class="fa fa-circle-o"></i> Alkes</a></li>
+              <!-- <li class="treeview <?php echo $kirim_barang_uang1; ?>"> <a href="#"> <i class="fa fa-circle-o"></i> <span class="">Pengiriman Alkes</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span> </a>
                 <ul class="treeview-menu">
                   <li class="<?php echo $kirim_barang_uang1_1; ?>"><a href="index.php?page=kirim_barang" class=""><i class="fa fa-circle-o"></i> Alkes Ber No Seri</a></li>
 
                   <li class="<?php echo $kirim_barang_uang1_2; ?>"><a href="index.php?page=kirim_barang_set" class=""><i class="fa fa-circle-o"></i> Alkes Ber Set</a></li>
                 </ul>
-              </li>
-              <li class="<?php echo $kirim_barang_uang2; ?>">
-                <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-                <a href="index.php?page=pengiriman_aksesoris" class=""><i class="fa fa-circle-o"></i> Pengiriman Aksesoris</a>
-              </li>
-              <li class="<?php echo $kirim_barang_uang3; ?>">
-                <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-                <a href="index.php?page=kirim_inventory_uang" class=""><i class="fa fa-circle-o"></i> Pengiriman Bar. Inventory</a>
+              </li> -->
+              <!-- <li class="<?php echo $kirim_barang_uang2; ?>"> -->
+              <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+              <!-- <a href="index.php?page=pengiriman_aksesoris" class=""><i class="fa fa-circle-o"></i> Pengiriman Aksesoris</a>
+              </li> -->
+              <li class="<?php echo $kirim_barang_uang3; ?>"><!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+                <a href="index.php?page=kirim_inventory_uang" class=""><i class="fa fa-circle-o"></i> Inventory</a>
               </li>
               <!--
                 <li class="<?php echo $kirim_barang_uang3; ?>"><a href="index.php?page=pengiriman_barang_set" class=""><i class="fa fa-circle-o"></i> Pengiriman Barang Set</a>
@@ -394,7 +397,7 @@
                 </li>
           </ul>
           </li>
-          <!--
+          
           <li>
           <a href="index.php?page=nota_debit">
             <i class="fa fa-flask"></i> <span>Nota Debit</span>

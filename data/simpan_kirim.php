@@ -9,7 +9,7 @@ if ($cek4 != 0) {
         $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_max from barang_dikirim"));
         $q = mysqli_query($koneksi, "select * from barang_dikirim_detail_hash where akun_id=" . $_SESSION['id'] . "");
         while ($d = mysqli_fetch_array($q)) {
-            $s = mysqli_query($koneksi, "insert into barang_dikirim_detail values('','" . $max['id_max'] . "','" . $d['barang_dijual_qty_id'] . "','" . $d['kategori_brg'] . "', '" . $d['barang_gudang_set_id'] . "', '" . $d['barang_gudang_satuan_id'] . "', '" . $d['barang_gudang_akse_id'] . "','" . $d['barang_gudang_detail_id'] . "','0','0')");
+            $s = mysqli_query($koneksi, "insert into barang_dikirim_detail values('','" . $max['id_max'] . "','" . $d['barang_dijual_qty_id'] . "','" . $d['jml_kirim'] . "','" . $d['kategori_brg'] . "', '" . $d['barang_gudang_set_id'] . "', '" . $d['barang_gudang_satuan_id'] . "', '" . $d['barang_gudang_akse_id'] . "','" . $d['barang_gudang_detail_id'] . "','0','0')");
             $up_stok = mysqli_query($koneksi, "update barang_gudang,barang_gudang_detail set stok_total=stok_total-1 where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=" . $d['barang_gudang_detail_id'] . "");
             $up_status = mysqli_query($koneksi, "update barang_gudang_detail set status_kirim=1 where id=" . $d['barang_gudang_detail_id'] . "");
         }

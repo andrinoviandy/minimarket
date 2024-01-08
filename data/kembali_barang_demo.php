@@ -1,7 +1,8 @@
 <?php
 include("../config/koneksi.php");
 include("../include/API.php");
-session_start()
+session_start();
+error_reporting(0);
 ?>
 <!DOCTYPE html>
 <html lang="en">

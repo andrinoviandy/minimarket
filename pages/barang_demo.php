@@ -15,41 +15,6 @@ if (isset($_POST['kirim_barang'])) {
 		</script>";
 }
 
-if (isset($_GET['id_hapus'])) {
-  $d1 = mysqli_query($koneksi, "delete from barang_demo_qty where barang_demo_id=" . $_GET['id_hapus'] . "");
-  $d2 = mysqli_query($koneksi, "delete from barang_demo where id=" . $_GET['id_hapus'] . "");
-  if ($d1 and $d2) {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-red',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Dihapus ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location = '?page=$_GET[page]'
-    })
-    </script>";
-  } else {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-red',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Tidak Dapat Dihapus ',
-      text: 'Kemungkinan Data Sedang Digunakan',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location = '?page=$_GET[page]'
-    })
-    </script>";
-  }
-}
-
 if (isset($_GET['id_ubah'])) {
   $sel = mysqli_query($koneksi, "select * from barang_demo_detail where barang_demo_id=" . $_GET['id_ubah'] . "");
   while ($d = mysqli_fetch_array($sel)) {
@@ -170,7 +135,19 @@ if (isset($_GET['id_ubah'])) {
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id;
+        // window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id;
+        $.post("data/hapus-barang-demo.php", {
+            id: id
+          },
+          function(data) {
+            if (data == 'S') {
+              alertHapus('S')
+              loadMore(load_flag, key, status_b)
+            } else {
+              alertCustom('F', 'Data Tidak Dapat Dihapus !', 'Data Sedang Digunakan');
+            }
+          }
+        );
       }
     })
   }

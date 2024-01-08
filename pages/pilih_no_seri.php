@@ -188,14 +188,27 @@
           function(data) {
             if (data == 'S') {
               showLoading(0);
-              alertSimpan('S');
-              window.location = 'index.php?page=kirim_barang';
+              Swal.fire({
+                customClass: {
+                  confirmButton: 'bg-green',
+                },
+                title: 'Data Berhasil Disimpan !',
+                text: '',
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location = 'index.php?page=kirim_barang';
+                }
+              })
             } else if (data == 'K') {
               showLoading(0);
               alertCustom('F', 'Data Masih Kosong !', 'Lengkapi Data Yang Ingin Dikirim')
             } else {
               showLoading(0);
-              alertCustom('F', 'Data Gagal Disimpan !', 'Tolong Hindari Penggunaan Tanda Petik Jika Ada Digunakan');
+              alertCustom('F', 'Data Gagal Disimpan !', 'Pastikan Data Sudah Terisi Semua Dan Tolong Hindari Penggunaan Tanda Petik Dalam Penginputan');
             }
           }
         );
@@ -326,7 +339,6 @@
           } else {
             var cek = data.split('&');
             if (cek[0]) {
-              alert(cek[1]);
               if (cek[0] == 'DEL') {
                 alertCustom('F', 'Stok Aksesoris\n' + cek[1] + '\nTidak Mencukupi !', '' + cek[2] + ', ' + cek[3]);
               } else {

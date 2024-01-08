@@ -162,18 +162,19 @@ if (isset($_POST['lapor'])) {
                     <td><?php echo $d['tipe_brg']; ?></td>
                     <td><?php echo $d['qty']; ?></td>
                     <td>
-                      <a href="#" onclick="hapus(<?php echo $d['idd']; ?>)">
-                        <button class="btn btn-xs btn-danger">
-                          <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                        </button>
-                      </a>
-                      &nbsp;
-                      <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $d['idd']; ?>">
-                        <button class="btn btn-xs btn-warning">
-                          <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                        </button>
-                      </a>
-
+                      <div class="row">
+                        <a href="#" onclick="hapus(<?php echo $d['idd']; ?>)">
+                          <button class="btn btn-xs btn-danger">
+                            <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                          </button>
+                        </a>
+                        &nbsp;
+                        <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $d['idd']; ?>">
+                          <button class="btn btn-xs btn-warning">
+                            <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
+                          </button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
 

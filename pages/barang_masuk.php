@@ -125,7 +125,6 @@ if (isset($_POST['simpan_qrcode'])) {
   <!-- /.content -->
 </div>
 
-
 <div class="modal fade" id="modal-pencarian">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -165,7 +164,40 @@ if (isset($_POST['simpan_qrcode'])) {
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="modal-detailbarang">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Data Lengkap Alkes</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="data-detail"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function modalDetailBarang(id) {
+    $('#modal-detailbarang').modal('show');
+    $.get("data/modal-barang-masuk.php", {id : id}, 
+      function (data) {
+       $('#data-detail').html(data); 
+      }
+    );
+  }
+
   function hapus(id) {
     Swal.fire({
       customClass: {
