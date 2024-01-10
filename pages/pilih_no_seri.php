@@ -285,7 +285,7 @@
     var metode_no_seri = check1 === true ? 'manual' : 'otomatis';
     var metode_rincian_no_seri = check2 === true ? 'asc' : 'desc';
     var mySelect = $('#id_akse').select2();
-
+    showLoading(1);
     if (kategori == 'Set') {
       let data = parseInt($('#jumlah_kirim').val());
       $.post("data/simpan_kirim_set.php", {
@@ -296,6 +296,7 @@
           metode2: metode_rincian_no_seri
         },
         function(data) {
+          showLoading(0);
           if (data == 'S') {
             $('#modal-pilihnoseri').modal('hide');
             mySelect.val("").trigger('change');
@@ -327,6 +328,7 @@
           metode2: metode_rincian_no_seri
         },
         function(data) {
+          showLoading(0);
           if (data == 'S') {
             $('#modal-pilihnoseri').modal('hide');
             mySelect.val("").trigger('change');
@@ -351,6 +353,7 @@
         }
       );
     } else if (kategori == 'Aksesoris') {
+      showLoading(0);
       let data = check1 === true ? $('#no_seri').val() : $('#jumlah_kirim').val();
       $.post("data/simpan_kirim_aksesoris.php", {
           kategori: 'Aksesoris',
@@ -382,17 +385,24 @@
         }
       );
     } else {
+      showLoading(0);
       alertCustom('F', 'Gagal Simpan !', 'Kategori Tidak Ditemukan')
     }
   }
 
+  function loading_no_seri() {
+    $.get("include/getLoading.php", function(data) {
+      $('#isi_no_seri').html(data);
+    });
+  }
+
   function ambilDataNoSeri(param) {
+    loading_no_seri();
     var kategori = param.split("-");
     var id_gudang = kategori[1];
     var id_qty = kategori[2];
     $('#simpanNoSeri').prop('disabled', false)
     if (kategori[0] == 'Set') {
-      loading_data('#isi_no_seri');
       $.get("data/isi_no_seri_set.php", {
           idd: id_gudang,
           id_qty: id_qty,
@@ -403,7 +413,6 @@
         }
       );
     } else if (kategori[0] == 'Satuan') {
-      loading_data('#isi_no_seri');
       $.get("data/isi_no_seri_satuan.php", {
           idd: id_gudang,
           id_qty: id_qty,
@@ -414,7 +423,6 @@
         }
       );
     } else if (kategori[0] == 'Aksesoris') {
-      loading_data('#isi_no_seri');
       $.get("data/isi_no_seri_akse.php", {
           idd: id_gudang,
           id_qty: id_qty,

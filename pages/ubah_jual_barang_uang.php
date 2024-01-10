@@ -978,8 +978,8 @@ if (isset($_POST['tambah_riwayat'])) {
     });
   }
 
-  async function getDataUmum(id) {
-    await $.get("data/jual_data_umum.php", {
+  function getDataUmum(id) {
+    $.get("data/jual_data_umum.php", {
         id: id
       },
       function(data) {
@@ -997,9 +997,9 @@ if (isset($_POST['tambah_riwayat'])) {
   }
 
   $(document).ready(function() {
-    loading_data('#isi_barang_jual');
+    // loading_data('#isi_barang_jual');
     reloadBarang('<?php echo $reload; ?>')
-    loading_data_umum();
+    // loading_data_umum();
     getDataUmum('<?php echo $_GET['id'] ?>')
   });
 </script>

@@ -1,52 +1,6 @@
 <?php
 include("include/API.php");
 
-if (isset($_GET['id_batal'])) {
-  $sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual where id=" . $_GET['id_batal'] . ""));
-  $cek = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang,utang_piutang_bayar where utang_piutang.id=utang_piutang_bayar.utang_piutang_id and no_faktur_no_po='" . $sel['no_po_jual'] . "'"));
-  if ($cek == 0) {
-    $del1 = mysqli_query($koneksi, "delete from barang_dijual_qty where barang_dijual_id='" . $_GET['id_batal'] . "'");
-    $del2 = mysqli_query($koneksi, "delete from barang_dijual where id='" . $_GET['id_batal'] . "'");
-    if ($del2) {
-      echo "<script type='text/javascript'>
-      window.location='index.php?page=jual_barang_uang';
-      alert('Berhasil di Dibatalkan !');
-      </script>";
-    } else {
-      echo "<script type='text/javascript'>alert('Maaf Data Tidak Dapat Di Hapus , Karena Sudah Ada Pengiriman atau Sudah Ada Pembayaran! Silakan Cek Data Pengiriman atau Data Piutang');
-		history.back();
-		</script>";
-    }
-  } else {
-    echo "<script type='text/javascript'>alert('Maaf Data Tidak Dapat Di Hapus , Karena Sudah Ada Pengiriman atau Sudah Ada Pembayaran! Silakan Cek Data Pengiriman atau Data Piutang');
-		history.back();
-		</script>";
-  }
-  /*$se = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual_detail where status_kirim=1 and barang_dijual_id=".$_GET['id_batal'].""));
-	if ($se!=0) {
-		echo "<script>alert('Data tidak dapat dibatalkan karena sudah dikirim ! Silakan batalkan proses kirim terlebih dahulu !');
-		window.location='index.php?page=jual_barang';
-		</script>";
-		}
-	else {
-		$sd = mysqli_query($koneksi, "select * from barang_dijual_detail where status_kirim=0 and barang_dijual_id=".$_GET['id_batal']."");
-		while ($da = mysqli_fetch_array($sd)) {
-			$upp=mysqli_query($koneksi, "update barang_gudang_detail,barang_gudang set stok_total=stok_total+1, status_terjual=0 where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=".$da['barang_gudang_detail_id']."");
-			}
-		if ($upp) {
-			mysqli_query($koneksi, "delete from barang_dijual_detail where barang_dijual_id=".$_GET['id_batal']."");
-			mysqli_query($koneksi, "delete from barang_dijual where id=".$_GET['id_batal']."");
-			echo "<script>alert('Pembatalan berhasil !');
-		window.location='index.php?page=jual_barang';
-		</script>";
-			}
-			else {
-				echo "<script>alert('Pembatalan Gagal !');
-		window.location='index.php?page=jual_barang';
-		</script>";
-				}
-		}*/
-}
 if (isset($_POST['pos'])) {
   $q = mysqli_query($koneksi, "select * from barang_dijual where id=" . $_GET['id'] . "");
   if ($q) {
@@ -295,7 +249,40 @@ if (isset($_POST['pos'])) {
 </div>
 
 <script>
+  function batalkanPenjualan(id) {
+    Swal.fire({
+      customClass: {
+        confirmButton: 'bg-red',
+        cancelButton: 'bg-white',
+      },
+      title: 'Yakin Akan Membatalkan Penjualan Ini ? ?',
+      text: 'Proses ini akan berhasil jika bagian gudang belum memilih no seri atau belum ada pembayaran di keuangan !',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya , Hapus',
+      cancelButtonText: 'Batal',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.post("data/batalkan-penjualan.php", {
+            id_batal: id
+          },
+          function(data) {
+            if (data == 'S') {
+              loadMore(load_flag, key, status_b)
+              alertCustom('S', 'Penjualan Berhasil Dibatalkan !', '')
+            } else if (data == 'TB') {
+              alertCustom('W', 'Penjualan Tidak Dapat Dibatalkan !', 'Karena Sudah Ada Pengiriman atau Sudah Ada Pembayaran! Silakan Cek Data Pengiriman atau Data Piutang')
+            } else {
+              alertCustom('А', 'Penjualan Gagal Dibatalkan !', '')
+            }
+          }
+        );
+      }
+    })
+  }
+
   function modalBarang(no_po) {
+    $('#modal-data-barang').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
     $('#modal-barang').modal('show');
     $.get("data/modal-barang-jual.php", {
         no_po_jual: no_po

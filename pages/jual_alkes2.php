@@ -54,7 +54,11 @@ if ($insert_pembeli) {
 if (isset($_POST['lapor'])) {
 	$jml = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual where no_po_jual='".$_POST['no_faktur']."'"));
 	if ($jml==0) {
-	mysqli_query($koneksi, "delete from barang_dijual_hash where akun_id=".$_SESSION['id']."");
+	$q = mysqli_query($koneksi, "select * from barang_dijual_qty_hash where akun_id=".$_SESSION['id']."");
+  while ($d = mysqli_fetch_array($q)) {
+    mysqli_query($koneksi, "delete from barang_dijual_qty_detail_hash where id=".$d['id']."");
+  }
+  mysqli_query($koneksi, "delete from barang_dijual_qty_hash where akun_id=".$_SESSION['id']."");
 	echo "<script type='text/javascript'>
 		window.location='index.php?page=simpan_jual_alkes2';
 		</script>";

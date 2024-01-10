@@ -76,7 +76,7 @@ error_reporting(0);
                     <th align="center">Status_Pengiriman</th>
                     <th align="center">Instalasi<br />Uji_Fungsi</th>
                     <?php if (!isset($_SESSION['adminmanajermarketing'])) { ?>
-                        <th align="center"><strong>Aksi</strong></th>
+                        <th align="center" style="padding-left: 20px; padding-right: 20px;"><strong>Aksi</strong></th>
                     <?php } ?>
                 </tr>
             </thead>
@@ -187,22 +187,23 @@ error_reporting(0);
                     </td>
                     <?php if (!isset($_SESSION['adminmanajermarketing'])) { ?>
                         <td align="center">
-                            <div class="row">
-                                <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator']) or isset($_SESSION['user_admin_keuangan']) && isset($_SESSION['pass_admin_keuangan'])) { ?>
-                                    <!--<a href="pages/delete_barang_jual.php?id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;-->
-                                    <?php if ($ttl['jml'] == 0) { ?>
+                            <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator']) or isset($_SESSION['user_admin_keuangan']) && isset($_SESSION['pass_admin_keuangan'])) { ?>
+                                <!--<a href="pages/delete_barang_jual.php?id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;-->
+                                <?php if ($ttl['jml'] == 0) { ?>
+                                    <div class="row">
                                         <a href="index.php?page=ubah_jual_barang_uang&id=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-warning">
                                             <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
                                         </a>&nbsp;
-                                        <a href="index.php?page=jual_barang_uang&id_batal=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Yakin Akan Membatalkan Penjualan Item Ini ? . Proses ini akan berhasil jika bagian gudang belum memilih no seri atau belum ada pembayaran di keuangan !')">
+                                        <!-- <a href="index.php?page=jual_barang_uang&id_batal=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Yakin Akan Membatalkan Penjualan Item Ini ? . Proses ini akan berhasil jika bagian gudang belum memilih no seri atau belum ada pembayaran di keuangan !')"> -->
+                                        <button class="btn btn-xs btn-danger" onclick="batalkanPenjualan('<?php echo $json[$i]['idd']; ?>')">
                                             <span data-toggle="tooltip" title="Batalkan Penjualan" class="fa fa-close"></span>
-                                        </a><br />
-                                    <?php } ?>
-                                    <?php } ?><?php if (!isset($_SESSION['user_admin_gudang'])) { ?>
-                                    <a target="blank" href="cetak_faktur_penjualan_uang.php?id=<?php echo $data_deal['idd']; ?>" class="btn btn-xs btn-primary">
-                                        <span data-toggle="tooltip" title="Cetak Faktur Penjualan" class="glyphicon glyphicon-print"></span></a>
+                                        </button>
+                                    </div>
                                 <?php } ?>
-                            </div>
+                                <?php } ?><?php if (!isset($_SESSION['user_admin_gudang'])) { ?>
+                                <a target="blank" href="cetak_faktur_penjualan_uang.php?id=<?php echo $data_deal['idd']; ?>" class="btn btn-xs btn-primary">
+                                    <span data-toggle="tooltip" title="Cetak Faktur Penjualan" class="glyphicon glyphicon-print"></span></a>
+                            <?php } ?>
                         </td>
                     <?php } ?>
                 </tr>

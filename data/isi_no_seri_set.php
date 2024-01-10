@@ -5,8 +5,8 @@ session_start();
 error_reporting(0);
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select tipe_brg, merk_brg from barang_gudang where id = $_GET[idd]"));
 $data_j = mysqli_fetch_array(mysqli_query($koneksi, "select qty_jual from barang_dijual_qty where id = $_GET[id_qty]"));
-$data_k = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(DISTINCT *) as jml from barang_dikirim_detail where barang_dijual_qty_id = $_GET[id_qty] and kategori_brg = 'Set'"));
-$data_hash = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim_detail_hash where barang_dijual_qty_id = $_GET[id_qty] and kategori_brg = 'Set'"));
+$data_k = mysqli_fetch_array(mysqli_query($koneksi, "select jml_kirim from barang_dikirim_detail where barang_dijual_qty_id = $_GET[id_qty] and kategori_brg = 'Set' LIMIT 1"));
+$data_hash = mysqli_fetch_array(mysqli_query($koneksi, "select jml_kirim from barang_dikirim_detail_hash where barang_dijual_qty_id = $_GET[id_qty] and kategori_brg = 'Set' LIMIT 1"));
 ?>
 <label>Kategori</label>
 <input id="kategori_brg" name="kategori_brg" class="form-control" type="text" placeholder="Kategori" value="<?php echo $_GET['kategori'] ?>" readonly />
@@ -22,7 +22,7 @@ $data_hash = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml f
     </div>
     <div class="col-lg-6">
         <label>Sisa Kirim</label>
-        <input id="sisa_kirim" name="sisa_kirim" class="form-control" type="number" value="<?php echo $data_j['qty_jual'] - $data_k['jml']-$data_hash['jml'] ?>" readonly />
+        <input id="sisa_kirim" name="sisa_kirim" class="form-control" type="number" value="<?php echo $data_j['qty_jual'] - $data_k['jml_kirim']-$data_hash['jml_kirim'] ?>" readonly />
     </div>
 </div>
 <br />

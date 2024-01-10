@@ -1,8 +1,7 @@
 <?php
 include("../config/koneksi.php");
 session_start();
-error_reporting(0);
-$metode1 = $_POST['metode1'];
+// error_reporting(0);
 $metode2 = $_POST['metode2'];
 $data = $_POST['data'];
 
@@ -66,9 +65,9 @@ while ($dt1 = mysqli_fetch_array($q1)) {
                 }
             }
         }
-        echo "S";
     } else {
         mysqli_query($koneksi, "delete from barang_dikirim_detail_hash where akun_id = $_SESSION[id] and barang_dijual_qty_id = $_POST[id_qty]");
         die('DEL&' . $cek['nm_brg'] . '&Tersedia : ' . $cek['jml'] . '&Akan Dikirim : ' . $dt1['jumlah']);
     }
 }
+echo "S";

@@ -40,7 +40,11 @@ if (isset($_POST['tambah_header'])) {
       } elseif ($_SESSION['status_po'] == 0) {
         $Result = mysqli_query($koneksi, "insert into utang_piutang values('','Piutang','" . $_SESSION['no_faktur'] . "','" . $_POST['tgl_input'] . "','" . $_POST['jatuh_tempo'] . "','0','" . $_POST['klien'] . "','" . $_POST['deskripsi'] . "','0')");
       }
-      mysqli_query($koneksi, "delete barang_dijual_qty_hash, barang_dijual_qty_detail_hash from barang_dijual_qty_hash JOIN barang_dijual_qty_detail_hash ON barang_dijual_qty_hash.id=barang_dijual_qty_detail_hash.barang_dijual_qty_hash_id where akun_id=" . $_SESSION['id'] . "");
+      $q = mysqli_query($koneksi, "select * from barang_dijual_qty_hash where akun_id=" . $_SESSION['id'] . "");
+      while ($d = mysqli_fetch_array($q)) {
+        mysqli_query($koneksi, "delete from barang_dijual_qty_detail_hash where id=" . $d['id'] . "");
+      }
+      mysqli_query($koneksi, "delete from barang_dijual_qty_hash where akun_id=" . $_SESSION['id'] . "");
       echo "<script type='text/javascript'>
 	          alert('Data Berhasil Di Simpan !');
 	          window.location='index.php?page=jual_barang_uang'</script>";
