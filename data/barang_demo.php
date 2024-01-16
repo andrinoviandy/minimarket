@@ -141,7 +141,7 @@ error_reporting(0);
                             echo $data_tek['nama_teknisi']; ?>
                       <a href="index.php?page=spi&id_tek=<?php echo $json[$i]['teknisi_id']; ?>#open_teknisi"><span data-toggle="tooltip" title="Detail Teknisi" class="fa fa-eye pull pull-left"></span></a>
                       </td>-->
-                    <td align="center">
+                    <td align="center" style="width: 7%;">
                         <div class="row">
                             <?php if ($json[$i]['status'] == 0) { ?>
                                 <!-- <a href="index.php?page=barang_demo&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->

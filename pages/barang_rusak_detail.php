@@ -1,59 +1,4 @@
 <?php
-if (isset($_POST['ubahuji'])) {
-  $u = mysqli_query($koneksi, "update barang_gudang_detail_rusak set teknisi_id='" . $_POST['id_teknisi'] . "' where id=$_POST[id_brg]");
-  if ($u) {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Disimpan ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(()=> {
-      window.location.href = '?page=barang_rusak_detail&id_gudang=$_GET[id_gudang]';
-    })
-    </script>";
-  }
-}
-
-if (isset($_GET['id_hapus'])) {
-  $se = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_gudang_detail_rusak where id=$_GET[id_hapus]"));
-  $up = mysqli_query($koneksi, "update barang_gudang_detail set status_kerusakan=0 where id=" . $se['barang_gudang_detail_id'] . "");
-  $up2 = mysqli_query($koneksi, "update barang_gudang_detail,barang_gudang set barang_gudang.stok_total=barang_gudang.stok_total+1 where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=" . $se['barang_gudang_detail_id'] . "");
-  $h = mysqli_query($koneksi, "delete from barang_gudang_detail_rusak where id=$_GET[id_hapus]");
-  if ($up and $up2 and $h) {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Dihapus ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(()=> {
-      window.location.href = '?page=barang_rusak_detail&id_gudang=$_GET[id_gudang]';
-    })
-    </script>";
-  } else {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-red',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Gagal Dihapus ',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    }),then(()=> {
-      window.location.href = '?page=barang_rusak_detail&id_gudang=$_GET[id_gudang]';
-    })
-    </script>";
-  }
-}
-
 if (isset($_POST['tambah_laporan'])) {
   $Result = mysqli_query($koneksi, "insert into alat_uji_detail values('','" . $_POST['id_akse'] . "','" . $_POST['soft_version'] . "','" . $_POST['tgl_garansi_habis'] . "','" . $_POST['tgl_i'] . "','" . $_POST['lampiran_i'] . "','" . $_POST['tgl_f'] . "','" . $_POST['lampiran_f'] . "','" . $_POST['keterangan'] . "')");
   if ($Result) {
@@ -226,22 +171,9 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center">Pilih Teknisi</h4>
       </div>
-      <form method="post">
+      <form method="post" onsubmit="ubahTeknisi(); return false;">
         <div class="modal-body">
-          <p align="justify">
-            <input type="hidden" name="id_brg" id="id_brg" />
-            <select name="id_teknisi" id="id_teknisi" class="form-control select2" style="width:100%">
-              <option value="">...</option>
-              <?php
-              $query_teknisi = mysqli_query($koneksi, "select * from tb_teknisi order by nama_teknisi ASC");
-              while ($data_t = mysqli_fetch_array($query_teknisi)) {
-              ?>
-                <option <?php if ($json[$i]['teknisi_id'] == $data_t['id']) {
-                          echo "selected";
-                        } ?> value="<?php echo $data_t['id']; ?>"><?php echo $data_t['nama_teknisi'] . " - " . $data_t['bidang']; ?></option>
-              <?php } ?>
-            </select>
-          </p>
+          <div id="data-teknisi"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -255,10 +187,32 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
 </div>
 
 <script>
+  function ubahTeknisi() {
+    $.post("data/ubah-teknisi-rusak.php", {
+        id: $('#id_brg').val(),
+        id_teknisi: $('#id_teknisi').val()
+      },
+      function(data) {
+        if (data == 'S') {
+          loadMore(load_flag, key, status_b)
+          $('#modal-teknisi').modal('hide');
+          alertSimpan('S');
+        } else {
+          alertSimpan('F');
+        }
+      }
+    );
+  }
+
   function pilihTeknisi(id, id_teknisi) {
-    document.getElementById("id_brg").value = id
-    document.getElementById("id_teknisi").value = id_teknisi;
-    $('#modal-teknisi').modal('show');
+    $.get("data/modal-teknisi.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-teknisi').html(data);
+        $('#modal-teknisi').modal('show');
+      }
+    );
   }
 
   function hapus(id_gudang, id_hapus) {
@@ -275,7 +229,18 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_gudang=' + id_gudang + '&id_hapus=' + id_hapus;
+        $.post("data/hapus-rusak-detail.php", {
+            id_hapus: id_hapus
+          },
+          function(data) {
+            if (data == 'S') {
+              loadMore(load_flag, key, status_b)
+              alertHapus('S');
+            } else {
+              alertHapus('F');
+            }
+          }
+        );
       }
     })
   }

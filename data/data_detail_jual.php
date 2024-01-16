@@ -3,6 +3,8 @@ include("../config/koneksi.php");
 session_start();
 error_reporting(0);
 ?>
+<input type="hidden" id="id_ubahh" value="<?php echo $_GET['id'] ?>">
+<input type="hidden" id="kategorii" value="<?php echo $_GET['kategori'] ?>">
 <div class="table-responsive no-padding">
     <table width="100%" id="example1" class="table table-bordered table-hover">
         <thead>
@@ -17,7 +19,7 @@ error_reporting(0);
         </thead>
         <?php
         // $q2 = mysqli_query($koneksi, "select *,barang_gudang_detail_set.id as idd from barang_gudang_detail_set, barang_gudang where barang_gudang.id=barang_gudang_detail_set.barang_gudang_id and barang_gudang_set_id=" . $_GET['id'] . " order by nama_brg ASC");
-        $q2 = mysqli_query($koneksi, "select count(*) over() as jml , nama_brg, harga_jual_saat_itu, jml_satuan, jml_total, barang_dijual_qty_id,barang_dijual_qty_detail.id as idd from barang_dijual_qty_detail, barang_gudang where barang_gudang.id=barang_dijual_qty_detail.barang_gudang_id and barang_dijual_qty_id=" . $_GET['id'] . " order by nama_brg ASC");
+        $q2 = mysqli_query($koneksi, "select count(*) over() as jml , nama_brg, harga_jual_saat_itu, jml_satuan, jml_total, barang_dijual_qty_id,barang_dijual_qty_detail.id as idd, barang_dijual_qty_detail.barang_gudang_id as id_gudang from barang_dijual_qty_detail, barang_gudang where barang_gudang.id=barang_dijual_qty_detail.barang_gudang_id and barang_dijual_qty_id=" . $_GET['id'] . " order by nama_brg ASC");
         $no = 0;
         while ($d = mysqli_fetch_array($q2)) {
             $no++;
@@ -27,11 +29,14 @@ error_reporting(0);
                 <td><?php echo $d['nama_brg']; ?></td>
                 <td><?php echo number_format($d['harga_jual_saat_itu'], 0, '.', ','); ?></td>
                 <td>
-                    <input type="number" class="form-control" value="<?php echo $d['jml_satuan']; ?>" id="qty_detail" style="width: 100px" />
+                <?php echo $d['jml_satuan']; ?>
+                    <!-- <input type="number" class="form-control" value="<?php echo $d['jml_satuan']; ?>" id="qty_detail" style="width: 100px" /> -->
                 </td>
                 <td><?php echo number_format($d['jml_total'], 0, '.', ','); ?></td>
                 <td>
-                    <button class="btn btn-xs btn-info" onclick="ubahQtyDetail('<?php echo $d['idd'] ?>','<?php echo $d['barang_dijual_qty_id'] ?>')"><i class="fa fa-edit"></i> Ubah</button>
+                    <!-- <button class="btn btn-xs btn-info" onclick="ubahQtyDetail('<?php echo $d['idd'] ?>','<?php echo $d['barang_dijual_qty_id'] ?>')"> -->
+                    <button class="btn btn-xs btn-info" onclick="modalUbahDetail('<?php echo $d['idd'] ?>','<?php echo $d['barang_dijual_qty_id'] ?>','<?php echo $_GET['kategori'] ?>', '<?php echo $d['jml_satuan']; ?>', '<?php echo $d['id_gudang']; ?>')">
+                    <i class="fa fa-edit"></i> Ubah</button>
                     <button class="btn btn-xs btn-danger" onclick="hapusQtyDetail('<?php echo $d['idd'] ?>','<?php echo $d['barang_dijual_qty_id'] ?>')"><i class="fa fa-edit"></i> Hapus</button>
                 </td>
             </tr>

@@ -225,6 +225,29 @@ if (isset($_POST['pos'])) {
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-cetak-faktur">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cetak Faktur</h4>
+      </div>
+      <div class="modal-body">
+        <a id="cetak_biasa" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Biasa</a>
+        <a id="cetak_ritel" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Ritel</a>
+        <a id="cetak_ekatalog" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> E-Katalog</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <div class="modal fade" id="modal-instalasi">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -249,6 +272,13 @@ if (isset($_POST['pos'])) {
 </div>
 
 <script>
+  function modalCetak(id) {
+    $('#cetak_biasa').prop('href', 'cetak_faktur_penjualan_uang.php?id=' + id)
+    $('#cetak_ritel').prop('href', 'cetak_faktur_penjualan_uang_ritel.php?id=' + id)
+    $('#cetak_ekatalog').prop('href', 'cetak_faktur_penjualan_uang_ekatalog.php?id=' + id)
+    $('#modal-cetak-faktur').modal('show');
+  }
+
   function batalkanPenjualan(id) {
     Swal.fire({
       customClass: {

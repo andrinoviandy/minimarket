@@ -49,7 +49,7 @@ $akse = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from b
         <?php
         for ($i = 0; $i < $jml; $i++) {
         ?>
-            <option <?php if ($json[$i]['selisih_hari'] < 0 && $json[$i]['tgl_expired'] != '0000-00-00') {echo "disabled";} ?> value="<?php echo $json[$i]['idd']; ?>"><?php echo $json[$i]['no_seri_brg']; 
+            <option <?php if ($json[$i]['selisih_hari'] < 0 && $json[$i]['tgl_expired'] != '0000-00-00') {echo "disabled";} ?> value="<?php echo $json[$i]['idd']; ?>"><?php echo $json[$i]['no_seri_brg']." (No. Loth : ".$json[$i]['no_lot'].")"; 
             if ($json[$i]['selisih_hari'] < 180 && $json[$i]['tgl_expired'] != '0000-00-00' && $json[$i]['selisih_hari'] >= 0) {
                 echo " @ Expired < 6 Bulan (".date('d/m/Y', strtotime($json[$i]['tgl_expired'])).")";
             } else {

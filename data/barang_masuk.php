@@ -30,19 +30,20 @@ $jml2 = $file2;
                 <th align="center">Kategori</th>
                 <th valign="top"><strong>Nama_Alkes</strong></th>
                 <th valign="top">Type/Merk</th>
-                <th valign="top">Detail Alkes</th>
-                <th>Jenis Barang</th>
-                <th align="center" valign="top"><strong>Stok Gudang</strong></th>
-                <th>Stok PO</th>
-                <th>Stok Sisa</th>
+                <th valign="top">Detail_Alkes</th>
+                <th>Jenis_Barang</th>
+                <td align="center"><strong>Stok PO Pembelian</strong></td>
+                <th align="center" valign="top"><strong>Stok_Gudang</strong></th>
+                <td align="center"><strong>Stok PO Penjualan</strong></td>
+                <th>Stok_Sisa</th>
                 <th align="center" valign="top">Terkirim</th>
                 <th align="center" valign="top">Rusak</th>
                 <th align="center" valign="top">Demo</th>
 
                 <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator']) or isset($_SESSION['user_admin_keuangan']) && isset($_SESSION['pass_admin_keuangan'])  or isset($_SESSION['user_manajer_keuangan']) && isset($_SESSION['pass_manajer_keuangan'])) { ?>
-                    <th align="center" valign="top"><strong>Harga Beli
+                    <th align="center" valign="top"><strong>Harga_Beli
                         </strong></th>
-                    <th align="center" valign="top"><strong>Harga Jual
+                    <th align="center" valign="top"><strong>Harga_Jual
                         </strong></th>
                 <?php } ?>
                 <th align="center" valign="top"><strong>Aksi</strong></th>
@@ -81,6 +82,9 @@ $jml2 = $file2;
                     }
                     ?>
                 </td>
+                <td align="center"><?php
+                                    $stok_beli = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_pesan_detail where barang_gudang_id=" . $json[$i]['idd'] . " and status_ke_stok = 0"));
+                                    echo $stok_beli['jml']; ?></td>
                 <td align="center"><?php
                                     $stok_total = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_gudang_detail where status_kirim=0 and status_kerusakan=0 and status_kembali_ke_gudang=0 and barang_gudang_id=" . $json[$i]['idd'] . ""));
                                     echo $stok_total['jml']; ?></td>

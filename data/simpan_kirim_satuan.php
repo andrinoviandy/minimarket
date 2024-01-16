@@ -1,11 +1,12 @@
 <?php
 include("../config/koneksi.php");
 session_start();
-error_reporting(0);
+// error_reporting(0);
 $metode1 = $_POST['metode1'];
 $metode2 = $_POST['metode2'];
 $data = $_POST['data'];
 if ($metode1 == 'manual') {
+    $jmll = count($data);
     $cek = 0;
     for ($i = 0; $i < count($data); $i++) {
         $dt = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail_hash where barang_gudang_detail_id = $data[$i]"));
@@ -27,25 +28,25 @@ if ($metode1 == 'manual') {
                         select count(*) as jml, '2' as idd from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and TIMESTAMPDIFF(DAY, NOW(), tgl_expired) > 180
                         union
                         select count(*) as jml, '3' as idd from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and TIMESTAMPDIFF(DAY, NOW(), tgl_expired) > 0");
-                        $jumlah = $dt['jumlah_satuan'];
+                        $jumlah = $dt['jml_satuan'];
                         while ($dt1 = mysqli_fetch_array($q2)) {
                             if ($dt1['jml'] >= $jumlah) {
                                 if ($dt1['idd'] == '1') {
-                                    $q2 = mysqli_query($koneksi, "select barang_gudang_detail.id from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and tgl_expired = '0000-00-00' order by barang_gudang_detail.id $metode2 limit $jumlah");
-                                    while ($dt2 = mysqli_fetch_array($q2)) {
-                                        $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','".count($data)."','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
+                                    $q22 = mysqli_query($koneksi, "select barang_gudang_detail.id from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and tgl_expired = '0000-00-00' order by barang_gudang_detail.id $metode2 limit $jumlah");
+                                    while ($dt2 = mysqli_fetch_array($q22)) {
+                                        $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','$jmll','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
                                     }
                                 }
                                 if ($dt1['idd'] == '2') {
                                     $q2 = mysqli_query($koneksi, "select barang_gudang_detail.id from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and TIMESTAMPDIFF(DAY, NOW(), tgl_expired) > 180 order by barang_gudang_detail.id $metode2 limit $jumlah");
                                     while ($dt2 = mysqli_fetch_array($q2)) {
-                                        $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','".count($data)."','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
+                                        $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','$jmll','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
                                     }
                                 }
                                 if ($dt1['idd'] == '3') {
                                     $q2 = mysqli_query($koneksi, "select barang_gudang_detail.id from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and TIMESTAMPDIFF(DAY, NOW(), tgl_expired) > 0 order by barang_gudang_detail.id $metode2 limit $jumlah");
                                     while ($dt2 = mysqli_fetch_array($q2)) {
-                                        $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','".count($data)."','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
+                                        $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','$jmll','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
                                     }
                                 }
                                 $jumlah = 0;
@@ -54,19 +55,19 @@ if ($metode1 == 'manual') {
                                     if ($dt1['idd'] == '1') {
                                         $q2 = mysqli_query($koneksi, "select barang_gudang_detail.id from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and tgl_expired = '0000-00-00' order by barang_gudang_detail.id $metode2 limit $dt1[jml]");
                                         while ($dt2 = mysqli_fetch_array($q2)) {
-                                            $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','".count($data)."','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
+                                            $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','$jmll','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
                                         }
                                     }
                                     if ($dt1['idd'] == '2') {
                                         $q2 = mysqli_query($koneksi, "select barang_gudang_detail.id from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and TIMESTAMPDIFF(DAY, NOW(), tgl_expired) > 180 order by barang_gudang_detail.id $metode2 limit $dt1[jml]");
                                         while ($dt2 = mysqli_fetch_array($q2)) {
-                                            $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','".count($data)."''Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
+                                            $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','$jmll','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
                                         }
                                     }
                                     if ($dt1['idd'] == '3') {
                                         $q2 = mysqli_query($koneksi, "select barang_gudang_detail.id from barang_gudang_detail left join barang_dikirim_detail_hash on barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id where barang_gudang_id = $dt[barang_gudang_id] and status_kirim=0 and status_kerusakan=0 and status_demo=0 and akun_id IS NULL and TIMESTAMPDIFF(DAY, NOW(), tgl_expired) > 0 order by barang_gudang_detail.id $metode2 limit $dt1[jml]");
                                         while ($dt2 = mysqli_fetch_array($q2)) {
-                                            $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','".count($data)."','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
+                                            $simpan2 = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','$_SESSION[id]','$_POST[id_qty]','$jmll','Aksesoris','','$_POST[id_gudang]','$dt[barang_gudang_id]','$dt2[id]')");
                                         }
                                     }
                                     $jumlah = $jumlah - $dt1['jml'];

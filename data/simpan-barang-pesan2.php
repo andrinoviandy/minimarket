@@ -6,7 +6,7 @@ $ce = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_pesan_hash wh
 if ($ce != 0) {
     $max_id_princ = $_SESSION['id_princ'];
     $almat_peng = str_replace("\n", "<br>", $_SESSION['alamat_pengiriman']);
-    $simpan1 = mysqli_query($koneksi, "insert into barang_pesan values('','" . $_SESSION['tgl_po'] . "','" . $_SESSION['no_po'] . "','Dalam Negeri','$max_id_princ','" . $_SESSION['ppn'] . "','" . $_SESSION['cara_pembayaran'] . "','" . $_SESSION['mata_uang'] . "','" . $almat_peng . "','" . $_SESSION['jalur_pengiriman'] . "','" . $_SESSION['estimasi_pengiriman'] . "','" . $_SESSION['catatan'] . "','0','','" . $_POST['total_price'] . "','" . $_POST['total_price_ppn'] . "','" . $_POST['cost_byair'] . "','" . $_POST['cost_cf'] . "','','','')");
+    $simpan1 = mysqli_query($koneksi, "insert into barang_pesan values('','" . $_SESSION['tgl_po'] . "','" . $_SESSION['no_po'] . "','Luar Negeri','$max_id_princ','" . $_SESSION['ppn'] . "','" . $_SESSION['cara_pembayaran'] . "','" . $_SESSION['mata_uang'] . "','" . $almat_peng . "','" . $_SESSION['jalur_pengiriman'] . "','" . $_SESSION['estimasi_pengiriman'] . "','" . $_SESSION['catatan'] . "','0','','" . $_POST['total_price'] . "','" . $_POST['total_price_ppn'] . "','" . $_POST['cost_byair'] . "','" . $_POST['cost_cf'] . "','','','')");
     $d1 = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_pesan from barang_pesan"));
     $id_pesan = $d1['id_pesan'];
     //simpan barang pesan detail

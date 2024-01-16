@@ -1,70 +1,5 @@
 <?php
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,utang_piutang.id as idd from utang_piutang where utang_piutang.id=$_GET[id]"));
-
-if (isset($_POST['ubah_riwayat'])) {
-  $da = mysqli_fetch_array(mysqli_query($koneksi, "select *,buku_kas.id as id_coa from utang_piutang_bayar,buku_kas where buku_kas.id=utang_piutang_bayar.buku_kas_id and utang_piutang_bayar.id=$_POST[id_ubah]"));
-  //$up=mysqli_query($koneksi, "update buku_kas set saldo=saldo-$da[nominal] where buku_kas.id=$da[id_coa]");
-  //if ($up) {
-  $nom = str_replace(".", "", $_POST['nominal2']);
-  //$up2=mysqli_query($koneksi, "update buku_kas set saldo=saldo+$nom where buku_kas.id=$_POST[akun2]");
-  $up3 = mysqli_query($koneksi, "update utang_piutang_bayar set tgl_bayar='" . $_POST['tgl_input2'] . "', nominal='" . str_replace(".", "", $_POST['nominal2']) . "', deskripsi='" . $_POST['deskripsi2'] . "', buku_kas_id=" . $_POST['akun2'] . " where id=$_POST[id_ubah]");
-  $up4 = mysqli_query($koneksi, "update keuangan set tgl_transaksi='" . $_POST['tgl_input2'] . "', deskripsi='" . $_POST['deskripsi2'] . "', saldo='" . str_replace(".", "", $_POST['nominal2']) . "' where id=$da[keuangan_id]");
-  if ($up3 and $up4) {
-    $sel = mysqli_fetch_array(mysqli_query($koneksi, "select sum(nominal) as jumlah from utang_piutang_bayar where utang_piutang_id=$_GET[id]"));
-    $sl = mysqli_fetch_array(mysqli_query($koneksi, "select no_faktur_no_po from utang_piutang where id=$_GET[id]"));
-    if ($sel['jumlah'] >= $data['nominal']) {
-      mysqli_query($koneksi, "update utang_piutang set status_lunas=1 where id=$_GET[id]");
-      mysqli_query($koneksi, "update barang_pesan set status_lunas=1 where no_po_pesan='" . $sl['no_faktur_no_po'] . "'");
-    } else {
-      mysqli_query($koneksi, "update utang_piutang set status_lunas=0 where id=$_GET[id]");
-      mysqli_query($koneksi, "update barang_pesan set status_lunas=0 where no_po_pesan='" . $sl['no_faktur_no_po'] . "'");
-    }
-    //}
-    if ($up and $up2 and $up3) {
-      echo "<script type='text/javascript'>
-		alert('Perubahan Berhasil Disimpan !');
-		window.location='index.php?page=bayar_piutang&id=$_GET[id]'
-		</script>";
-    }
-  }
-}
-
-if (isset($_POST['tambah_header'])) {
-  $simpan1 = mysqli_query($koneksi, "insert into keuangan values('','" . $_POST['tgl_input'] . "','Pembayaran Piutang Alkes Ber No Seri','" . $_POST['deskripsi'] . "','" . str_replace(".", "", $_POST['nominal']) . "')");
-  $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_max from keuangan"));
-  $Result = mysqli_query($koneksi, "insert into utang_piutang_bayar values('','$max[id_max]','Piutang','$_GET[id]','" . $_POST['tgl_input'] . "','" . str_replace(".", "", $_POST['nominal']) . "','" . $_POST['deskripsi'] . "','" . $_POST['akun'] . "')");
-  $simpan2 = mysqli_query($koneksi, "insert into keuangan_detail values('','$max[id_max]','4','19','8','db')");
-  $simpan3 = mysqli_query($koneksi, "insert into keuangan_detail values('','$max[id_max]','1','2','22','db')");
-  $simpan4 = mysqli_query($koneksi, "insert into keuangan_detail values('','$max[id_max]','3','32','','db')");
-  if ($Result) {
-    $sel = mysqli_fetch_array(mysqli_query($koneksi, "select sum(nominal) as jumlah from utang_piutang_bayar where utang_piutang_id=$_GET[id]"));
-    $nom = str_replace(".", "", $_POST['nominal']);
-    //$up=mysqli_query($koneksi, "update buku_kas set saldo=saldo+$nom where buku_kas.id=$_POST[akun]");
-    if ($sel['jumlah'] >= $data['nominal']) {
-      mysqli_query($koneksi, "update utang_piutang,barang_dijual set utang_piutang.status_lunas=1,barang_dijual.status_lunas=1 where barang_dijual.no_po_jual=utang_piutang.no_faktur_no_po and utang_piutang.id=" . $_GET['id'] . "");
-    }
-    echo "<script type='text/javascript'>
-		alert('Pembayaran Berhasil Disimpan !');
-		window.location='index.php?page=bayar_piutang&id=$_GET[id]'
-		</script>";
-  }
-}
-if (isset($_GET['id_hapus'])) {
-  $sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from utang_piutang_bayar where id=$_GET[id_hapus]"));
-  //$up = mysqli_query($koneksi, "update utang_piutang_bayar,buku_kas,utang_piutang set saldo=saldo-$sel[nominal] where utang_piutang.id=utang_piutang_bayar.utang_piutang_id and buku_kas.id=utang_piutang_bayar.buku_kas_id and utang_piutang_bayar.buku_kas_id=".$sel['buku_kas_id']."");
-  //if ($up) { 
-  $de = mysqli_query($koneksi, "delete from utang_piutang_bayar where id=$_GET[id_hapus]");
-  $de2 = mysqli_query($koneksi, "delete from keuangan_detail where keuangan_id=$sel[keuangan_id]");
-  $de3 = mysqli_query($koneksi, "delete from keuangan where id=$sel[keuangan_id]");
-  if ($de and $de2 and $de3) {
-    $c = mysqli_fetch_array(mysqli_query($koneksi, "select sum(nominal) as jumlah from utang_piutang_bayar where utang_piutang_id=$_GET[id]"));
-    if ($c['jumlah'] < $data['nominal']) {
-      $up = mysqli_query($koneksi, "update utang_piutang,barang_pesan set utang_piutang.status_lunas=0,barang_pesan.status_lunas=0 where barang_pesan.no_po_pesan=utang_piutang.no_faktur_no_po and utang_piutang.id=$_GET[id]");
-    }
-  }
-  //}
-  echo "<script>window.location='index.php?page=bayar_piutang&id=$_GET[id]'</script>";
-}
 ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -90,9 +25,9 @@ if (isset($_GET['id_hapus'])) {
         <div class="box box-success"><!-- /.chat -->
           <div class="box-footer">
             <div class="box-body">
-              <a href="index.php?page=piutang"><button name="tambah_header" class="btn btn-success" type="button"> Kembali Ke Halaman Sebelumnya </button></a>
+              <a href="index.php?page=piutang"><button name="tambah_header" class="btn btn-success" type="button"> Kembali </button></a>
               <center>
-                <h3 class="box-title">Tambah Pembayaran</h3>
+                <h4 class="box-title">Pembayaran</h4>
               </center>
               <script type="text/javascript">
                 function yesnoCheck() {
@@ -101,7 +36,8 @@ if (isset($_GET['id_hapus'])) {
                   } else document.getElementById('ifYes').style.display = 'none';
                 }
               </script>
-              <form method="post">
+              <form method="post" id="formData" enctype="multipart/form-data" onsubmit="tambahPembayaran(); return false;">
+                <input name="id" value="<?php echo $_GET['id']; ?>" type="hidden">
                 <label>Tanggal</label>
                 <input name="tgl_input" class="form-control" type="date" placeholder="" required="required" value="<?php echo date('Y-m-d'); ?>"><br />
                 <?php
@@ -154,153 +90,9 @@ if (isset($_GET['id_hapus'])) {
               <h3 class="box-title">Detail Piutang</h3>
             </div>
             <div class="box-body">
-              <div class="table-responsive">
-                <table width="100%" id="" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td width="" align="center"><strong>Status</strong>
-                        </th>
-                      <th width="" valign="top">No PO</th>
-                      <th width="" valign="top">No_Kontrak</th>
-                      <th width="" valign="top">Barang</th>
-                      <th width="" valign="top"><strong>Tanggal</strong></th>
-                      <th width="" valign="top">Klien</th>
-                      <th width="" valign="top"><strong>Deskripsi</strong></th>
-                      <th width="" valign="top">Nominal</th>
-                      <th width="" valign="top">Detail</th>
-                      <!--<th valign="top">NIE</th>
-      <th valign="top">No. Bath</th>
-      <th valign="top">No. Lot</th>-->
-                    </tr>
-                  </thead>
-
-                  <?php if ($data['status_lunas'] == 0) {
-                    $b = "btn-danger";
-                  } else {
-                    $b = "btn-success";
-                  } ?>
-                  <tr>
-                    <td align="center" class="<?php echo $b; ?>"><?php if ($data['status_lunas'] == 0) {
-                                                                    echo "Belum Lunas";
-                                                                  } else {
-                                                                    echo "Sudah Lunas";
-                                                                  } ?></td>
-                    <td><?php echo $data['no_faktur_no_po']; ?></td>
-                    <td>
-                      <?php
-                      $dd = mysqli_fetch_array(mysqli_query($koneksi, "select no_kontrak from barang_dijual where no_po_jual='" . $data['no_faktur_no_po'] . "'"));
-                      echo $dd['no_kontrak']; ?>
-                    </td>
-                    <td>
-                      <a href="#" data-toggle="modal" data-target="#modal-detailpiutang<?php echo $data['idd']; ?>"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
-                    </td>
-                    <td>
-                      <?php echo date("d M Y", strtotime($data['tgl_input']));  ?><br />
-                      <font style="font-size:11px"><?php if ($data['jatuh_tempo'] != 0000 - 00 - 00) {
-                                                      echo "Jatuh Tempo : " . date("d M Y", strtotime($data['jatuh_tempo']));
-                                                    }  ?></font>
-                    </td>
-                    <td><?php echo $data['klien']; ?></td>
-
-                    <td><?php echo $data['deskripsi']; ?></td>
-                    <td><?php echo "Rp" . number_format($data['nominal'], 2, ',', '.'); ?><br />
-                      <font style="font-size:11px"><?php
-                                                    $to = mysqli_fetch_array(mysqli_query($koneksi, "select sum(nominal) as jumlah from utang_piutang_bayar where utang_piutang_id=$_GET[id]"));
-                                                    echo "Sisa Piutang : <br>Rp" . number_format($data['nominal'] - $to['jumlah'], 2, ',', '.'); ?></font>
-                    </td>
-                    <td><a href="#" data-toggle="modal" data-target="#modal-detail<?php echo $data['idd']; ?>"><small data-toggle="tooltip" title="Detail Hutang" class="label label-warning"><span class="fa fa-folder-open"></span></small></a></td>
-                    <!--<td></td>
-    <td><?php //echo $data['no_bath']; 
-        ?></td>
-    <td><?php //echo $data['no_lot']; 
-        ?></td>-->
-                    <?php if ($data['stok_total'] == 0) {
-                      $color = "red";
-                    } else {
-                      $color = "";
-                    } ?>
-                  </tr>
-
-                </table>
-              </div>
-              <h3 class="box-title" align="center">Riwayat Pembayaran</h3>
-              <div class="table-responsive">
-                <table width="100%" id="example1" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th width="" valign="top"><strong>Tanggal</strong></th>
-                      <th width="" valign="top">Nominal</th>
-                      <th width="" valign="top"><strong>Deskripsi</strong></th>
-                      <th width="" valign="top"> Akun</th>
-                      <th width="" valign="top">Aksi</th>
-                      <!--<th valign="top">NIE</th>
-      <th valign="top">No. Bath</th>
-      <th valign="top">No. Lot</th>-->
-                    </tr>
-                  </thead>
-                  <?php
-                  $q2 = mysqli_query($koneksi, "select *,utang_piutang_bayar.id as idd from utang_piutang_bayar,buku_kas where buku_kas.id=utang_piutang_bayar.buku_kas_id and utang_piutang_id=$_GET[id]");
-                  while ($d = mysqli_fetch_array($q2)) {
-                  ?>
-                    <tr>
-                      <td>
-                        <?php echo date("d M Y", strtotime($d['tgl_bayar']));  ?></td>
-                      <td><?php echo "Rp " . number_format($d['nominal'], 2, ',', '.'); ?>
-                      </td>
-
-                      <td><?php echo $d['deskripsi']; ?></td>
-                      <td><?php echo $d['nama_akun']; ?></td>
-                      <td><a href="index.php?page=bayar_piutang&id_hapus=<?php echo $d['idd']; ?>&id=<?php echo $_GET['id']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Riwayat Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;&nbsp;
-                        <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $d['idd']; ?>"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a>
-                      </td>
-                    </tr>
-                    <div class="modal fade" id="modal-ubah<?php echo $d['idd']; ?>">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" align="center">Ubah Pembayaran</h4>
-                          </div>
-                          <form method="post">
-                            <div class="modal-body">
-                              <p align="justify">
-                                <input type="hidden" name="id_ubah" value="<?php echo $d['idd']; ?>" />
-                                <label>Tanggal</label>
-                                <input name="tgl_input2" class="form-control" type="date" placeholder="" required="required" value="<?php echo $d['tgl_bayar']; ?>"><br />
-                                <label>Nominal</label>
-                                <input name="nominal2" class="form-control" type="text" placeholder="" required="required" value="<?php echo number_format($d['nominal'], 0, ',', '.'); ?>" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"><br />
-                                <label>Deskripsi</label>
-                                <textarea name="deskripsi2" class="form-control" rows="4" required="required"><?php echo $d['deskripsi']; ?></textarea>
-                                <br />
-
-                                <label>Akun</label>
-                                <select name="akun2" id="akun2" class="form-control select2" required style="width:100%">
-                                  <option value="">-- Pilih --</option>
-                                  <?php
-                                  $q = mysqli_query($koneksi, "select * from buku_kas order by no_akun ASC");
-                                  while ($d2 = mysqli_fetch_array($q)) {
-                                  ?>
-                                    <option <?php if ($d['buku_kas_id'] == $d2['id']) {
-                                              echo "selected";
-                                            } ?> value="<?php echo $d2['id']; ?>"><?php echo $d2['no_akun'] . " | &nbsp;&nbsp;" . $d2['nama_akun']; ?></option>
-                                  <?php } ?>
-                                </select><br />
-                              </p>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                              <button name="ubah_riwayat" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan </button>
-                            </div>
-                          </form>
-                        </div>
-                        <!-- /.modal-content -->
-                      </div>
-                      <!-- /.modal-dialog -->
-                    </div>
-                  <?php } ?>
-                </table>
-              </div>
+              <div id="header-piutang"></div>
+              <h4 class="box-title" align="center">Riwayat Pembayaran</h4>
+              <div id="riwayat-pembayaran"></div>
               <script type="text/javascript">
                 function yesnoCheck() {
                   if (document.getElementById('yesCheck').checked) {
@@ -338,7 +130,7 @@ if (isset($_GET['id_hapus'])) {
 <?php
 
 ?>
-<div id="openUbah" class="modalDialog">
+<!-- <div id="openUbah" class="modalDialog">
   <div>
     <a href="#" title="Close" class="close">X</a>
     <h3 align="center">Ubah Riwayat Pembayaran</h3>
@@ -369,7 +161,7 @@ if (isset($_GET['id_hapus'])) {
     </form>
 
   </div>
-</div>
+</div> -->
 <script src="jquery-1.10.2.min.js"></script>
 <script src="jquery.chained.min.js"></script>
 <script>
@@ -692,3 +484,151 @@ if (isset($_GET['id_hapus'])) {
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="modalUbah">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Ubah Pembayaran</h4>
+      </div>
+      <form method="post" onsubmit="ubahPembayaran(); return false;" id="formUbah">
+        <div class="modal-body">
+          <div id="modal-ubah"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="ubah_riwayat" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan </button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<script>
+  function loading() {
+    $.get("include/getLoading.php", function(data) {
+      $('#riwayat-pembayaran').html(data);
+    });
+  }
+
+  function modalUbah(id, id_ubah) {
+    $('#modalUbah').modal('show');
+    $.get("data/modal-ubah-piutang.php", {
+        id: id,
+        id_ubah: id_ubah
+      },
+      function(data) {
+        $('#modal-ubah').html(data);
+      }
+    );
+  }
+
+  function getHeader() {
+    $.get("data/header-piutang.php", {
+        id: '<?php echo $_GET['id']; ?>'
+      },
+      function(data) {
+        $('#header-piutang').html(data);
+      }
+    );
+  }
+
+  function getRiwayat() {
+    loading();
+    $.get("data/riwayat-pembayaran-piutang.php", {
+        id: '<?php echo $_GET['id']; ?>'
+      },
+      function(data) {
+        $('#riwayat-pembayaran').html(data);
+      }
+    );
+  }
+
+  function hapus(id_hapus) {
+    Swal.fire({
+      customClass: {
+        confirmButton: 'bg-red',
+        cancelButton: 'bg-white',
+      },
+      title: 'Anda Yakin Akan Menghapus Transaksi Ini ?',
+      text: 'Data Akan Dihapus Secara Permanen',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya , Hapus',
+      cancelButtonText: 'Batal',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.post("data/hapus-pembayaran-piutang.php", {
+            id: '<?php echo $_GET['id'] ?>',
+            id_hapus: id_hapus
+          },
+          function(data) {
+            if (data == 'S') {
+              getRiwayat();
+              getHeader();
+              alertHapus('S')
+            } else {
+              alertHapus('F')
+            }
+          }
+        );
+      }
+    })
+  }
+
+  function ubahPembayaran() {
+    var dataform = $('#formUbah')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/ubah-pembayaran-piutang.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modalUbah').modal('hide');
+          dataform.reset();
+          getRiwayat();
+          getHeader();
+          alertSimpan('S')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function tambahPembayaran() {
+    var dataform = $('#formData')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/simpan-pembayaran-piutang.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response == 'S') {
+          dataform.reset();
+          getRiwayat();
+          getHeader();
+          alertSimpan('S')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    getHeader();
+    getRiwayat();
+  });
+</script>

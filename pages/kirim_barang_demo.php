@@ -83,7 +83,7 @@ if (isset($_GET['id_hapus'])) {
           <div class="box-footer">
             <div class="box-body">
               <div class="">
-              <?php include "include/getInputSearch.php"; ?>
+                <?php include "include/getInputSearch.php"; ?>
                 <div id="table" style="margin-top: 10px;"></div>
                 <section class="col-lg-12">
                   <center>
@@ -175,7 +175,41 @@ $q = mysqli_fetch_array(mysqli_query($koneksi, "select * from pembeli,alamat_pro
   </div>
 </div>
 
+<div class="modal fade" id="modal-detailbarang">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Detail Barang</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="data-detailbarang"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function modalBarang(id) {
+    $.get("data/modal-barang-demo.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-detailbarang').html(data);
+        $('#modal-detailbarang').modal('show');
+      }
+    );
+  }
+
   function hapus(id) {
     Swal.fire({
       customClass: {

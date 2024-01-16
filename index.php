@@ -494,7 +494,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
 
                       </div>
                       <div class="pull-right">
-                        <a href="proses_logout.php" class="btn btn-default btn-flat" onclick="return confirm('Yakin Akan Keluar Dari Aplikasi ?')"><i class="fa fa-power-off"></i></a>
+                        <a href="javascript:void()" onclick="prosesLogout();" class="btn btn-default btn-flat"><i class="fa fa-power-off"></i></a>
                       </div>
                     </li>
                     </ul>
@@ -503,7 +503,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
                 <!-- Control Sidebar Toggle Button -->
                 <?php if (!isset($_SESSION['id_b'])) { ?>
                   <li>
-                    <a href="proses_logout.php" title="Logout" onclick="return confirm('Yakin Akan Keluar Dari Aplikasi ?')"><i class="fa fa-power-off"></i></a>
+                    <a href="javascript:void()" onclick="prosesLogout();" title="Logout"><i class="fa fa-power-off"></i></a>
                   </li>
                 <?php } ?>
             </ul>
@@ -879,6 +879,25 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
         loadMore(load_flag, key, status_b)
         // }, 500);
       });
+
+      function prosesLogout() {
+        Swal.fire({
+          customClass: {
+            confirmButton: 'bg-green',
+            cancelButton: 'bg-white',
+          },
+          title: 'Anda Yakin Ingin Keluar Dari Sistem ?',
+          text: 'Lanjutkan Dengan Pilih Ya',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Ya',
+          cancelButtonText: 'Batal',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = 'proses_logout.php';
+          }
+        })
+      }
     </script>
   </body>
 

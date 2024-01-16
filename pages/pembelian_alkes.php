@@ -61,7 +61,8 @@
 
         <!-- quick email widget -->
       </section>
-      <?php //include "include/header_pencarian.php"; ?>
+      <?php //include "include/header_pencarian.php"; 
+      ?>
       <div id="header_pencarian"></div>
       <section class="col-lg-12 connectedSortable">
         <!-- Custom tabs (Charts with tabs)-->
@@ -104,7 +105,110 @@
   </section>
   <!-- /.content -->
 </div>
+
+<div class="modal fade" id="modal-detailbarang">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Detail Barang</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="modal-barang-pesan"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-principle">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Data Principle</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="data-principle"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-pengiriman">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Data Pengiriman</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="data-pengiriman"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function modalPrinciple(id) {
+    $.get("data/modal-principle.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-principle').html(data);
+        $('#modal-principle').modal('show');
+      }
+    );
+  }
+
+  function modalPengiriman(id) {
+    $.get("data/modal-pengiriman.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-pengiriman').html(data);
+        $('#modal-pengiriman').modal('show')
+      }
+    );
+  }
+
+  function modalBarang(id) {
+    $.get("data/modal-barang-pesan.php", {
+        id: id
+      },
+      function(data) {
+        $('#modal-barang-pesan').html(data);
+        $('#modal-detailbarang').modal('show')
+      }
+    );
+  }
+
   function hapus(id) {
     Swal.fire({
       customClass: {
@@ -119,8 +223,10 @@
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        $.post("data/hapus-pembelian-alkes.php", {id_hapus: id},
-          function (data) {
+        $.post("data/hapus-pembelian-alkes.php", {
+            id_hapus: id
+          },
+          function(data) {
             if (data == 'S') {
               alertHapus('S');
               loadMore(load_flag, key, status_b);
@@ -132,6 +238,7 @@
       }
     })
   }
+
   function pulihkan(id) {
     Swal.fire({
       customClass: {
@@ -146,8 +253,10 @@
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        $.post("data/pulihkan-pembelian-alkes.php", {id_pulih: id},
-          function (data) {
+        $.post("data/pulihkan-pembelian-alkes.php", {
+            id_pulih: id
+          },
+          function(data) {
             if (data == 'S') {
               alertCustom('S', 'Berhasil Dipulihkan !', '');
               loadMore(load_flag, key, status_b);

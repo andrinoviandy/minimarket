@@ -83,12 +83,12 @@ error_reporting(0);
                         echo $tek['nama_teknisi']; ?></td>
                     <td align="center">
                         <!-- <a href="#" data-toggle="modal" data-target="#modal-teknisi<?php echo $json[$i]['idd']; ?>"> -->
-                        <a href="#" onclick="pilihTeknisi(<?php echo $json[$i]['idd']; ?>, <?php echo $tek['id']; ?>)">
+                        <a href="javascript:void()" onclick="pilihTeknisi(<?php echo $json[$i]['idd']; ?>, <?php echo $tek['id']; ?>)">
                             <small data-toggle="tooltip" title="Pilih Teknisi" class="label bg-green"> Pilih Teknisi</small>
                         </a>
                         <br />
                         <!-- <a href="index.php?page=barang_rusak_detail&id_hapus=<?php echo $json[$i]['idd']; ?>&id_gudang=<?php echo $_GET['id_gudang']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ? Aksi Ini Akan Membuat History Kerusakan Alkes Akan Terhapus Dan Status Alkes Menjadi Layak Untuk Dijual !')"> -->
-                        <a href="#" onclick="hapus(<?php echo $_GET['id_gudang']; ?>, <?php echo $json[$i]['idd']; ?>)">
+                        <a href="javascript:void()" onclick="hapus(<?php echo $_GET['id_gudang']; ?>, <?php echo $json[$i]['idd']; ?>)">
                             <button class="btn btn-xs btn-danger">
                                 <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
                             </button>

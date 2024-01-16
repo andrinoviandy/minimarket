@@ -166,7 +166,62 @@
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-ubahnoseri">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Ubah No Seri</h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" onsubmit="UbahNoSeri(); return false;">
+        <div class="modal-body">
+          <div id="ubah_no_seri"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" name="testing2">Simpan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function UbahNoSeri() {
+    let id_ubah = $('#id_ubah_ns').val();
+    let no_seri = $('#no_seri_ubah').val();
+    $.post("data/ubah-noseri-kirim.php", {
+        id: id_ubah,
+        no_seri: no_seri
+      },
+      function(data) {
+        if (data == 'S') {
+        $('#modal-ubahnoseri').modal('hide');
+          getDataBarang();
+          alertCustom('S', 'Perubahan Berhasil Disimpan !', '');
+        } else {
+          alertCustom('F', 'Perubahan Gagal Disimpan !', '');
+        }
+      }
+    );
+  }
+
+  function modalUbahNoSeri(id_hash, id_gudang) {
+    $.get("data/isi_no_seri.php", {
+        id_ubah: id_hash,
+        id_gudang: id_gudang
+      },
+      function(data) {
+        $('#ubah_no_seri').html(data);
+        $('#modal-ubahnoseri').modal('show');
+      }
+    );
+  }
+
   function simpanFix() {
     Swal.fire({
       customClass: {
@@ -324,7 +379,7 @@
           id_qty: id_qty,
           metode1: metode_no_seri,
           data: data,
-          jml_aksesoris: $('#jumlah_aksesoris').val(),
+          jml_aksesoris: $("#jumlah_aksesoris").val(),
           metode2: metode_rincian_no_seri
         },
         function(data) {
@@ -494,7 +549,7 @@
   }
 
   $(document).ready(function() {
-    loading_data('#data-barang');
+    // loading_data('#data-barang');
     getDataKirim();
     getDataBarang();
     $('#isi_no_seri').html('<center>Silakan Pilih Nama Barang !</center>');

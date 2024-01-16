@@ -201,8 +201,10 @@ error_reporting(0);
                                     </div>
                                 <?php } ?>
                                 <?php } ?><?php if (!isset($_SESSION['user_admin_gudang'])) { ?>
-                                <a target="blank" href="cetak_faktur_penjualan_uang.php?id=<?php echo $data_deal['idd']; ?>" class="btn btn-xs btn-primary">
-                                    <span data-toggle="tooltip" title="Cetak Faktur Penjualan" class="glyphicon glyphicon-print"></span></a>
+                                <!-- <a target="blank" href="cetak_faktur_penjualan_uang.php?id=<?php echo $data_deal['idd']; ?>" class="btn btn-xs btn-primary"> -->
+                                <a onclick="modalCetak('<?php echo $data_deal['idd']; ?>')" class="btn btn-xs btn-primary">
+                                    <span data-toggle="tooltip" title="Cetak Faktur Penjualan" class="glyphicon glyphicon-print"></span>
+                                </a>
                             <?php } ?>
                         </td>
                     <?php } ?>

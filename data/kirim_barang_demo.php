@@ -90,7 +90,9 @@ error_reporting(0);
                                 <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
                         <?php } else { ?>
-                            <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
+                            <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
+                            <a href="javascript:void()" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
+                            <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
                         <?php } ?>
                     </td>
                     <td><?php
@@ -147,45 +149,6 @@ error_reporting(0);
                         } ?>
                     </td>
                 </tr>
-                <div class="modal fade" id="modal-detailbarang<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" align="center">Detail Barang</h4>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <p align="justify">
-
-                                        <?php
-                                        $q = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_kembali,tipe_brg from barang_gudang,barang_gudang_detail,barang_demo_kirim_detail where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_demo_kirim_detail.barang_gudang_detail_id and barang_demo_kirim_id=" . $json[$i]['idd'] . "");
-                                        $n = 0;
-                                        while ($d1 = mysqli_fetch_array($q)) {
-                                            $n++;
-                                        ?>
-                                            <?php if ($d1['status_kembali'] == 1) { ?>
-                                                <font class="pull pull-right">Sudah Kembali</font>
-                                            <?php } ?>
-                                            <?php echo $n . ". " . $d1['nama_brg'] . "     |    "; ?></td>
-                                            <?php echo $d1['tipe_brg'] . "  |  " ?></td>
-                                            <?php echo $d1['no_seri_brg']; ?>
-                                            <hr />
-                                        <?php } ?>
-
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
 
                 <div class="modal fade" id="modal-pengiriman<?php echo $json[$i]['idd']; ?>">
                     <div class="modal-dialog">

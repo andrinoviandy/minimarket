@@ -16,13 +16,13 @@ error_reporting(0);
                 </strong></td>
             <td align="center" valign="bottom"><strong>NIE
                 </strong></td>
-            <td align="center" valign="bottom"><strong>No Seri</strong></td>
+            <td align="center" valign="bottom"><strong>No Seri / No Loth</strong></td>
             <td align="center" valign="bottom"><strong>Aksi</strong></td>
         </tr>
     </thead>
     <tbody>
         <?php
-        $q_akse = mysqli_query($koneksi, "select nama_brg, no_seri_brg, tipe_brg, merk_brg, nie_brg, barang_dikirim_detail_hash.id as idd, barang_dikirim_detail_hash.* from barang_dikirim_detail_hash, barang_gudang_detail, barang_gudang where barang_gudang.id = barang_gudang_detail.barang_gudang_id and  barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id and akun_id=" . $_SESSION['id'] . "");
+        $q_akse = mysqli_query($koneksi, "select nama_brg, no_seri_brg, no_lot, tipe_brg, merk_brg, nie_brg, barang_dikirim_detail_hash.id as idd, barang_dikirim_detail_hash.*, barang_gudang.id as id_gudang from barang_dikirim_detail_hash, barang_gudang_detail, barang_gudang where barang_gudang.id = barang_gudang_detail.barang_gudang_id and  barang_gudang_detail.id = barang_dikirim_detail_hash.barang_gudang_detail_id and akun_id=" . $_SESSION['id'] . "");
         $no = 0;
         while ($data = mysqli_fetch_array($q_akse)) {
             $no++;
@@ -49,15 +49,21 @@ error_reporting(0);
                 <td align="center"><?php echo $data['tipe_brg']; ?></td>
                 <td align="center"><?php echo $data['merk_brg']; ?></td>
                 <td align="center"><?php echo $data['nie_brg']; ?></td>
-                <td align="center"><?php echo $data['no_seri_brg']; ?></td>
+                <td align="center"><?php echo $data['no_seri_brg']."<br>No Loth : ".$data['no_lot']; ?></td>
                 <td align="center">
                     <!-- <a href="index.php?page=pilih_no_seri&id=<?php echo $_GET['id']; ?>&id_hapus=<?php echo $data['idd']; ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"> -->
                     <?php //if ($data['kategori_brg'] == 'Aksesoris' && $data['barang_gudang_satuan_id'] != 0) { ?>
                         <!-- Data Rincian -->
                     <?php //} else { ?>
-                        <a onclick="hapus('<?php echo $_GET['id']; ?>', '<?php echo $data['idd']; ?>')">
+                        <a href="javascript:void();" onclick="hapus('<?php echo $_GET['id']; ?>', '<?php echo $data['idd']; ?>')">
                             <button class="btn btn-xs btn-danger">
                                 <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                            </button>
+                        </a>
+                        &nbsp;
+                        <a href="javascript:void();" onclick="modalUbahNoSeri('<?php echo $data['idd']; ?>', '<?php echo $data['id_gudang']; ?>')">
+                            <button class="btn btn-xs btn-info">
+                                <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
                             </button>
                         </a>
                     <?php // } ?>

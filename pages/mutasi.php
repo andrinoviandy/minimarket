@@ -129,7 +129,7 @@ if (isset($_POST['simpan_perubahan'])) {
                       <th><strong>Harga</strong></th>
                       <th>Diskon</th>
                       <th><strong>Total</strong></th>
-                      <th>#</th>
+                      <th>Status/Aksi</th>
                     </tr>
                   </thead>
                   <?php

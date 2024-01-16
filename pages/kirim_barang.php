@@ -192,8 +192,18 @@ if (isset($_POST['kirim_pengganti'])) {
         <h4 class="modal-title">Cetak Surat Jalan</h4>
       </div>
       <div class="modal-body">
-        <a id="cetak1" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Print</a>
-        <a id="cetak2" class="btn btn-app"><i class="fa fa-file-word-o"></i> Word</a>
+        <div class="row">
+          <div class="col-lg-6" style="text-align: center">
+            <center>Print</center><br>
+            <a id="cetak1" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Biasa</a>
+            <a id="cetak1_reagent" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Reagent</a>
+          </div>
+          <div class="col-lg-6" style="text-align: center">
+            <center>Word</center><br>
+            <a id="cetak2" class="btn btn-app"><i class="fa fa-file-word-o"></i> Biasa</a>
+            <a id="cetak2_reagent" class="btn btn-app"><i class="fa fa-file-word-o"></i> Reagent</a>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -361,7 +371,9 @@ if (isset($_POST['kirim_pengganti'])) {
 <script>
   function modal_cetak_surat_jalan(id) {
     $('#cetak1').prop('href', 'cetak_surat_jalan.php?id=' + id)
+    $('#cetak1_reagent').prop('href', 'cetak_surat_jalan_reagent.php?id=' + id)
     $('#cetak2').prop('href', 'cetak_surat_jalan_word.php?id=' + id)
+    $('#cetak2_reagent').prop('href', 'cetak_surat_jalan_word_reagent.php?id=' + id)
     $('#modal-cetak-surat-jalan').modal('show');
   }
 
@@ -469,7 +481,7 @@ if (isset($_POST['kirim_pengganti'])) {
     })
   }
 
-  function hapus(id) {
+  function hapus(id, id_jual) {
     Swal.fire({
       customClass: {
         confirmButton: 'bg-red',
@@ -483,7 +495,8 @@ if (isset($_POST['kirim_pengganti'])) {
     }).then((result) => {
       if (result.isConfirmed) {
         $.post("data/hapus-kirim-barang.php", {
-            id_hapus: id
+            id_hapus: id,
+            id_jual: id_jual
           },
           function(data) {
             if (data == 'S') {

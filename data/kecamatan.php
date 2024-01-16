@@ -4,7 +4,7 @@ include("../config/koneksi.php");
 session_start();
 error_reporting(0);
 ?>
-<option value="">Pilih Kecamatan</option>
+<option value="all">Semua</option>
 <?php $q3 = mysqli_query($koneksi, "select *,alamat_kecamatan.id as idd from alamat_kecamatan where kabupaten_id = " . $_GET['kabupaten_id'] . " order by nama_kecamatan ASC");
 while ($row3 = mysqli_fetch_array($q3)) {
 ?>

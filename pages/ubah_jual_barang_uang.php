@@ -584,7 +584,17 @@ if (isset($_POST['tambah_riwayat'])) {
         </h4>
       </div>
       <div class="modal-body">
-        <div class="text-right" id="jumlah_set"></div>
+        <div class="rows">
+          <div class="pull pull-left">
+            <div class="text-left">
+              <button class="btn btn-sm btn-success" onclick="modalTambahDetail();"><i class="fa fa-plus"></i> Tambah</button>
+            </div>
+          </div>
+          <div class="pull pull-right">
+            <div class="text-right" id="jumlah_set"></div>
+          </div>
+        </div>
+        <br><br>
         <div id="data-detail-jual"></div>
       </div>
 
@@ -640,7 +650,148 @@ if (isset($_POST['tambah_riwayat'])) {
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-ubah-detail2" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center"><strong>Ubah Data Rincian</strong></h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" onsubmit="simpanUbahDetail(); return false;">
+        <div class="modal-body">
+          <input id="id_ubah_brg" type="hidden">
+          <input id="id_qty_brg" type="hidden">
+          <label>Nama Barang</label>
+          <div id="nama_barang3"></div>
+          <br />
+          <label>Qty</label>
+          <input id="qty_jual3" name="qty" class="form-control" type="number" placeholder="" size="2" />
+          <br />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="sasdas" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-tambah-detail" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center"><strong>Tambah Data Rincian</strong></h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" onsubmit="simpanTambahDetail(); return false;">
+        <div class="modal-body">
+          <input id="id_jual4" type="hidden">
+          <label>Nama Barang</label>
+          <div id="nama_barang4"></div>
+          <br />
+          <label>Qty</label>
+          <input id="qty_jual4" name="qty" class="form-control" type="number" placeholder="" size="2" />
+          <br />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="sasdas" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function simpanTambahDetail() {
+    $.post("data/simpan-detail-jual.php", {
+        id_gudang: $('#id_akse4').val(),
+        qty: $('#qty_jual4').val(),
+        id_jual: $('#id_jual4').val()
+      },
+      function(data) {
+        if (data == 'S') {
+          $.get("data/data_detail_jual.php", {
+              id: $('#id_jual4').val(),
+            },
+            function(data) {
+              $('#data-detail-jual').html(data);
+            }
+          );
+          $('#modal-tambah-detail').modal('hide');
+          alertSimpan('S')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    );
+  }
+
+  function simpanUbahDetail() {
+    $.post("data/ubah-detail-jual.php", {
+        id_gudang: $('#id_akse3').val(),
+        qty: $('#qty_jual3').val(),
+        id: $('#id_ubah_brg').val()
+      },
+      function(data) {
+        if (data == 'S') {
+          $.get("data/data_detail_jual.php", {
+              id: $('#id_qty_brg').val(),
+            },
+            function(data) {
+              $('#data-detail-jual').html(data);
+            }
+          );
+          $('#modal-ubah-detail2').modal('hide');
+          alertCustom('S', 'Perubahan Berhasil Disimpan !', '')
+        } else {
+          alertCustom('F', 'Perubahan Gagal Disimpan !', '')
+        }
+      }
+    );
+  }
+
+  function modalUbahDetail(id_ubah, id_qty, kategori, jml, id_gudang) {
+    $('#id_ubah_brg').val(id_ubah);
+    $('#id_qty_brg').val(id_qty);
+    $('#qty_jual3').val(jml);
+    $('#nama_barang3').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
+    $.get("data/get_nama_barang3.php", {
+        kategori: kategori == 'Set' ? 'Satuan' : 'Aksesoris',
+        id: id_gudang
+      },
+      function(data) {
+        $('#nama_barang3').html(data);
+      }
+    );
+    $('#modal-ubah-detail2').modal('show');
+  }
+
+  function modalTambahDetail() {
+    var id_jual = $('#id_ubahh').val();
+    $('#id_jual4').val(id_jual);
+    var kate = $('#kategorii').val();
+    $('#nama_barang4').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
+    $.get("data/get_nama_barang4.php", {
+        kategori: kate == 'Set' ? 'Satuan' : 'Aksesoris',
+        id_jual: id_jual
+      },
+      function(data) {
+        $('#nama_barang4').html(data);
+      }
+    );
+    $('#modal-tambah-detail').modal('show');
+  }
+
   function hapusRiwayat(id) {
     Swal.fire({
       customClass: {
@@ -696,11 +847,12 @@ if (isset($_POST['tambah_riwayat'])) {
       $('#jumlah_set').html('<font style="font-size:18px;">Jumlah : ' + jml_set + ' Set</font>');
     } else if (kategori == 'Satuan') {
       $('#detail-jual-title').html('Detail Rincian Aksesoris Barang Per Satuan');
-      $('#jumlah_set').html('<font style="font-size:18px;">Jumlah : ' + jml_set + '</font>');
+      $('#jumlah_set').html('<font style="font-size:18px;">Jumlah : ' + jml_set + ' Satuan</font>');
     }
     $.get("data/data_detail_jual.php", {
         id: id,
-        id_barang_jual: $('#id_pilih').val()
+        id_barang_jual: $('#id_pilih').val(),
+        kategori: kategori
       },
       function(data) {
         $('#data-detail-jual').html(data);

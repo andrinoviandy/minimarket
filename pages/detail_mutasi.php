@@ -155,17 +155,16 @@ if (isset($_POST['simpan_perubahan'])) {
                 </table>
               </div>
               <br />
-              <div style="width:50%">
+              <div style="width:100%">
                 <h3 align="center">Data Mutasi</h3>
               </div>
-              <div class="table-responsive" style="width:50%">
+              <div class="table-responsive" style="width:100%">
                 <table width="100%" id="example1" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <th><strong>Tanggal Masuk</strong></th>
                       <th>Stok Mutasi</th>
-
-                      <th align="center">#</th>
+                      <td align="center"><strong>Aksi</strong></td>
                     </tr>
                   </thead>
                   <?php

@@ -79,8 +79,9 @@ error_reporting(0);
                         </td>
                         <td><?php echo $json[$i]['no_po_pesan']; ?></td>
                         <td>
-                            <a href="#" data-toggle="modal" data-target="#modal-principle<?php echo $json[$i]['idd']; ?>">
-                                <button class="btn btn-info btn-xs">
+                            <!-- <a href="#" data-toggle="modal" data-target="#modal-principle<?php echo $json[$i]['idd']; ?>"> -->
+                            <a href="javascript:void()" onclick="modalPrinciple('<?php echo $json[$i]['principle_id']; ?>')">
+                                <button class="btn btn-primary btn-xs">
                                     <span class="fa fa-folder-open"></span>
                                 </button>
                             </a>
@@ -100,8 +101,9 @@ error_reporting(0);
                                     <hr style="margin:0px; border-top:1px double; width:100%" />
                                 <?php } ?>
                             <?php } else { ?>
-                                <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>">
-                                    <button class="btn btn-info btn-xs">
+                                <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
+                                <a href="javascript:void();" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
+                                    <button class="btn btn-primary btn-xs">
                                         <span class="fa fa-folder-open"></span>
                                     </button>
                                 </a>
@@ -110,8 +112,9 @@ error_reporting(0);
                         <td><?php echo $json[$i]['ppn'] . "%"; ?></td>
                         <td><?php echo $json[$i]['cara_pembayaran']; ?></td>
                         <td>
-                            <a href="#" data-toggle="modal" data-target="#modal-pengiriman<?php echo $json[$i]['idd']; ?>">
-                                <button class="btn btn-info btn-xs">
+                            <!-- <a href="#" data-toggle="modal" data-target="#modal-pengiriman<?php echo $json[$i]['idd']; ?>"> -->
+                            <a href="javascript:void()" onclick="modalPengiriman('<?php echo $json[$i]['idd']; ?>')">
+                                <button class="btn btn-primary btn-xs">
                                     <span class="fa fa-folder-open"></span>
                                 </button>
                             </a>
@@ -181,116 +184,6 @@ error_reporting(0);
                         <!-- /.modal-dialog -->
                     </div>
 
-                    <div class="modal fade" id="modal-detailbarang<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" align="center">Detail Barang</h4>
-                                </div>
-                                <form method="post">
-                                    <div class="modal-body">
-                                        <p align="justify">
-
-                                            <?php
-                                            $q = mysqli_query($koneksi, "select nama_brg,tipe_brg,qty,status_ke_stok from barang_pesan_detail,barang_gudang where barang_gudang.id=barang_pesan_detail.barang_gudang_id and barang_pesan_detail.barang_pesan_id=" . $json[$i]['idd'] . "");
-                                            $n = 0;
-                                            while ($d1 = mysqli_fetch_array($q)) {
-                                                $n++;
-                                            ?>
-                                                <?php if ($d1['status_ke_stok'] == 1) { ?>
-                                                    <font class="pull pull-right" size="+1"><span class="fa fa-share"></span></font>
-                                                <?php } ?>
-                                                <?php echo $n . ". " . $d1['nama_brg'] . "     |    "; ?></td>
-                                                <?php echo $d1['tipe_brg'] . "  |  " ?></td>
-                                                <?php echo $d1['qty'] . "  |  "; ?>
-
-                                                <hr />
-                                            <?php } ?>
-
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
-
-
-                    <div class="modal fade" id="modal-principle<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" align="center">Data Principle</h4>
-                                </div>
-                                <form method="post">
-                                    <div class="modal-body">
-                                        <p align="justify">
-                                            <?php
-                                            $sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from principle where id=" . $json[$i]['principle_id'] . ""));
-                                            echo "<b>Nama Principle :</b> <br/>" . $sel['nama_principle']; ?>
-                                            <hr />
-                                            <?php echo "<b>Alamat Principle :</b> <br/>" . $sel['alamat_principle']; ?>
-                                            <hr />
-                                            <?php echo "<b>Telepon Principle :</b> <br/>" . $sel['telp_principle']; ?>
-                                            <hr />
-                                            <?php echo "<b>Fax Principle :</b> <br/>" . $sel['fax_principle']; ?>
-                                            <hr />
-                                            <?php echo "<b>Attn Principle :</b> <br/>" . $sel['attn_principle']; ?>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
-
-                    <div class="modal fade" id="modal-pengiriman<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" align="center">Data Pengiriman</h4>
-                                </div>
-                                <form method="post">
-                                    <div class="modal-body">
-                                        <p align="justify">
-                                            <?php
-                                            echo "<b>Alamat Pengiriman :</b> <br/>" . $json[$i]['alamat_pengiriman']; ?>
-                                            <hr />
-                                            <?php echo "<b>Jalur Pengiriman :</b> <br/>" . $json[$i]['jalur_pengiriman']; ?>
-                                            <hr />
-                                            <?php echo "<b>Estimasi Pengiriman :</b> <br/>"; ?>
-                                            <?php
-                                            if ($json[$i]['estimasi_pengiriman'] != 0000 - 00 - 00) {
-                                                echo date("d/m/Y", strtotime($json[$i]['estimasi_pengiriman']));
-                                            } ?>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
                     <div class="modal fade" id="modal-cetak-po<?php echo $json[$i]['idd']; ?>">
                         <div class="modal-dialog">
                             <div class="modal-content">

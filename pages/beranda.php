@@ -111,52 +111,17 @@
               <div class="box-tools pull-right">
                 <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button> -->
-                <select class="form-control select2" id="tahun_now1" name="tahun_now1" onchange="areaChart(this.value)">
-                  <?php
-                  $q99 = mysqli_query($koneksi, "select DISTINCT year(tgl_jual) as thn, max(year(tgl_jual)) OVER() as maks_thn from barang_dijual group by year(tgl_jual) order by year(tgl_jual) ASC");
-                  $jm_99 = mysqli_fetch_array(mysqli_query($koneksi, "SELECT COUNT(*) as jml FROM `barang_dikirim` WHERE year(tgl_kirim) = year(NOW())"));
-                  $dd = mysqli_fetch_array($q99);
-                  while ($d = mysqli_fetch_array($q99)) {
-                  ?>
-                    <option <?php
-                            if (isset($_GET['thn'])) {
-                              if ($_GET['thn'] != 'all') {
-                                if ($_GET['thn'] == $d['thn']) {
-                                  echo "selected";
-                                }
-                              }
-                            } else {
-                              if (!isset($_GET['pilihan'])) {
-                                if (date('Y') == $d['thn']) {
-                                  echo "selected";
-                                }
-                              }
-                            }
-                            ?> value="<?php echo $d['thn']; ?>"><?php echo $d['thn']; ?></option>
-                  <?php } ?>
-                  <?php for ($i = (intval($dd['maks_thn']) + 1); $i <= intval(date('Y')); $i++) { ?>
-                    <option <?php
-                            if (isset($_GET['thn'])) {
-                              if ($_GET['thn'] != 'all') {
-                                if ($_GET['thn'] == $i) {
-                                  echo "selected";
-                                }
-                              }
-                            } else {
-                              if (!isset($_GET['pilihan'])) {
-                                if (date('Y') == $i) {
-                                  echo "selected";
-                                }
-                              }
-                            }
-                            ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                  <?php } ?>
-                </select>
+                <button class="btn btn-sm btn-primary" onclick="modalFilterPenjualan()"><i class="fa fa-cog"></i> Filter</button>
               </div>
+            </div>
+            <div class="box-header no-padding">
+              <center>
+                <div id="label-penjualan">Semua</div>
+              </center>
             </div>
             <div class="box-body">
               <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
+                <canvas id="areaChart" style="height:250px;"></canvas>
               </div>
             </div>
             <!-- /.box-body -->
@@ -170,48 +135,13 @@
               <div class="box-tools pull-right">
                 <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button> -->
-                <select class="form-control select2" id="tahun_now2" name="tahun_now2" onchange="barChart(this.value)">
-                  <?php
-                  $q99 = mysqli_query($koneksi, "select DISTINCT year(tgl_po_pesan) as thn, max(year(tgl_po_pesan)) OVER() as maks_thn from barang_pesan group by year(tgl_po_pesan) order by year(tgl_po_pesan) ASC");
-                  $jm_99 = mysqli_fetch_array(mysqli_query($koneksi, "SELECT COUNT(*) as jml FROM `barang_dikirim` WHERE year(tgl_kirim) = year(NOW())"));
-                  $dd = mysqli_fetch_array($q99);
-                  while ($d = mysqli_fetch_array($q99)) {
-                  ?>
-                    <option <?php
-                            if (isset($_GET['thn'])) {
-                              if ($_GET['thn'] != 'all') {
-                                if ($_GET['thn'] == $d['thn']) {
-                                  echo "selected";
-                                }
-                              }
-                            } else {
-                              if (!isset($_GET['pilihan'])) {
-                                if (date('Y') == $d['thn']) {
-                                  echo "selected";
-                                }
-                              }
-                            }
-                            ?> value="<?php echo $d['thn']; ?>"><?php echo $d['thn']; ?></option>
-                  <?php } ?>
-                  <?php for ($i = (intval($dd['maks_thn']) + 1); $i <= intval(date('Y')); $i++) { ?>
-                    <option <?php
-                            if (isset($_GET['thn'])) {
-                              if ($_GET['thn'] != 'all') {
-                                if ($_GET['thn'] == $i) {
-                                  echo "selected";
-                                }
-                              }
-                            } else {
-                              if (!isset($_GET['pilihan'])) {
-                                if (date('Y') == $i) {
-                                  echo "selected";
-                                }
-                              }
-                            }
-                            ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                  <?php } ?>
-                </select>
+                <button class="btn btn-sm btn-primary" onclick="modalFilterPembelian()"><i class="fa fa-cog"></i> Filter</button>
               </div>
+            </div>
+            <div class="box-header no-padding">
+              <center>
+                <div id="label-pembelian"><?php echo date('Y'); ?></div>
+              </center>
             </div>
             <div class="box-body">
               <div class="chart">
@@ -424,15 +354,109 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+<div class="modal fade" id="modal-filter-penjualan">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class=""></i> Filter Grafik Penjualan</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="post" id="formJual" enctype="multipart/form-data" onsubmit="areaChart(); return false;">
+        <div class="modal-body">
+          <div id="data-modal-jual"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="sasdas" class="btn btn-primary pull-right" type="submit"><span class="fa fa-cog"></span> Filter</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-filter-pembelian">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class=""></i> Filter Grafik Pembelian</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="post" id="formBeli" enctype="multipart/form-data" onsubmit="barChart(); return false;">
+        <div class="modal-body">
+          <div id="data-modal-beli"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="sasdas" class="btn btn-primary pull-right" type="submit"><span class="fa fa-cog"></span> Filter</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 <script>
-  async function areaChart(tahun) {
+  let prov = '',
+    kab = '',
+    kec = '',
+    thn = '';
+
+  function modalFilterPenjualan() {
+    $.get("data/modal-filter-penjualan.php",
+      function(data) {
+        $('#data-modal-jual').html(data);
+      }
+    );
+    $('#modal-filter-penjualan').modal('show')
+  }
+
+  function modalFilterPembelian() {
+    $.get("data/modal-filter-pembelian.php",
+      function(data) {
+        $('#data-modal-beli').html(data);
+      }
+    );
+    $('#modal-filter-pembelian').modal('show')
+  }
+
+  function loadingLine() {
+    $.get("include/getLoading.php", function(data) {
+      $('#areaChart').html(data);
+    });
+  }
+
+  function getParam(p, ka, ke, th) {
+    if (id != 'all') {
+      $.get("data/get-provinsi", {
+          id: id
+        },
+        function(data) {
+          prov = data
+        }
+      );
+    }
+  }
+
+  async function areaChart() {
+    loadingLine();
+    if (prov != '' || kab != '' || kec != '' || thn != '') {
+      $('#label-penjualan').html(prov + ', ' + kab + ', ' + kec + ' Tahun ' + thn);
+    }
     //--------------
     //- AREA CHART -
     //--------------
     let dataa;
     // Get context with jQuery - using jQuery's .get() method.
     await $.get("http://173.212.225.28/ALKES_2/json/beranda_penjualan.php", {
-        tahun: tahun
+        // tahun: tahun
+        provinsi: $('#provinsi1').val() != undefined ? $('#provinsi1').val() : 'all',
+        kabupaten: $('#kabupaten1').val(),
+        kecamatan: $('#kecamatan1').val(),
+        tahun: $('#tahun_now1').val() != undefined ? $('#tahun_now1').val() : new Date().getFullYear(),
       },
       function(data) {
         var dt = data.replace('[', '');
@@ -487,8 +511,6 @@
       datasetStroke: true,
       //Number - Pixel width of dataset stroke
       datasetStrokeWidth: 2,
-      //Boolean - Whether to fill the dataset with a color
-      datasetFill: true,
       //String - A legend template
       legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
       //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
@@ -496,18 +518,31 @@
       //Boolean - whether to make the chart responsive to window resizing
       responsive: false
     }
-
     //Create the line chart
+    areaChartOptions.datasetFill = true
     areaChart.Line(areaChartData, areaChartOptions)
+
+    $('#modal-filter-penjualan').modal('hide')
   }
 
-  async function barChart(tahun) {
+  function loadingBar() {
+    $.get("include/getLoading.php", function(data) {
+      $('#barChart').html(data);
+    });
+  }
+
+  async function barChart() {
+    loadingBar();
+    $('#label-pembelian').html($('#tahun_now2').val());
     //-------------
     //- BAR CHART -
     //-------------
     let dataa;
     await $.get("http://173.212.225.28/ALKES_2/json/beranda_pembelian.php", {
-        tahun: tahun
+        // provinsi: $('#provinsi2').val(),
+        // kabupaten: $('#kabupaten2').val(),
+        // kecamatan: $('#kecamatan2').val(),
+        tahun: $('#tahun_now2').val() != undefined ? $('#tahun_now2').val() : new Date().getFullYear(),
       },
       function(data) {
         var dt = data.replace('[', '');
@@ -562,12 +597,16 @@
     barChartOptions.datasetFill = true
     barChart.Bar(barChartData, barChartOptions)
 
+    $('#modal-filter-pembelian').modal('hide')
+
   }
 
   $(document).ready(function() {
     // setInterval(() => {
-    areaChart($('#tahun_now1').val());
-    barChart($('#tahun_now2').val());
+    // areaChart($('#tahun_now1').val());
+    // barChart($('#tahun_now2').val());
+    areaChart();
+    barChart();
     // }, 3500);
   });
 </script>

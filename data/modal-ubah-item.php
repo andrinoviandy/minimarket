@@ -5,7 +5,7 @@ session_start();
 // error_reporting(0);
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_gudang_detail where id = " . $_GET['id'] . ""));
 ?>
-<form method="post" enctype="multipart/form-data" onsubmit="ubahItem(); return false;">
+<form method="post" enctype="multipart/form-data" id="formUbah" onsubmit="ubahItem(); return false;">
     <div class="modal-body">
         <label>No. Bath</label>
         <input type="hidden" name="id_item" id="id_item" value="<?php echo $data['id'] ?>" />

@@ -355,27 +355,30 @@ if (isset($_POST['tambah_detail'])) {
   }
 
   function ubahItem() {
-    $.post("data/simpan_ubah_item.php", {
-        id_ubah: $('#id_item').val(),
-        no_bath: $('#no_bath').val(),
-        no_lot: $('#no_lot').val(),
-        no_seri: $('#no_seri').val(),
-        expired: $('#expired').val()
-      },
-      function(data) {
-        if (data == 'S') {
+    var dataform = $('#formUbah')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/simpan_ubah_item.php",
+      data: data,
+      enctype: 'multipart/form-data',
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function (response) {
+        if (response == 'S') {
           alertSimpan('S');
           $('#modal-ubah-item').modal('hide');
           loading();
           loadMore(load_flag, key, status_b)
-        } else if (data == 'SA') {
+        } else if (response == 'SA') {
           alertCustom('F', 'Tidak Dapat Dilanjutkan', 'No Seri Sudah Terdaftar !');
         } else {
           alertSimpan('F');
           $('#modal-ubah-item').modal('hide');
         }
       }
-    );
+    });
   }
 
   function modalUbahItem(id_ubah) {
