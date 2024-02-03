@@ -22,7 +22,7 @@ error_reporting(0);
         ?>
             <!-- <a href="?page=ubah_jual_barang_uang&id=<?php //echo $_GET['idd'] 
                                                             ?>&hapus_riwayat=<?php //echo $_GET['id']; 
-                                                                                                    ?>" class="pull-right" onclick="return confirm('Anda yakin akan menghapus Riwayat Ini ?')"> -->
+                                                                                ?>" class="pull-right" onclick="return confirm('Anda yakin akan menghapus Riwayat Ini ?')"> -->
             <button class="pull pull-right btn btn-danger" onclick="hapusRiwayat('<?php echo $_GET['id']; ?>')"><span data-toggle="tooltip" title="Hapus Riwayat" class="fa fa-close"></span> Hapus Riwayat Ini</button>
             <!-- </a> -->
         <?php } ?>
@@ -36,7 +36,7 @@ error_reporting(0);
                         <th valign="bottom"><strong>Nama Alkes</strong></th>
                         <th align="center" valign="bottom"><strong>Tipe
                             </strong></th>
-                        <th align="center" valign="bottom"><strong>Merk
+                        <th align="center" valign="bottom"><strong>Satuan
                             </strong></th>
                         <th align="center" valign="bottom"><strong>Harga Jual</strong></th>
                         <th align="center" valign="bottom"><strong>Qty</strong></th>
@@ -60,7 +60,13 @@ error_reporting(0);
                             <td align="left"><?php echo $data_akse['nama_brg']; ?>
                             </td>
                             <td align="left"><?php echo $data_akse['tipe_brg']; ?></td>
-                            <td align="left"><?php echo $data_akse['merk_brg']; ?></td>
+                            <td align="left"><?php echo $data_akse['satuan']; ?>
+                                <?php
+                                if ($data_akse['satuan_header'] != '') {
+                                    echo "<br>(" . $data_akse['jumlah_rincian_to_satuan'] . " " . $data_akse['satuan'] . "=1 " . $data_akse['satuan_header'].")";
+                                }
+                                ?>
+                            </td>
                             <td align="left"><?php echo "Rp" . number_format($data_akse['harga_jual_saat_itu'], 2, ',', '.'); ?></td>
                             <td align="center"><?php echo $data_akse['qty_jual']; ?></td>
                             <td align="right"><?php echo "Rp" . number_format($data_akse['harga_jual_saat_itu'] * $data_akse['qty_jual'], 2, ',', '.'); ?></td>
@@ -76,7 +82,7 @@ error_reporting(0);
                                             <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
                                         </a>
                                     <?php } ?>
-                                    <a class="btn btn-xs btn-warning" onclick="openUbah('<?php echo $dt['id']; ?>', '<?php echo $data_akse['idd']; ?>', '<?php echo $data_akse['qty_jual']; ?>')"><span data-toggle="tooltip" title="Ubah Qty" class="fa fa-edit"></span></a>
+                                    <a class="btn btn-xs btn-warning" onclick="openUbah('<?php echo $dt['id']; ?>', '<?php echo $data_akse['idd']; ?>', '<?php echo $data_akse['qty_jual']; ?>','<?php echo number_format($data_akse['harga_jual_saat_itu'],0,',','.'); ?>')"><span data-toggle="tooltip" title="Ubah Qty" class="fa fa-edit"></span></a>
                                     <?php if ($data_akse['kategori_brg'] !== 'Aksesoris') { ?>
                                         <br>
                                         <a class="btn btn-xs btn-info" onclick="openDetail('<?php echo $data_akse['idd']; ?>','<?php echo $data_akse['kategori_brg']; ?>', '<?php echo $data_akse['qty_jual']; ?>')"><span data-toggle="tooltip" title="Detail" class="fa fa-folder-open-o"></span></a>

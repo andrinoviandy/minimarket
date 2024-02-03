@@ -13,7 +13,7 @@ $q = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_kembali,tipe_brg
                 <th>Nama Barang</th>
                 <th>Tipe Barang</th>
                 <th>No Seri</th>
-                <th></th>
+                <th>Status</th>
             </tr>
         </thead>
         <?php
@@ -33,7 +33,7 @@ $q = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_kembali,tipe_brg
                 <td><?php echo $d1['no_seri_brg']; ?></td>
                 <td>
                     <?php if ($d1['status_kembali'] == 1) { ?>
-                        <small class="label bg-success pull pull-right">Sudah Kembali</small>
+                        <small class="label bg-green">Sudah Kembali</small>
                     <?php } ?>
                 </td>
             </tr>

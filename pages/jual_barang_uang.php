@@ -32,7 +32,7 @@ if (isset($_POST['pos'])) {
     <div class="row">
       <section class="col-lg-12">
         <div class="box box-body">
-          <?php if (isset($_SESSION['administrator']) or isset($_SESSION['adminkeuangan']) or isset($_SESSION['adminmanajerkeuangan'])) {
+          <?php if (isset($_SESSION['administrator']) or isset($_SESSION['adminkeuangan']) or isset($_SESSION['adminmanajerkeuangan']) or isset($_SESSION['adminpoluar'])) {
           ?>
             <div class="input-group pull pull-left col-xs-1" style="padding-right:10px">
               <a href="?page=jual_alkes2">

@@ -8,7 +8,7 @@ if (isset($_GET['simpan_barang']) == 1) {
       $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_max from barang_dikirim"));
       $q = mysqli_query($koneksi, "select * from barang_dikirim_detail_hash where akun_id=" . $_SESSION['id'] . "");
       while ($d = mysqli_fetch_array($q)) {
-        $s = mysqli_query($koneksi, "insert into barang_dikirim_detail values('','" . $max['id_max'] . "','" . $d['barang_dijual_qty_id'] . "','" . $d['barang_gudang_detail_id'] . "','0','0')");
+        $s = mysqli_query($koneksi, "insert into barang_dikirim_detail values('','" . $max['id_max'] . "','" . $d['barang_dijual_qty_id'] . "','" . $d['jml_kirim'] . "', '" . $d['kategori_brg'] . "','" . $d['barang_gudang_set_id'] . "', '" . $d['barang_gudang_satuan_id'] . "', '" . $d['barang_gudang_akse_id'] . "','" . $d['barang_gudang_detail_id'] . "','0','0')");
         $up_stok = mysqli_query($koneksi, "update barang_gudang,barang_gudang_detail set stok_total=stok_total-1 where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=" . $d['barang_gudang_detail_id'] . "");
         $up_status = mysqli_query($koneksi, "update barang_gudang_detail set status_kirim=1 where id=" . $d['barang_gudang_detail_id'] . "");
       }
@@ -35,7 +35,7 @@ if (isset($_GET['simpan_barang']) == 1) {
 if (isset($_POST['simpan_tambah_aksesoris'])) {
   $cek_no_seri = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail_hash where id=" . $_POST['barang_dikirim_detail_hash_id'] . ""));
   if ($cek_no_seri == 0) {
-    $simpan = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','" . $_SESSION['id'] . "','" . $_POST['barang_dijual_qty_id'] . "','','" . $_POST['no_seri'] . "','','','" . $_POST['no_seri'] . "')");
+    $simpan = mysqli_query($koneksi, "insert into barang_dikirim_detail_hash values('','" . $_SESSION['id'] . "','" . $_POST['barang_dijual_qty_id'] . "','" . $_POST['jml_kirim'] . "','" . $_POST['kategori_brg'] . "','" . $_POST['barang_gudang_set_id'] . "','" . $_POST['barang_gudang_satuan_id'] . "','" . $_POST['barang_gudang_akse_id'] . "','" . $_POST['no_seri'] . "')");
     if ($simpan) {
       echo "<script>window.location='index.php?page=pilih_no_seri_pengganti'</script>";
     }
@@ -199,6 +199,11 @@ if (isset($_GET['id_hapus'])) {
                                 <div class="modal-body">
                                   <input type="hidden" name="barang_dijual_qty_id" value="<?php echo $data_akse['barang_dijual_qty_id']; ?>" />
                                   <input type="hidden" name="barang_dikirim_detail_hash_id" value="<?php echo $data['idd']; ?>" />
+                                  <input type="hidden" name="jml_kirim" value="<?php echo $data['jml_kirim']; ?>" />
+                                  <input type="hidden" name="kategori_brg" value="<?php echo $data['kategori_brg']; ?>" />
+                                  <input type="hidden" name="barang_gudang_set_id" value="<?php echo $data['barang_gudang_set_id']; ?>" />
+                                  <input type="hidden" name="barang_gudang_satuan_id" value="<?php echo $data['barang_gudang_satuan_id']; ?>" />
+                                  <input type="hidden" name="barang_gudang_akse_id" value="<?php echo $data['barang_gudang_akse_id']; ?>" />
 
                                   <select name="no_seri" class="form-control select2" style="width:100%" required>
                                     <option value="">... Pilih No Seri ...</option>

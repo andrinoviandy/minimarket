@@ -131,46 +131,150 @@ header("Content-disposition: inline; filename=Surat Perintah Instalasi - $data[n
       </table>
       <br>
       Barang - barang yang di instalasi, sebagai berikut :<br><br>
-      <table width="100%" class="mytable">
+      <table width="100%" class="mytable" style="font-size:13px">
         <tr>
-          <td align="center"><strong>Item</strong></td>
-          <td align="center"><strong>Item Description</strong></td>
-          <td align="center"><strong>Qty</strong></td>
-          <td align="center"><strong>Rincian</strong></td>
+          <th align="center"><strong>No</strong></th>
+          <th align="center"><strong>Item</strong></th>
+          <th align="center" colspan="2"><strong>Item Description</strong></th>
+          <th align="center" width="12%"><strong>Qty</strong></th>
+          <th align="center" width="25%"><strong>Serial Number</strong></th>
         </tr>
         <?php
-        // $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $_GET['id_kirim'] . " group by nama_brg");
+        $no = 0;
+        // $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $id . "");
         $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, nama_brg, satuan, barang_gudang.kategori_brg from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $_GET['id_kirim'] . "");
-        while ($d = mysqli_fetch_array($q)) { ?>
+        while ($d = mysqli_fetch_array($q)) {
+          $no++;
+          $rincian_set = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id]) as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
+          $rincian_sat = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id] and kategori_brg != 'Satuan') as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
+        ?>
           <tr>
-            <td height="100%" align="center" valign="top">
-              <p><?php echo $d['tipe_brg']; ?></p>
-            </td>
-            <td valign="top"><?php echo $d['nama_brg']; ?></td>
+            <td align="center" valign="top"><?php echo $no; ?></td>
             <td align="center" valign="top">
-              <?php
-              // $jm = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$_GET[id_kirim] and barang_gudang.id=$d[id_gudang]"));
-              // $j_batal = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$_GET[id_kirim] and status_batal=1 and barang_gudang.id=$d[id_gudang]"));
-              $j_batal = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$_GET[id_kirim] and status_batal=1 and barang_dijual_qty_id=$d[barang_dijual_qty_id]"));
-              echo $d['jml_kirim'] . " " . $d['satuan'] . "<br>Batal : " . $j_batal; ?>
-              <!-- echo $jm . " " . $d['satuan'] . "<br>Batal : " . $j_batal; ?> -->
+              <?php echo $d['tipe_brg']; ?>
             </td>
-            <td align="center">
+            <td valign="top" colspan="2">
               <?php
-              if ($d['kategori_brg'] == 'Set') {
-                $rincian = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id]) as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
-                if ($rincian['jml'] > 0) {
-                  echo "Terlampir<br>" . $rincian['jmm'] . " Barang";
-                }
-              }
-              if ($d['kategori_brg'] == 'Satuan') {
-                $rincian = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id] and kategori_brg != 'Satuan') as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
-                if ($rincian['jml'] > 0) {
-                  echo "Terlampir<br>" . $rincian['jmm'] . " Aksesoris";
-                }
-              }
+              echo $d['nama_brg'];
               ?>
             </td>
+            <td align="center" valign="top">
+              <?php
+              $jm = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail,barang_gudang_detail where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]"));
+              // $j_batal = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$data2[id_kirim] and status_batal=1 and barang_gudang.id=$d[id_gudang]"));
+              echo $d['jml_kirim'] . " " . $d['satuan'] . "<br>";
+              // echo $jm['jml'] . " " . $d['satuan'] . "<br>";
+              // if ($j_batal !== 0) {
+              // echo "Batal : " . $j_batal;
+              // } 
+              ?>
+            </td>
+            <td align="center" valign="top">
+              <table class="mytable3">
+                <?php
+                if ($d['kategori_brg'] == 'Satuan') {
+                  $qq = mysqli_query($koneksi, "select barang_gudang.nama_brg, barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Satuan' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]");
+                  while ($dd = mysqli_fetch_array($qq)) {
+                    echo "<tr><td>-</td><td>" . $dd['no_seri_brg'] . "</td></tr>";
+                  }
+                }
+                if ($d['kategori_brg'] == 'Aksesoris') {
+                  $qq = mysqli_query($koneksi, "select barang_gudang.nama_brg, barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]");
+                  while ($dd = mysqli_fetch_array($qq)) {
+                    echo "<tr><td>-</td><td>" . $dd['no_seri_brg'] . "</td></tr>";
+                  }
+                }
+                ?>
+              </table>
+            </td>
+          </tr>
+          <?php
+          if ($d['kategori_brg'] == 'Set') {
+            if ($rincian_set['jml'] > 0) {
+          ?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td colspan="2">Kelengkapan :</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php
+              // $q3 = mysqli_query($koneksi, "select barang_gudang.nama_brg, barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Satuan' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]");
+              $q3 = mysqli_query($koneksi, "select distinct barang_gudang.nama_brg, barang_dikirim_detail.barang_gudang_satuan_id as id_detail, satuan from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Satuan' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]");
+              while ($d3 = mysqli_fetch_array($q3)) {
+              ?>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="noborder" width="5px" valign="top">-</td>
+                  <td valign="top"><?php echo $d3['nama_brg'] ?></td>
+                  <td align="center">
+                    <?php
+                    $q4 = mysqli_query($koneksi, "select barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id] and barang_dikirim_detail.barang_gudang_akse_id = $d3[id_detail]");
+                    echo mysqli_num_rows($q4) . " " . $d3['satuan'];
+                    ?>
+                  </td>
+                  <td align="center" valign="top">
+                    <table class="mytable3">
+                      <?php
+                      while ($d4 = mysqli_fetch_array($q4)) {
+                        echo "<tr><td>-</td><td>" . $d4['no_seri_brg'] . "</td></tr>";
+                      }
+                      ?>
+                    </table>
+                  </td>
+                </tr>
+              <?php
+              }
+            }
+          }
+          if ($d['kategori_brg'] == 'Satuan') {
+            if ($rincian_sat['jml'] > 0) {
+              ?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td colspan="2">Kelengkapan :</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php
+              // $q3 = mysqli_query($koneksi, "select barang_gudang.nama_brg, barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]");
+              $q3 = mysqli_query($koneksi, "select distinct barang_gudang.nama_brg, barang_dikirim_detail.barang_gudang_akse_id as id_detail, satuan from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]");
+              while ($d3 = mysqli_fetch_array($q3)) {
+              ?>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="noborder" width="5px" valign="top">-</td>
+                  <td valign="top"><?php echo $d3['nama_brg'] ?></td>
+                  <td align="center">
+                    <?php 
+                    $q4 = mysqli_query($koneksi, "select barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id] and barang_dikirim_detail.barang_gudang_akse_id = $d3[id_detail]");
+                    echo mysqli_num_rows($q4) . " " . $d3['satuan'];
+                    ?>
+                  </td>
+                  <td valign="top" align="center">
+                    <table class="mytable3">
+                      <?php
+                      while ($d4 = mysqli_fetch_array($q4)) {
+                        echo "<tr><td>-</td><td>".$d4['no_seri_brg'] . "</td></tr>";
+                      }
+                      ?>
+                    </table>
+                  </td>
+                </tr>
+              <?php } ?>
+            <?php } ?>
+          <?php } ?>
+          <tr class="bordered">
+            <td></td>
+            <td></td>
+            <td class="noborder" width="5px"></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         <?php } ?>
       </table>
@@ -213,81 +317,6 @@ header("Content-disposition: inline; filename=Surat Perintah Instalasi - $data[n
     </div>
     <div style="position:absolute; bottom:10px">
       1. Putih : Teknisi, 2. Merah : Teknisi, 3. Keuangan, 4. Hijau : Administrasi, 5. Biru : Copy Admin
-    </div>
-  </div>
-  <div style="page-break-before:always;">
-    <div id="container">
-      <div id="body">
-        <center>
-          <font size="+2" style="font-family:Arial, Helvetica, sans-serif"><b>RINCIAN</b></font>
-        </center><br>
-        <br>
-        <table width="100%" class="mytable" style="font-size:13px">
-          <tr>
-            <td align="center"><strong>Nama Barang</strong></td>
-            <td align="center"><strong>Kuantitas</strong></td>
-            <td align="center"><strong>Rincian</strong></td>
-            <td align="center"><strong>Nomor Seri</strong></td>
-          </tr>
-          <?php
-          // $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $id . "");
-          $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, nama_brg, satuan, barang_gudang.kategori_brg from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $id . "");
-          while ($d = mysqli_fetch_array($q)) { ?>
-            <tr>
-              <td valign="top"><?php echo $d['nama_brg']; ?></td>
-              <td align="center" valign="top">
-                <?php
-                $jm = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail,barang_gudang_detail where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id]"));
-                // $j_batal = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$data2[id_kirim] and status_batal=1 and barang_gudang.id=$d[id_gudang]"));
-                echo $d['jml_kirim'] . " " . $d['satuan'] . "<br>";
-                // if ($j_batal !== 0) {
-                // echo "Batal : " . $j_batal;
-                // } 
-                ?>
-              </td>
-              <td align="center" valign="top">
-                <?php
-                if ($d['kategori_brg'] == 'Set') {
-                  $rincian = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id]) as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
-                  if ($rincian['jml'] > 0) {
-                    echo "Terlampir<br>" . $rincian['jmm'] . " Barang";
-                  }
-                }
-                if ($d['kategori_brg'] == 'Satuan') {
-                  $rincian = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id] and kategori_brg != 'Satuan') as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
-                  if ($rincian['jml'] > 0) {
-                    echo "Terlampir<br>" . $rincian['jmm'] . " Aksesoris";
-                  }
-                }
-                ?>
-              </td>
-              <td style="padding: 0px;" align="center">
-                <table class="mytable2">
-                  <?php
-                  $q_rincian = mysqli_query($koneksi, "select no_seri_brg from barang_dikirim_detail left join barang_gudang_detail on barang_gudang_detail.id = barang_dikirim_detail.barang_gudang_detail_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]");
-                  $n = 0;
-                  while ($d_r = mysqli_fetch_array($q_rincian)) {
-                    $n++;
-                  ?>
-                    <tr>
-                      <td align="center" width="5%">
-                        <?php echo $n; ?>
-                      </td>
-                      <td align="center">
-                        <?php echo $d_r['no_seri_brg']; ?>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </table>
-
-              </td>
-            </tr>
-          <?php } ?>
-        </table>
-      </div>
-      <div id="footer">
-        1. Putih : Setelah ttd mohon kembalikan ke PT. Cipta Varia Kharisma Utama, 2. Merah : Expedisi, 3. Kuning Instansi, 4. Hijau : Gudang, 5. Biru : Admin, 6. Copy : Keuangan
-      </div>
     </div>
   </div>
 </body>

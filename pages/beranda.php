@@ -116,6 +116,10 @@
             </div>
             <div class="box-header no-padding">
               <center>
+                <input type="hidden" id="provinsii">
+                <input type="hidden" id="kabupatenn">
+                <input type="hidden" id="kecamatann">
+                <input type="hidden" id="tahunn">
                 <div id="label-penjualan">Semua</div>
               </center>
             </div>
@@ -400,11 +404,6 @@
   <!-- /.modal-dialog -->
 </div>
 <script>
-  let prov = '',
-    kab = '',
-    kec = '',
-    thn = '';
-
   function modalFilterPenjualan() {
     $.get("data/modal-filter-penjualan.php",
       function(data) {
@@ -441,10 +440,43 @@
     }
   }
 
+  function getProvinsi(id) {
+    $.get("data/getProvinsi.php", {id: id},
+      function (data) {
+        return data;
+      }
+    );
+  }
+
+  function getKabupaten(id) {
+    $.get("data/getKabupaten.php", {id: id},
+      function (data) {
+        return data;
+      }
+    );
+  }
+
+  function getKecamatan(id) {
+    $.get("data/getKecamatan.php", {id: id},
+      function (data) {
+        return data;
+      }
+    );
+  }
+
   async function areaChart() {
     loadingLine();
-    if (prov != '' || kab != '' || kec != '' || thn != '') {
-      $('#label-penjualan').html(prov + ', ' + kab + ', ' + kec + ' Tahun ' + thn);
+    // memanggil nama provinsi
+    let prov = $('#provinsi1').val();
+    let kab = $('#kabupaten1').val();
+    let kec = $('#kecamatan1').val();
+    let thn = $('#tahun_now1').val();
+    if (prov != 'all') {
+      let provv = getProvinsi(prov);
+      alert(provv)
+      $('#label-penjualan').html(provv + ' ' + kab + ' ' + kec + ' Tahun ' + thn);
+    } else {
+      $('#label-penjualan').html(prov + ' ' + kab + ' ' + kec + ' Tahun ' + thn);
     }
     //--------------
     //- AREA CHART -

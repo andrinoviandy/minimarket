@@ -65,7 +65,7 @@ header("Content-Disposition: attachment; filename=Rekapan Data $d1[nama_brg].xls
                   <td align="right"><?php
                                     $stok_po1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual) as stok_po from barang_dijual_qty where barang_gudang_id=" . $d1['id'] . ""));
                                     $stok_po11 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(jml_total) as stok_po from barang_dijual_qty_detail where barang_gudang_id=" . $d1['id'] . ""));
-                                    $stok_po2 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_dijual_qty where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty.id=barang_dikirim_detail.barang_dijual_qty_id and barang_dijual_qty.barang_gudang_id=" . $d1['id'] . ""));
+                                    $stok_po2 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_dijual_qty where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty.id=barang_dikirim_detail.barang_dijual_qty_id and barang_gudang_detail.barang_gudang_id=" . $d1['id'] . ""));
                                     $stok_po = $stok_po1['stok_po'] + $stok_po11['stok_po'] - $stok_po2;
                                     if ($stok_po != 0) {
                                       echo $stok_po;

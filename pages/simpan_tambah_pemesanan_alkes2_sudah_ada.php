@@ -385,7 +385,7 @@ if (isset($_POST['tambah_laporan'])) {
   }
 
   function getData() {
-    loadingg('#data-barang');
+    // loadingg('#data-barang');
     $.get("data/barang_pesan2.php",
       function(data) {
         $('#data-barang').html(data);

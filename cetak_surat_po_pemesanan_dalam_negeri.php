@@ -89,7 +89,21 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan.id as i
       
     </strong></td>
     <td align="center"><strong><?php echo $brg['tipe_brg']; ?></strong></td>
-    <td align="center"><strong><?php echo $d['qty']." Units"; ?></strong></td>
+    <td align="center"><strong>
+      <?php 
+      // echo $d['qty']." Units"; 
+      if ($d['satuan_header'] != '') {
+        // echo $d['qty_jual'];
+        if ($d['qty'] % $brg['jumlah_rincian_to_satuan'] == 0) {
+          $qtyy = $d['qty'] / $brg['jumlah_rincian_to_satuan'];
+          echo $qtyy . " " . $brg['satuan_header'];
+        } else {
+          echo $d['qty'] . " " . $brg['satuan'];
+        }
+      } else {
+        echo $d['qty'] . " " . $brg['satuan'];
+      }
+      ?></strong></td>
     <td align="center"><strong>
       <?php 
 	$mata_uang = mysqli_fetch_array(mysqli_query($koneksi, "select * from mata_uang where id=".$d['mata_uang_id'].""));

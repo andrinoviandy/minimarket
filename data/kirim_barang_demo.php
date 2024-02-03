@@ -142,7 +142,7 @@ error_reporting(0);
                             </a>
                             <br />
                             <?php if ($json[$i]['tgl_sampai'] != 0000 - 00 - 00) { ?>
-                                <a href="index.php?page=pilih_barang_demo_kembali&id=<?php echo $json[$i]['idd']; ?>&hapus_all=1">
+                                <a href="index.php?page=pilih_barang_demo_kembali&id=<?php echo $json[$i]['idd']; ?>">
                                     <small data-toggle="tooltip" title="" class="label bg-green"> Dikembalikan</small>
                                 </a>
                         <?php }

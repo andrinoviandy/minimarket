@@ -10,7 +10,7 @@ if (isset($_POST['simpan_barang'])) {
 		}
 	}
 	if ($ns == '') {
-		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "', '" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','0')");
+		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "', '" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','','','0')");
 
 		$maks = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as maks from barang_gudang"));
 		$nilai_maks = $maks['maks'];
@@ -49,7 +49,7 @@ if (isset($_POST['simpan_barang_baru'])) {
 		}
 	}
 	if ($ns == '') {
-		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','0')");
+		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','','','0')");
 
 		$maks = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as maks from barang_gudang"));
 		$nilai_maks = $maks['maks'];
@@ -88,7 +88,7 @@ if (isset($_POST['simpan_akse'])) {
 		}
 	}
 	if ($ns == '') {
-		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','0')");
+		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','','','0')");
 
 		$maks = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as maks from barang_gudang"));
 		$nilai_maks = $maks['maks'];
@@ -140,7 +140,7 @@ if (isset($_POST['simpan_selesai'])) {
 		}
 	}
 	if ($ns == '') {
-		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','0')");
+		$simpan = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "', '" . $_SESSION['nie_brg'] . "', '" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','" . $_SESSION['stok'] . "','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','','','0')");
 
 		$maks = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as maks from barang_gudang"));
 		$nilai_maks = $maks['maks'];

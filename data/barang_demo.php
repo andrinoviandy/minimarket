@@ -166,7 +166,9 @@ error_reporting(0);
                                 }
                                 if ($n_cek != 0) {
                                 ?>
-                                    <a href="#" data-toggle="modal" data-target="#modal-kirim<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Kirim" class="label bg-green">Kirim</small></a>
+                                    <!-- <a href="#" data-toggle="modal" data-target="#modal-kirim<?php echo $json[$i]['idd']; ?>"> -->
+                                    <a href="javascript:void()" onclick="modalKirim('<?php echo $json[$i]['idd']; ?>')">
+                                    <small data-toggle="tooltip" title="Kirim" class="label bg-green">Kirim</small></a>
                                 <?php  } ?>
                             <?php } else {
                                 echo "Sudah Masuk Stok";
@@ -255,47 +257,6 @@ error_reporting(0);
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-
-                <div class="modal fade" id="modal-kirim<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog modal-md">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" align="center">Kirim Barang Demo</h4>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <p align="justify">
-                                        <input type="hidden" name="id_kirim" value="<?php echo $json[$i]['idd']; ?>" />
-                                        <label>Nama Paket</label>
-                                        <input id="input" type="text" placeholder="" name="nama_paket" required>
-                                        <label>No. Surat Jalan</label>
-                                        <input id="input" type="text" placeholder="" name="no_peng" required>
-                                        <label>Ekspedisi</label>
-                                        <input id="input" type="text" placeholder="" name="ekspedisi" required>
-                                        <label>Tanggal Pengiriman</label>
-                                        <input id="input" type="date" placeholder="" name="tgl_kirim" required>
-                                        <label>Via Pengiriman</label>
-                                        <input id="input" type="text" placeholder="" name="via_kirim" required>
-                                        <label>Estimasi Barang Sampai</label>
-                                        <input id="input" type="date" placeholder="" name="estimasi_brg_sampai">
-                                        <label>Biaya Jasa</label>
-                                        <input id="input" type="text" placeholder="" name="biaya_kirim" required="required">
-                                        <label>Keterangan</label>
-                                        <textarea name="keterangan" id="input" rows="4"></textarea>
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                    <button name="kirim_barang" type="submit" class="btn btn-success">Next</button>
                                 </div>
                             </form>
                         </div>

@@ -120,7 +120,53 @@ if (isset($_GET['id_ubah'])) {
   </section>
   <!-- /.content -->
 </div>
+
+<div class="modal fade" id="modal-kirim">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Kirim Barang Demo</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <p align="justify">
+            <input type="hidden" name="id_kirim" id="id_kirim" />
+            <label>Nama Paket</label>
+            <input id="input" type="text" placeholder="" name="nama_paket" required>
+            <label>No. Surat Jalan</label>
+            <input id="input" type="text" placeholder="" name="no_peng" required>
+            <label>Ekspedisi</label>
+            <input id="input" type="text" placeholder="" name="ekspedisi" required>
+            <label>Tanggal Pengiriman</label>
+            <input id="input" type="date" placeholder="" name="tgl_kirim" required>
+            <label>Via Pengiriman</label>
+            <input id="input" type="text" placeholder="" name="via_kirim" required>
+            <label>Estimasi Barang Sampai</label>
+            <input id="input" type="date" placeholder="" name="estimasi_brg_sampai">
+            <label>Biaya Jasa</label>
+            <input id="input" type="text" placeholder="" name="biaya_kirim" required="required">
+            <label>Keterangan</label>
+            <textarea name="keterangan" id="input" rows="4"></textarea>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="kirim_barang" type="submit" class="btn btn-success">Next</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 <script>
+  function modalKirim(id) {
+    $('#id_kirim').val(id);
+    $('#modal-kirim').modal('show');
+  }
+
   function hapus(id) {
     Swal.fire({
       customClass: {

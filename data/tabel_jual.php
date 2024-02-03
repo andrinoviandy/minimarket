@@ -11,7 +11,7 @@ error_reporting(0);
             <th valign="bottom"><strong>Nama Alkes</strong></th>
             <th align="center" valign="bottom"><strong>Tipe
                 </strong></th>
-            <th align="center" valign="bottom"><strong>Merk
+            <th align="center" valign="bottom"><strong>Satuan
                 </strong></th>
             <th align="center" valign="bottom"><strong>Harga Jual</strong></th>
             <th align="center" valign="bottom">
@@ -82,7 +82,7 @@ error_reporting(0);
                     -->
     <?php
     $no = 0;
-    $q_akse = mysqli_query($koneksi, "select kategori_brg, nama_brg, harga_jual_saat_itu, tipe_brg, merk_brg, qty, harga_satuan, okr, barang_dijual_qty_hash.id as idd, barang_gudang.id as id_gudang from barang_dijual_qty_hash,barang_gudang where barang_gudang.id=barang_dijual_qty_hash.barang_gudang_id and barang_dijual_qty_hash.akun_id=" . $_SESSION['id'] . "");
+    $q_akse = mysqli_query($koneksi, "select kategori_brg, nama_brg, harga_jual_saat_itu, tipe_brg, merk_brg, qty, harga_satuan, okr, satuan, satuan_header, jumlah_rincian_to_satuan, barang_dijual_qty_hash.id as idd, barang_gudang.id as id_gudang from barang_dijual_qty_hash,barang_gudang where barang_gudang.id=barang_dijual_qty_hash.barang_gudang_id and barang_dijual_qty_hash.akun_id=" . $_SESSION['id'] . "");
     $jm = mysqli_num_rows($q_akse);
     if ($jm != 0) {
         while ($data_akse = mysqli_fetch_array($q_akse)) {
@@ -94,14 +94,20 @@ error_reporting(0);
                 <td align="left"><?php echo $data_akse['nama_brg']; ?>
                 </td>
                 <td align="left"><?php echo $data_akse['tipe_brg']; ?></td>
-                <td align="left"><?php echo $data_akse['merk_brg']; ?></td>
+                <td align="left"><?php echo $data_akse['satuan']; ?>
+                    <?php
+                    if ($data_akse['satuan_header'] != '') {
+                        echo "<br>(" . $data_akse['jumlah_rincian_to_satuan'] . " " . $data_akse['satuan'] . "=1 " . $data_akse['satuan_header'] . ")";
+                    }
+                    ?>
+                </td>
                 <td align="left"><?php echo "Rp" . number_format($data_akse['harga_jual_saat_itu'], 2, ',', '.'); ?></td>
                 <td align="center"><?php echo $data_akse['qty']; ?></td>
                 <td align="right"><?php echo number_format($data_akse['harga_satuan'] * $data_akse['qty'], 2, ',', '.'); ?></td>
                 <td align="right" bgcolor="#FFFF00"><?php echo "Rp" . number_format($data_akse['okr'], 2, ',', '.'); ?></td>
                 <td align="center">
                     <div class="row">
-                        <a href="javascript:void()" class="btn btn-xs btn-warning" onclick="ubahData('<?php echo $data_akse['idd']; ?>', '<?php echo $data_akse['qty']; ?>')">
+                        <a href="javascript:void()" class="btn btn-xs btn-warning" onclick="ubahData('<?php echo $data_akse['idd']; ?>', '<?php echo $data_akse['qty']; ?>','<?php echo number_format($data_akse['harga_jual_saat_itu'], 0, ',', '.') ?>')">
                             <span data-toggle="tooltip" title="Ubah Kuantitas" class="fa fa-edit"></span>
                         </a>
                         <!-- <a href="index.php?page=simpan_jual_alkes2&id_hapus=<?php echo $data_akse['idd']; ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"> -->

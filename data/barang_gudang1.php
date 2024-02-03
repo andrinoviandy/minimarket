@@ -22,8 +22,8 @@ error_reporting(0);
     if (isset($_GET['cari'])) {
         $search = str_replace(" ", "%20", $_GET['cari']);
         if (isset($_GET['mutasi'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&tgldari=" . $_GET['tgldari'] . "&tglsampai=" . $_GET['tglsampai'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "");
         } else if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
             $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "");
             $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "");
@@ -33,8 +33,8 @@ error_reporting(0);
         }
     } else {
         if (isset($_GET['mutasi'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&tgldari=" . $_GET['tgldari'] . "&tglsampai=" . $_GET['tglsampai'] . "&mutasi=" . $_GET['mutasi'] . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "");
         } else if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
             $file = file_get_contents($API . "json/$_GET[page].php?start=$start");
             $file2 = file_get_contents($API . "json/$_GET[page].php");

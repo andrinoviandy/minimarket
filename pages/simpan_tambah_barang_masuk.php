@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['simpan_barang'])) {
   if ($_POST['stok'] <= 0) {
-    $insert = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "','" . $_SESSION['nie_brg'] . "','" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','0','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','0')");
+    $insert = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "','" . $_SESSION['nie_brg'] . "','" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','0','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','','','0')");
     if ($insert) {
       echo "<script type='text/javascript'>
 			alert('Karena Stok 0 , Maka Data Langsung Tersimpan !');
@@ -96,7 +96,7 @@ if (isset($_POST['simpan_barang'])) {
                         <td><input id="" name="tgl_masuk" class="form-control" type="date" placeholder="" autofocus="autofocus" size="3" required /></td>
                         <td><input id="" name="no_po" class="form-control" type="text" placeholder="" size="4" required /></td>
                         <td><input id="tgl_expired" name="tgl_expired" class="form-control" type="date" placeholder="" size="3" /></td>
-                        <td><input id="no_po" name="stok" class="form-control" type="text" placeholder="" size="1" required="required" /></td>
+                        <td><input name="stok" class="form-control" type="number" placeholder="" size="1" required="required" /></td>
                       </tr>
                     </table>
                   </div>

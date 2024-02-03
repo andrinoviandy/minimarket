@@ -1,7 +1,8 @@
 <?php
 include("../config/koneksi.php");
 include("../include/API.php");
-session_start()
+session_start();
+error_reporting(0);
 ?>
 <?php
 $start = $_GET['start'];
@@ -83,7 +84,7 @@ $jml2 = $file2;
                     ?>
                 </td>
                 <td align="center"><?php
-                                    $stok_beli = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_pesan_detail where barang_gudang_id=" . $json[$i]['idd'] . " and status_ke_stok = 0"));
+                                    $stok_beli = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty) as jml from barang_pesan_detail where barang_gudang_id=" . $json[$i]['idd'] . " and status_ke_stok = 0"));
                                     echo $stok_beli['jml']; ?></td>
                 <td align="center"><?php
                                     $stok_total = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_gudang_detail where status_kirim=0 and status_kerusakan=0 and status_kembali_ke_gudang=0 and barang_gudang_id=" . $json[$i]['idd'] . ""));
@@ -91,7 +92,7 @@ $jml2 = $file2;
                 <td align="center"><?php
                                     $stok_po1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual) as stok_po from barang_dijual_qty where barang_gudang_id=" . $json[$i]['idd'] . ""));
                                     $stok_po11 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(jml_total) as stok_po from barang_dijual_qty_detail where barang_gudang_id=" . $json[$i]['idd'] . ""));
-                                    $stok_po2 = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail,barang_gudang_detail,barang_dijual_qty where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty.id=barang_dikirim_detail.barang_dijual_qty_id and barang_dijual_qty.barang_gudang_id=" . $json[$i]['idd'] . ""));
+                                    $stok_po2 = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail,barang_gudang_detail,barang_dijual_qty where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty.id=barang_dikirim_detail.barang_dijual_qty_id and barang_gudang_detail.barang_gudang_id=" . $json[$i]['idd'] . ""));
                                     $stok_po = $stok_po1['stok_po'] + $stok_po11['stok_po'] - $stok_po2['jml'];
                                     if ($stok_po != 0) {
                                         echo $stok_po;

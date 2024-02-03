@@ -550,14 +550,18 @@ if (isset($_POST['tambah_riwayat'])) {
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" align="center">Ubah Kuantitas</h4>
+        <h4 class="modal-title" align="center">Ubah Kuantitas & Harga</h4>
       </div>
       <form method="post" enctype="multipart/form-data" onsubmit="ubahDataQty(); return false;">
         <div class="modal-body">
           <p align="justify">
             <input type="hidden" name="id_barang_jual" id="id_barang_jual" />
             <input type="hidden" name="id_ubahitem" id="id_ubahitem" />
+            <label>Kuantitas</label>
             <input id="qty_ubah_jual" name="qty" class="form-control" type="number" placeholder="">
+            <br>
+            <label>Harga Jual</label>
+            <input id="harga_ubah_jual" name="harga" class="form-control" type="text" placeholder="" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
           </p>
         </div>
         <div class="modal-footer">
@@ -861,16 +865,18 @@ if (isset($_POST['tambah_riwayat'])) {
     );
   }
 
-  function openUbah(idd, id_ubah, qty) {
+  function openUbah(idd, id_ubah, qty, harga) {
     $('#id_barang_jual').val(idd);
     $('#id_ubahitem').val(id_ubah);
     $('#qty_ubah_jual').val(qty);
+    $('#harga_ubah_jual').val(harga);
     $('#modal-ubahitem').modal('show');
   }
 
   function ubahDataQty(id_jual, id_ubah) {
     loading_data('#isi_barang_jual');
     $.post("data/ubah_qty_jual.php", {
+        harga: $('#harga_ubah_jual').val(),
         qty: $('#qty_ubah_jual').val(),
         id_ubahitem: $('#id_ubahitem').val(),
         id_barang_jual: $('#id_barang_jual').val(),

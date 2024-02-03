@@ -154,14 +154,24 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
               <?php
               $jm = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$data2[id_kirim] and barang_gudang.id=$d[id_gudang]"));
               $j_batal = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$data2[id_kirim] and status_batal=1 and barang_gudang.id=$d[id_gudang]"));
-              echo $jm . " " . $d['satuan'] . "<br>";
+              if ($d['satuan_header'] != '') {
+                if ($jm % $d['jumlah_rincian_to_satuan'] == 0) {
+                  $qtyy = $jm / $d['jumlah_rincian_to_satuan'];
+                  echo $qtyy." ".$d['satuan_header'];
+                } else {
+                  echo $jm . " " . $d['satuan'];  
+                }
+              } else {
+                echo $jm . " " . $d['satuan'];
+              }
+              // echo $jm . " " . $d['satuan'];
               if ($j_batal !== 0) {
-                echo "Batal : " . $j_batal;
+                echo "<br>Batal : " . $j_batal;
               } ?>
             </td>
             <td align="center" valign="top">
               <?php
-              $q_lot = mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$data2[id_kirim] and status_batal=0 and barang_gudang.id=$d[id_gudang]");
+              $q_lot = mysqli_query($koneksi, "select DISTINCT no_lot, tgl_expired from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$data2[id_kirim] and status_batal=0 and barang_gudang.id=$d[id_gudang]");
               $j_lot = mysqli_num_rows($q_lot);
               if ($j_lot > 1) {
                 $koma_lot = "<br>";

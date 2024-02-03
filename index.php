@@ -528,7 +528,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
       } else if (isset($_SESSION['user_manajer_marketing']) and isset($_SESSION['pass_manajer_marketing'])) {
         require('sidebar_admin_marketing.php');
       } else if (isset($_SESSION['user_admin_po_dalam']) or isset($_SESSION['user_admin_po_luar'])) {
-        require('sidebar_admin_po.php');
+        require('sidebar_po2.php');
       } else if (isset($_SESSION['user_cs']) or isset($_SESSION['pass_cs'])) {
         require('sidebar_cs.php');
       } else if (isset($_SESSION['user_pjt']) or isset($_SESSION['pass_pjt'])) {

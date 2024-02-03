@@ -3,7 +3,7 @@ include("../config/koneksi.php");
 session_start();
 // error_reporting(0);
 
-$upt = mysqli_query($koneksi, "update barang_dijual_qty set qty_jual=" . $_POST['qty'] . " where id=" . $_POST['id_ubahitem'] . "");
+$upt = mysqli_query($koneksi, "update barang_dijual_qty set qty_jual=" . $_POST['qty'] . ", harga_jual_saat_itu=" . str_replace(".","",$_POST['harga']) . " where id=" . $_POST['id_ubahitem'] . "");
 $upt2 = mysqli_query($koneksi, "update barang_dijual_qty_detail set barang_dijual_qty_detail.jml_total = barang_dijual_qty_detail.jml_satuan*$_POST[qty] where barang_dijual_qty_id=" . $_POST['id_ubahitem'] . "");
 if ($upt && $upt2) {
     $jml = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as total from barang_dijual_qty where barang_dijual_id=" . $_POST['id_barang_jual'] . ""));

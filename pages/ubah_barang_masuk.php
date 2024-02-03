@@ -12,9 +12,9 @@ if (isset($_POST['pencarian'])) {
 
 if (isset($_POST['simpan_perubahan'])) {
   if (isset($_SESSION['user_administrator']) or isset($_SESSION['user_admin_keuangan'])) {
-    $Result = mysqli_query($koneksi, "update barang_gudang set nama_brg='" . $_POST['nama_barang'] . "', nie_brg='" . $_POST['nie_brg'] . "', merk_brg='" . $_POST['merk'] . "', tipe_brg='" . $_POST['tipe'] . "', negara_asal='" . $_POST['negara_asal'] . "', jenis_barang='" . $_POST['jenis_barang'] . "' ,deskripsi_alat='" . $_POST['deskripsi'] . "', harga_beli='" . str_replace(".", "", $_POST['harga_beli']) . "',harga_satuan='" . str_replace(".", "", $_POST['harga_satuan']) . "', satuan='" . $_POST['satuan'] . "', status_cek='" . $_POST['status_cek'] . "' where id=" . $_GET['id'] . "");
+    $Result = mysqli_query($koneksi, "update barang_gudang set nama_brg='" . $_POST['nama_barang'] . "', nie_brg='" . $_POST['nie_brg'] . "', merk_brg='" . $_POST['merk'] . "', tipe_brg='" . $_POST['tipe'] . "', negara_asal='" . $_POST['negara_asal'] . "', jenis_barang='" . $_POST['jenis_barang'] . "' ,deskripsi_alat='" . $_POST['deskripsi'] . "', harga_beli='" . str_replace(".", "", $_POST['harga_beli']) . "',harga_satuan='" . str_replace(".", "", $_POST['harga_satuan']) . "', satuan='" . $_POST['satuan'] . "', satuan_header='" . $_POST['satuan_header'] . "', jumlah_rincian_to_satuan='" . $_POST['jumlah_rincian_to_satuan'] . "', status_cek='" . $_POST['status_cek'] . "' where id=" . $_GET['id'] . "");
   } else {
-    $Result = mysqli_query($koneksi, "update barang_gudang set nama_brg='" . $_POST['nama_barang'] . "', nie_brg='" . $_POST['nie_brg'] . "', merk_brg='" . $_POST['merk'] . "', tipe_brg='" . $_POST['tipe'] . "', negara_asal='" . $_POST['negara_asal'] . "', jenis_barang='" . $_POST['jenis_barang'] . "' , deskripsi_alat='" . $_POST['deskripsi'] . "',satuan='" . $_POST['satuan'] . "', status_cek='" . $_POST['status_cek'] . "' where id=" . $_GET['id'] . "");
+    $Result = mysqli_query($koneksi, "update barang_gudang set nama_brg='" . $_POST['nama_barang'] . "', nie_brg='" . $_POST['nie_brg'] . "', merk_brg='" . $_POST['merk'] . "', tipe_brg='" . $_POST['tipe'] . "', negara_asal='" . $_POST['negara_asal'] . "', jenis_barang='" . $_POST['jenis_barang'] . "' , deskripsi_alat='" . $_POST['deskripsi'] . "',satuan='" . $_POST['satuan'] . "',satuan_header='" . $_POST['satuan_header'] . "', jumlah_rincian_to_satuan='" . $_POST['jumlah_rincian_to_satuan'] . "', status_cek='" . $_POST['status_cek'] . "' where id=" . $_GET['id'] . "");
   }
   if ($Result) {
     echo "<script>
@@ -27,7 +27,7 @@ if (isset($_POST['simpan_perubahan'])) {
         icon: 'success',
         confirmButtonText: 'OK',
       }).then(() => {
-        window.location.href = '?page=barang_masuk';
+        window.location.href = '?page=ubah_barang_masuk&id=$_GET[id]';
       })
       </script>";
   }
@@ -100,8 +100,16 @@ if (isset($_POST['simpan_perubahan'])) {
                   <label>Harga Jual</label>
                   <input name="harga_satuan" class="form-control" type="text" placeholder="Harga Satuan" value="<?php echo number_format($data['harga_satuan'], 0, ',', '.'); ?>" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"><br />
                 <?php } ?>
-                <label>Satuan</label>
+                <label>Satuan (Detail)</label>
                 <input name="satuan" class="form-control" type="text" placeholder="Satuan" value="<?php echo $data['satuan']; ?>"><br />
+                <div class="well">
+                <font style="color: red;">* Abaikan/Kosongkan Jika Tidak Memiliki Jenis Satuan Lain</font>
+                <br>
+                <label>Satuan (Header)</label>
+                <input name="satuan_header" class="form-control" type="text" placeholder="Satuan Header" value="<?php echo $data['satuan_header']; ?>"><br />
+                <label>Jumlah Per Satuan (Detail) Untuk Mencapat 1 Satuan (Header)</label>
+                <input name="jumlah_rincian_to_satuan" class="form-control" type="number" placeholder="Jumlah" value="<?php echo $data['jumlah_rincian_to_satuan']; ?>"><br />
+                </div>
                 <!--<label>Kode Barcode</label>
               <input name="kode_barcode" class="form-control" type="text" placeholder="Hanya Angka" value="<?php echo $data['kode_barcode']; ?>"><br />-->
                 <label>Status Pengecekan</label>

@@ -351,7 +351,8 @@ if (isset($_POST['tambah_laporan'])) {
           <label>Stok Total</label>
           <input id="stok_total" name="stok_total" class="form-control" type="text" placeholder="Stok" disabled="disabled" size="4" />
           <br />
-          <label>Harga (<font size="-2" color="#FF0000">Harga tidak boleh 0</font>)</label>
+          <!-- <label>Harga (<font size="-2" color="#FF0000">Harga tidak boleh 0</font>)</label> -->
+          <label>Harga</label>
           <input id="harga" name="harga" class="form-control" type="text" placeholder="Harga" disabled="disabled" size="8" />
           <br />
           <label>Tipe</label>
@@ -493,13 +494,16 @@ if (isset($_POST['tambah_laporan'])) {
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" align="center"><strong>Ubah Kuantitas Barang Yang Dijual</strong></h4>
+        <h4 class="modal-title" align="center"><strong>Ubah Kuantitas & Harga Barang Yang Dijual</strong></h4>
       </div>
       <form method="post" id="form-ubah" enctype="multipart/form-data" onsubmit="ubahBarang(); return false;">
         <div class="modal-body">
           <input id="id_ubah" type="hidden" />
           <label>Qty</label>
           <input id="qty_ubah" name="qty" class="form-control" type="number" placeholder="" size="2" />
+          <br>
+          <label>Harga Jual</label>
+          <input id="harga_ubah" name="harga" class="form-control" type="text" placeholder="" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -537,16 +541,18 @@ if (isset($_POST['tambah_laporan'])) {
     }
   }
 
-  function ubahData(id, qty) {
+  function ubahData(id, qty, harga) {
     $('#id_ubah').val(id);
     $('#qty_ubah').val(qty);
+    $('#harga_ubah').val(harga);
     $('#modal-ubah').modal('show');
   }
 
   function ubahBarang() {
     $.post("data/ubah_barang_jual.php", {
         id: $('#id_ubah').val(),
-        qty: $('#qty_ubah').val()
+        qty: $('#qty_ubah').val(),
+        harga: $('#harga_ubah').val()
       },
       function(data) {
         // alert(data);
@@ -734,6 +740,8 @@ if (isset($_POST['tambah_laporan'])) {
             icon: 'error',
             confirmButtonText: 'OK',
           });
+          loading_jual();
+          getDataBarang();
         } else {
           $('#modal-tambah').modal('hide');
           Swal.fire({

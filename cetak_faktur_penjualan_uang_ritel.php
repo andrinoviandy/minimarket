@@ -123,7 +123,21 @@ $jml_q = mysqli_num_rows($qq);
     ?>
       <tr>
         <td align="center" valign="top"><?php echo $no; ?></td>
-        <td align="center" valign="top"><?php echo $d['qty_jual']; ?></td>
+        <td align="center" valign="top">
+          <?php
+          if ($d['satuan_header'] != '') {
+            // echo $d['qty_jual'];
+            if ($d['qty_jual'] % $d['jumlah_rincian_to_satuan'] == 0) {
+              $qtyy = $d['qty_jual'] / $d['jumlah_rincian_to_satuan'];
+              echo $qtyy . " " . $d['satuan_header'];
+            } else {
+              echo $d['qty_jual'] . " " . $d['satuan'];
+            }
+          } else {
+            echo $d['qty_jual'] . " " . $d['satuan'];
+          }
+          ?>
+        </td>
         <td valign="top"><?php echo $d['nama_brg']; ?></td>
 
         <td align="right" valign="top"><?php echo number_format($d['harga_satuan'], 0, ',', '.'); ?></td>

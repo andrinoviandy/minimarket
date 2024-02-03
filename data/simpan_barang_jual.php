@@ -3,7 +3,7 @@ include("../config/koneksi.php");
 session_start();
 error_reporting(0);
 $dt = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_gudang where id=" . $_POST['id_akse'] . ""));
-if ($dt['harga_satuan'] > 0) {
+// if ($dt['harga_satuan'] > 0) {
   $cek = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dijual_qty_hash where barang_gudang_id = $_POST[id_akse] and akun_id = $_SESSION[id]"));
   if ($cek['jml'] > 0) {
     echo "SA";
@@ -46,9 +46,9 @@ if ($dt['harga_satuan'] > 0) {
 		echo "<script>alert('Maaf , Stok Tidak Mencukupi !');
 		</script>";
 		}*/
-} else {
-  echo "SAMA";
+// } else {
+//   echo "SAMA";
   // echo "<script>
   // alert('Harga jual alat tidak boleh 0 , update harga jual nya terlebih dahulu !');
   // </script>";
-}
+// }

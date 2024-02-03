@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['lihat'])) {
   echo "<script>
-	window.location='index.php?page=barang_gudang1&tgldari=$_POST[tgl1]&tglsampai=$_POST[tgl2]&mutasi=$_POST[mutasi]';
+	window.location='index.php?page=barang_gudang1&tgl1=$_POST[tgl1]&tgl2=$_POST[tgl2]&mutasi=$_POST[mutasi]';
 	</script>";
 }
 
