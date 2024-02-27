@@ -53,7 +53,7 @@ error_reporting(0);
                     <td width="3%" align="center"><strong>No</strong>
                         </th>
                     <th width="" valign="top">ID</th>
-                    <th width="" valign="top"><strong>Tanggal </strong></th>
+                    <th width="10%" valign="top"><strong>Tanggal </strong></th>
                     <th width="" valign="top">No PO</th>
                     <th width="" valign="top">No_Kontrak</th>
                     <th width="" valign="top">Barang</th>
@@ -66,7 +66,7 @@ error_reporting(0);
             </thead>
             <?php
             for ($i = 0; $i < $jml; $i++) {
-                $dd = mysqli_fetch_array(mysqli_query($koneksi, "select no_kontrak, (select id from barang_dijual where status_deal = 1 and no_po_jual = '" . $json[$i]['no_faktur_no_po'] . "') as id_jual from barang_dijual where no_po_jual='" . $json[$i]['no_faktur_no_po'] . "'"));
+                $dd = mysqli_fetch_array(mysqli_query($koneksi, "select no_kontrak, (select id from barang_dijual where status_deal = 1 and no_po_jual = '" . $json[$i]['no_faktur_no_po'] . "') as id_jual, (select count(*) over() from barang_dijual where no_po_jual = '" . $json[$i]['no_faktur_no_po'] . "') as jml from barang_dijual where no_po_jual='" . $json[$i]['no_faktur_no_po'] . "'"));
             ?>
                 <tr>
                     <td align="center"><?php echo $start += 1; ?></td>
@@ -124,7 +124,11 @@ error_reporting(0);
                         </td>
                     <?php } else { ?>
                         <td colspan="3" align="center">
-                            <small class="label bg-red">Belum Deal</small>
+                            <?php if ($dd['jml'] == 0) {
+                                echo "<font color='red'><em><strong>PO Telah Dihapus</strong></em></font>";
+                            } else { ?>
+                                <small class="label bg-red">Belum Deal</small>
+                            <?php } ?>
                         </td>
                     <?php } ?>
                 </tr>

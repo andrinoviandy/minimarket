@@ -84,11 +84,12 @@ error_reporting(0);
                     <td>
                         <!-- <a href="#" data-toggle="modal" data-target="#modal-ubahinstalasi<?php //echo $json[$i]['idd'] 
                                                                                                 ?>"> -->
-                        <a href="#" onclick="lampiranInstalasi(<?php echo $json[$i]['idd'] ?>)">
+                        <a href="javascript:void()" onclick="lampiranInstalasi(<?php echo $json[$i]['idd'] ?>)">
                             <small data-toggle="tooltip" title="Ubah Lampiran" class="label bg-blue pull pull-right pull-top">Ubah</small>
                         </a>
                         <?php if ($json[$i]['lampiran_i'] != '') { ?>
-                            <a href="#" data-toggle="modal" data-target="#modal-instalasi<?php echo $json[$i]['idd']; ?>">
+                            <!-- <a href="#" data-toggle="modal" data-target="#modal-instalasi<?php echo $json[$i]['idd']; ?>"> -->
+                            <a href="javascript:void()" onclick="modalInstalasi('<?php echo $json[$i]['lampiran_i']; ?>')">
                                 <img src="gambar_fi/instalasi/<?php echo $json[$i]['lampiran_i']; ?>" width="50px" />
                             </a>
                         <?php } ?>
@@ -96,90 +97,49 @@ error_reporting(0);
                     <td><?php echo date("d/m/Y", strtotime($json[$i]['tgl_f'])); ?></td>
                     <td>
                         <!-- <a href="#" data-toggle="modal" data-target="#modal-ubahfungsi<?php echo $json[$i]['idd'] ?>"> -->
-                        <a href="#" onclick="lampiranUjiFungsi(<?php echo $json[$i]['idd'] ?>)">
+                        <a href="javascript:void()" onclick="lampiranUjiFungsi(<?php echo $json[$i]['idd'] ?>)">
                             <small data-toggle="tooltip" title="Ubah Lampiran" class="label bg-blue pull pull-right pull-top">Ubah</small>
                         </a>
                         <?php if ($json[$i]['lampiran_f'] != '') { ?>
-                            <a href="#" data-toggle="modal" data-target="#modal-ujifungsi<?php echo $json[$i]['idd']; ?>"><img src="gambar_fi/fungsi/<?php echo $json[$i]['lampiran_f']; ?>" width="50px" /></a>
+                            <!-- <a href="#" data-toggle="modal" data-target="#modal-ujifungsi<?php echo $json[$i]['idd']; ?>"> -->
+                            <a href="javascript:void()" onclick="modalUjifungsi('<?php echo $json[$i]['lampiran_f']; ?>')">
+                            <img src="gambar_fi/fungsi/<?php echo $json[$i]['lampiran_f']; ?>" width="50px" /></a>
                         <?php } ?>
                     </td>
                     <td><?php echo $json[$i]['nama_teknisi']; ?></td>
                     <td><?php echo $json[$i]['no_hp'] . " / " . $_SESSION['kontak2']; ?></td>
                     <td><?php echo $json[$i]['keterangan']; ?></td>
                     <td align="center">
-                        <!-- <a href="pages/delete_uji.php?id_hapus=<?php echo $json[$i]['idd']; ?>&id_rumkit=<?php echo $_GET['id_rumkit']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
-                        <a href="#" onclick="hapus(<?php echo $json[$i]['idd']; ?>, <?php echo $_GET['id_rumkit']; ?>)">
-                            <button class="btn btn-xs btn-danger">
-                                <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                            </button>
-                        </a>
-                        &nbsp;
-                        <!-- <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $json[$i]['idd']; ?>"> -->
-                        <a href="#" onclick="modalUbah(<?php echo $json[$i]['idd']; ?>, '<?php echo $json[$i]['soft_version']; ?>', '<?php echo $json[$i]['tgl_garansi_habis']; ?>', '<?php echo $json[$i]['tgl_i']; ?>', '<?php echo $json[$i]['tgl_f']; ?>', '<?php echo $json[$i]['keterangan'] ?>')">
-                            <button class="btn btn-xs btn-warning">
-                                <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                            </button>
-                        </a>
-                        &nbsp;
-                        <a target="_blank" href="cetak_laporan_instalasi.php?id=<?php echo $json[$i]['idd']; ?>">
-                            <button class="btn btn-xs btn-primary">
-                                <span data-toggle="tooltip" title="Download Report" class="glyphicon glyphicon-print"></span>
-                            </button>
-                        </a>
-                        <br />
-                        <?php
-                        //$lihat = mysqli_num_rows(mysqli_query($koneksi, "select * from alat_pelatihan where alat_uji_detail_id=".$json[$i]['idd'].""));
-                        if ($json[$i]['status_pelatihan'] == 0) { ?>
-                            <a href="index.php?page=tambah_pelatihan&id=<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Pelatihan Alat" class="label bg-blue">Pelatihan</small></a>
-                        <?php } ?>
+                        <div class="row">
+
+                            <!-- <a href="pages/delete_uji.php?id_hapus=<?php echo $json[$i]['idd']; ?>&id_rumkit=<?php echo $_GET['id_rumkit']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
+                            <a href="javascript:void()" onclick="hapus('<?php echo $json[$i]['idd']; ?>', '<?php echo $_GET['id_rumkit']; ?>')">
+                                <button class="btn btn-xs btn-danger">
+                                    <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                                </button>
+                            </a>
+                            &nbsp;
+                            <!-- <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $json[$i]['idd']; ?>"> -->
+                            <a href="javascript:void()" onclick="modalUbah(<?php echo $json[$i]['idd']; ?>, '<?php echo $json[$i]['soft_version']; ?>', '<?php echo $json[$i]['tgl_garansi_habis']; ?>', '<?php echo $json[$i]['tgl_i']; ?>', '<?php echo $json[$i]['tgl_f']; ?>', '<?php echo $json[$i]['keterangan'] ?>')">
+                                <button class="btn btn-xs btn-warning">
+                                    <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
+                                </button>
+                            </a>
+                            &nbsp;
+                            <a target="_blank" href="cetak_laporan_instalasi.php?id=<?php echo $json[$i]['idd']; ?>">
+                                <button class="btn btn-xs btn-primary">
+                                    <span data-toggle="tooltip" title="Download Report" class="glyphicon glyphicon-print"></span>
+                                </button>
+                            </a>
+                            <br />
+                            <?php
+                            //$lihat = mysqli_num_rows(mysqli_query($koneksi, "select * from alat_pelatihan where alat_uji_detail_id=".$json[$i]['idd'].""));
+                            if ($json[$i]['status_pelatihan'] == 0) { ?>
+                                <a href="index.php?page=tambah_pelatihan&id=<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Pelatihan Alat" class="label bg-blue">Pelatihan</small></a>
+                            <?php } ?>
+                        </div>
                     </td>
                 </tr>
-
-                <div class="modal fade" id="modal-instalasi<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <img src="gambar_fi/instalasi/<?php echo $json[$i]['lampiran_i']; ?>" width="100%" height="auto" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-
-                <div class="modal fade" id="modal-ujifungsi<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <img src="gambar_fi/fungsi/<?php echo $json[$i]['lampiran_f']; ?>" width="100%" height="auto" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-
-                
             <?php } ?>
         </table>
     </div>

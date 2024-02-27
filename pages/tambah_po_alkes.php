@@ -1,56 +1,8 @@
 <?php
 $query = mysqli_query($koneksi, "select *,principle.id as id_principle from barang_pesan,principle where principle.id=barang_pesan.principle_id and barang_pesan.id='" . $_GET['id'] . "'");
 $data = mysqli_fetch_array($query);
-
-
-if (isset($_POST['tambah_laporan'])) {
-  $Result = mysqli_query($koneksi, "update barang_pesan_detail set qty=" . $_POST['qty2'] . ", harga_perunit=" . $_POST['harga_perunit2'] . ", diskon=" . $_POST['diskon2'] . ", harga_total=" . $_POST['total_harga2'] . " where id=" . $_POST['id_ubah'] . "");
-  if ($Result) {
-    mysqli_query($koneksi, "update barang_pesan set cost_byair=0, cost_cf=0 where id=$_GET[id]");
-    echo "<script type='text/javascript'>
-	alert('Berhasil Di Ubah ! Harap isi kembali Ongkir nya !');	window.location='index.php?page=tambah_po_alkes&id=$_GET[id]';
-		</script>";
-  }
-}
-
-if (isset($_POST['simpan_barang'])) {
-  $s = mysqli_query($koneksi, "update utang_piutang set nominal=" . $_POST['dalam_rupiah'] . " where no_faktur_no_po='" . $data['no_po_pesan'] . "'");
-  $simpan = mysqli_query($koneksi, "update barang_pesan set total_price='" . $_POST['total_price'] . "', total_price_ppn='" . $_POST['total_price_ppn'] . "', cost_byair='" . $_POST['cost_byair'] . "', cost_cf='" . $_POST['cost_cf'] . "',nilai_tukar='" . $_POST['nilai_tukar'] . "' where id=$_GET[id]");
-  if ($simpan and $s) {
-    echo "<script type='text/javascript'>
-	alert('Data Berhasil Di Simpan !');
-	window.location='index.php?page=ubah_pembelian_alkes&id=$_GET[id]'</script>";
-  }
-}
-
-if (isset($_POST['simpan_tambah_aksesoris'])) {
-
-  $simpan = mysqli_query($koneksi, "insert into barang_pesan_detail values('','" . $_GET['id'] . "','" . $_POST['id_akse'] . "','" . $_POST['qty'] . "','" . $data['mata_uang_id'] . "','" . $_POST['harga_perunit'] . "','" . $_POST['diskon'] . "','" . $_POST['total_harga'] . "','" . $_POST['catatan_spek'] . "','')");
-  mysqli_query($koneksi, "update barang_pesan set cost_byair=0, cost_cf=0 where id=$_GET[id]");
-  echo "<script>
-alert('Berhasil Di Simpan ! Harap isi kembali Ongkir nya !');	window.location='index.php?page=tambah_po_alkes&id=$_GET[id]'</script>";
-}
-
-if (isset($_GET['id_hapus'])) {
-  $del = mysqli_query($koneksi, "delete from barang_pesan_detail where id=" . $_GET['id_hapus'] . "");
-  mysqli_query($koneksi, "update barang_pesan set cost_byair=0, cost_cf=0 where id=$_GET[id]");
-  echo "<script type='text/javascript'>
-	alert('Harap isi kembali Ongkir nya !');	window.location='index.php?page=tambah_po_alkes&id=$_GET[id]';
-		</script>";
-}
 ?>
 <script type="text/javascript">
-  function sum() {
-    var txtFirstNumberValue = document.getElementById('qty').value;
-    var txtSecondNumberValue = document.getElementById('harga_perunit').value;
-    var txtThirdNumberValue = document.getElementById('diskon').value;
-
-    var result = parseFloat(txtFirstNumberValue) * parseFloat(txtSecondNumberValue) - (parseFloat(txtFirstNumberValue) * parseFloat(txtSecondNumberValue) * (parseFloat(txtThirdNumberValue) / 100));
-    if (!isNaN(result)) {
-      document.getElementById('total_harga').value = result;
-    }
-  }
-
   function sum_total_keseluruhan() {
     var txtFirstNumberValue = document.getElementById('total_price_ppn').value;
     var txtSecondNumberValue = document.getElementById('cost_byair').value;
@@ -138,167 +90,14 @@ if (isset($_GET['id_hapus'])) {
                 <br />
                 <button class="btn btn-success pull pull-right" data-toggle="modal" data-target="#modal-tambahbarang"><span class="fa fa-plus"></span> Tambah Barang</button>
                 <br /><br />
-                <div class="table-responsive no-padding">
-                  <table width="100%" id="example1" class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th valign="bottom">No</th>
-                        <th valign="bottom"><strong>Nama Alkes</strong></th>
-                        <td align="center" valign="bottom"><strong>Tipe
-                          </strong>
-                        <td align="center" valign="bottom"><strong>Merk
-                          </strong>
-                        <td align="center" valign="bottom"><strong>Qty</strong>
-                        <td align="center" valign="bottom"><strong>Mata Uang
-                          </strong>
-                        <td align="center" valign="bottom"><strong>Harga Per Unit </strong>
-                        <td align="center" valign="bottom"><strong>Diskon (%)</strong>
-                        <td align="center" valign="bottom"><strong>Total Harga
-                          </strong>
-                        <td align="center" valign="bottom"><strong>Catatan Spek</strong>
-                        <td align="center" valign="bottom"><strong>Aksi</strong>
-                      </tr>
-                    </thead>
-  
-  
-                    <?php
-  
-                    $no = 0;
-                    $q_akse = mysqli_query($koneksi, "select *,barang_pesan_detail.id as idd,barang_gudang.id as id_gudang from barang_pesan_detail,barang_gudang,mata_uang where barang_gudang.id=barang_pesan_detail.barang_gudang_id and mata_uang.id=barang_pesan_detail.mata_uang_id and barang_pesan_detail.barang_pesan_id=$_GET[id]");
-                    $jm = mysqli_num_rows($q_akse);
-                    if ($jm != 0) {
-                      while ($data_akse = mysqli_fetch_array($q_akse)) {
-                        $no++;
-                    ?>
-                        <tr>
-                          <td><?php echo $no; ?></td>
-                          <td><?php echo $data_akse['nama_brg']; ?>
-                          </td>
-                          <td align="center"><?php echo $data_akse['tipe_brg']; ?></td>
-                          <td align="center"><?php echo $data_akse['merk_brg']; ?></td>
-                          <td align="center"><?php echo $data_akse['qty']; ?></td>
-                          <td align="center"><?php echo $data_akse['jenis_mu']; ?></td>
-                          <td align="center"><?php echo $data_akse['simbol'] . " " . number_format($data_akse['harga_perunit'], 2, ',', '.'); ?></td>
-                          <td align="center"><?php
-                                              if ($data_akse['diskon'] != 0) {
-                                                echo $data_akse['diskon'] . " %";
-                                              } else {
-                                                echo "0 %";
-                                              } ?></td>
-                          <td align="center"><?php echo $data_akse['simbol'] . " " . number_format($data_akse['harga_total'], 2, ',', '.'); ?></td>
-                          <td align="center"><?php echo $data_akse['catatan_spek']; ?></td>
-                          <td align="center"><?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['adminpodalam'])) { ?>
-                              <a href="#" data-toggle="modal" data-target="#modal-ubahbarang<?php echo $data_akse['idd']; ?>"><span data-toggle="tooltip" title="Hapus" class="fa fa-edit"></span></a>&nbsp;&nbsp;<a href="index.php?page=tambah_po_alkes&id_hapus=<?php echo $data_akse['idd']; ?>&id=<?php echo $_GET['id']; ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a><!--&nbsp;&nbsp;&nbsp;<a href="index.php?page=simpan_tambah_aksesoris_pesan&id=<?php echo $data_akse['id_gudang']; ?>"><small data-toggle="tooltip" title="Kelola Aksesoris" class="label bg-green"><span class="fa fa-cogs"></span>&nbsp Akse</small></a>-->
-                            <?php } ?>
-                          </td>
-                        </tr>
-                        <div class="modal fade" id="modal-ubahbarang<?php echo $data_akse['idd']; ?>">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" align="center">Ubah Barang</h4>
-                              </div>
-                              <form method="post">
-                                <div class="modal-body">
-                                  <input type="hidden" name="id_ubah" value="<?php echo $data_akse['idd']; ?>" />
-                                  <label>Qty</label>
-                                  <input name="qty2" id="qty<?php echo $data_akse['idd']; ?>" class="form-control" type="text" required placeholder="" value="<?php echo $data_akse['qty']; ?>" onkeyup="sum<?php echo $data_akse['idd']; ?>();" autofocus>
-                                  <br />
-                                  <label>Harga Per Unit</label>
-                                  <input name="harga_perunit2" id="harga_perunit<?php echo $data_akse['idd']; ?>" class="form-control" type="text" required value="<?php echo $data_akse['harga_perunit']; ?>" onkeyup="sum<?php echo $data_akse['idd']; ?>();" placeholder="">
-                                  <br />
-                                  <label>Diskon</label>
-                                  <input name="diskon2" id="diskon<?php echo $data_akse['idd']; ?>" class="form-control" type="text" required value="<?php echo $data_akse['diskon']; ?>" onkeyup="sum<?php echo $data_akse['idd']; ?>();" placeholder="">
-                                  <br />
-                                  <label>Total Harga</label>
-                                  <input name="total_harga2" id="total_harga<?php echo $data_akse['idd']; ?>" class="form-control" type="text" readonly="readonly" required placeholder="" value="<?php echo $data_akse['harga_total']; ?>">
-  
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                  <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan</button>
-                                  <script type="text/javascript">
-                                    function sum<?php echo $data_akse['idd']; ?>() {
-                                      var txtFirstNumberValue = document.getElementById('qty<?php echo $data_akse['idd']; ?>').value;
-                                      var txtSecondNumberValue = document.getElementById('harga_perunit<?php echo $data_akse['idd']; ?>').value;
-                                      var txtThirdNumberValue = document.getElementById('diskon<?php echo $data_akse['idd']; ?>').value;
-                                      var result = parseFloat(txtFirstNumberValue) * parseFloat(txtSecondNumberValue) - (parseFloat(txtFirstNumberValue) * parseFloat(txtSecondNumberValue) * (parseFloat(txtThirdNumberValue) / 100));
-                                      if (!isNaN(result)) {
-                                        document.getElementById('total_harga<?php echo $data_akse['idd']; ?>').value = result;
-                                      }
-                                    }
-                                  </script>
-                                </div>
-                              </form>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->
-                        </div>
-                    <?php }
-                    } else {
-                      echo "<tr><td colspan='11' align='center'>Tidak Ada Data</td></tr>";
-                    } ?>
-                    <form method="post">
-                      <tr>
-                        <td colspan="8" align="right" valign="bottom"><strong>Total Price =</strong></td>
-                        <td colspan="2" align="left">
-                          <?php
-                          $total = mysqli_fetch_array(mysqli_query($koneksi, "select *,sum(harga_total) as total from barang_pesan_detail where barang_pesan_id=$_GET[id]"));
-                          //$total = mysqli_query($koneksi, "select * from barang_pesan_detail where barang_pesan_id=$id");
-                          //echo " ".number_format($total_akse2+$total['total'],0,',',',').".00";
-                          ?>
-                          <input name="total_price" class="form-control" type="text" required="required" placeholder="" size="20" value="<?php echo number_format($total['total'], 2, ',', ''); ?>" />
-                        </td>
-                        <td align="center"></td>
-                      </tr>
-                      <tr>
-                        <td colspan="8" align="right" valign="bottom"><strong>Total Price + PPN(<?php echo $data['ppn'] . "%"; ?>) =</strong></td>
-                        <td colspan="2" align="left">
-                          <input name="total_price_ppn" id="total_price_ppn" class="form-control" type="text" required="required" placeholder="" size="20" value="<?php echo number_format(($total['total']) + (($total['total']) * floatval($data['ppn']) / 100), 2, ',', ''); ?>" />
-                        </td>
-                        <td align="center"></td>
-                      </tr>
-                      <tr>
-                        <td colspan="8" align="right" valign="bottom"><strong>Freight Cost by Air to JAKARTA =</strong></td>
-                        <td colspan="2" align="left" valign="top"><input name="cost_byair" id="cost_byair" class="form-control" type="text" required="required" value="<?php
-                                                                                                                                                                        if ($data['cost_byair'] != 0) {
-                                                                                                                                                                          echo $data['cost_byair'];
-                                                                                                                                                                        } ?>" placeholder="" size="20" onkeyup="sum_total_keseluruhan();" /></td>
-                        <td align="center"></td>
-                      </tr>
-                      <tr>
-                        <td height="24" colspan="8" align="right" valign="bottom"><strong>Total Keseluruhan =</strong></td>
-                        <td colspan="2" align="left" valign="top"><input name="cost_cf" id="cost_cf" class="form-control" type="text" required="required" value="<?php echo $data['cost_cf']; ?>" placeholder="" size="20" onkeyup="sum_total_keseluruhan();" /></td>
-                        <td align="center"></td>
-                      </tr>
-                      <tr>
-                        <td height="24" colspan="8" align="right" valign="bottom">Nilai Tukar (satuan dalam rupiah) =</td>
-                        <td colspan="2" align="left" valign="top"><input id="nilai_tukar" name="nilai_tukar" class="form-control" type="text" readonly="readonly" value="1" placeholder="" size="20" onkeyup="sum_total_keseluruhan();" /></td>
-                        <td align="center"></td>
-                      </tr>
-                      <tr>
-                        <td height="24" colspan="8" align="right" valign="bottom"><strong>Total Keseluruhan</strong> (Rupiah) =</td>
-                        <td colspan="2" align="left" valign="top"><?php
-                                                                  $mu = mysqli_fetch_array(mysqli_query($koneksi, " select * from utang_piutang where no_faktur_no_po='" . $data['no_po_pesan'] . "'"));
-                                                                  if ($mu['nominal'] != 0) {
-                                                                    $total_rupiah = $mu['nominal'];
-                                                                  }
-                                                                  ?>
-                          <input name="dalam_rupiah" id="dalam_rupiah" type="text" required class="form-control" value="<?php echo $total_rupiah; ?>" placeholder="Auto" size="20" readonly="readonly" />
-                        </td>
-                        <td align="center"></td>
-                      </tr>
-                  </table>
-                </div>
-
+                <div id="data-barang-pesan"></div>
                 <center>
                   <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['adminpodalam'])) { ?>
-                    <a href="index.php?page=tambah_po_alkes&simpan_barang=1&id=<?php echo $_GET['id']; ?>"><button name="simpan_barang" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan</button></a><?php } ?>
+                    <!-- <a href="index.php?page=tambah_po_alkes&simpan_barang=1&id=<?php echo $_GET['id']; ?>"> -->
+                    <button name="simpan_barang" onclick="simpanData(); return false;" class="btn btn-success" type="button"><span class="fa fa-check"></span> Simpan</button>
+                    <!-- </a> -->
+                  <?php } ?>
                 </center>
-                </form>
               </div>
             </div>
           </div>
@@ -336,41 +135,48 @@ if (isset($_GET['id_hapus'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center">Tambah Barang</h4>
       </div>
-      <form method="post">
+      <form id="formTambah" method="post" onsubmit="tambahData(); return false;">
         <div class="modal-body">
-
+          <input name="id" type="hidden" value="<?php echo $_GET['id'] ?>">
+          <label>Alkes</label>
           <select name="id_akse" id="id_akse" class="form-control select2" autofocus="autofocus" required onchange="changeValue(this.value)" style="width:100%">
-            <option value="">-- Pilih Alkes</option>
+            <option value="">...</option>
             <?php
             $q = mysqli_query($koneksi, "select * from barang_gudang order by nama_brg ASC");
             $jsArray = "var dtBrg = new Array();
-";
+            ";
             while ($d = mysqli_fetch_array($q)) { ?>
               <option value="<?php echo $d['id']; ?>"><?php echo $d['nama_brg'] . " - " . $d['tipe_brg']; ?></option>
             <?php
               $jsArray .= "dtBrg['" . $d['id'] . "'] = {tipe_akse:'" . addslashes($d['tipe_brg']) . "',
-						merk_akse:'" . addslashes($d['merk_brg']) . "'
-						};";
+                merk_akse:'" . addslashes($d['merk_brg']) . "'
+              };";
             } ?>
 
           </select><br /><br />
+          <label>Tipe</label>
           <input id="tipe_akse" name="tipe_akse" class="form-control" type="text" placeholder="Tipe" disabled="disabled" />
           <br />
+          <label>Merk</label>
           <input id="merk_akse" name="merk_akse" class="form-control" type="text" placeholder="Merk" disabled="disabled" />
           <br />
-          <input id="qty" required="required" name="qty" class="form-control" type="text" placeholder="Qty" onkeyup="sum();" size="2" />
+          <label>Kuantitas</label>
+          <input id="qty" required="required" name="qty" class="form-control" type="text" placeholder="Qty" size="2" />
           <br />
+          <label>Mata Uang</label>
+          <input type="hidden" name="mata_uang_id" value="<?php echo $data['mata_uang_id']; ?>">
           <input name="mata" class="form-control" type="text" placeholder="Mata Uang" disabled="disabled" value="<?php
                                                                                                                   $q_uang = mysqli_fetch_array(mysqli_query($koneksi, "select * from mata_uang where id=" . $data['mata_uang_id'] . ""));
                                                                                                                   echo $q_uang['jenis_mu'];
                                                                                                                   ?>" />
           <br />
-          <input id="harga_perunit" name="harga_perunit" class="form-control" type="text" onkeyup="sum();" required="required" size="10" placeholder="Harga Perunit" />
+          <label>Harga Satuan</label>
+          <input id="harga_perunit" name="harga_perunit" class="form-control" type="text" required="required" size="10" placeholder="Harga Perunit" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
           <br />
-          <input id="diskon" name="diskon" onkeyup="sum();" class="form-control" type="text" placeholder="Diskon" required="required" size="5" />
+          <label>Diskon (%)</label>
+          <input id="diskon" name="diskon" class="form-control" type="text" placeholder="Diskon" required="required" size="5" />
           <br />
-          <input id="total_harga" name="total_harga" class="form-control" type="text" placeholder="Total Harga" readonly="readonly" size="10" />
-          <br />
+          <label>Catatan Spek</label>
           <textarea name="catatan_spek" class="form-control" placeholder="Catatan Spek"></textarea>
           <br />
           <script type="text/javascript">
@@ -387,7 +193,10 @@ if (isset($_GET['id_hapus'])) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['adminpodalam'])) { ?><button name="simpan_tambah_aksesoris" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button><?php } ?>
+          <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['adminpodalam'])) { ?>
+            <button name="simpan_tambah_aksesoris" class="btn btn-success" type="submit">
+              <span class="fa fa-plus"></span> Simpan</button>
+          <?php } ?>
         </div>
       </form>
     </div>
@@ -395,3 +204,184 @@ if (isset($_GET['id_hapus'])) {
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="modal-ubahbarang">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Ubah Barang</h4>
+      </div>
+      <form id="formUbah" method="post" onsubmit="ubahData(); return false;">
+        <div class="modal-body">
+          <input id="id" name="id" type="hidden" value="<?php echo $_GET['id'] ?>">
+          <input type="hidden" name="id_ubah" id="id_ubah" />
+          <label>Qty</label>
+          <input name="qty2" id="qty2" class="form-control" type="text" required placeholder="" value="<?php echo $data_akse['qty']; ?>" autofocus>
+          <br />
+          <label>Harga Per Unit</label>
+          <input name="harga_perunit2" id="harga_perunit2" class="form-control" type="text" required onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" placeholder="">
+          <br />
+          <label>Diskon (%)</label>
+          <input name="diskon2" id="diskon2" class="form-control" type="text" required placeholder="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan</button>
+          <!-- <script type="text/javascript">
+                                        function sum<?php echo $data_akse['idd']; ?>() {
+                                            var txtFirstNumberValue = document.getElementById('qty<?php echo $data_akse['idd']; ?>').value;
+                                            var txtSecondNumberValue = document.getElementById('harga_perunit<?php echo $data_akse['idd']; ?>').value;
+                                            var txtThirdNumberValue = document.getElementById('diskon<?php echo $data_akse['idd']; ?>').value;
+                                            var result = parseFloat(txtFirstNumberValue) * parseFloat(txtSecondNumberValue) - (parseFloat(txtFirstNumberValue) * parseFloat(txtSecondNumberValue) * (parseFloat(txtThirdNumberValue) / 100));
+                                            if (!isNaN(result)) {
+                                                document.getElementById('total_harga<?php echo $data_akse['idd']; ?>').value = result;
+                                            }
+                                        }
+                                    </script> -->
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<script>
+  function dataBarang() {
+    $.get("data/data-barang-pesan-kelola.php", {
+        id: <?php echo $_GET['id']; ?>
+      },
+      function(data) {
+        $('#data-barang-pesan').html(data);
+      }
+    );
+  }
+
+  function modalUbah(id, qty, harga, diskon) {
+    $('#id_ubah').val(id);
+    $('#qty2').val(qty);
+    $('#harga_perunit2').val(harga);
+    $('#diskon2').val(diskon);
+    $('#modal-ubahbarang').modal('show');
+  }
+
+  function simpanData() {
+    showLoading(1);
+    $.post("data/simpan-barang-kelola.php", {
+        id: $('#id_simpan').val(),
+        dalam_rupiah: $('#dalam_rupiah').val(),
+        total_price: $('#total_price').val(),
+        total_price_ppn: $('#total_price_ppn').val(),
+        cost_byair: $('#cost_byair').val(),
+        cost_cf: $('#cost_cf').val(),
+        nilai_tukar: $('#nilai_tukar').val()
+      },
+      function(data) {
+        showLoading(0);
+        if (data == 'S') {
+          Swal.fire({
+            customClass: {
+              confirmButton: 'bg-green',
+              cancelButton: 'bg-white',
+            },
+            title: 'Berhasil Di Simpan !',
+            text: 'Data Sukses Disimpan',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+            allowOutsideClick: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = 'index.php?page=ubah_pembelian_alkes&id=<?php echo $_GET['id'] ?>';
+            }
+          })
+        } else {
+          alertSimpan('F')
+        }
+      }
+    );
+  }
+
+  function tambahData() {
+    var dataform = $('#formTambah')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/tambah-barang-kelola.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-tambahbarang').modal('hide');
+          dataform.reset();
+          dataBarang();
+          alertSimpan('S')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function ubahData(id) {
+    var dataform = $('#formUbah')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/ubah-barang-kelola.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-ubahbarang').modal('hide');
+          dataform.reset();
+          dataBarang();
+          alertSimpan('S')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function hapusData(id) {
+    Swal.fire({
+      customClass: {
+        confirmButton: 'bg-red',
+        cancelButton: 'bg-white',
+      },
+      title: 'Yakin Akan Menghapus Item Ini ? ?',
+      text: 'Data Akan Dihapus Secara Permanen',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya , Hapus',
+      cancelButtonText: 'Batal',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.post("data/hapus-barang-kelola.php", {
+            id_hapus: id,
+            id: <?php echo $_GET['id']; ?>
+          },
+          function(data) {
+            if (data == 'S') {
+              dataBarang();
+              alertHapus('S');
+            } else {
+              alertHapus('F');
+            }
+          }
+        );
+      }
+    })
+  }
+
+  $(document).ready(function() {
+    dataBarang();
+  });
+</script>

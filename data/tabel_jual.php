@@ -187,29 +187,6 @@ error_reporting(0);
         <td align="center"></td>
     </tr>
     <tr>
-        <td colspan="7" align="right">Diskon (
-            <?php
-            if (isset($_SESSION['diskon']) and $_SESSION['diskon'] != '') {
-                echo $_SESSION['diskon'];
-            } else {
-                echo "...";
-            }
-            ?>
-            %)
-            <button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs" onclick="$('#diskon').focus();"><span class="fa fa-edit"></span></button>
-        </td>
-        <td align="right"><?php
-                            if (isset($_SESSION['diskon'])) {
-                                $diskon = $_SESSION['diskon'];
-                                echo $diskon . "%";
-                            } else {
-                                echo "....";
-                            }
-                            ?></td>
-        <td align="center"></td>
-        <td align="center"></td>
-    </tr>
-    <tr>
         <td colspan="7" align="right">PPN (<?php
                                             if (isset($_SESSION['ppn']) and $_SESSION['ppn'] != '') {
                                                 echo $_SESSION['ppn'];
@@ -294,7 +271,7 @@ error_reporting(0);
                     echo "Rp" . number_format($total2, 2, ',', '.'); ?>
                     <script>
                         $(document).ready(function() {
-                            $('#nominal').val('<?php echo $total3; ?>');
+                            $('#nominall').val('<?php echo $total3; ?>');
                         });
                     </script>
                 </strong></h4>
@@ -303,16 +280,39 @@ error_reporting(0);
         <td align="center"></td>
     </tr>
     <tr>
-        <td colspan="7" align="right" valign="bottom"><strong>Fee Supplier (DPP(Tanpa Ongkir)-(PPN dari DPP(Tanpa Ongkir)+PPh dari DPP(Tanpa Ongkir)+Zakat dari DPP(Dengan Ongkir)+Biaya Bank)</strong>)<strong>*Diskon</strong></td>
+        <td colspan="7" align="right">Diskon (
+            <?php
+            if (isset($_SESSION['diskon']) && $_SESSION['diskon'] != '') {
+                echo $_SESSION['diskon'];
+            } else {
+                echo "...";
+            }
+            ?>
+            %)
+            <button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs" onclick="$('#diskon').focus();"><span class="fa fa-edit"></span></button>
+        </td>
+        <td align="right"><?php
+                            if (isset($_SESSION['diskon'])) {
+                                $diskon = $_SESSION['diskon'];
+                                echo $diskon . "%";
+                            } else {
+                                echo "....";
+                            }
+                            ?></td>
+        <td align="center"></td>
+        <td align="center"></td>
+    </tr>
+    <tr>
+        <td colspan="7" align="right" valign="bottom"><strong>Fee Supplier (DPP(Tanpa Ongkir)-(PPN dari DPP(Tanpa Ongkir)+PPh dari DPP(Tanpa Ongkir)+Zakat dari DPP(Tanpa Ongkir)+Biaya Bank)</strong>)<strong>*Diskon</strong></td>
         <td align="right" valign="bottom">
             <strong>
                 <?php
                 $dpp_m = ($total1['total1'] / 1.1);
-                //$ppn_m = $dpp_m*$_SESSION['ppn']/100;
+                $ppn_m = $dpp_m*$_SESSION['ppn']/100;
                 $pph_m = $dpp_m * $_SESSION['pph'] / 100;
                 $zakat_m = $dpp_m * $_SESSION['zakat'] / 100;
                 $biaya_bank_m = $biaya_bank;
-                $fee_marketing = ($dpp_m - ($pph_m + $zakat_m + $biaya_bank_m)) * ($diskon / 100);
+                $fee_marketing = ($dpp_m - ($ppn_m + $pph_m + $zakat_m + $biaya_bank_m)) * ($diskon / 100);
                 echo "Rp" . number_format($fee_marketing, 2, ',', '.'); ?>
             </strong>
         </td>

@@ -1,120 +1,4 @@
 <?php
-if (isset($_POST['ubah_uji'])) {
-  $u = mysqli_query($koneksi, "update alat_uji_detail set soft_version='" . $_POST['soft_version'] . "',tgl_garansi_habis='" . $_POST['tgl_garansi'] . "',tgl_i='" . $_POST['tgl_i'] . "', tgl_f='" . $_POST['tgl_f'] . "', keterangan='" . $_POST['keterangan'] . "' where id=" . $_POST['id_ubah'] . "");
-  if ($u) {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Diubah ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location='index.php?page=ubah_uji&id_rumkit=$_GET[id_rumkit]';
-    })
-    </script>";
-  }
-}
-
-if (isset($_POST['ubahlampiran2'])) {
-
-  $qq = mysqli_fetch_array(mysqli_query($koneksi, "select * from alat_uji_detail where id=" . $_POST['id_f'] . ""));
-  unlink("gambar_fi/fungsi/$qq[lampiran_f]");
-  $max2 = mysqli_fetch_array(mysqli_query($koneksi, "select max(id)+1 as maks from alat_uji_detail"));
-  $ext2 = explode(".", $_FILES['lampiran_f']['name']);
-  if ($_FILES['lampiran_f']['name'] != '') {
-    $lamp_f = "Fungsi" . $_POST['id_f'] . "." . $ext2[1];
-  } else {
-    $lamp_f = "";
-  }
-  $u2 = mysqli_query($koneksi, "update alat_uji_detail set lampiran_f='" . $lamp_f . "' where id=" . $_POST['id_f'] . "");
-  if ($u2) {
-    copy($_FILES['lampiran_f']['tmp_name'], "gambar_fi/fungsi/" . $lamp_f);
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Diubah ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location='index.php?page=ubah_uji&id_rumkit=$_GET[id_rumkit]';
-    })
-    </script>";
-  }
-}
-
-if (isset($_POST['ubahlampiran1'])) {
-
-  $qq = mysqli_fetch_array(mysqli_query($koneksi, "select * from alat_uji_detail where id=" . $_POST['id_i'] . ""));
-  unlink("gambar_fi/instalasi/$qq[lampiran_i]");
-  $max2 = mysqli_fetch_array(mysqli_query($koneksi, "select max(id)+1 as maks from alat_uji_detail"));
-  $ext2 = explode(".", $_FILES['lampiran_i']['name']);
-  if ($_FILES['lampiran_i']['name'] != '') {
-    $lamp_f = $_POST['id_i'] . "." . $ext2[1];
-  } else {
-    $lamp_f = "";
-  }
-  $u2 = mysqli_query($koneksi, "update alat_uji_detail set lampiran_i='" . $lamp_f . "' where id=" . $_POST['id_i'] . "");
-  if ($u2) {
-    copy($_FILES['lampiran_i']['tmp_name'], "gambar_fi/instalasi/" . $lamp_f);
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Diubah ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location='index.php?page=ubah_uji&id_rumkit=$_GET[id_rumkit]';
-    })
-    </script>";
-  }
-}
-
-if (isset($_GET['id_hapus'])) {
-  $d = mysqli_fetch_array(mysqli_query($koneksi, "select * from alat_uji_detail where id=$_GET[id_hapus]"));
-  unlink("../gambar_fi/instalasi/$d[lampiran_i]");
-  unlink("../gambar_fi/fungsi/$d[lampiran_f]");
-  $hapus = mysqli_query($koneksi, "delete from alat_uji_detail where id=" . $_GET['id_hapus'] . "");
-  if ($hapus) {
-    mysqli_query($koneksi, "update barang_teknisi_detail set status_uji=0 where id=$d[barang_teknisi_detail_id]");
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Dihapus ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location='index.php?page=ubah_uji&id_rumkit=$_GET[id_rumkit]';
-    })
-    </script>";
-  } else {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Tidak Dapat Dihapus',
-      text: 'Kemungkinan Masih Ada Data di Pelatihan , Silakan Hapus Dulu di Pelatihan',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location='index.php?page=ubah_uji&id_rumkit=$_GET[id_rumkit]';
-    })
-    </script>";
-  }
-}
 
 if (isset($_POST['tambah_laporan'])) {
   $Result = mysqli_query($koneksi, "insert into alat_uji_detail values('','" . $_POST['id_akse'] . "','" . $_POST['soft_version'] . "','" . $_POST['tgl_garansi_habis'] . "','" . $_POST['tgl_i'] . "','" . $_POST['lampiran_i'] . "','" . $_POST['tgl_f'] . "','" . $_POST['lampiran_f'] . "','" . $_POST['keterangan'] . "')");
@@ -136,68 +20,11 @@ if (isset($_POST['tambah_laporan'])) {
   }
 }
 ?>
-<?php
-
-if (isset($_GET['simpan_barang']) == 1) {
-
-  //$insert_pembeli=mysqli_query($koneksi, "insert into pembeli values('','".$_SESSION['pembeli']."','".$_SESSION['provinsi']."','".$_SESSION['kabupaten']."','".$_SESSION['kecamatan']."','".$_SESSION['kelurahan']."','".$_SESSION['alamat']."','".$_SESSION['kontak_rs']."')");
-
-  $insert_pemakai = mysqli_query($koneksi, "insert into pemakai values('','" . $_SESSION['pemakai'] . "','" . $_SESSION['kontak1'] . "','" . $_SESSION['kontak2'] . "','" . $_SESSION['email'] . "')");
-
-  //$pembeli=mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_pembeli from pembeli"));
-  $id_pembeli = $_SESSION['pembeli'];
-  $pemakai = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_pemakai from pemakai"));
-  $id_pemakai = $pemakai['id_pemakai'];
-  //simpan barang dijual
-  $total = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual_hash"));
-  $simpan1 = mysqli_query($koneksi, "insert into barang_dijual values('','" . $_SESSION['tgl_jual'] . "','$total','$id_pembeli','$id_pemakai')");
-
-  $d1 = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_jual from barang_dijual"));
-  $id_jual = $d1['id_jual'];
-  //simpan barang pesan detail
-  $q2 = mysqli_query($koneksi, "select * from barang_dijual_hash");
-  $jml_baris = mysqli_num_rows($q2);
-  for ($i = 1; $i <= $jml_baris; $i++) {
-    $d2 = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual_hash where no=$i"));
-    $simpan2 = mysqli_query($koneksi, "insert into barang_dijual_detail values('','$id_jual','" . $d2['barang_gudang_detail_id'] . "','0')");
-    $up = mysqli_query($koneksi, "update barang_gudang_detail set status_terjual=1 where id=" . $d2['barang_gudang_detail_id'] . "");
-    $up2 = mysqli_query($koneksi, "update barang_gudang,barang_gudang_detail set stok_total=stok_total-1 where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=" . $d2['barang_gudang_detail_id'] . "");
-  }
-  if ($simpan1 and $simpan2) {
-    mysqli_query($koneksi, "delete from barang_dijual_hash");
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Disimpan ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      window.location='index.php?page=jual_barang';
-    })
-    </script>";
-  }
-}
-
-
-if (isset($_POST['simpan_tambah_aksesoris'])) {
-  $no = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual_hash")) + 1;
-  $simpan = mysqli_query($koneksi, "insert into barang_dijual_hash values('','$no','" . $_POST['no_seri'] . "')");
-  if ($simpan) {
-    echo "<script>window.location='index.php?page=simpan_jual_alkes2'</script>";
-  }
-}
-
-
-?>
-
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Instalasi &amp; Uji Fungsi</h1>
+      Instalasi & Uji Fungsi</h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       <li class="active"> Instalasi &amp; Uji Fungsi</li>
@@ -318,10 +145,9 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center">Ubah Instalasi & Uji Fungsi</h4>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form id="formUbah" onsubmit="simpanUbah(); return false">
         <div class="modal-body">
           <input type="hidden" name="id_ubah" id="id_ubah" />
-
           <label>Soft. Version</label>
           <input name="soft_version" class="form-control" type="text" required placeholder="Soft. Version" id="s_v"><br />
           <label>Tgl Garansi</label>
@@ -352,7 +178,7 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center">Ubah Lampiran Instalasi</h4>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form id="formData1" onsubmit="simpanInstalasi(); return false;">
         <div class="modal-body">
           <input type="hidden" name="id_i" id="id_i" />
           <input name="lampiran_i" type="file" class="form-control" />
@@ -376,7 +202,7 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center">Ubah Lampiran Uji Fungsi</h4>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form id="formData2" onsubmit="simpanUjiFungsi(); return false;">
         <div class="modal-body">
           <input type="hidden" name="id_f" id="id_f" />
           <input name="lampiran_f" type="file" class="form-control" />
@@ -392,7 +218,135 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-instalasi">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Lampiran Instalasi</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <img width="100%" height="auto" id="gambarInstalasi" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-ujifungsi">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Lampiran Uji Fungsi</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <img id="gambarUjifungsi" width="100%" height="auto" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function simpanUbah() {
+    var dataform = $('#formUbah')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "POST",
+      url: "data/simpan-ubah-uji.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-ubah').modal('hide');
+          alertSimpan('S');
+          loadMore(load_flag, key, status_b)
+          dataform.reset();
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function simpanInstalasi() {
+    var dataform = $('#formData1')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "POST",
+      url: "data/simpan-lampiran-instalasi.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-ubahinstalasi').modal('hide');
+          alertSimpan('S');
+          loadMore(load_flag, key, status_b)
+          dataform.reset();
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function simpanUjiFungsi() {
+    var dataform = $('#formData2')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "POST",
+      url: "data/simpan-lampiran-ujifungsi.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-ubahfungsi').modal('hide');
+          alertSimpan('S');
+          loadMore(load_flag, key, status_b)
+          dataform.reset();
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function modalInstalasi(lampiran) {
+    $('#gambarInstalasi').attr('src', 'gambar_fi/instalasi/' + lampiran);
+    $('#modal-instalasi').modal('show');
+  }
+
+  function modalUjifungsi(lampiran) {
+    $('#gambarUjifungsi').attr('src', 'gambar_fi/fungsi/' + lampiran);
+    $('#modal-ujifungsi').modal('show');
+  }
+
   function lampiranInstalasi(id) {
     document.getElementById("id_i").value = id;
     $('#modal-ubahinstalasi').modal('show');
@@ -427,7 +381,22 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id + '&id_rumkit=' + id2;
+        $.post("data/hapus-ubah-uji.php", {
+            id_hapus: id
+          },
+          function(data) {
+            if (data == 'S') {
+              alertHapus('S')
+              loadMore(load_flag, key, status_b)
+            }
+            else if (data == 'TB') {
+              alertCustom('F', 'Tidak Dapat Dihapus !', 'Sudah Ada Pelatihan')
+            }
+            else {
+              alertHapus('F')
+            }
+          }
+        );
       }
     })
   }

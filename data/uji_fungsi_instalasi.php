@@ -52,10 +52,9 @@ error_reporting(0);
                 <tr>
                     <th align="center">No</th>
                     <th>Nama RS/Dinas/Pusk./dll</th>
-                    <td align="center" valign="bottom"><strong>Alamat</strong>
-
-                    <td align="center"><strong>Kontak RS/Dinas/Dll</strong>
-                    <td align="center"><strong>Aksi</strong></th>
+                    <td align="center" valign="bottom"><strong>Alamat</strong></td>
+                    <td align="center"><strong>Kontak RS/Dinas/Dll</strong></td>
+                    <td align="center"><strong>Aksi</strong></td>
                 </tr>
             </thead>
             <?php

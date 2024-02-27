@@ -15,7 +15,7 @@ if (isset($_POST['tambah_header'])) {
 
     $total1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty*harga_satuan) as total1 from barang_gudang,barang_dijual_qty_hash where barang_gudang.id=barang_dijual_qty_hash.barang_gudang_id and akun_id=" . $_SESSION['id'] . ""));
 
-    $simpan1 = mysqli_query($koneksi, "insert into barang_dijual values('','" . $_SESSION['tgl_jual'] . "','" . $_SESSION['no_faktur'] . "','" . $_SESSION['no_kontrak'] . "','$id_pembeli','$id_pemakai','" . $_SESSION['marketing'] . "','" . $_SESSION['subdis'] . "','" . $_SESSION['ongkir'] . "','" . $_SESSION['diskon'] . "','" . $total1['total1'] . "','" . $_SESSION['ppn'] . "','" . $_SESSION['pph'] . "','" . $_SESSION['zakat'] . "','" . $_SESSION['biaya_bank'] . "','" . str_replace(",", ".", str_replace(".", "", $_POST['nominal'])) . "','1','" . $_SESSION['status_po'] . "')");
+    $simpan1 = mysqli_query($koneksi, "insert into barang_dijual values('','" . $_SESSION['tgl_jual'] . "','" . $_SESSION['no_faktur'] . "','" . $_SESSION['no_kontrak'] . "','$id_pembeli','$id_pemakai','" . $_SESSION['marketing'] . "','" . $_SESSION['subdis'] . "','" . $_SESSION['ongkir'] . "','" . $_SESSION['diskon'] . "','" . $total1['total1'] . "','" . $_SESSION['ppn'] . "','" . $_SESSION['pph'] . "','" . $_SESSION['zakat'] . "','" . $_SESSION['biaya_bank'] . "','" . str_replace(",", ".", str_replace(".", "", $_POST['nominal'])) . "','$_GET[dpp]','1','" . $_SESSION['status_po'] . "')");
 
     $d1 = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_jual from barang_dijual"));
     $id_jual = $d1['id_jual'];
@@ -255,7 +255,7 @@ if (isset($_POST['tambah_laporan'])) {
                                                                                                           // echo "0";
                                                                                                           // }; 
                                                                                                           ?>" required="required" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"><br /> -->
-          <input name="nominal" class="form-control" type="text" id="nominal" placeholder="" required="required" readonly><br />
+          <input name="nominal" class="form-control" type="text" id="nominall" placeholder="" required="required" readonly><br />
           <label>Klien</label>
           <input name="klien" class="form-control" type="text" placeholder="" value="<?php echo $sel['nama_pembeli'];  ?>" required="required"><br />
           <label>Deskripsi</label>
@@ -488,6 +488,40 @@ if (isset($_POST['tambah_laporan'])) {
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-ongkir11">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Nilai Diskon, PPN</h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" onsubmit="simpanLainnya2(); return false;">
+        <div class="modal-body">
+          
+          <label>Diskon (%)</label>
+          <input id="diskon2" name="diskon2" class="form-control" type="text" placeholder="Gunakan Tanda '.' Untuk Koma" value="<?php if (isset($_SESSION['diskon'])) {
+                                                                                                                                echo $_SESSION['diskon'];
+                                                                                                                              } ?>">
+          <br />
+          <label>PPN (%)</label>
+          <input id="ppn2" name="ppn2" class="form-control" type="text" placeholder="Gunakan Tanda '.' Untuk Koma" value="<?php if (isset($_SESSION['ppn'])) {
+                                                                                                                          echo $_SESSION['ppn'];
+                                                                                                                        } ?>" <?php echo $focus_ppn; ?>>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="input_ongkir" class="btn btn-info" type="submit"><span class="fa fa-check"></span>Simpan</button>
+        </div>
+      </form>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <div class="modal fade" id="modal-ubah">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -496,7 +530,7 @@ if (isset($_POST['tambah_laporan'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center"><strong>Ubah Kuantitas & Harga Barang Yang Dijual</strong></h4>
       </div>
-      <form method="post" id="form-ubah" enctype="multipart/form-data" onsubmit="ubahBarang(); return false;">
+      <form method="post" enctype="multipart/form-data" onsubmit="ubahBarang(); return false;">
         <div class="modal-body">
           <input id="id_ubah" type="hidden" />
           <label>Qty</label>
@@ -507,7 +541,7 @@ if (isset($_POST['tambah_laporan'])) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button name="simpann" class="btn btn-success" type="submit" onclick="ubahBarang(); return false;"><span class="fa fa-check"></span> Ubah</button>
+          <button name="simpann" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Ubah</button>
         </div>
       </form>
     </div>
@@ -558,28 +592,11 @@ if (isset($_POST['tambah_laporan'])) {
         // alert(data);
         if (data == 'S') {
           $('#modal-ubah').modal('hide');
-          Swal.fire({
-            customClass: {
-              confirmButton: 'bg-green',
-              cancelButton: 'bg-white',
-            },
-            title: 'Berhasil Disimpan',
-            icon: 'success',
-            confirmButtonText: 'OK',
-          });
+          alertSimpan('S');
           loading_jual();
           getDataBarang();
         } else {
-          $('#modal-ubah').modal('hide');
-          Swal.fire({
-            customClass: {
-              confirmButton: 'bg-red',
-              cancelButton: 'bg-white',
-            },
-            title: 'Gagal Disimpan',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          })
+          alertSimpan('F');
           loading_jual();
           getDataBarang();
         }
@@ -649,8 +666,15 @@ if (isset($_POST['tambah_laporan'])) {
     });
   }
 
-  async function getDataBarang() {
-    await $.get("data/tabel_jual.php",
+  function getDataBarang() {
+    let dpp = getVars('dpp');
+    let url = '';
+    if (dpp == 1) {
+      url = "data/tabel_jual.php";
+    } else {
+      url = "data/tabel_jual_no_dpp.php";
+    }
+    $.get(url,
       function(data) {
         $('#tabel_jual').html(data);
       }
@@ -771,6 +795,23 @@ if (isset($_POST['tambah_laporan'])) {
       },
       function() {
         $('#modal-ongkir1').modal('hide');
+        loading_jual();
+        getDataBarang();
+      }
+    );
+  }
+
+  function simpanLainnya2() {
+    $.post("data/simpan_barang_jual_lainnya.php", {
+        ongkir: 0,
+        diskon: $('#diskon2').val(),
+        ppn: $('#ppn2').val(),
+        pph: 0,
+        zakat: 0,
+        biaya_bank: 0,
+      },
+      function() {
+        $('#modal-ongkir11').modal('hide');
         loading_jual();
         getDataBarang();
       }

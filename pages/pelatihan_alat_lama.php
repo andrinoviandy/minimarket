@@ -1,44 +1,3 @@
-<?php
-if (isset($_POST['simpan_1'])) {
-  $id = $_POST['id_lamp1'];
-  $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id)+1 as maks from alat_pelatihan"));
-  $ext = explode(".", $_FILES['lamp1']['name']);
-  //$ext2 = explode(".",$_FILES['lamp2']['name']);
-  if ($_FILES['lamp1']['name'] != '') {
-    $lamp1 = "Lampiran1_" . $max['maks'] . "." . $ext[1];
-  } else {
-    $lamp1 = "";
-  }
-  //$lamp2="Lampiran2_".$max['maks'].".".$ext2[1];
-  $R = mysqli_query($koneksi, "update alat_pelatihan set lamp1='$lamp1' where id=$id");
-  if ($R) {
-    copy($_FILES['lamp1']['tmp_name'], "gambar_pelatihan/lampiran1/$lamp1");
-    echo "<script type='text/javascript'>
-		  window.location='index.php?page=pelatihan_alat_lama&id_rumkit=$_GET[id_rumkit]';
-		</script>";
-  }
-}
-
-if (isset($_POST['simpan_2'])) {
-  $id = $_POST['id_lamp2'];
-  $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id)+1 as maks from alat_pelatihan"));
-  //$ext = explode(".",$_FILES['lamp1']['name']);
-  $ext2 = explode(".", $_FILES['lamp2']['name']);
-  //$lamp1="Lampiran1_".$max['maks'].".".$ext[1];
-  if ($_FILES['lamp2']['name'] != '') {
-    $lamp2 = "Lampiran2_" . $max['maks'] . "." . $ext2[1];
-  } else {
-    $lamp2 = "";
-  }
-  $R = mysqli_query($koneksi, "update alat_pelatihan set lamp2='$lamp2' where id=$id");
-  if ($R) {
-    copy($_FILES['lamp2']['tmp_name'], "gambar_pelatihan/lampiran2/$lamp2");
-    echo "<script type='text/javascript'>
-		  window.location='index.php?page=pelatihan_alat_lama&id_rumkit=$_GET[id_rumkit]';
-		</script>";
-  }
-}
-?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -101,185 +60,26 @@ if (isset($_POST['simpan_2'])) {
                     </tr>
                   </table>
                 </span><br /><br /><br />
-                <div class="table-responsive">
-                  <table width="100%" id="example1" class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <td align="center"><strong>No</strong>
-                          </th>
-
-                        <th valign="bottom"><strong>Nama Alkes</strong></th>
-                        <th valign="bottom"><strong>No Seri</strong></th>
-
-                        <th valign="bottom"><strong>Jumlah Peserta</strong></th>
-                        <th valign="bottom"><strong>Pelatih</strong></th>
-                        <th valign="bottom"><strong>Tgl Pelatihan</strong></th>
-                        <td align="center" valign="bottom"><strong>Pelatihan Oleh</strong>
-                        <td align="center" valign="bottom"><strong>Lamp. 1
-                          </strong>
-                        <td align="center" valign="bottom"><strong>Lamp. 2
-                          </strong>
-                        <td align="center" valign="bottom"><strong>Aksi</strong></th>
-                      </tr>
-                    </thead>
-                    <?php
-
-                    // membuka file JSON
-                    if (isset($_SESSION['id_b'])) {
-                      $file = file_get_contents("http://localhost/ALKES/json/pelatihan_alat_lama.php?id_rumkit=$_GET[id_rumkit]&id_b=$_SESSION[id_b]");
-                    } else {
-                      $file = file_get_contents("http://localhost/ALKES/json/pelatihan_alat_lama.php?id_rumkit=$_GET[id_rumkit]");
-                    }
-                    $json = json_decode($file, true);
-                    $jml = count($json);
-                    for ($i = 0; $i < $jml; $i++) {
-                      //echo "Nama Barang ke-".$i." : " . $json[$i]['nama_brg'] . "<br />";
-                      //echo 'Nama Anggota ke-3 : ' . $json['2']['nama_brg'];
+                <div>
+                  <div class="pull pull-right">
+                    <?php //include "include/getFilter.php"; 
                     ?>
-                      <tr>
-                        <td align="center"><?php echo $i + 1; ?></td>
-                        <td <?php if ($json[$i]['status_batal'] == 1) {
-                              echo "bgcolor='red'";
-                            } ?>><?php echo $json[$i]['nama_brg']; ?>
-                        </td>
-                        <td><?php echo $json[$i]['no_seri_brg'] . " " . $json[$i]['nama_set']; ?></td>
-                        <td><?php echo $json[$i]['banyak_peserta'] . " Orang"; ?></td>
-                        <td><?php echo $json[$i]['pelatih']; ?></td>
-                        <td><?php echo date("d F Y", strtotime($json[$i]['tgl_pelatihan'])); ?></td>
-                        <td align="center"><?php echo $json[$i]['pelatihan_oleh']; ?></td>
-                        <td align="center">
-                          <a href="#" data-toggle="modal" data-target="#modal-ubahlamp1<?php echo $json[$i]['idd'] ?>"><small data-toggle="tooltip" title="Ubah Lampiran" class="label bg-blue pull pull-right pull-top">Ubah</small></a>
-                          <?php if ($json[$i]['lamp1'] != "") { ?>
-                            <a href="#" data-toggle="modal" data-target="#modal-lampiran1<?php echo $json[$i]['idd']; ?>"><img src="gambar_pelatihan/lampiran1/<?php echo $json[$i]['lamp1']; ?>" width="50px" /></a>
-                          <?php } ?>
-                        </td>
-                        <td align="center">
-                          <a href="#" data-toggle="modal" data-target="#modal-ubahlamp2<?php echo $json[$i]['idd'] ?>"><small data-toggle="tooltip" title="Ubah Lampiran" class="label bg-blue pull pull-right pull-top">Ubah</small></a>
-                          <?php if ($json[$i]['lamp2'] != "") { ?>
-                            <a href="#" data-toggle="modal" data-target="#modal-lampiran2<?php echo $json[$i]['idd']; ?>"><img src="gambar_pelatihan/lampiran2/<?php echo $json[$i]['lamp2']; ?>" width="50px" /></a>
-                          <?php } ?>
-                        </td>
-                        <td align="center">
-                          <?php if (!isset($_SESSION['id_b'])) { ?>
-                            <a href="pages/delete_pelatihan.php?id_rumkit=<?php echo $_GET['id_rumkit']; ?>&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')">
-                              <button class="btn btn-xs btn-danger">
-                                <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                              </button>
-                            </a>
-                            &nbsp;
-                          <?php } ?>
-                          <a href="index.php?page=ubah_latih&id=<?php echo $json[$i]['idd']; ?>">
-                            <button class="btn btn-xs btn-warning">
-                              <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                            </button>
-                          </a>
-                          &nbsp;
-                          <a href="index.php?page=sertifikat&id=<?php echo $json[$i]['idd']; ?>">
-                            <button class="btn btn-xs btn-primary">
-                              <span data-toggle="tooltip" title="Cetak Sertifikat Pelatiihan" class="fa fa-print"></span>
-                            </button>
-                          </a>
-                          &nbsp;
-                          <a href="cetak_report_training.php?id=<?php echo $json[$i]['idd'] ?>&alkes=<?php echo $json[$i]['nama_brg'] ?>&no_seri=<?php echo $json[$i]['no_seri_brg'] ?>">
-                            <button class="btn btn-xs btn-primary">
-                              <span data-toggle="tooltip" title="Download Report" class="glyphicon glyphicon-print"></span>
-                            </button>
-                          </a>
-                        </td>
-                      </tr>
-                      <div class="modal fade" id="modal-ubahlamp1<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog modal-sm">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title" align="center">Ubah Lampiran 1</h4>
-                            </div>
-                            <form method="post" enctype="multipart/form-data">
-                              <div class="modal-body">
-                                <input type="hidden" name="id_lamp1" value="<?php echo $json[$i]['idd'] ?>" />
-                                <input name="lamp1" type="file" class="form-control" />
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button name="simpan_1" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button>
-                              </div>
-                            </form>
-                          </div>
-                          <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                      </div>
-
-                      <div class="modal fade" id="modal-ubahlamp2<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog modal-sm">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title" align="center">Ubah Lampiran 2</h4>
-                            </div>
-                            <form method="post" enctype="multipart/form-data">
-                              <div class="modal-body">
-                                <input type="hidden" name="id_lamp2" value="<?php echo $json[$i]['idd'] ?>" />
-                                <input name="lamp2" type="file" class="form-control" />
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button name="simpan_2" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button>
-                              </div>
-                            </form>
-                          </div>
-                          <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                      </div>
-
-                      <div class="modal fade" id="modal-lampiran1<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <form method="post">
-                              <div class="modal-body">
-                                <img src="gambar_pelatihan/lampiran1/<?php echo $json[$i]['lamp1']; ?>" width="100%" height="auto" />
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                              </div>
-                            </form>
-                          </div>
-                          <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                      </div>
-
-                      <div class="modal fade" id="modal-lampiran2<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <form method="post">
-                              <div class="modal-body">
-                                <img src="gambar_pelatihan/lampiran2/<?php echo $json[$i]['lamp2']; ?>" width="100%" height="auto" />
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                              </div>
-                            </form>
-                          </div>
-                          <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                      </div>
-                    <?php } ?>
-                  </table>
+                    <?php include "include/atur_halaman.php"; ?>
+                  </div>
+                  <?php include "include/header_pencarian.php"; ?>
+                  <div class="">
+                    <?php include "include/getInputSearch.php"; ?>
+                    <div id="table" style="margin-top: 10px;"></div>
+                    <section class="col-lg-12">
+                      <center>
+                        <ul class="pagination">
+                          <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
+                          <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
+                        </ul>
+                        <?php include "include/getInfoPagingData.php"; ?>
+                      </center>
+                    </section>
+                  </div>
                 </div>
               </div>
             </div>
@@ -344,3 +144,170 @@ if (isset($_POST['jual'])) {
     </form>
   </div>
 </div>
+
+<div class="modal fade" id="modal-lampiran">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="title" align="center"></h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <img id="lampiran" width="100%" height="auto" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-ubahlamp1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Ubah Lampiran 1</h4>
+      </div>
+      <form id="formData1" onsubmit="simpanLamp1(); return false">
+        <div class="modal-body">
+          <input type="hidden" name="id_lamp1" id="id_lamp1" />
+          <input name="lamp1" type="file" class="form-control" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="simpan_1" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-ubahlamp2">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Ubah Lampiran 2</h4>
+      </div>
+      <form id="formData2" onsubmit="simpanLamp2(); return false">
+        <div class="modal-body">
+          <input type="hidden" name="id_lamp2" id="id_lamp2" />
+          <input name="lamp2" type="file" class="form-control" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="simpan_2" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<script>
+  function hapus(id) {
+    Swal.fire({
+      customClass: {
+        confirmButton: 'bg-red',
+        cancelButton: 'bg-white',
+      },
+      title: 'Anda Yakin Akan Menghapus Data Ini ?',
+      text: 'Data Akan Dihapus Secara Permanen',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya , Hapus',
+      cancelButtonText: 'Batal',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.post("data/hapus-alat-pelatihan.php", {
+            id_hapus: id
+          },
+          function(data) {
+            if (data == 'S') {
+              alertSimpan('S');
+              loadMore(load_flag, key, status_b)
+            } else {
+              alertSimpan('F');
+            }
+          }
+        );
+      }
+    })
+  }
+
+  function simpanLamp1() {
+    var dataform = $('#formData1')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "POST",
+      url: "data/simpan-lampiran1.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-ubahlamp1').modal('hide');
+          alertSimpan('S');
+          loadMore(load_flag, key, status_b)
+          dataform.reset();
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function simpanLamp2() {
+    var dataform = $('#formData2')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "POST",
+      url: "data/simpan-lampiran2.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-ubahlamp2').modal('hide');
+          alertSimpan('S');
+          loadMore(load_flag, key, status_b)
+          dataform.reset();
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function ubahLamp1(id) {
+    $('#id_lamp1').val(id);
+    $('#modal-ubahlamp1').modal('show');
+  }
+
+  function ubahLamp2(id) {
+    $('#id_lamp2').val(id);
+    $('#modal-ubahlamp2').modal('show');
+  }
+
+  function modalLampiran(name, gambar) {
+    $('#lampiran').attr('src', gambar);
+    $('#title').html(name);
+    $('#modal-lampiran').modal('show');
+  }
+</script>

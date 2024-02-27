@@ -40,13 +40,21 @@ if ($dt['harga_satuan'] != 0) {
 
         mysqli_query($koneksi, "update barang_dijual set ongkir=ongkir+" . str_replace(".", "", $_POST['ongkirr']) . "");
         $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual where id=" . $_POST['idd'] . ""));
-        $dpp = ($jml['total'] + $data['ongkir']) / 1.1;
-        mysqli_query($koneksi, "update barang_dijual set total_harga=$jml[total], neto='" . ($dpp - ($jml['total'] * $data['diskon_jual'] / 100) - (($dpp * $data['ppn_jual'] / 100) + ($dpp * $data['pph'] / 100) + $data['zakat'] + $data['biaya_bank'])) . "' where id=" . $_POST['idd'] . "");
+        $dpp = $_POST['dpp'] == 1 ? (($jml['total'] + $data['ongkir']) / 1.1) : ($jml['total'] + $data['ongkir']);
+        $diskon = $dpp * $data['diskon_jual'] / 100;
+        $ppn = $dpp * $data['ppn_jual'] / 100;
+        $pph = $dpp * $data['pph'] / 100;
+        $zakat = $dpp * $data['zakat'] / 100;
+        $biaya_bank = $data['biaya_bank'];
+        $neto = $_POST['dpp'] == 1 ? ($dpp - ($ppn + $pph + $zakat + $biaya_bank)) : ($dpp - $diskon + $ppn);
+        // mysqli_query($koneksi, "update barang_dijual set total_harga=$jml[total], neto='" . ($dpp - ($jml['total'] * $data['diskon_jual'] / 100) - (($dpp * $data['ppn_jual'] / 100) + ($dpp * $data['pph'] / 100) + $data['zakat'] + $data['biaya_bank'])) . "' where id=" . $_POST['idd'] . "");
+        mysqli_query($koneksi, "update barang_dijual set total_harga=$jml[total], neto='" . $neto . "' where id=" . $_POST['idd'] . "");
 
         //$update_piutang = mysqli_query($koneksi, "update utang_piutang set nominal=$jml[total] where no_faktur_no_po='".$data['no_po_jual']."'");
 
         if ($data['status_deal'] == 1) {
-            $update_piutang = mysqli_query($koneksi, "update utang_piutang set nominal=" . ($dpp - ($jml['total'] * $data['diskon_jual'] / 100) - ($dpp * $data['ppn_jual'] / 100) - ($dpp * $data['pph'] / 100) - $data['zakat'] - $data['biaya_bank']) . " where no_faktur_no_po='" . $data['no_po_jual'] . "'");
+            // $update_piutang = mysqli_query($koneksi, "update utang_piutang set nominal=" . ($dpp - ($jml['total'] * $data['diskon_jual'] / 100) - ($dpp * $data['ppn_jual'] / 100) - ($dpp * $data['pph'] / 100) - $data['zakat'] - $data['biaya_bank']) . " where no_faktur_no_po='" . $data['no_po_jual'] . "'");
+            $update_piutang = mysqli_query($koneksi, "update utang_piutang set nominal=" . $neto . " where no_faktur_no_po='" . $data['no_po_jual'] . "'");
         }
         echo "S";
     } else {

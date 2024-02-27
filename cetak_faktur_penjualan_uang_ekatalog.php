@@ -127,7 +127,7 @@ $jml_q = mysqli_num_rows($qq);
         </tr>
         <?php
 
-        $q = mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $data['idd'] . "");
+        $q = mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $_GET['id'] . "");
         $jml_q = mysqli_num_rows($q);
         $no = 0;
         while ($d = mysqli_fetch_array($q)) {
@@ -179,7 +179,7 @@ $jml_q = mysqli_num_rows($qq);
             <td colspan="4" align="right" valign="top"><strong></strong></td>
             <td align="right" valign="top"><strong>
                     <?php
-                    $t = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang,sum(harga_jual_saat_itu*qty_jual) as total from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $data['idd'] . ""));
+                    $t = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang,sum(harga_jual_saat_itu*qty_jual) as total from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $_GET['id'] . ""));
                     $total_ongkir = $t['total'] + $data['ongkir'];
                     echo number_format($total_ongkir, 0, ',', '.');
                     ?>
@@ -220,6 +220,17 @@ $jml_q = mysqli_num_rows($qq);
             <td width="50%" align="center">Hormat kami,</td>
         </tr>
     </table>
+    <script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
 </body>
 
 </html>

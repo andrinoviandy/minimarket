@@ -435,7 +435,7 @@ if (isset($_GET['page'])) {
 		$act2 = "active";
 		$sub_act2_2 = "active";
 		$gudang = "active";
-	} else if ($_GET['page'] == 'jual_barang_uang' or $_GET['page'] == 'ubah_barang_jual2_uang' or $_GET['page'] == 'ubah_jual_barang_uang' or $_GET['page'] == 'jual_alkes' or $_GET['page'] == 'jual_alkes2' or $_GET['page'] == 'simpan_jual_alkes2' or $_GET['page'] == 'simpan_jual_alkes') {
+	} else if ($_GET['page'] == 'jual_barang_uang' or $_GET['page'] == 'ubah_barang_jual2_uang' or $_GET['page'] == 'ubah_jual_barang_uang' or $_GET['page'] == 'jual_alkes' or $_GET['page'] == 'jual_alkes2' or $_GET['page'] == 'simpan_jual_alkes2' or $_GET['page'] == 'simpan_jual_alkes3' or $_GET['page'] == 'simpan_jual_alkes') {
 		$act2_2 = "active";
 		$sub_act2_2 = "active";
 		$sub_act2_2_1 = "active";

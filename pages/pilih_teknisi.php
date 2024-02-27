@@ -1,13 +1,6 @@
 <?php
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_teknisi where id=" . $_GET['id'] . ""));
 
-if (isset($_POST['simpan_teknisi'])) {
-  $sim = mysqli_query($koneksi, "update barang_teknisi,barang_teknisi_detail,barang_teknisi_detail_teknisi,barang_dikirim,barang_dikirim_detail,pembeli,barang_dijual,barang_gudang,barang_gudang_detail,tb_teknisi set estimasi='" . $_POST['estimasi'] . "', tgl_berangkat_teknisi='" . $_POST['tgl_berangkat'] . "',deskripsi='" . $_POST['deskripsi'] . "' where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual.id=barang_dikirim.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_teknisi_detail.id=barang_teknisi_detail_teknisi.barang_teknisi_detail_id and tb_teknisi.id=barang_teknisi_detail_teknisi.teknisi_id and barang_teknisi.id=" . $_POST['id_ubah'] . " and barang_gudang.id=" . $_POST['id_gudang'] . "");
-  if ($sim) {
-    echo "<script>window.location='index.php?page=pilih_teknisi&id=$_POST[id_ubah]'</script>";
-  }
-}
-
 if (isset($_GET['simpan_barang']) == 1) {
   $cek = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_teknisi_hash where akun_id=" . $_SESSION['id'] . ""));
   if ($cek != 0) {
@@ -61,73 +54,6 @@ if (isset($_GET['simpan_barang']) == 1) {
               confirmButtonText: 'OK',
             }).then(() => {
               window.location.href = '?page=tambah_spk_masuk2';
-            })
-            </script>";
-  }
-}
-
-
-if (isset($_POST['simpan_tambah_aksesoris'])) {
-  //$no=mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual_hash"))+1;
-
-  if ($_POST['id_brg'] == 'all') {
-    $que = mysqli_query($koneksi, "select * from barang_teknisi_detail where barang_teknisi_id=" . $_GET['id'] . "");
-    while ($data_que = mysqli_fetch_array($que)) {
-      $simpan = mysqli_query($koneksi, "insert into barang_teknisi_detail_teknisi values('','" . $_GET['id'] . "','" . $data_que['id'] . "','" . $_POST['id_teknisi'] . "','" . $_POST['estimasi'] . "','" . $_POST['tgl_berangkat'] . "','" . $_POST['deskripsi'] . "')");
-      mysqli_query($koneksi, "update barang_teknisi_detail set status_teknisi=1 where id=" . $data_que['id'] . "");
-    }
-    if ($simpan) {
-      echo "<script>
-		      window.location='index.php?page=pilih_teknisi&id=$_GET[id]'</script>";
-    }
-  } else {
-    $que = mysqli_query($koneksi, "select *,barang_teknisi_detail.id as idd from barang_gudang,barang_gudang_detail,barang_dijual,barang_dikirim,barang_dikirim_detail,barang_teknisi,barang_teknisi_detail where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual.id=barang_dikirim.barang_dijual_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_teknisi.id=" . $_GET['id'] . " and barang_gudang.id=" . $_POST['id_brg'] . "");
-    while ($data_que = mysqli_fetch_array($que)) {
-      $simpan = mysqli_query($koneksi, "insert into barang_teknisi_detail_teknisi values('','" . $_GET['id'] . "','" . $data_que['idd'] . "','" . $_POST['id_teknisi'] . "','" . $_POST['estimasi'] . "','" . $_POST['tgl_berangkat'] . "','" . $_POST['deskripsi'] . "')");
-      mysqli_query($koneksi, "update barang_teknisi_detail set status_teknisi=1 where id=" . $data_que['idd'] . "");
-    }
-    if ($simpan) {
-      echo "<script>
-		      window.location='index.php?page=pilih_teknisi&id=$_GET[id]'</script>";
-    }
-  }
-}
-
-if (isset($_GET['id_hapus'])) {
-  $cek = mysqli_num_rows(mysqli_query($koneksi, "select * from alat_uji_detail,barang_teknisi_detail,barang_dikirim_detail,barang_gudang_detail,barang_gudang,barang_teknisi where barang_teknisi_detail.id=alat_uji_detail.barang_teknisi_detail_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_gudang.id=" . $_GET['id_hapus'] . " and barang_teknisi.id=" . $_GET['id'] . ""));
-  if ($cek == 0) {
-    $sq = mysqli_query($koneksi, "select *,barang_teknisi_detail_teknisi.id as id_detail_teknisi, barang_teknisi_detail.id as id_d from barang_teknisi_detail_teknisi,barang_teknisi_detail,barang_dikirim_detail,barang_gudang_detail,barang_gudang,barang_teknisi where barang_teknisi_detail.id=barang_teknisi_detail_teknisi.barang_teknisi_detail_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_gudang.id=" . $_GET['id_hapus'] . " and barang_teknisi.id=" . $_GET['id'] . "");
-    while ($da = mysqli_fetch_array($sq)) {
-      $del = mysqli_query($koneksi, "delete from barang_teknisi_detail_teknisi where id=" . $da['id_detail_teknisi'] . "");
-      mysqli_query($koneksi, "update barang_teknisi_detail set status_teknisi=0 where id=" . $da['id_d'] . "");
-    }
-    if ($del) {
-      echo "<script>window.location='index.php?page=pilih_teknisi&id=$_GET[id]';
-	        </script>";
-    } else {
-      echo "<script>
-            Swal.fire({
-              customClass: {
-                confirmButton: 'bg-green',
-                cancelButton: 'bg-white',
-              },
-              title: 'Data Gagal Dihapus',
-              icon: 'success',
-              confirmButtonText: 'OK',
-            })
-            </script>";
-    }
-  } else {
-    echo "<script>
-            Swal.fire({
-              customClass: {
-                confirmButton: 'bg-green',
-                cancelButton: 'bg-white',
-              },
-              title: 'Data Tidak Dapat Dihapus',
-              title: 'Sudah Dilakukan Instalasi & Uji Fungsi',
-              icon: 'success',
-              confirmButtonText: 'OK',
             })
             </script>";
   }
@@ -187,126 +113,10 @@ if (isset($_GET['id_hapus'])) {
                 <button class="btn btn-success pull pull-right" data-toggle="modal" data-target="#modal-tambah"><span class="fa fa-plus"></span> Tambah</button>
                 <br /><br />
                 <div class="table-responsive">
-                  <table width="100%" id="example1" class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th align="center" valign="bottom">No</th>
-                        <th valign="bottom"><strong> Nama Alkes</strong></th>
-                        <th valign="bottom"><strong> Teknisi</strong></th>
-                        <th valign="bottom"><strong>Estimasi</strong></th>
-                        <th valign="bottom"><strong>Tgl Berangkat</strong></th>
-                        <th valign="bottom"><strong>Deskripsi</strong></th>
-                        <th align="center" valign="bottom"><strong>Aksi</strong></th>
-                      </tr>
-                    </thead>
-
-                    <?php
-
-                    $no = 0;
-                    $q_akse = mysqli_query($koneksi, "select *,barang_teknisi.id as idd,barang_gudang.id as id_gudang from barang_teknisi,barang_teknisi_detail,barang_teknisi_detail_teknisi,barang_dikirim,barang_dikirim_detail,pembeli,barang_dijual,barang_gudang,barang_gudang_detail,tb_teknisi where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual.id=barang_dikirim.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_teknisi_detail.id=barang_teknisi_detail_teknisi.barang_teknisi_detail_id and tb_teknisi.id=barang_teknisi_detail_teknisi.teknisi_id and barang_teknisi.id=" . $_GET['id'] . " group by barang_gudang.id order by nama_brg ASC");
-                    $jm = mysqli_num_rows($q_akse);
-
-                    while ($data_akse = mysqli_fetch_array($q_akse)) {
-                      $no++;
-                    ?>
-                      <tr>
-                        <td align=""><?php echo $no; ?></td>
-                        <td align="left"><?php echo $data_akse['nama_brg'] . " / " . $data_akse['tipe_brg']; ?>
-                        </td>
-                        <td align="left"><?php echo $data_akse['nama_teknisi'] ?></td>
-                        <td><?php echo date("d/M/Y", strtotime($data_akse['estimasi'])); ?></td>
-                        <td><?php
-                            if ($data_akse['tgl_berangkat_teknisi'] != 0000 - 00 - 00) {
-                              echo date("d/M/Y", strtotime($data_akse['tgl_berangkat_teknisi']));
-                            }
-                            ?></td>
-                        <td><?php echo $data_akse['deskripsi']; ?></td>
-                        <td>
-                          <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $data_akse['idd'] ?>">
-                            <button class="btn btn-xs btn-warning">
-                              <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                            </button>
-                          </a>
-                          &nbsp;
-                          <!-- <a href="index.php?page=pilih_teknisi&id_hapus=<?php echo $data_akse['id_gudang']; ?>&id=<?php echo $_GET['id']; ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"> -->
-                          <a href="#" onclick="hapus(<?php echo $_GET['id']; ?>, <?php echo $data_akse['id_gudang']; ?>)">
-                            <button class="btn btn-xs btn-danger">
-                              <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                            </button>
-                          </a>
-                        </td>
-                      </tr>
-                      <div class="modal fade" id="modal-ubah<?php echo $data_akse['idd']; ?>">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title" align="center">Ubah Data</h4>
-                            </div>
-                            <form method="post">
-                              <div class="modal-body">
-                                <p align="justify">
-                                  <input type="hidden" value="<?php echo $data_akse['idd']; ?>" name="id_ubah" />
-                                  <input type="hidden" value="<?php echo $data_akse['id_gudang']; ?>" name="id_gudang" />
-                                  <label>Nama Alkes</label>
-                                  <select name="id_brg" id="id_brg" class="form-control select2" disabled="disabled" autofocus="autofocus" required onchange="changeValue(this.value)" style="width:100%">
-                                    <option value="">--Pilih--</option>
-                                    <option value="all">SEMUA NYA</option>
-                                    <?php
-                                    $q = mysqli_query($koneksi, "select *,barang_gudang.id as idd from barang_dikirim,barang_dikirim_detail, barang_dijual, barang_gudang,barang_gudang_detail,barang_teknisi,barang_teknisi_detail where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual.id=barang_dikirim.barang_dijual_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_teknisi.id=" . $_GET['id'] . " group by tipe_brg order by barang_dikirim.no_po_jual ASC");
-                                    $jsArray = "var dtBrg = new Array();
-";
-                                    while ($d = mysqli_fetch_array($q)) { ?>
-                                      <option <?php if ($data_akse['id_gudang'] == $d['idd']) {
-                                                echo "selected";
-                                              } ?> value="<?php echo $d['idd']; ?>"><?php echo $d['nama_brg'] . " / " . $d['tipe_brg']; ?></option>
-                                    <?php
-                                      $jsArray .= "dtBrg['" . $d['idd'] . "'] = {tgl_kirim:'" . addslashes($d['tgl_kirim']) . "',
-						nama_pembeli:'" . addslashes($d['nama_pembeli']) . "',
-						nama_paket:'" . addslashes($d['nama_paket']) . "'
-						};";
-                                    } ?>
-                                  </select>
-                                  <br><br>
-                                  <label>Teknisi</label>
-                                  <select name="id_teknisi" id="id_teknisi" class="form-control select2" disabled="disabled" required style="width:100%">
-                                    <option value="">...</option>
-                                    <?php
-                                    $q_seri = mysqli_query($koneksi, "select * from tb_teknisi order by nama_teknisi ASC");
-                                    while ($d_seri = mysqli_fetch_array($q_seri)) {
-                                    ?>
-                                      <option <?php if ($data_akse['teknisi_id'] == $d_seri['id']) {
-                                                echo "selected";
-                                              } ?> value="<?php echo $d_seri['id']; ?>">
-                                        <?php echo $d_seri['nama_teknisi'] . " / Bidang : " . $d_seri['bidang']; ?></option>
-                                    <?php } ?>
-                                  </select>
-                                  <br><br>
-                                  <label>Estimasi</label>
-                                  <input type="date" name="estimasi" id="" class="form-control" required="required" value="<?php echo $data_akse['estimasi'] ?>" />
-                                  <br>
-                                  <label>Tanggal Berangkat</label>
-                                  <input type="date" name="tgl_berangkat" id="" class="form-control" value="<?php echo $data_akse['tgl_berangkat_teknisi'] ?>" />
-                                  <br>
-                                  <label>Deskripsi</label>
-                                  <input type="text" class="form-control" name="deskripsi" value="<?php echo $data_akse['deskripsi'] ?>" />
-                                </p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button class="btn btn-success" name="simpan_teknisi" type="submit">Simpan Perubahan</button>
-                              </div>
-                            </form>
-                          </div>
-                          <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                      </div>
-                    <?php } ?>
-                  </table>
+                  <div id="table-teknisi"></div>
                 </div>
                 <center>
+                  <br>
                   <!--<a href="index.php?page=tambah_spk_masuk2&simpan_barang=1"><button name="simpan_barang" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button></a>&nbsp;&nbsp;--><a href="index.php?page=spk_masuk"><button name="batal" class="btn btn-success" type="submit"><span class="fa  fa-check"></span> Kembali Ke Halaman SPI</button></a>
                 </center>
               </div>
@@ -351,8 +161,9 @@ if (isset($_GET['id_hapus'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center">Tambah Data</h4>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form id="formTambah" onsubmit="simpanTambah(); return false;">
         <div class="modal-body">
+          <input type="hidden" id="id" name="id" value="<?php echo $_GET['id']; ?>">
           <label>Nama Alkes</label>
           <select name="id_brg" id="id_brg" class="form-control select2" required style="width:100%">
             <option value="">...</option>
@@ -360,7 +171,7 @@ if (isset($_GET['id_hapus'])) {
             <?php
             $q = mysqli_query($koneksi, "select *,barang_gudang.id as idd from barang_dikirim,barang_dikirim_detail, barang_dijual, barang_gudang,barang_gudang_detail,barang_teknisi,barang_teknisi_detail where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual.id=barang_dikirim.barang_dijual_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_teknisi.id=" . $_GET['id'] . " group by nama_brg order by barang_dikirim.no_po_jual ASC");
             $jsArray = "var dtBrg = new Array();
-";
+            ";
             while ($d = mysqli_fetch_array($q)) { ?>
               <option value="<?php echo $d['idd']; ?>"><?php echo $d['nama_brg'] . " / " . $d['tipe_brg']; ?></option>
             <?php
@@ -414,7 +225,99 @@ if (isset($_GET['id_hapus'])) {
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-ubah">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Ubah Data</h4>
+      </div>
+      <form id="formUbah" onsubmit="simpanUbah(); return false">
+        <div class="modal-body">
+          <div id="data-ubah"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button class="btn btn-success" name="simpan_teknisi" type="submit">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function getData() {
+    $.get("data/data-pilih-teknisi.php", {
+        id: <?php echo $_GET['id'] ?>
+      },
+      function(data) {
+        $('#table-teknisi').html(data);
+      }
+    );
+  }
+
+  function modalUbah(id) {
+    $.get("data/data-ubah-pilih-teknisi.php", {
+      id:id
+    },
+      function (data) {
+        $('#data-ubah').html(data);
+        $('#modal-ubah').modal('show')
+      }
+    );
+  }
+
+  function simpanTambah() {
+    var dataform = $('#formTambah')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "POST",
+      url: "data/simpan-pilih-teknisi.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-tambah').modal('hide');
+          alertSimpan('S');
+          getData();
+          dataform.reset();
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
+  function simpanUbah() {
+    var dataform = $('#formUbah')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "POST",
+      url: "data/ubah-pilih-teknisi.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (response == 'S') {
+          $('#modal-ubah').modal('hide');
+          alertSimpan('S');
+          getData();
+          dataform.reset();
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
   function hapus(id, id_hapus) {
     Swal.fire({
       customClass: {
@@ -429,7 +332,22 @@ if (isset($_GET['id_hapus'])) {
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id_hapus + '&id=' + id;
+        $.post("data/hapus-pilih-teknisi.php", {
+            id_hapus: id_hapus,
+            id: id
+          },
+          function(data) {
+            if (data == 'S') {
+              alertHapus('S');
+              getData();
+            } else if (data == 'TB') {
+              alertCustom('F', 'Data Tidak Dapat Dihapus !', 'Sudah Dilakukan Instalasi & Uji Fungsi');
+              getData();
+            } else {
+              alertHapus('F')
+            }
+          }
+        );
       }
     })
   }
@@ -452,4 +370,8 @@ if (isset($_GET['id_hapus'])) {
       }
     })
   }
+
+  $(document).ready(function() {
+    getData();
+  });
 </script>

@@ -106,8 +106,8 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         <font size="+2" style="font-family:Arial, Helvetica, sans-serif"><b>SURAT JALAN</b></font>
       </center><br>
       <table width="100%">
-        <tr>
-          <td colspan="3" rowspan="4" valign="top" style="font-size:17px; font-family:Arial"><b>PT. CIPTA VARIA KHARISMA UTAMA<br>Jl. Utan Kayu Raya No.105A<br>
+      <tr>
+          <td colspan="3" rowspan="4" valign="top" style="font-size:17px; font-family:Arial" width="40%"><b>PT. CIPTA VARIA KHARISMA UTAMA<br>Jl. Utan Kayu Raya No.105A<br>
               Utan Kayu Utara, Matraman<br>
               Jakarta Timur</b></td>
 
@@ -118,22 +118,24 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
             <font style="font:Arial">Delivery No.</font>
           </td>
           <td width="2%" valign="top">:</td>
-          <td width="24%" align="right" valign="top"><?php echo $data2['no_pengiriman']; ?></td>
+          <td width="26%" align="justify" valign="top"><?php echo $data2['no_pengiriman']; ?></td>
         </tr>
         <tr>
           <td height="24" valign="top">
             <font>Delivery Date</font>
           </td>
           <td valign="top">:</td>
-          <td width="24%" align="right" valign="top"><?php echo date("d M Y", strtotime($data2['tgl_kirim'])); ?></td>
+          <td width="26%" align="justify" valign="top"><?php echo date("d M Y", strtotime($data2['tgl_kirim'])); ?></td>
         </tr>
         <tr>
           <td height="24" valign="top">
             <font>PO. No.</font>
           </td>
           <td valign="top">:</td>
-          <td width="24%" align="right" valign="top"><?php echo $data2['no_po_jual']; ?></td>
+          <td width="26%" align="justify" valign="top"><?php echo $data2['no_po_jual']; ?></td>
         </tr>
+      </table>
+      <table width="100%">
         <tr>
           <td colspan="3">&nbsp;</td>
           <td colspan="4">&nbsp;</td>
@@ -142,7 +144,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
           <td width="7%" valign="top">Paket: </td>
           <td width="35%" valign="top"><?php echo $data2['nama_paket']; ?></td>
           <td width="15%" valign="top">&nbsp;</td>
-          <td colspan="4" rowspan="2" valign="top"><strong>Kepada Yth,</strong><br><br>
+          <td colspan="4" rowspan="2" valign="top"><strong>Kepada Yth,</strong><br>
             <b><?php echo $data2['nama_pembeli']; ?></b><br>
             <?php echo $data2['jalan'] . " Kel." . $data2['kelurahan_id']; ?><br>
             <?php echo "Kec." . ucwords(strtolower($data2['nama_kecamatan'])) . ", Kab." . ucwords(strtolower($data2['nama_kabupaten'])) . ", " . ucwords(strtolower($data2['nama_provinsi'])); ?><br>
@@ -171,7 +173,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         <?php
         $no = 0;
         // $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $id . "");
-        $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, nama_brg, satuan, satuan_header, jumlah_rincian_to_satuan barang_gudang.kategori_brg, barang_gudang.id as id_gudang from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $id . "");
+        $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, nama_brg, satuan, satuan_header, jumlah_rincian_to_satuan, barang_gudang.kategori_brg, barang_gudang.id as id_gudang from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $id . "");
         while ($d = mysqli_fetch_array($q)) {
           $no++;
           $rincian_set = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id]) as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
@@ -401,6 +403,17 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
       1. Putih : Setelah ttd mohon kembalikan ke PT. Cipta Varia Kharisma Utama, 2. Merah : Expedisi, 3. Kuning Instansi, 4. Hijau : Gudang, 5. Biru : Admin, 6. Copy : Keuangan
     </div>
   </div>
+  <script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
 </body>
 
 </html>

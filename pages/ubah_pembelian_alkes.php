@@ -176,50 +176,7 @@ if (isset($_POST['simpan_perubahan'])) {
                 </table>
               </strong>
               <br /><br /><br /><br /><br /><br />
-              <div class="table-reponsive">
-                <table width="100%" id="example1" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th><strong>Nama Alkes</strong></th>
-                      <th>Merk</th>
-  
-                      <th><strong>Tipe</strong></th>
-                      <th><strong>Qty</strong></th>
-                      <th><strong>Harga Satuan</strong></th>
-                      <th>Diskon</th>
-                      <th><strong>Total</strong></th>
-                      <!--<th>Aksi</th>
-                          <th>#</th>-->
-                    </tr>
-                  </thead>
-                  <?php
-                  $q = mysqli_query($koneksi, "select *,barang_pesan_detail.id as idd from barang_gudang,barang_pesan_detail,barang_pesan,mata_uang where barang_gudang.id=barang_pesan_detail.barang_gudang_id and barang_pesan.id=barang_pesan_detail.barang_pesan_id and mata_uang.id=barang_pesan_detail.mata_uang_id and barang_pesan.id=" . $_GET['id'] . "");
-                  $no = 0;
-                  while ($d = mysqli_fetch_array($q)) {
-                    $no++;
-                  ?>
-                    <tr>
-                      <td><?php echo $d['nama_brg']; ?></td>
-                      <td><?php echo $d['merk_brg']; ?></td>
-                      <td><?php echo $d['tipe_brg']; ?></td>
-                      <td><?php echo $d['qty']; ?></td>
-                      <td><?php echo $d['simbol'] . " " . number_format($d['harga_perunit'], 0, ',', ',') . ".00"; ?></td>
-                      <td><?php echo $d['diskon'] . " %"; ?></td>
-                      <td><?php echo $d['simbol'] . " " . number_format($d['harga_total'], 0, ',', ',') . ".00"; ?></td>
-                      <!--<td><a href="index.php?page=ubah_pembelian_alkes&id_hapus=<?php echo $d['idd']; ?>&id=<?php echo $_GET['id']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;&nbsp;&nbsp;<a href="index.php?page=ubah_po_alkes&id_ubah=<?php echo $d['idd']; ?>&id=<?php echo $_GET['id']; ?>"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a></td>
-                      <!--
-                      <td>
-                      <?php if ($d['status_ke_stok'] == 0) { ?>
-                      <a href="index.php?page=simpan_tambah_ke_stok&id_pesan=<?php echo $_GET['id']; ?>&id=<?php echo $d['barang_gudang_id']; ?>&id_detail=<?php echo $d['idd']; ?>&stok=<?php echo $d['qty']; ?>"><small data-toggle="tooltip" title="Tambah Ke Stok" class="label bg-green"><span class="fa fa-share"></span> Stok</small></a>
-                      <?php } else {
-                                      echo "Sudah Masuk Stok";
-                                    } ?>
-                      </td>
-                      -->
-                    </tr>
-                  <?php } ?>
-                </table>
-              </div>
+              <div id="data-barang-pesan"></div>
             </div>
           </div>
         </div>
@@ -492,3 +449,17 @@ if (isset($_POST['tambah_detail'])) {
 
   <!-- /.modal-dialog -->
 </div>
+
+<script>
+  function dataBarang() {
+    $.get("data/data-barang-pesan.php", {id: <?php echo $_GET['id']; ?>},
+      function (data) {
+        $('#data-barang-pesan').html(data); 
+      }
+    );
+  }
+
+  $(document).ready(function () {
+    dataBarang();
+  });
+</script>

@@ -67,15 +67,19 @@ if ($jml_deal == 0) {
       border: 1px solid black;
       padding: 5px 10px;
     }
+
+    body {
+      font-family: 'Calibri';
+    }
   </style>
   <link href='logo.png' rel='icon'>
 </head>
 <?php
 $qq = mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and status_deal=1 and barang_dijual.id=" . $_GET['id'] . " group by nama_brg");
-$jml_q = mysqli_num_rows($qq);
+$jml_qq = mysqli_num_rows($qq);
 ?>
 
-<body onLoad="window.print();" style="font-family:Arial;  <?php if ($jml_deal == 0) { ?>background-position:center; background-repeat:no-repeat; background-size:50%; background-image:url(img/belum%20deal.png);<?php } ?>">
+<body style="font-family:Arial;  <?php if ($jml_deal == 0) { ?>background-position:center; background-repeat:no-repeat; background-size:50%; background-image:url(img/belum%20deal.png);<?php } ?>">
 
   <table width="100%">
     <tr>
@@ -115,7 +119,7 @@ $jml_q = mysqli_num_rows($qq);
     </tr>
     <?php
 
-    $q = mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $data['idd'] . "");
+    $q = mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $_GET['id'] . "");
     $jml_q = mysqli_num_rows($q);
     $no = 0;
     while ($d = mysqli_fetch_array($q)) {
@@ -129,12 +133,12 @@ $jml_q = mysqli_num_rows($qq);
             // echo $d['qty_jual'];
             if ($d['qty_jual'] % $d['jumlah_rincian_to_satuan'] == 0) {
               $qtyy = $d['qty_jual'] / $d['jumlah_rincian_to_satuan'];
-              echo $qtyy." ".$d['satuan_header'];
+              echo $qtyy . " " . $d['satuan_header'];
             } else {
-              echo $d['qty_jual']." ".$d['satuan'];  
+              echo $d['qty_jual'] . " " . $d['satuan'];
             }
           } else {
-            echo $d['qty_jual']." ".$d['satuan'];
+            echo $d['qty_jual'] . " " . $d['satuan'];
           }
           ?>
         </td>
@@ -147,7 +151,7 @@ $jml_q = mysqli_num_rows($qq);
       <td colspan="4" align="right" valign="top"><strong>Sub Total</strong></td>
       <td align="right" valign="top"><strong>
           <?php
-          $t = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang,sum(harga_jual_saat_itu*qty_jual) as total from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $data['idd'] . ""));
+          $t = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_gudang.id as id_gudang,sum(harga_jual_saat_itu*qty_jual) as total from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $_GET['id'] . ""));
           echo "Rp" . number_format($t['total'], 0, ',', '.');
           ?>
         </strong></td>
@@ -193,6 +197,18 @@ $jml_q = mysqli_num_rows($qq);
       <td width="50%" align="center">Hormat kami,</td>
     </tr>
   </table>
+
+  <script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
 </body>
 
 </html>

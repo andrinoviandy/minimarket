@@ -62,7 +62,7 @@ if (isset($_GET['id_hapus'])) {
         <div class="box box-success">
           <!-- /.chat -->
           <div class="box-footer">
-            <div class="box-body table-responsive no-padding">
+            <div class="box-body no-padding">
               <div class="">
                 <!--<a href="index.php?page=tambah_barang_masuk"><button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah Barang</button></a>-->
 
@@ -89,52 +89,28 @@ if (isset($_GET['id_hapus'])) {
                 <h3 align="center">
                   Detail Alkes
                 </h3>
-                <table width="100%" id="example1" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th valign="bottom">Tgl Kirim</th>
-                      <th valign="bottom"><strong>Tgl Sampai </strong></th>
-                      <th valign="bottom">No Seri</th>
-                      <th valign="bottom">Kondisi</th>
-                      <th valign="bottom">Keterangan</th>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-11">
+                      <?php include "include/getInputSearch.php"; ?>
+                    </div>
+                    <div class="col-lg-1">
+                      <?php include "include/atur_halaman.php"; ?>
+                    </div>
+                  </div>
+                </div>
 
-                      <th valign="bottom">Aksi</th>
-                    </tr>
-                  </thead>
-                  <?php
-
-                  // membuka file JSON
-                  if (isset($_SESSION['id_b'])) {
-                    $file = file_get_contents("http://localhost/ALKES/json/barang_demo_kembali.php?id_gudang=$_GET[id_gudang]&id_b=$_SESSION[id_b]");
-                  } else {
-                    $file = file_get_contents("http://localhost/ALKES/json/barang_demo_kembali.php?id_gudang=$_GET[id_gudang]");
-                  }
-                  $json = json_decode($file, true);
-                  $jml = count($json);
-                  for ($i = 0; $i < $jml; $i++) {
-                    //echo "Nama Barang ke-".$i." : " . $json[$i]['nama_brg'] . "<br />";
-                    //echo 'Nama Anggota ke-3 : ' . $json['2']['nama_brg'];
-                  ?>
-                    <tr>
-                      <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_kirim'])); ?></td>
-                      <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_sampai'])); ?></td>
-                      <td><?php echo $json[$i]['no_seri_brg']; ?></td>
-                      <td><?php echo $json[$i]['kondisi']; ?></td>
-                      <td><?php echo $json[$i]['keterangan']; ?></td>
-                      <td>
-                        <!-- <a onclick="return confirm('Anda Yakin Akan Menghapus dan Mengembalikan Status Barang Menjadi Barang Untuk Demo ?')" href="index.php?page=kembali_barang_demo_detail&id_hapus=<?php echo $json[$i]['idd']; ?>&id_gudang=<?php echo $_GET['id_gudang']; ?>&id_detail=<?php echo $json[$i]['barang_gudang_detail_id']; ?>"> -->
-                        <a onclick="hapus(<?php echo $json[$i]['idd']; ?>, <?php echo $_GET['id_gudang']; ?>, <?php echo $json[$i]['barang_gudang_detail_id']; ?>)" href="#">
-                        <button class="btn btn-xs btn-danger">
-                          <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                        </button>
-                        </a>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </table>
-                <p align="left">&nbsp;</p>
-                <br />
-
+                <div id="table" style="margin-top: 10px;"></div>
+                <section class="col-lg-12">
+                  <center>
+                    <ul class="pagination">
+                      <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
+                      <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
+                    </ul>
+                    <?php include "include/getInfoPagingData.php"; ?>
+                  </center>
+                </section>
+                <br>
               </div>
             </div>
           </div>

@@ -138,16 +138,7 @@ error_reporting(0);
                     <td align="center"></td>
                 </tr>
                 <tr>
-                    <td colspan="7" align="right">Diskon (<?php echo $data3['diskon_jual'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
-                    <td align="right"><?php
-                                        $diskon = $data3['diskon_jual'];
-                                        echo $diskon . "%";
-                                        ?></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                </tr>
-                <tr>
-                    <td colspan="7" align="right">PPN (<?php echo $data['ppn_jual'] . "%"; ?>)
+                    <td colspan="7" align="right">PPN (<?php echo $data3['ppn_jual'] . "%"; ?>)
                         <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button>
                     </td>
                     <td align="right">
@@ -160,7 +151,7 @@ error_reporting(0);
                     <td align="center"></td>
                 </tr>
                 <tr>
-                    <td colspan="7" align="right">PPh (<?php echo $data['pph'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
+                    <td colspan="7" align="right">PPh (<?php echo $data3['pph'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
                     <td align="right"><?php
                                         $pph = ($dpp) * $data3['pph'] / 100;
                                         echo number_format($pph, 2, ',', '.');
@@ -170,7 +161,7 @@ error_reporting(0);
                 </tr>
 
                 <tr>
-                    <td colspan="7" align="right">Zakat (<?php echo $data['zakat'] . "%"; ?>)<button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
+                    <td colspan="7" align="right">Zakat (<?php echo $data3['zakat'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
                     <td align="right"><?php $zakat = $dpp * $data3['zakat'] / 100;
                                         echo number_format($dpp * $data3['zakat'] / 100, 2, ',', '.'); ?></td>
                     <td align="center"></td>
@@ -197,7 +188,16 @@ error_reporting(0);
                     <td align="center"></td>
                 </tr>
                 <tr>
-                    <td colspan="7" align="right" valign="bottom"><strong>Fee Supplier (DPP(Tanpa Ongkir)-(PPh dari DPP(Tanpa Ongkir)+Zakat dari DPP(Dengan Ongkir)+Biaya Bank)</strong>)<strong>*Diskon</strong></td>
+                    <td colspan="7" align="right">Diskon (<?php echo $data3['diskon_jual'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
+                    <td align="right"><?php
+                                        $diskon = $data3['diskon_jual'];
+                                        echo $diskon . "%";
+                                        ?></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td colspan="7" align="right" valign="bottom"><strong>Fee Supplier (DPP(Tanpa Ongkir)-(PPh dari DPP(Tanpa Ongkir)+Zakat dari DPP(Tanpa Ongkir)+Biaya Bank)</strong>)<strong>*Diskon</strong></td>
                     <td align="right" valign="bottom">
                         <?php
                         $dpp_m = ($total1['total1'] / 1.1);
@@ -227,10 +227,10 @@ error_reporting(0);
 <script>
     function openModalLainnya() {
         $('#ongkir').val('<?php echo number_format($data3['ongkir'], 0, ',', '.'); ?>');
-        $('#diskon').val('<?php echo $diskon; ?>');
-        $('#ppn').val('<?php echo $ppn; ?>');
-        $('#pph').val('<?php echo $pph; ?>');
-        $('#zakat').val('<?php echo $zakat; ?>');
+        $('#diskon').val('<?php echo $data3['diskon_jual']; ?>');
+        $('#ppn').val('<?php echo $data3['ppn_jual']; ?>');
+        $('#pph').val('<?php echo $data3['pph']; ?>');
+        $('#zakat').val('<?php echo $data3['zakat']; ?>');
         $('#biaya_bank').val('<?php echo number_format($data3['biaya_bank'], 0, ',', '.'); ?>');
         $('#modal-lainnya').modal('show');
     }

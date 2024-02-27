@@ -24,39 +24,6 @@ if (isset($_POST['kirim_barang'])) {
 		</script>";
 }
 
-if (isset($_GET['id_hapus'])) {
-  $d1 = mysqli_query($koneksi, "delete from barang_pinjam_detail where barang_pinjam_id=" . $_GET['id_hapus'] . "");
-  $d2 = mysqli_query($koneksi, "delete from barang_pinjam where id=" . $_GET['id_hapus'] . "");
-  if ($d1 and $d2) {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Dihapus ',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(()=> {
-      window.location.href = '?page=$_GET[page]';
-    })
-    </script>";
-  } else {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-red',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Gagal Dihapus ',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    }).then(()=> {
-      window.location.href = '?page=$_GET[page]';
-    })
-    </script>";
-  }
-}
 if (isset($_GET['id_ubah'])) {
   $sel = mysqli_query($koneksi, "select * from barang_demo_detail where barang_demo_id=" . $_GET['id_ubah'] . "");
   while ($d = mysqli_fetch_array($sel)) {
@@ -225,7 +192,69 @@ if (isset($_POST['simpan_tanggal'])) {
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-kirim">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Kirim Barang Pinjaman</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <p align="justify">
+            <input type="hidden" name="id_kirim" id="id_kirim" />
+            <label>Lokasi Tujuan</label>
+          <div class="">
+            <select name="lokasi_tujuan" id="lokasi_tujuan" required class="form-control select2" style="width:100%">
+              <option value="">...</option>
+
+              <?php
+              $result = mysqli_query($koneksi, "select *,pembeli.id as idd from pembeli,alamat_provinsi,alamat_kabupaten,alamat_kecamatan where alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id group by nama_pembeli order by nama_pembeli ASC");
+
+              while ($row = mysqli_fetch_array($result)) {
+                echo '
+						                        <option value="' . $row['idd'] . '">' . $row['nama_pembeli'] . '</option>';
+              }
+              ?>
+            </select>
+            <!--<span class="input-group-addon label-success" data-toggle="modal" data-target="#modal-tambahrs"><i class="fa fa-plus"></i></span>-->
+          </div><br />
+          <label>Nama Paket</label>
+          <input id="input" type="text" placeholder="" name="nama_paket" required>
+          <label>No. Surat Jalan</label>
+          <input id="input" type="text" placeholder="" name="no_peng" required>
+          <label>Ekspedisi</label>
+          <input id="input" type="text" placeholder="" name="ekspedisi" required>
+          <label>Tanggal Pengiriman</label>
+          <input id="input" type="date" placeholder="" name="tgl_kirim" required>
+          <label>Via Pengiriman</label>
+          <input id="input" type="text" placeholder="" name="via_kirim" required>
+          <label>Estimasi Barang Sampai</label>
+          <input id="input" type="date" placeholder="" name="estimasi_brg_sampai">
+          <label>Biaya Jasa</label>
+          <input id="input" type="text" placeholder="" name="biaya_kirim" required="required">
+          <label>Keterangan</label>
+          <textarea name="keterangan" id="input" rows="4"></textarea>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="kirim_barang" type="submit" class="btn btn-success">Next</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function modalkirim(id) {
+    $('#id_kirim').val(id);
+    $('#modal-kirim').modal('show');
+  }
+
   function hapus(id_hapus) {
     Swal.fire({
       customClass: {
@@ -240,6 +269,18 @@ if (isset($_POST['simpan_tanggal'])) {
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
+        $.post("data/hapus-peminjaman-barang.php", {
+            id_hapus: id_hapus
+          },
+          function(data) {
+            if (data == 'S') {
+              alertHapus('S')
+              loadMore(load_flag, key, status_b)
+            } else {
+              alertHapus('F')
+            }
+          }
+        );
         window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id_hapus;
       }
     })

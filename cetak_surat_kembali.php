@@ -110,6 +110,17 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_kembali.id as
 <div style="position:absolute; bottom:0px">
 1. Putih : Setelah ttd mohon kembalikan ke PT. Cipta Varia Kharisma Utama, 2. Merah : Expedisi, 3. Kuning Instansi, 4. Hijau : Gudang, 5. Biru : Admin, 6. Copy : Keuangan
 </div>
+<script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
 </body>
 </html>
 <?php 

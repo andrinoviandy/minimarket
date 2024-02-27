@@ -66,8 +66,8 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         <font size="+2" style="font-family:Arial, Helvetica, sans-serif"><b>SURAT JALAN</b></font>
       </center><br>
       <table width="100%">
-        <tr>
-          <td colspan="3" rowspan="4" valign="top" style="font-size:17px; font-family:Arial"><b>PT. CIPTA VARIA KHARISMA UTAMA<br>Jl. Utan Kayu Raya No.105A<br>
+      <tr>
+          <td colspan="3" rowspan="4" valign="top" style="font-size:17px; font-family:Arial" width="40%"><b>PT. CIPTA VARIA KHARISMA UTAMA<br>Jl. Utan Kayu Raya No.105A<br>
               Utan Kayu Utara, Matraman<br>
               Jakarta Timur</b></td>
 
@@ -78,22 +78,24 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
             <font style="font:Arial">Delivery No.</font>
           </td>
           <td width="2%" valign="top">:</td>
-          <td width="24%" align="right" valign="top"><?php echo $data2['no_pengiriman']; ?></td>
+          <td width="26%" align="justify" valign="top"><?php echo $data2['no_pengiriman']; ?></td>
         </tr>
         <tr>
           <td height="24" valign="top">
             <font>Delivery Date</font>
           </td>
           <td valign="top">:</td>
-          <td width="24%" align="right" valign="top"><?php echo date("d M Y", strtotime($data2['tgl_kirim'])); ?></td>
+          <td width="26%" align="justify" valign="top"><?php echo date("d M Y", strtotime($data2['tgl_kirim'])); ?></td>
         </tr>
         <tr>
           <td height="24" valign="top">
             <font>PO. No.</font>
           </td>
           <td valign="top">:</td>
-          <td width="24%" align="right" valign="top"><?php echo $data2['no_po_jual']; ?></td>
+          <td width="26%" align="justify" valign="top"><?php echo $data2['no_po_jual']; ?></td>
         </tr>
+      </table>
+      <table width="100%">
         <tr>
           <td colspan="3">&nbsp;</td>
           <td colspan="4">&nbsp;</td>
@@ -102,7 +104,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
           <td width="7%" valign="top">Paket: </td>
           <td width="35%" valign="top"><?php echo $data2['nama_paket']; ?></td>
           <td width="15%" valign="top">&nbsp;</td>
-          <td colspan="4" rowspan="2" valign="top"><strong>Kepada Yth,</strong><br><br>
+          <td colspan="4" rowspan="2" valign="top"><strong>Kepada Yth,</strong><br>
             <b><?php echo $data2['nama_pembeli']; ?></b><br>
             <?php echo $data2['jalan'] . " Kel." . $data2['kelurahan_id']; ?><br>
             <?php echo "Kec." . ucwords(strtolower($data2['nama_kecamatan'])) . ", Kab." . ucwords(strtolower($data2['nama_kabupaten'])) . ", " . ucwords(strtolower($data2['nama_provinsi'])); ?><br>
@@ -121,6 +123,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
       <br>
       <table width="100%" class="mytable" style="font-size:13px">
         <tr>
+          <td align="center"><strong>No</strong></td>
           <td width="16%" align="center"><strong>Item</strong></td>
           <td width="37%" align="center"><strong>Item Description</strong></td>
           <td width="13%" align="center"><strong>Qty</strong></td>
@@ -128,8 +131,10 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         </tr>
         <?php
         $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $data2['id_kirim'] . " group by nama_brg");
-        while ($d = mysqli_fetch_array($q)) { ?>
+        $no = 0;
+        while ($d = mysqli_fetch_array($q)) { $no++; ?>
           <tr>
+            <td align="center" valign="top"><?php echo $no; ?></td>
             <td height="100%" align="center" valign="top">
               <p><?php echo $d['tipe_brg']; ?></p>
             </td>
@@ -236,6 +241,17 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
       1. Putih : Setelah ttd mohon kembalikan ke PT. Cipta Varia Kharisma Utama, 2. Merah : Expedisi, 3. Kuning Instansi, 4. Hijau : Gudang, 5. Biru : Admin, 6. Copy : Keuangan
     </div>
   </div>
+  <script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
 </body>
 
 </html>

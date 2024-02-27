@@ -115,13 +115,15 @@
               </div>
             </div>
             <div class="box-header no-padding">
-              <center>
-                <input type="hidden" id="provinsii">
-                <input type="hidden" id="kabupatenn">
-                <input type="hidden" id="kecamatann">
-                <input type="hidden" id="tahunn">
-                <div id="label-penjualan">Semua</div>
-              </center>
+              <div class="row">
+                <center>
+                  <span id="label-penjualan">Semua Data</span>
+                  <span id="lbl-provinsi"></span>
+                  <span id="lbl-kabupaten"></span>
+                  <span id="lbl-kecamatan"></span>
+                  <span id="lbl-tahun"></span>
+                </center>
+              </div>
             </div>
             <div class="box-body">
               <div class="chart">
@@ -404,6 +406,19 @@
   <!-- /.modal-dialog -->
 </div>
 <script>
+  function ucwords(str) {
+    // Memisahkan string menjadi array kata
+    let words = str.toLowerCase().split(' ');
+
+    // Mengonversi huruf pertama setiap kata menjadi kapital
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+
+    // Menggabungkan kembali array kata menjadi sebuah string
+    return words.join(' ');
+  }
+
   function modalFilterPenjualan() {
     $.get("data/modal-filter-penjualan.php",
       function(data) {
@@ -441,25 +456,31 @@
   }
 
   function getProvinsi(id) {
-    $.get("data/getProvinsi.php", {id: id},
-      function (data) {
-        return data;
+    $.get("data/getProvinsi.php", {
+        id: id
+      },
+      function(data) {
+        $('#lbl-provinsi').html(ucwords(data));
       }
     );
   }
 
   function getKabupaten(id) {
-    $.get("data/getKabupaten.php", {id: id},
-      function (data) {
-        return data;
+    $.get("data/getKabupaten.php", {
+        id: id
+      },
+      function(data) {
+        $('#lbl-kabupaten').html(ucwords(data));
       }
     );
   }
 
   function getKecamatan(id) {
-    $.get("data/getKecamatan.php", {id: id},
-      function (data) {
-        return data;
+    $.get("data/getKecamatan.php", {
+        id: id
+      },
+      function(data) {
+        $('#lbl-kecamatan').html(ucwords(data));
       }
     );
   }
@@ -471,12 +492,20 @@
     let kab = $('#kabupaten1').val();
     let kec = $('#kecamatan1').val();
     let thn = $('#tahun_now1').val();
-    if (prov != 'all') {
-      let provv = getProvinsi(prov);
-      alert(provv)
-      $('#label-penjualan').html(provv + ' ' + kab + ' ' + kec + ' Tahun ' + thn);
+    if (prov && prov !== 'all') {
+      $('#label-penjualan').html('');
+      getProvinsi(prov);
+    }
+    if (kab && kab !== 'all') {
+      getKabupaten(kab);
+    }
+    if (kec && kec != 'all') {
+      getKecamatan(kec);
+    }
+    if (thn) {
+      $('#lbl-tahun').html('Tahun ' + thn)
     } else {
-      $('#label-penjualan').html(prov + ' ' + kab + ' ' + kec + ' Tahun ' + thn);
+      $('#lbl-tahun').html(new Date().getFullYear())
     }
     //--------------
     //- AREA CHART -
@@ -484,6 +513,7 @@
     let dataa;
     // Get context with jQuery - using jQuery's .get() method.
     await $.get("http://173.212.225.28/ALKES_2/json/beranda_penjualan.php", {
+        // await $.get("http://localhost/ALKES_2/json/beranda_penjualan.php", {
         // tahun: tahun
         provinsi: $('#provinsi1').val() != undefined ? $('#provinsi1').val() : 'all',
         kabupaten: $('#kabupaten1').val(),
@@ -528,11 +558,11 @@
       //Boolean - Whether to show vertical lines (except Y axis)
       scaleShowVerticalLines: true,
       //Boolean - Whether the line is curved between points
-      bezierCurve: true,
+      // bezierCurve: true,
       //Number - Tension of the bezier curve between points
       bezierCurveTension: 0.3,
       //Boolean - Whether to show a dot for each point
-      pointDot: true,
+      // pointDot: true,
       //Number - Radius of each point dot in pixels
       pointDotRadius: 4,
       //Number - Pixel width of point dot stroke
@@ -571,6 +601,7 @@
     //-------------
     let dataa;
     await $.get("http://173.212.225.28/ALKES_2/json/beranda_pembelian.php", {
+        // await $.get("http://localhost/ALKES_2/json/beranda_pembelian.php", {
         // provinsi: $('#provinsi2').val(),
         // kabupaten: $('#kabupaten2').val(),
         // kecamatan: $('#kecamatan2').val(),

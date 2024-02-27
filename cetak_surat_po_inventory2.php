@@ -174,6 +174,17 @@ Syarat-syarat :</td>
     </table>
 <br><br>
 <div style="position:absolute; font-size:13px">1. Putih : Supplier, 2. Merah : Keuangan, 3. Kuning : Administrasi I, 4. Hijau : Administrasi II, 5. Biru : Gudang</div>
+<script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
 </body>
 </html>
 <?php 

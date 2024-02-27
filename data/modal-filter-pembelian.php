@@ -26,6 +26,20 @@ session_start();
 <label>Tahun</label>
 <select class="form-control select2" id="tahun_now2" name="tahun_now2" style="width: 100%;">
     <?php
+    $thnn = intval(date('Y'));
+    for ($i=($thnn-5); $i<=$thnn; $i++) {
+        ?>
+        <option <?php if ($thnn == $i) {echo "selected";} ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+        <?php
+    }
+    for ($j=$thnn+1; $j<=($thnn+5); $j++) {
+        ?>
+        <option <?php if ($thnn == $j) {echo "selected";} ?> value="<?php echo $j; ?>"><?php echo $j; ?></option>
+        <?php
+    }
+    ?>
+    <?php
+    /*
     $q88 = mysqli_query($koneksi, "select DISTINCT year(tgl_po_pesan) as thn, max(year(tgl_po_pesan)) OVER() as maks_thn from barang_pesan group by year(tgl_po_pesan) order by year(tgl_po_pesan) ASC");
     $dd88 = mysqli_fetch_array($q88);
     while ($d = mysqli_fetch_array($q88)) {
@@ -62,7 +76,7 @@ session_start();
                     }
                 }
                 ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-    <?php } ?>
+    <?php } */ ?>
 </select>
 
 <script>

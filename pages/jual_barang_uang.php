@@ -22,8 +22,6 @@ if (isset($_POST['pos'])) {
       <li class="active">Jual Alkes</li>
     </ol>
   </section>
-
-
   <!-- Main content -->
   <section class="content">
     <!-- Small boxes (Stat box) -->
@@ -88,7 +86,7 @@ if (isset($_POST['pos'])) {
           </span>
           <br /><br /><br /><br />
           <div class="pull pull-left">
-            <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak Rekap</button>
           </div>
           <div class="pull pull-right">
             <?php include "include/getFilter.php"; ?>
@@ -153,24 +151,32 @@ if (isset($_POST['pos'])) {
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
-          <center>Cetak Penjualan Barang</center>
+          <center>Cetak Rekapan Penjualan Barang</center>
         </h4>
       </div>
-      <form method="post" enctype="multipart/form-data" action="cetak_laporan_penjualan_alkes.php">
+      <form method="post" enctype="multipart/form-data" onsubmit="cetakRekapan(); return false;">
         <div class="modal-body">
           <label>Dari Tanggal</label>
-          <input name="tgl1" type="date" class="form-control" placeholder="" value=""><br />
+          <input name="tgl1" id="tglRekap1" type="date" class="form-control" required placeholder="" value=""><br />
           <label>Sampai Tanggal</label>
-          <input name="tgl2" type="date" class="form-control" placeholder="" value=""><br />
+          <input name="tgl2" id="tglRekap2" type="date" class="form-control" required placeholder="" value=""><br />
+          <label>Filter Berdasarkan</label>
+          <select class="form-control select2" id="filterRekap" onchange="filterCetak(this.value)" style="width:100%" name="filter">
+            <option value="0">...</option>
+            <option value="1">Nama Dinas/RS/Dll</option>
+            <option value="2">Provinsi/Kabupaten/Kecamatan</option>
+          </select>
+          <br><br>
+          <div id="filterData"></div>
           <label>Status Barang</label>
-          <select class="form-control" style="width:100%" name="status">
+          <select class="form-control select2" id="statusRekap" style="width:100%" name="status">
             <option value="Semua">Semua</option>
             <option value="Sudah Terkirim">Sudah Terkirim</option>
           </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-info" name="cetak">Cetak</button>
+          <button type="submit" class="btn btn-info" name="cetak"><i class="fa fa-print"></i> Cetak</button>
         </div>
       </form>
     </div>
@@ -272,6 +278,46 @@ if (isset($_POST['pos'])) {
 </div>
 
 <script>
+  function cetakRekapan() {
+    var tgl1 = $('#tglRekap1').val();
+    var tgl2 = $('#tglRekap2').val();
+    var filter = $('#filterRekap').val();
+    var pembeli = $('#pembeli').val();
+    var provinsi = $('#provinsi1').val();
+    var kabupaten = $('#kabupaten1').val();
+    var kecamatan = $('#kecamatan1').val();
+    var status = $('#statusRekap').val();
+    // $.post("cetak_laporan_penjualan_alkes.php",
+    //   function(data) {
+    if (filter == 1) {
+      window.location.href = 'cetak_laporan_penjualan_alkes.php?filter=1&pembeli=' + pembeli + '&tgl1=' + tgl1 + '&tgl2=' + tgl2 + '&status=' + status;
+    } else if (filter == 2) {
+      window.location.href = 'cetak_laporan_penjualan_alkes.php?filter=2&provinsi=' + provinsi + '&kabupaten=' + kabupaten + '&kecamatan=' + kecamatan + '&tgl1=' + tgl1 + '&tgl2=' + tgl2 + '&status=' + status;
+    } else {
+      window.location.href = 'cetak_laporan_penjualan_alkes.php?tgl1=' + tgl1 + '&tgl2=' + tgl2 + '&status=' + status;
+    }
+    //   }
+    // );
+  }
+
+  function filterCetak(param) {
+    if (param == '1') {
+      $.get("data/modal-dinas-rs.php",
+        function(data) {
+          $('#filterData').html(data);
+        }
+      );
+    } else if (param == '2') {
+      $.get("data/modal-provinsi-kabupaten-kecamatan.php",
+        function(data) {
+          $('#filterData').html(data);
+        }
+      );
+    } else {
+      $('#filterData').html('');
+    }
+  }
+
   function modalCetak(id) {
     $('#cetak_biasa').prop('href', 'cetak_faktur_penjualan_uang.php?id=' + id)
     $('#cetak_ritel').prop('href', 'cetak_faktur_penjualan_uang_ritel.php?id=' + id)

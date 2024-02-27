@@ -38,7 +38,9 @@ error_reporting(0);
         <input id="no_akse" name="no_akse" class="form-control" type="text" placeholder="NIE" disabled="disabled" />
         <br />
         <label>No Seri</label>
-        <div id="noseri-demo"></div>
+        <div id="noseri-demo">
+            <select class="form-control select2"></select>
+        </div>
         <script type="text/javascript">
             <?php
             echo $jsArray;

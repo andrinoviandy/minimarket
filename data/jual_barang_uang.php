@@ -144,12 +144,14 @@ error_reporting(0);
                         echo number_format($data_deal['total_harga'], 0, ',', '.'); ?></td>
                     <td><?php echo number_format($data_deal['ongkir'], 0, ',', '.'); ?></td>
                     <td><?php
-                        $dpp = ($data_deal['total_harga'] + $data_deal['ongkir']) / 1.1;
+                        $dpp = $json[$i]['include_dpp'] == 1 ? (($data_deal['total_harga'] + $data_deal['ongkir']) / 1.1) : 0;
                         echo number_format($dpp, 2, ',', '.'); ?></td>
                     <td><?php echo $data_deal['diskon_jual'] . " %"; ?>
                     </td>
                     <td><?php echo $data_deal['ppn_jual'] . " %"; ?><br />
-                        <?php echo "(" . number_format(($data_deal['ppn_jual'] / 100) * ($dpp), 2, ',', '.') . ")"; ?>
+                        <?php 
+                        $tot_ppn = $json[$i]['include_dpp'] == 1 ? $dpp : $data_deal['total_harga'];
+                        echo "(" . number_format(($data_deal['ppn_jual'] / 100) * ($tot_ppn), 2, ',', '.') . ")"; ?>
                     </td>
                     <td><?php echo $data_deal['pph'] . " %"; ?><br />
                         <?php echo "(" . number_format($data_deal['pph'] / 100 * $dpp, 2, ',', '.') . ")"; ?>

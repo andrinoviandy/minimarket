@@ -24,7 +24,8 @@ if (isset($_POST['button_urut'])) {
       <section class="col-lg-12">
         <div class="box box-body">
           <div class="pull pull-right">
-            <?php //include "include/getFilter.php"; ?>
+            <?php //include "include/getFilter.php"; 
+            ?>
             <?php include "include/atur_halaman.php"; ?>
           </div>
         </div>
@@ -40,17 +41,17 @@ if (isset($_POST['button_urut'])) {
           <!-- /.chat -->
           <div class="box-footer">
             <div class="box-body">
-            <?php include "include/getInputSearch.php"; ?>
-                <div id="table" style="margin-top: 10px;"></div>
-                <section class="col-lg-12">
-                  <center>
-                    <ul class="pagination">
-                      <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
-                      <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
-                    </ul>
-                    <?php include "include/getInfoPagingData.php"; ?>
-                  </center>
-                </section>
+              <?php include "include/getInputSearch.php"; ?>
+              <div id="table" style="margin-top: 10px;"></div>
+              <section class="col-lg-12">
+                <center>
+                  <ul class="pagination">
+                    <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
+                    <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
+                  </ul>
+                  <?php include "include/getInfoPagingData.php"; ?>
+                </center>
+              </section>
             </div>
           </div>
         </div>

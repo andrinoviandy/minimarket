@@ -190,6 +190,17 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual,b
       <td width="50%" align="center">Hormat kami,</td>
     </tr>
   </table>
+  <script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
 </body>
 
 </html>

@@ -75,26 +75,41 @@ session_start();
 
     function pilihProvinsi(id) {
         kabupaten.disabled = false;
-        const xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                kabupaten.innerHTML = xhr.responseText
+        $.get("data/kabupaten.php", {
+                provinsi_id: id
+            },
+            function(data) {
+                $('#kabupaten1').html(data);
             }
-        }
-        xhr.open('GET', "data/kabupaten.php?provinsi_id=" + id, true)
-        xhr.send()
+        );
+        // const xhr = new XMLHttpRequest()
+        // xhr.onreadystatechange = () => {
+        //     if (xhr.readyState == 4 && xhr.status == 200) {
+        //         kabupaten.innerHTML = xhr.responseText
+        //     }
+        // }
+        // xhr.open('GET', "data/kabupaten.php?provinsi_id=" + id, true)
+        // xhr.send()
     }
 
     function pilihKabupaten(id) {
         kecamatan.disabled = false
-        const xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                kecamatan.innerHTML = xhr.responseText
+        $.get("data/kecamatan.php", {
+                kabupaten_id: id
+            },
+            function(data) {
+                $('#kecamatan1').html(data);
             }
-        }
-        xhr.open('GET', "data/kecamatan.php?kabupaten_id=" + id, true)
-        xhr.send()
+        );
+
+        // const xhr = new XMLHttpRequest()
+        // xhr.onreadystatechange = () => {
+        //     if (xhr.readyState == 4 && xhr.status == 200) {
+        //         kecamatan.innerHTML = xhr.responseText
+        //     }
+        // }
+        // xhr.open('GET', "data/kecamatan.php?kabupaten_id=" + id, true)
+        // xhr.send()
     }
 </script>
 <script>

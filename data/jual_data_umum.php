@@ -67,6 +67,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual w
             <td><strong>Kontak 1</strong></td>
             <td><strong>Kontak 2</strong></td>
             <td><strong>Email</strong></td>
+            <td><strong>Include DPP</strong></td>
             <td><strong>Status PO</strong></td>
         </tr>
         <tr>
@@ -78,6 +79,8 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual w
             <td><?php echo $sel_pemakai['kontak2_pemakai']; ?></td>
             <td>
                 <?php echo $sel_pemakai['email_pemakai']; ?></td>
+            <td>
+                <?php if ($data['include_dpp'] == 1) {echo "<small class='label bg-green'>YA</small>";} else { echo "<small class='label bg-red'>TIDAK</small>"; } ?></td>
             <td><?php
                 $jm_deal3 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual where no_po_jual='" . $data['no_po_jual'] . "' and status_deal=1"));
                 if ($jm_deal3 != 0) {

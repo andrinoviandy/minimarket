@@ -91,5 +91,16 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,alat_uji_detail.id a
 </table>
 <br>
 1. Putih : Teknisi, 2. Merah : Teknisi, 3. Keuangan, 4. Hijau : Administrasi, 5. Biru : Copy Admin
-    </body>
+<script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>    
+</body>
 </html>

@@ -22,7 +22,7 @@ $q=mysqli_query($koneksi, "select *,pengeluaran.id as idd from pengeluaran where
         <link href='logo.png' rel='icon'>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     </head>
-    <body onLoad="window.print();" style="font-family:">
+    <body onLoad="window.print();" style="">
     <table width="100%">
     <thead><img src="img/kop4.png" width="100%"/></thead>
     </table>
@@ -80,5 +80,16 @@ D i r e c t o r<br>
 <i>bs/rd</i></td>
   </tr>
 </table>
+<script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
     </body>
 </html>

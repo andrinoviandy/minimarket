@@ -102,30 +102,30 @@ error_reporting(0);
                         echo $spi['no_po_jual'];
                         ?></td>
                     <td align="">
-                        <?php //if ($_GET['tampil']==1) { 
+                        <?php if ($_GET['tampil'] == 1) {
                         ?>
-                        <?php
-                        $q23 = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_batal,status_uji,status_teknisi,tipe_brg,barang_teknisi_detail.id as id_detail_teknisi from barang_teknisi,barang_teknisi_detail,barang_dikirim_detail,barang_gudang, barang_gudang_detail where barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_teknisi.id=" . $json[$i]['idd'] . "");
-                        $n2 = 0;
-                        while ($d1 = mysqli_fetch_array($q23)) {
-                            $n2++;
-                        ?>
-                            <?php if ($d1['status_teknisi'] == 1) { ?>
-                                <font class="pull pull-right" size="">(<span class='fa fa-user'></span>)</font>
+                            <?php
+                            $q23 = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_batal,status_uji,status_teknisi,tipe_brg,barang_teknisi_detail.id as id_detail_teknisi from barang_teknisi,barang_teknisi_detail,barang_dikirim_detail,barang_gudang, barang_gudang_detail where barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_teknisi.id=" . $json[$i]['idd'] . "");
+                            $n2 = 0;
+                            while ($d1 = mysqli_fetch_array($q23)) {
+                                $n2++;
+                            ?>
+                                <?php if ($d1['status_teknisi'] == 1) { ?>
+                                    <font class="pull pull-right" size="">(<span class='fa fa-user'></span>)</font>
+                                <?php } ?>
+                                <font class="pull pull-right" size="">
+                                    <?php
+                                    if ($d1['status_uji'] == 1) {
+                                        echo "(<span class='fa fa-wrench'></span>)";
+                                    }
+                                    ?>
+                                </font>
+                                <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['no_seri_brg'] . "]"; ?>
+                                <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
-                            <font class="pull pull-right" size="">
-                                <?php
-                                if ($d1['status_uji'] == 1) {
-                                    echo "(<span class='fa fa-wrench'></span>)";
-                                }
-                                ?>
-                            </font>
-                            <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['no_seri_brg'] . "]"; ?>
-                            <hr style="margin:0px; border-top:1px double; width:100%" />
+                        <?php } else { ?>
+                            <a href="javascript:void()" onclick="modalDetailBarang('<?php echo $json[$i]['idd']; ?>'); return false;"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
                         <?php } ?>
-                        <?php /*} else { ?>
-                                      <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
-                        <?php } */ ?>
                     </td>
 
                     <td bgcolor="#00FFFF"><?php
@@ -157,52 +157,6 @@ error_reporting(0);
                         <?php } ?>
                     </td>
                 </tr>
-                <div class="modal fade" id="modal-detailbarang<?php echo $json[$i]['idd']; ?>">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" align="center">Detail Barang</h4>
-                            </div>
-                            <form method="post">
-                                <div class="modal-body">
-                                    <p align="justify">
-
-                                        <?php
-                                        $q2 = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_batal,status_uji,status_teknisi,tipe_brg,barang_teknisi_detail.id as id_detail_teknisi from barang_teknisi,barang_teknisi_detail,barang_dikirim_detail,barang_gudang, barang_gudang_detail where barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_teknisi.id=" . $json[$i]['idd'] . "");
-                                        $n = 0;
-                                        while ($d1 = mysqli_fetch_array($q2)) {
-                                            $n++;
-                                        ?>
-                                            <?php if ($d1['status_teknisi'] == 1) { ?>
-                                                <font class="pull pull-right" size="+1">(<span class='fa fa-user'></span>)</font>
-                                            <?php } ?>
-                                            <font class="pull pull-right" size="+1">
-                                                <?php
-                                                if ($d1['status_uji'] == 1) {
-                                                    echo "(<span class='fa fa-wrench'></span>)";
-                                                }
-                                                ?>
-                                            </font>
-                                            <?php echo $n . ". " . $d1['nama_brg'] . "     |    "; ?>
-                                            <?php echo $d1['tipe_brg'] . "     |    "; ?>
-                                            <?php echo $d1['no_seri_brg']; ?>
-                                            <hr />
-                                        <?php } ?>
-
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
             <?php } ?>
         </table>
     </div>

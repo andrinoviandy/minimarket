@@ -75,7 +75,7 @@ if (isset($_POST['tambah_riwayat'])) {
 
   $sel = mysqli_query($koneksi, "select * from barang_dijual where id=" . $_POST['riwayat'] . "");
   $dt_sel = mysqli_fetch_array($sel);
-  $simpan1 = mysqli_query($koneksi, "insert into barang_dijual values('','" . $dt_sel['tgl_jual'] . "','" . $dt_sel['no_po_jual'] . "','" . $dt_sel['no_kontrak'] . "','" . $dt_sel['pembeli_id'] . "','" . $dt_sel['pemakai_id'] . "','" . $dt_sel['marketing'] . "','" . $dt_sel['subdis'] . "','" . $dt_sel['ongkir'] . "','" . $dt_sel['diskon_jual'] . "','" . $dt_sel['total_harga'] . "','" . $dt_sel['ppn_jual'] . "','" . $dt_sel['pph'] . "','" . $dt_sel['zakat'] . "','" . $dt_sel['biaya_bank'] . "','" . $dt_sel['neto'] . "','0','0')");
+  $simpan1 = mysqli_query($koneksi, "insert into barang_dijual values('','" . $dt_sel['tgl_jual'] . "','" . $dt_sel['no_po_jual'] . "','" . $dt_sel['no_kontrak'] . "','" . $dt_sel['pembeli_id'] . "','" . $dt_sel['pemakai_id'] . "','" . $dt_sel['marketing'] . "','" . $dt_sel['subdis'] . "','" . $dt_sel['ongkir'] . "','" . $dt_sel['diskon_jual'] . "','" . $dt_sel['total_harga'] . "','" . $dt_sel['ppn_jual'] . "','" . $dt_sel['pph'] . "','" . $dt_sel['zakat'] . "','" . $dt_sel['biaya_bank'] . "','" . $dt_sel['neto'] . "','" . $dt_sel['include_dpp'] . "','0','0')");
 
   $id_max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as idd from barang_dijual"));
   $sel2 = mysqli_query($koneksi, "select * from barang_dijual_qty where barang_dijual_id=" . $_POST['riwayat'] . "");
@@ -130,7 +130,7 @@ if (isset($_POST['tambah_riwayat'])) {
                 <br /><br />
                 <div id="data-umum"></div>
                 <br />
-                <input type="hidden" id="id_pilih" class="form-control" value="">
+                <input type="hidden" id="id_pilih" class="form-control">
                 <div class="table-responsive no-padding">
                   <!-- Custom Tabs -->
                   <div class="nav-tabs-custom">
@@ -361,6 +361,16 @@ if (isset($_POST['tambah_riwayat'])) {
           <label>Subdis</label>
           <textarea class="form-control" name="subdis" id="subdis" required rows="5" placeholder="Gunakan [ENTER] untuk melainkan kalimat pertama dan kalimat berikutnya"><?php echo str_replace("<br>", "\n", $data['subdis']); ?></textarea>
           <br />
+          <label>DPP</label>
+          <select name="include_dpp" id="include_dpp" class="form-control select2" style="width:100%">
+            <option <?php if ($data['include_dpp'] == 1) {
+                      echo "selected";
+                    } ?> value="1">Include DPP</option>
+            <option <?php if ($data['include_dpp'] == 0) {
+                      echo "selected";
+                    } ?> value="0">Tidak Include DPP</option>
+          </select>
+          <br><br>
           <label>Riwayat Po yang deal</label>
           <select name="status_deal" id="status_deal" class="form-control select2" style="width:100%">
             <option <?php if ($jm_deal == 0) {
@@ -654,6 +664,39 @@ if (isset($_POST['tambah_riwayat'])) {
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-lainnya2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Total Ongkir, Diskon, PPN</h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" onsubmit="simpanLainnya2($('#id_pilih').val()); return false;">
+        <div class="modal-body">
+          <input type="hidden" name="idd" value="<?php echo $dt['id'] ?>" />
+          <label>Total Ongkir</label>
+          <input id="ongkir2" name="ongkir" class="form-control" type="text" placeholder="" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+          <br />
+          <label>Diskon</label>
+          <input id="diskon2" name="diskon" class="form-control" type="text" placeholder="Gunakan Tanda '.' Untuk Koma">
+          <br />
+          <label>PPN (%)</label>
+          <input id="ppn2" name="ppn" class="form-control" type="text" placeholder="Gunakan Tanda '.' Untuk Koma">
+          <br />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="input_ongkir" class="btn btn-info" type="submit"><span class="fa fa-check"></span> Simpan</button>
+        </div>
+      </form>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <div class="modal fade" id="modal-ubah-detail2" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -834,13 +877,34 @@ if (isset($_POST['tambah_riwayat'])) {
         biaya_bank: $('#biaya_bank').val(),
       },
       function(data) {
-        $('#modal-lainnya').modal('hide');
-        // if (data == 'S') {
-        //   alert('Sukses')
-        reloadBarang(id);
-        // } else {
-        //   alert('Gagal')
-        // }
+        alert(data)
+        if (data == 'S') {
+          $('#modal-lainnya').modal('hide');
+          alertSimpan('S')
+          reloadBarang(id);
+        } else {
+          alertSimpan('F')
+        }
+      }
+    );
+  }
+
+  function simpanLainnya2(id) {
+    loading_data('#isi_barang_jual');
+    $.post("data/ubah_barang_jual_lainnya2.php", {
+        idd: id,
+        ongkir: $('#ongkir2').val(),
+        diskon: $('#diskon2').val(),
+        ppn: $('#ppn2').val(),
+      },
+      function(data) {
+        if (data == 'S') {
+          $('#modal-lainnya2').modal('hide');
+          alertSimpan('S')
+          reloadBarang(id);
+        } else {
+          alertSimpan('F')
+        }
       }
     );
   }
@@ -880,6 +944,7 @@ if (isset($_POST['tambah_riwayat'])) {
         qty: $('#qty_ubah_jual').val(),
         id_ubahitem: $('#id_ubahitem').val(),
         id_barang_jual: $('#id_barang_jual').val(),
+        dpp: <?php echo $data['include_dpp']; ?>
       },
       function(data) {
         if (data == 'S') {
@@ -928,7 +993,8 @@ if (isset($_POST['tambah_riwayat'])) {
         loading_data('#isi_barang_jual');
         $.post("data/hapus_jual_barang.php", {
             id_hapus: id,
-            id_barang_jual: $('#id_pilih').val()
+            id_barang_jual: $('#id_pilih').val(),
+            dpp: <?php echo $data['include_dpp']; ?>
           },
           function(data) {
             reloadBarang($('#id_pilih').val());
@@ -946,7 +1012,8 @@ if (isset($_POST['tambah_riwayat'])) {
         id_akse: $('#id_akse').val(),
         qty: $('#qty_jual').val(),
         ongkirr: $('#ongkir_jual').val(),
-        inc: no_include == true ? '0' : '1'
+        inc: no_include == true ? '0' : '1',
+        dpp: <?php echo $data['include_dpp'] ?>
       },
       function(data) {
         if (data == 'S') {
@@ -1001,8 +1068,15 @@ if (isset($_POST['tambah_riwayat'])) {
 
   function reloadBarang(id) {
     // loading_data('#isi_barang_jual');
+    var dpp = <?php echo $data['include_dpp']; ?>;
     $('#id_pilih').val(id);
-    $.get("data/isi_barang_jual.php", {
+    let url = '';
+    if (dpp == 1) {
+      url = "data/isi_barang_jual.php";
+    } else {
+      url = "data/isi_barang_jual_no_dpp.php";
+    }
+    $.get(url, {
         id: id
       },
       function(data) {
@@ -1070,37 +1144,26 @@ if (isset($_POST['tambah_riwayat'])) {
         marketing: $('#marketing').val(),
         subdis: $('#subdis').val(),
         status_deal: $('#status_deal').val(),
+        dpp: $('#include_dpp').val(),
 
       },
       function(data) {
         if (data == 'S') {
           if ($('#status_deal').val() != '<?php echo $data['status_deal'] ?>') {
+            alertSimpan('S');
+            location.reload(true);
+          } else if ($('#include_dpp').val() != '<?php echo $data['include_dpp'] ?>') {
+            alertSimpan('S');
             location.reload(true);
           } else {
             $('#modal-ubah-umum').modal('hide');
-            Swal.fire({
-              customClass: {
-                confirmButton: 'bg-green',
-                cancelButton: 'bg-white',
-              },
-              title: 'Berhasil Disimpan',
-              icon: 'success',
-              confirmButtonText: 'OK',
-            });
-            loading_data_umum();
+            alertSimpan('S');
+            // loading_data_umum();
             getDataUmum('<?php echo $_GET['id'] ?>');
           }
         } else {
           $('#modal-ubah-umum').modal('hide');
-          Swal.fire({
-            customClass: {
-              confirmButton: 'bg-red',
-              cancelButton: 'bg-white',
-            },
-            title: 'Gagal Disimpan',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          })
+          alertSimpan('F');
         }
       }
     );

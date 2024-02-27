@@ -176,5 +176,16 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,tb_maintenance_detai
     <td>&nbsp;</td>
   </tr>
 </table>
+<script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+      PrintPage()
+      setTimeout(function() {
+        window.close()
+      }, 750)
+    });
+  </script>
     </body>
 </html>
