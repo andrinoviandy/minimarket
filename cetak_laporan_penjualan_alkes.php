@@ -9,6 +9,33 @@ error_reporting(0);
   Rekapan Penjualan Alkes
   <br />
   Tanggal : <?php echo date("d/m/Y", strtotime($_GET['tgl1'])) . " - " . date("d/m/Y", strtotime($_GET['tgl2'])) ?>
+  <br />
+  Filter :
+  <?php
+  if ($_GET['filter'] == '1') {
+    $dt = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dijual.id as idd from barang_dijual,barang_dijual_qty,barang_gudang,pembeli,alamat_provinsi,alamat_kabupaten,alamat_kecamatan where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and pembeli.id=barang_dijual.pembeli_id and barang_dijual.status_awal=1 and pembeli.provinsi_id = alamat_provinsi.id and pembeli.kabupaten_id = alamat_kabupaten.id and pembeli.kecamatan_id = alamat_kecamatan.id and pembeli.id = $_GET[pembeli] and tgl_jual between '$_GET[tgl1]' and '$_GET[tgl2]' group by no_po_jual order by tgl_jual DESC, barang_dijual.id DESC"));
+    echo $dt['nama_pembeli'];
+  } else if ($_GET['filter'] == '2') {
+    if ($_GET['provinsi']) {
+      if ($_GET['provinsi'] == 'all') {
+        echo "Semua Provinsi";
+      } else {
+        $dt1 = mysqli_fetch_array(mysqli_query($koneksi, "select nama_provinsi from alamat_provinsi where id = $_GET[provinsi]"));
+        echo "Provinsi " . ucwords(strtolower($dt1['nama_provinsi']));
+        if ($_GET['kabupaten'] != 'all') {
+          $dt2 = mysqli_fetch_array(mysqli_query($koneksi, "select nama_kabupaten from alamat_kabupaten where id = $_GET[kabupaten]"));
+          echo " Kabupaten " . ucwords(strtolower($dt2['nama_kabupaten']));
+          if ($_GET['kecamatan'] != 'all') {
+            $dt3 = mysqli_fetch_array(mysqli_query($koneksi, "select nama_kecamatan from alamat_kecamatan where id = $_GET[kecamatan]"));
+            echo " Kecamatan " . ucwords(strtolower($dt3['nama_kecamatan']));
+          }
+        }
+      }
+    }
+  } else {
+    echo "-";
+  }
+  ?>
 </center>
 <br />
 <table width="100%" id="" border="1">
@@ -24,6 +51,9 @@ error_reporting(0);
       <th align="center">Tipe</th>
       <th align="center">Qty</th>
       <th align="center"><strong>Dinas/RS/Puskemas/Klinik</strong></th>
+      <th align="center">Provinsi</th>
+      <th align="center">Kabupaten</th>
+      <th align="center">Kecamatan</th>
       <th align="center">Nama Pemakai</th>
       <th align="center">Marketing</th>
       <th align="center">Subdis</th>
@@ -112,8 +142,11 @@ error_reporting(0);
         </table>
       </td>
       <td valign="top"><?php
-                        $data_pem = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual,pembeli,pemakai where pembeli.id=barang_dijual.pembeli_id and pemakai.id=barang_dijual.pemakai_id and barang_dijual.id=" . $json[$i]['idd'] . ""));
+                        $data_pem = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual,pembeli,pemakai,alamat_provinsi,alamat_kabupaten,alamat_kecamatan where pembeli.id=barang_dijual.pembeli_id and pemakai.id=barang_dijual.pemakai_id and alamat_provinsi.id = pembeli.provinsi_id and alamat_kabupaten.id = pembeli.kabupaten_id and alamat_kecamatan.id = pembeli.kecamatan_id and barang_dijual.id=" . $json[$i]['idd'] . ""));
                         echo $data_pem['nama_pembeli']; ?></td>
+      <td valign="top"><?php echo $data_pem['nama_provinsi']; ?></td>
+      <td valign="top"><?php echo $data_pem['nama_kabupaten']; ?></td>
+      <td valign="top"><?php echo $data_pem['nama_kecamatan']; ?></td>
       <td valign="top"><?php echo $data_pem['nama_pemakai']; ?></td>
       <td align="center" valign="top"><?php echo $json[$i]['marketing']; ?></td>
       <td align="center" valign="top"><?php echo $json[$i]['subdis']; ?></td>
