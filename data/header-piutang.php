@@ -4,7 +4,7 @@ include("../include/API.php");
 session_start();
 error_reporting(0);
 
-$data = mysqli_fetch_array(mysqli_query($koneksi, "select *,utang_piutang.id as idd from utang_piutang where utang_piutang.id=$_GET[id]"));
+$data = mysqli_fetch_array(mysqli_query($koneksi, "select *,utang_piutang.id as idd, barang_dijual.id as id_po from utang_piutang left join barang_dijual on utang_piutang.no_faktur_no_po = barang_dijual.no_po_jual where utang_piutang.id=$_GET[id]"));
 ?>
 <div class="table-responsive">
     <table width="100%" id="" class="table table-bordered table-hover">
@@ -59,7 +59,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,utang_piutang.id as 
                                                 $to = mysqli_fetch_array(mysqli_query($koneksi, "select sum(nominal) as jumlah from utang_piutang_bayar where utang_piutang_id=$_GET[id]"));
                                                 echo "Sisa Piutang : <br>Rp" . number_format($data['nominal'] - $to['jumlah'], 2, ',', '.'); ?></font>
             </td>
-            <td><a href="#" data-toggle="modal" data-target="#modal-detail<?php echo $data['idd']; ?>"><small data-toggle="tooltip" title="Detail Hutang" class="label label-warning"><span class="fa fa-folder-open"></span></small></a></td>
+            <td><a href="#" data-toggle="modal" data-target="#modal-detail<?php echo $data['idd']; ?>" onclick="getDataUmum('<?php echo $data['id_po']; ?>'); getDataDetail('<?php echo $data['id_po']; ?>','<?php echo $data['include_dpp'] ?>'); return false;"><small data-toggle="tooltip" title="Detail Hutang" class="label label-warning"><span class="fa fa-folder-open"></span></small></a></td>
             <!--<td></td>
                     <td><?php //echo $data['no_bath']; 
                         ?></td>

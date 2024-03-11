@@ -231,7 +231,7 @@
     <?php } ?>
     <?php if (!isset($_SESSION['user_administrator'])) { ?>
       <div class="row">
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-3 col-xs-3">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
@@ -248,7 +248,7 @@
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-3 col-xs-3">
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
@@ -265,7 +265,7 @@
             <a href="index.php?page=akun_user" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-3 col-xs-3">
           <!-- small box -->
           <div class="small-box bg-light-blue">
             <div class="inner">
@@ -282,7 +282,7 @@
             <a href="index.php?page=barang_kembali_teknisi" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-3 col-xs-3">
           <!-- small box -->
           <div class="small-box bg-gray">
             <div class="inner">
@@ -299,6 +299,61 @@
           </div>
         </div>
         <!-- ./col -->
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Grafik Transaksi Penjualan</h3>
+              <div class="box-tools pull-right">
+                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button> -->
+                <button class="btn btn-sm btn-primary" onclick="modalFilterPenjualan()"><i class="fa fa-cog"></i> Filter</button>
+              </div>
+            </div>
+            <div class="box-header no-padding">
+              <div class="row">
+                <center>
+                  <span id="label-penjualan">Semua Data</span>
+                  <span id="lbl-provinsi"></span>
+                  <span id="lbl-kabupaten"></span>
+                  <span id="lbl-kecamatan"></span>
+                  <span id="lbl-tahun"></span>
+                </center>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="areaChart" style="height:250px;"></canvas>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Grafik Transaksi Pembelian</h3>
+
+              <div class="box-tools pull-right">
+                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button> -->
+                <button class="btn btn-sm btn-primary" onclick="modalFilterPembelian()"><i class="fa fa-cog"></i> Filter</button>
+              </div>
+            </div>
+            <div class="box-header no-padding">
+              <center>
+                <div id="label-pembelian"><?php echo date('Y'); ?></div>
+              </center>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="barChart" style="height:250px"></canvas>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
       </div>
     <?php
     }

@@ -31,7 +31,7 @@ error_reporting(0);
     $jml = count($json);
 
     $json2 = json_decode($file2, true);
-    $jml2 = count($json2);
+    $jml2 = $file2;
 
     ?>
     <div>
@@ -41,6 +41,7 @@ error_reporting(0);
         <table width="100%" id="example1" class="table table-bordered table-hover">
             <thead>
                 <tr>
+                    <th valign="bottom">No</th>
                     <th valign="bottom"><strong>Tgl SPI</strong></th>
                     <th valign="bottom">No SPI</th>
                     <th valign="bottom">Nama Alkes</th>
@@ -72,6 +73,7 @@ error_reporting(0);
                 //echo 'Nama Anggota ke-3 : ' . $json['2']['nama_brg'];
             ?>
                 <tr>
+                    <td><?php echo $i+1; ?></td>
                     <td><?php echo date("d/m/Y", strtotime($json[$i]['tgl_spk'])); ?></td>
                     <td><?php echo $json[$i]['no_spk']; ?></td>
                     <td <?php if ($json[$i]['status_batal'] == 1) {

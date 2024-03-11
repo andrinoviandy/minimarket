@@ -9,7 +9,7 @@ $cek_saldo = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas w
 if ($cek_saldo['saldo'] < str_replace(".", "", $_POST['nominal'])) {
     die('TC');
 } else {
-    $simpan1 = mysqli_query($koneksi, "insert into keuangan values('','" . $_POST['tgl_input'] . "','Pembayaran Hutang Alkes Ber No Seri','" . $_POST['deskripsi'] . "','" . str_replace(".", "", $_POST['nominal']) . "')");
+    $simpan1 = mysqli_query($koneksi, "insert into keuangan values('','" . $_POST['tgl_input'] . "','Pembayaran Hutang Alkes','" . $_POST['deskripsi'] . "','" . str_replace(".", "", $_POST['nominal']) . "')");
     $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_max from keuangan"));
     $Result = mysqli_query($koneksi, "insert into utang_piutang_bayar values('','$max[id_max]','Hutang','$_POST[id]','" . $_POST['tgl_input'] . "','" . str_replace(".", "", $_POST['nominal']) . "','" . $_POST['deskripsi'] . "','" . $_POST['akun'] . "')");
     $simpan2 = mysqli_query($koneksi, "insert into keuangan_detail values('','$max[id_max]','2','9','45','db')");

@@ -348,7 +348,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=kategori" class=""><i class="fa fa-circle-o"></i> Akun</a></li>
+          <li class="<?php echo $kategori; ?>"><a href="index.php?page=kategori" class=""><i class="fa fa-circle-o"></i> Akun COA</a></li>
           <li class="<?php echo $marketing; ?>"><a href="index.php?page=marketing" class=""><i class="fa fa-circle-o"></i> Marketing</a></li>
           <li class="<?php echo $mata_uang; ?>"><a href="index.php?page=mata_uang" class=""><i class="fa fa-circle-o"></i> Mata Uang</a></li>
           <li class="<?php echo $master_gaji; ?>"><a href="index.php?page=master_gaji" class=""><i class="fa fa-circle-o"></i> Master Gaji</a></li>

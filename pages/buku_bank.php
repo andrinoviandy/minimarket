@@ -57,83 +57,7 @@ if (isset($_POST['tambah_laporan'])) {
                 <a href="index.php?page=tambah_buku_bank">
                   <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah</button></a>
               </div>
-
-              <!--<form method="post" action="cetak_stok_alkes.php">--><!--<a href="cetak_stok_alkes.php">
-              <button name="tambah_laporan" class="btn btn-warning" type="submit"><span class="fa fa-print"></span> Cetak Stok Alkes</button></a>
-              <span class="pull pull-right"><font color="#FF0000">Keterangan :</font> Klik Nama Alkes Untuk Melihat Proses Penjualan</span>
-              --><br /><br />
-              <!--
-              <form method="post">
-              <div class="input-group pull pull-left col-xs-1">
-                
-                <select class="form-control" name="limiterr" style="margin-right:40px">
-                <option <?php if ($limiter['limiter'] == 10) {
-                          echo "selected";
-                        } ?> value="10">10</option>
-                <option <?php if ($limiter['limiter'] == 50) {
-                          echo "selected";
-                        } ?> value="50">50</option>
-                <option <?php if ($limiter['limiter'] == 100) {
-                          echo "selected";
-                        } ?> value="100">100</option>
-                <option <?php if ($limiter['limiter'] == 500) {
-                          echo "selected";
-                        } ?> value="500">500</option>
-                <option <?php if ($limiter['limiter'] == 1000) {
-                          echo "selected";
-                        } ?> value="1000">1000</option>
-                <?php
-                $total = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang"));
-                ?>
-                <option <?php if ($limiter['limiter'] == $total) {
-                          echo "selected";
-                        } ?> <?php if ($_POST['cari'] != '') {
-                                                                                        echo "selected";
-                                                                                      } ?> value="<?php echo $total; ?>">All</option>
-                </select>
-                
-                <span class="input-group-btn">
-                      <button type="submit" name="button_limit" class="btn btn-default btn-flat"><i class="fa fa-check"></i></button>
-                    </span>
-                
-              </div>
-              </form>
-              
-              <form method="post">
-              <div class="input-group pull pull-left col-xs-2">
-                
-                <select class="form-control" name="urutt" style="margin-right:40px">
-                <option <?php if ($limiter['urut'] == 'ASC') {
-                          echo "selected";
-                        } ?> value="ASC">Ascending</option>
-                <option <?php if ($limiter['urut'] == 'DESC') {
-                          echo "selected";
-                        } ?> value="DESC">Descending</option>
-                
-                </select>
-                
-                <span class="input-group-btn">
-                      <button type="submit" name="button_urut" class="btn btn-default btn-flat"><i class="fa fa-check"></i></button>
-                    </span>
-                
-              </div>
-              </form>
-              
-              <form method="post" class="">
-              <div class="input-group input-group-md col-xs-4 pull pull-right">
-                <input type="text" name="cari" placeholder="Keyword .. (Not ; Stok, Harga, Pengecekan)" class="form-control">
-                    <span class="input-group-btn">
-                      <button type="submit" name="button_cari" class="btn btn-info btn-flat"><i class="fa fa-search"></i> Cari </button>
-                    </span>
-              </div>
-              </form>-->
-              <br />
-
-              <?php
-              if ($_POST['cari'] != '') {
-                echo "Results  Of  '" . $_POST['cari'] . "'";
-              }
-              ?>
+              <br /><br><br>
               <div class="table-responsive">
                 <table width="100%" id="example1" class="table table-bordered table-hover">
                   <thead>
@@ -141,7 +65,7 @@ if (isset($_POST['tambah_laporan'])) {
                       <td width="5%" align="center">#</th>
                       <th width="15%" valign="top"><strong>No Akun</strong></th>
                       <th width="20%" valign="top">Nama</th>
-                      <th width="15%" valign="top">Saldo Awal</th>
+                      <th width="15%" valign="top">Saldo</th>
                       <!--<th valign="top">NIE</th>
       <th valign="top">No. Bath</th>
       <th valign="top">No. Lot</th>-->
@@ -164,8 +88,8 @@ if (isset($_POST['tambah_laporan'])) {
                       <td><?php echo $data['nama_akun']; ?></td>
 
                       <td><?php echo "Rp " . number_format($data['saldo'], 2, ',', '.'); ?>
-                        <hr style="padding:0px; margin:0px">
-                        <div class="pull pull-right">Saldo Riil :</div>
+                        <!-- <hr style="padding:0px; margin:0px">
+                        <div class="pull pull-right">Saldo Riil :</div> -->
                       </td>
                       <!--<td></td>
                       <td><?php //echo $data['no_bath']; 
@@ -178,9 +102,10 @@ if (isset($_POST['tambah_laporan'])) {
                         $jm2 = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id=" . $data['idd'] . ""));
                         if ($jm1 == 0 and $jm2 == 0) {
                         ?>
-                          <a href="index.php?page=buku_bank&id_hapus=<?php echo $data['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ? Riwayat Pembayaran Pada Buku Ini Juga Akan Ikut Terhapus !')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;
+                          <a href="index.php?page=buku_bank&id_hapus=<?php echo $data['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ? Riwayat Pembayaran Pada Buku Ini Juga Akan Ikut Terhapus !')" class="btn btn-xs btn-danger">
+                          <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;
                         <?php } ?>
-                        <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $data['idd']; ?>"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a>&nbsp;<a href="index.php?page=ubah_buku_kas&id=<?php echo $data['idd']; ?>"><span data-toggle="tooltip" title="Riwayat Akun" class="fa fa-caret-square-o-right"></span></a><!--&nbsp;<a target="_blank" href="cetak_rekapan_alkes2.php?id=<?php echo $data['idd']; ?>"><span data-toggle="tooltip" title="Print" class="fa fa-print"></span></a>
+                        <a href="#" data-toggle="modal" data-target="#modal-ubah<?php echo $data['idd']; ?>" class="btn btn-xs btn-warning"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a>&nbsp;<a href="index.php?page=ubah_buku_kas&id=<?php echo $data['idd']; ?>" class="btn btn-xs btn-info"><span data-toggle="tooltip" title="Riwayat Akun" class="fa fa-caret-square-o-right"></span></a><!--&nbsp;<a target="_blank" href="cetak_rekapan_alkes2.php?id=<?php echo $data['idd']; ?>"><span data-toggle="tooltip" title="Print" class="fa fa-print"></span></a>
       -->
                         <!-- Tombol Jual -->
 

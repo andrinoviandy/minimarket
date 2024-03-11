@@ -847,7 +847,11 @@
                 </li>-->
             </ul>
           </li>
-
+          <!-- <li class="<?php echo $monitoring_penjualan; ?>">
+            <a href="index.php?page=monitoring_penjualan">
+              <i class="fa fa-bar-chart"></i> <span>Monitoring Penjualan</span>
+            </a>
+          </li> -->
           <li class="<?php echo $karyawan; ?>">
             <a href="index.php?page=karyawan">
               <i class="fa fa-user-plus"></i> <span>Karyawan</span>
@@ -936,7 +940,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="<?php echo $kategori; ?>"><a href="index.php?page=kategori" class=""><i class="fa fa-circle-o"></i> Akun</a></li>
+              <li class="<?php echo $kategori; ?>"><a href="index.php?page=kategori" class=""><i class="fa fa-circle-o"></i> Akun COA</a></li>
               <li class="<?php echo $marketing; ?>"><a href="index.php?page=marketing" class=""><i class="fa fa-circle-o"></i> Marketing</a></li>
               <li class="<?php echo $mata_uang; ?>"><a href="index.php?page=mata_uang" class=""><i class="fa fa-circle-o"></i> Mata Uang</a></li>
               <li class="<?php echo $master_gaji; ?>"><a href="index.php?page=master_gaji" class=""><i class="fa fa-circle-o"></i> Master Gaji</a></li>

@@ -114,7 +114,7 @@ $jml2 = $file2;
         ?>
             <tr>
                 <td align="center" valign="center"><?php echo $start += 1; ?></td>
-                <td valign="center"><?php echo $json[$i]['jenis_transaksi']; ?></td>
+                <td valign="center"><span class="<?php if($json[$i]['jenis_transaksi'] == 'Penerimaan') {echo "label label-success";} else {echo "label label-warning";} ?>"><?php echo $json[$i]['jenis_transaksi']; ?></span></td>
                 <td valign="center"><?php echo date("d M Y", strtotime($json[$i]['tgl'])); ?></td>
                 <td>
                     <?php
@@ -128,8 +128,12 @@ $jml2 = $file2;
                     <?php echo $json[$i]['deskripsi'];  ?></td>
                 <td><?php echo "Rp " . number_format($json[$i]['harga'], 2, ',', '.'); ?></td>
                 <td>
-                    <a href="index.php?page=biaya_lain&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;&nbsp;
-                    <a href="index.php?page=ubah_biaya_lain&id_ubah=<?php echo $json[$i]['idd']; ?>"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a><br />
+                    <!-- <a href="index.php?page=biaya_lain&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
+                    <a href="javascript:void()" onclick="hapus('<?php echo $json[$i]['idd']; ?>')" class="btn btn-xs btn-danger">
+                    <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;&nbsp;
+                    <!-- <a href="index.php?page=ubah_biaya_lain&id_ubah=<?php echo $json[$i]['idd']; ?>"> -->
+                    <a href="javascript:void()" onclick="openUbah('<?php echo $json[$i]['idd']; ?>')" class="btn btn-xs btn-info">
+                    <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a><br />
                 </td>
             </tr>
         <?php } ?>

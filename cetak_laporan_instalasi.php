@@ -129,22 +129,22 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,alat_uji_detail.id a
 </table><br />
 <strong>Peripherals / Accessories data</strong>
 <br />
-<table border="1" class="mytable">
+<table border="1" class="mytable" style="font-size: 12px;">
   <tr>
     <td width="38%" align="center" height="30px"><strong>Accessories Name</strong></td>
     <td width="32%" align="center"><strong>Model / Type / No</strong></td>
     <td width="30%" align="center"><strong>Description</strong></td>
   </tr>
   <?php
-  $q2=mysqli_query($koneksi, "select * from aksesoris_alkes,aksesoris where aksesoris.id=aksesoris_alkes.aksesoris_id and aksesoris_alkes.barang_gudang_id=".$data['id_gudang']."");
+  $q2=mysqli_query($koneksi, "select * from barang_gudang,barang_gudang_detail_akse where barang_gudang.id=barang_gudang_detail_akse.barang_gudang_akse_id and barang_gudang_detail_akse.barang_gudang_id=".$data['id_gudang']."");
   $to=mysqli_num_rows($q2);
   if ($to!=0) {
   while ($d2 = mysqli_fetch_array($q2)) {
   ?>
   <tr>
-    <td height="30px" style="padding-left:10px; padding-right:10px"><?php echo $d2['nama_akse']; ?></td>
-    <td align="center" style="padding-left:10px; padding-right:10px"><?php echo $d2['merk_akse']." / ".$d2['tipe_akse']." / ".$d2['nie_akse']; ?></td>
-    <td style="padding-left:10px; padding-right:10px"><?php echo $d2['deskripsi_akse']; ?></td>
+    <td height="30px" style="padding-left:10px; padding-right:10px"><?php echo $d2['nama_brg']; ?></td>
+    <td align="center" style="padding-left:10px; padding-right:10px"><?php echo $d2['merk_brg']." / ".$d2['tipe_brg']." / ".$d2['nie_brg']; ?></td>
+    <td style="padding-left:10px; padding-right:10px"><?php echo $d2['deskripsi_alat']; ?></td>
   </tr>
   <?php } } else { ?>
   <tr height="30px"><td colspan="3" height="30px" align="center">Tidak Ada Aksesoris</td></tr>

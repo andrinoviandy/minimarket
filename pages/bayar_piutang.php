@@ -225,239 +225,10 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,utang_piutang.id as 
               <div class="box-footer">
                 <div class="box-body">
                   <div class="">
-                    <div class="table-responsive">
-                      <?php
-                      $dataa = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dijual.id as idd from barang_dijual,pembeli,pemakai where pembeli.id=barang_dijual.pembeli_id and pemakai.id=barang_dijual.pemakai_id and no_po_jual='" . $data['no_faktur_no_po'] . "' and status_deal=1"));
-                      ?>
-                      <table width="100%" id="" class="table table-bordered table-hover">
-                        <thead>
-                          <tr>
-                            <th colspan="7" align="left">
-                              <table width="">
-                                <tr valign="top">
-                                  <td><strong>Marketing </strong></td>
-                                  <td><strong>&nbsp;:&nbsp;</strong></td>
-                                  <td><strong><?php echo $dataa['marketing']; ?></strong></td>
-                                  <td><strong> &nbsp;&nbsp;,&nbsp;&nbsp; </strong></td>
-                                  <td><strong>Sub Distributor </strong></td>
-                                  <td><strong> &nbsp;:&nbsp; </strong></td>
-                                  <td><strong><?php echo $dataa['subdis']; ?></strong></td>
-                                  <td><strong>
-                                      <!--&nbsp;&nbsp;&nbsp;&nbsp; , Diskon : <?php echo $_SESSION['diskon'] . " %"; ?>&nbsp;&nbsp;&nbsp;&nbsp; , PPN : <?php echo $_SESSION['ppn'] . " %"; ?>-->
-                                    </strong></td>
-                                </tr>
-                              </table>
-                            </th>
-                          </tr>
-                          <tr>
-                            <th colspan="4" valign="bottom">&nbsp;</th>
-                            <th valign="bottom">&nbsp;</th>
-                            <th valign="bottom">&nbsp;</th>
-                            <th valign="bottom">&nbsp;</th>
-
-                          </tr>
-                          <tr>
-                            <th valign="bottom"><strong>Tgl Jual</strong></th>
-                            <th valign="bottom">No PO</th>
-                            <th valign="bottom">No Kontrak</th>
-                            <th valign="bottom">Nama RS/Dinas/Klinik/dll</th>
-                            <th valign="bottom"><strong>Kelurahan</strong></th>
-                            <th valign="bottom">Alamat</th>
-                            <th valign="bottom"><strong>Kontak RS/Dinas/dll</strong></th>
-
-                          </tr>
-                        </thead>
-                        <tr>
-                          <td>
-                            <?php echo $dataa['tgl_jual']; ?></td>
-                          <td>
-                            <?php echo $dataa['no_po_jual']; ?></td>
-                          <td><?php echo $dataa['no_kontrak']; ?></td>
-                          <td><?php
-                              $sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from pembeli where id=" . $dataa['pembeli_id'] . ""));
-                              echo $sel['nama_pembeli']; ?></td>
-                          <td><?php echo $sel['kelurahan_id']; ?></td>
-                          <td><?php echo $sel['jalan']; ?></td>
-                          <td><?php echo $sel['kontak_rs']; ?></td>
-
-                        </tr>
-                      </table>
-                    </div>
-                    <br />
-                    <div class="table-responsive">
-                      <table width="100%" class="table table-bordered table-hover">
-                        <tr>
-                          <td><strong>Nama Pemakai</strong></td>
-                          <td><strong>Kontak 1</strong></td>
-                          <td><strong>Kontak 2</strong></td>
-                          <td><strong>Email</strong></td>
-                        </tr>
-                        <tr>
-                          <td><?php
-                              $sel_pemakai = mysqli_fetch_array(mysqli_query($koneksi, "select * from pemakai where id=" . $dataa['pemakai_id'] . "")); ?>
-                            <?php echo $sel_pemakai['nama_pemakai']; ?></td>
-                          <td>
-                            <?php echo $sel_pemakai['kontak1_pemakai']; ?></td>
-                          <td><?php echo $sel_pemakai['kontak2_pemakai']; ?></td>
-                          <td>
-                            <?php echo $sel_pemakai['email_pemakai']; ?></td>
-                        </tr>
-
-                      </table>
-                    </div>
-
+                    <div id="data-umum"></div>
                     <br />
 
-
-                    <br />
-
-                    <div class="table-responsive">
-                      <table width="100%" id="example1" class="table table-bordered table-hover">
-                        <thead>
-                          <tr>
-                            <th valign="bottom">No</th>
-                            <th valign="bottom"><strong>Nama Alkes</strong></th>
-
-                            <th align="center" valign="bottom"><strong>Harga
-                                Jual</strong></th>
-                            <th align="center" valign="bottom"><strong>Tipe
-                              </strong></th>
-                            <th align="center" valign="bottom"><strong>Merk
-                              </strong></th>
-                            <th align="center" valign="bottom"><strong>Qty</strong></th>
-                            <th valign="bottom"><strong>Total</strong></th>
-
-                          </tr>
-                        </thead>
-
-
-                        <?php
-
-                        $no = 0;
-                        $q_akse = mysqli_query($koneksi, "select *,barang_dijual_qty.id as idd from barang_dijual_qty,barang_gudang where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $dataa['idd'] . "");
-                        $jm = mysqli_num_rows($q_akse);
-                        if ($jm != 0) {
-                          while ($data_akse = mysqli_fetch_array($q_akse)) {
-                            $no++;
-                        ?>
-                            <tr>
-                              <td><?php echo $no; ?></td>
-                              <td align="left"><?php echo $data_akse['nama_brg']; ?>
-                              </td>
-
-                              <td align="left"><?php echo "Rp" . number_format($data_akse['harga_jual_saat_itu'], 2, ',', '.'); ?></td>
-                              <td align="left"><?php echo $data_akse['tipe_brg']; ?></td>
-                              <td align="left"><?php echo $data_akse['merk_brg']; ?></td>
-                              <td align="center"><?php echo $data_akse['qty_jual']; ?></td>
-                              <td align="right"><?php echo "Rp" . number_format($data_akse['harga_jual_saat_itu'] * $data_akse['qty_jual'], 2, ',', '.'); ?></td>
-
-                            </tr>
-
-                        <?php }
-                        } ?>
-                        <tr bgcolor="#FF9900">
-                          <td colspan="7"></td>
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right"><strong> Total</strong></td>
-                          <td align="right"><?php
-                                            $total1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual*harga_satuan) as total1 from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $dataa['idd'] . ""));
-                                            echo number_format($total1['total1'], 2, ',', '.');
-                                            ?></td>
-
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right">Ongkir</td>
-                          <td align="right"><?php echo number_format($dataa['ongkir'], 2, ',', '.'); ?></td>
-
-                        </tr>
-                        <!--
-    <tr>
-      <td colspan="6" align="right"><strong>DPP</strong></td>
-      <td align="right"><?php echo number_format($dataa['dpp'], 2, ',', '.'); ?></td>
-      <td align="center"></td>
-    </tr>
-    -->
-                        <tr>
-                          <td colspan="6" align="right">DPP ((Total + Ongkir) /1.1)</td>
-                          <td align="right">
-                            <?php
-
-                            $dpp = ($dataa['ongkir'] + $total1['total1']) / 1.1;
-                            echo number_format($dpp, 2, ',', '.');
-
-                            ?>
-                          </td>
-
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right">Diskon (<?php echo $dataa['diskon_jual'] . "%"; ?>)</td>
-                          <td align="right"><?php
-                                            $diskon = $dataa['diskon_jual'];
-                                            echo $diskon . "%";
-                                            ?></td>
-
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right">PPN (<?php echo $dataa['ppn_jual'] . "%"; ?>)
-                          </td>
-                          <td align="right">
-                            <?php
-                            $ppn = ($dpp) * $dataa['ppn_jual'] / 100;
-                            echo number_format($ppn, 2, ',', '.');
-                            ?>
-                          </td>
-
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right">PPh (<?php echo $dataa['pph'] . "%"; ?>) </td>
-                          <td align="right"><?php
-                                            $pph = ($dpp) * $dataa['pph'] / 100;
-                                            echo number_format($pph, 2, ',', '.');
-                                            ?></td>
-
-                        </tr>
-
-                        <tr>
-                          <td colspan="6" align="right">Zakat (<?php echo $dataa['zakat'] . "%"; ?>)</td>
-                          <td align="right"><?php $zakat = $dpp * $dataa['zakat'] / 100;
-                                            echo number_format($dpp * $dataa['zakat'] / 100, 2, ',', '.'); ?></td>
-
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right">Biaya Bank </td>
-                          <td align="right"><?php echo number_format($dataa['biaya_bank'], 2, ',', '.'); ?></td>
-
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right" valign="bottom">
-                            <h4><strong>Neto (DPP(Dengan Ongkir)-(PPN dari DPP(Dengan Ongkir)+PPh dari DPP(Dengan Ongkir)+Zakat dari DPP(Dengan Ongkir)+Biaya Bank)</strong>)</h4>
-                          </td>
-                          <td align="right" valign="bottom">
-                            <h4><strong>
-                                <?php
-                                $total2 = $dpp - ($ppn + $pph + $zakat + $dataa['biaya_bank']);
-                                echo number_format($total2, 2, ',', '.'); ?>
-                              </strong></h4>
-                          </td>
-
-                        </tr>
-                        <tr>
-                          <td colspan="6" align="right" valign="bottom"><strong>Fee Supplier (DPP(Tanpa Ongkir)-(PPh dari DPP(Tanpa Ongkir)+Zakat dari DPP(Dengan Ongkir)+Biaya Bank)</strong>)<strong>*Diskon</strong></td>
-                          <td align="right" valign="bottom">
-                            <?php
-                            $dpp_m = ($total1['total1'] / 1.1);
-                            //$ppn_m = $dpp_m*$data['ppn_jual']/100;
-                            $pph_m = $dpp_m * $dataa['pph'] / 100;
-                            $zakat_m = $dpp_m * $dataa['zakat'] / 100;
-                            $biaya_bank_m = $dataa['biaya_bank'];
-                            $fee_marketing = ($dpp_m - ($pph_m + $zakat_m + $biaya_bank_m)) * ($diskon / 100);
-                            echo "Rp" . number_format($fee_marketing, 2, ',', '.'); ?>
-                          </td>
-
-                        </tr>
-                      </table>
-                    </div>
+                    <div id="data-detail"></div>
 
                   </div>
                 </div>
@@ -509,6 +280,32 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,utang_piutang.id as 
 </div>
 
 <script>
+  function getDataUmum(id) {
+    $.get("data/jual_data_umum.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-umum').html(data);
+      }
+    );
+  }
+
+  function getDataDetail(id, dpp) {
+    let url = '';
+    if (dpp == 1) {
+      url = "data/detail_piutang.php";
+    } else {
+      url = "data/detail_piutang_no_dpp.php";
+    }
+    $.get(url, {
+        id: id
+      },
+      function(data) {
+        $('#data-detail').html(data);
+      }
+    );
+  }
+
   function loading() {
     $.get("include/getLoading.php", function(data) {
       $('#riwayat-pembayaran').html(data);
