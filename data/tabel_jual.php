@@ -143,10 +143,11 @@ error_reporting(0);
         </td>
         <td align="right" bgcolor="#FFFF00">
             <?php
-            if (isset($_SESSION['ongkir'])) {
-                $ongkir = $_SESSION['ongkir'];
-                echo number_format($_SESSION['ongkir'], 2, ',', '.');
-            } elseif ($_SESSION['ongkir'] == '') {
+            if (isset($_GET['ongkir'])) {
+                $ongkir = str_replace(".","",$_GET['ongkir']);
+                echo number_format($ongkir, 2, ',', '.');
+            } 
+            elseif ($_GET['ongkir'] == '0') {
                 $ongkir = 0;
                 echo $ongkir;
             }
@@ -175,8 +176,8 @@ error_reporting(0);
         <td colspan="7" align="right">DPP ((Total + Ongkir) /1.1)</td>
         <td align="right">
             <?php
-            if (isset($_SESSION['ongkir'])) {
-                $dpp = ($_SESSION['ongkir'] + $total1['total1']) / 1.1;
+            if (isset($_GET['ongkir'])) {
+                $dpp = ($ongkir + $total1['total1']) / 1.1;
                 echo number_format($dpp, 2, ',', '.');
             } else {
                 echo "....";
@@ -188,16 +189,16 @@ error_reporting(0);
     </tr>
     <tr>
         <td colspan="7" align="right">PPN (<?php
-                                            if (isset($_SESSION['ppn']) and $_SESSION['ppn'] != '') {
-                                                echo $_SESSION['ppn'];
+                                            if (isset($_GET['ppn']) and $_GET['ppn'] != '') {
+                                                echo $_GET['ppn'];
                                             } else {
                                                 echo "...";
                                             }
                                             ?> %) <button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs" onclick="$('#ppn').focus();"><span class="fa fa-edit"></span></button></td>
         <td align="right">
             <?php
-            if (isset($_SESSION['ppn'])) {
-                $ppn = $_SESSION['ppn'] / 100 * ($dpp);
+            if (isset($_GET['ppn'])) {
+                $ppn = $_GET['ppn'] / 100 * ($dpp);
                 echo number_format($ppn, 2, ',', '.');
             } else {
                 echo "....";
@@ -209,15 +210,15 @@ error_reporting(0);
     </tr>
     <tr>
         <td colspan="7" align="right">PPh (<?php
-                                            if (isset($_SESSION['pph']) and $_SESSION['pph'] != '') {
-                                                echo $_SESSION['pph'];
+                                            if (isset($_GET['pph']) and $_GET['pph'] != '') {
+                                                echo $_GET['pph'];
                                             } else {
                                                 echo "...";
                                             }
                                             ?> %) <button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs" onclick="$('#pph').focus();"><span class="fa fa-edit"></span></button></td>
         <td align="right"><?php
-                            if (isset($_SESSION['pph'])) {
-                                $pph = $_SESSION['pph'] / 100 * ($dpp);
+                            if (isset($_GET['pph'])) {
+                                $pph = $_GET['pph'] / 100 * ($dpp);
                                 echo number_format($pph, 2, ',', '.');
                             } else {
                                 echo "....";
@@ -229,15 +230,15 @@ error_reporting(0);
 
     <tr>
         <td colspan="7" align="right" valign="bottom">Zakat (<?php
-                                                                if ($_SESSION['zakat'] != '') {
-                                                                    echo $_SESSION['zakat'];
+                                                                if ($_GET['zakat'] != '') {
+                                                                    echo $_GET['zakat'];
                                                                 } else {
                                                                     echo "...";
                                                                 }
                                                                 ?> %)<button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs" onclick="$('#zakat').focus();"><span class="fa fa-edit"></span></button></td>
         <td align="right" valign="bottom"><?php
-                                            if (isset($_SESSION['zakat'])) {
-                                                $zakat = $_SESSION['zakat'] / 100 * ($dpp);
+                                            if (isset($_GET['zakat'])) {
+                                                $zakat = $_GET['zakat'] / 100 * ($dpp);
                                                 echo number_format($zakat, 2, ',', '.');
                                             } else {
                                                 echo "....";
@@ -249,9 +250,9 @@ error_reporting(0);
     <tr>
         <td colspan="7" align="right" valign="bottom">Biaya Bank <button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs" onclick="$('#biaya_bank').focus();"><span class="fa fa-edit"></span></button></td>
         <td align="right" valign="bottom"><?php
-                                            if (isset($_SESSION['biaya_bank'])) {
-                                                $biaya_bank = $_SESSION['biaya_bank'];
-                                                echo number_format($_SESSION['biaya_bank'], 2, ',', '.');
+                                            if (isset($_GET['biaya_bank'])) {
+                                                $biaya_bank = str_replace(".","",$_GET['biaya_bank']);
+                                                echo number_format($biaya_bank, 2, ',', '.');
                                             } else {
                                                 echo "....";
                                             }

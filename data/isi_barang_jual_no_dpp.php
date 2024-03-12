@@ -100,7 +100,7 @@ error_reporting(0);
                 <tr>
                     <td colspan="7" align="right"><strong>Sub Total</strong></td>
                     <td align="right"><?php
-                                        $total1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual*harga_satuan) as total1 from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $dt['id'] . ""));
+                                        $total1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as total1 from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $dt['id'] . ""));
                                         echo number_format($total1['total1'], 2, ',', '.');
                                         ?></td>
                     <td align="center" bgcolor="#FFFF00"></td>

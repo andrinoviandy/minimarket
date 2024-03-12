@@ -7,7 +7,7 @@ function getVars(param = null) {
 			vars.push(hash[0]);
 			vars[hash[0]] = hash[1];
 		}
-		return vars[param];
+		return vars[param].replace(/#/g,"");
 	}
 	else {
 		return null;

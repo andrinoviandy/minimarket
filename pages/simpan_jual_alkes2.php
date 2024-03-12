@@ -498,17 +498,21 @@ if (isset($_POST['tambah_laporan'])) {
       </div>
       <form method="post" enctype="multipart/form-data" onsubmit="simpanLainnya2(); return false;">
         <div class="modal-body">
-          
+          <label>Ongkir</label>
+          <input id="ongkir2" name="ongkir2" class="form-control" type="text" placeholder="" value="<?php if (isset($_SESSION['ongkir'])) {
+                                                                                                      echo number_format($_SESSION['ongkir'], 0, ',', '.');
+                                                                                                    } ?>" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+          <br />
           <label>Diskon (%)</label>
           <input id="diskon2" name="diskon2" class="form-control" type="text" placeholder="Gunakan Tanda '.' Untuk Koma" value="<?php if (isset($_SESSION['diskon'])) {
-                                                                                                                                echo $_SESSION['diskon'];
-                                                                                                                              } ?>">
+                                                                                                                                  echo $_SESSION['diskon'];
+                                                                                                                                } ?>">
           <br />
           <label>PPN (%)</label>
           <input id="ppn2" name="ppn2" class="form-control" type="text" placeholder="Gunakan Tanda '.' Untuk Koma" value="<?php if (isset($_SESSION['ppn'])) {
-                                                                                                                          echo $_SESSION['ppn'];
-                                                                                                                        } ?>" <?php echo $focus_ppn; ?>>
-          
+                                                                                                                            echo $_SESSION['ppn'];
+                                                                                                                          } ?>" <?php echo $focus_ppn; ?>>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -586,18 +590,24 @@ if (isset($_POST['tambah_laporan'])) {
     $.post("data/ubah_barang_jual.php", {
         id: $('#id_ubah').val(),
         qty: $('#qty_ubah').val(),
-        harga: $('#harga_ubah').val()
+        harga: $('#harga_ubah').val(),
+        ongkir: getVars("dpp") == 1 ? $('#ongkir').val() : $('#ongkir2').val(),
+        diskon: getVars("dpp") == 1 ? $('#diskon').val() : $('#diskon2').val(),
+        ppn: getVars("dpp") == 1 ? $('#ppn').val() : $('#ppn2').val(),
+        pph: getVars("dpp") == 1 ? $('#pph').val() : 0,
+        zakat: getVars("dpp") == 1 ? $('#zakat').val() : 0,
+        biaya_bank: getVars("dpp") == 1 ? $('#biaya_bank').val() : 0,
       },
       function(data) {
         // alert(data);
         if (data == 'S') {
           $('#modal-ubah').modal('hide');
           alertSimpan('S');
-          loading_jual();
+          // loading_jual();
           getDataBarang();
         } else {
           alertSimpan('F');
-          loading_jual();
+          // loading_jual();
           getDataBarang();
         }
       }
@@ -619,7 +629,13 @@ if (isset($_POST['tambah_laporan'])) {
     }).then((result) => {
       if (result.isConfirmed) {
         $.post("data/hapus_barang_jual.php", {
-            id_hapus: id
+            id_hapus: id,
+            ongkir: getVars("dpp") == 1 ? $('#ongkir').val() : $('#ongkir2').val(),
+            diskon: getVars("dpp") == 1 ? $('#diskon').val() : $('#diskon2').val(),
+            ppn: getVars("dpp") == 1 ? $('#ppn').val() : $('#ppn2').val(),
+            pph: getVars("dpp") == 1 ? $('#pph').val() : 0,
+            zakat: getVars("dpp") == 1 ? $('#zakat').val() : 0,
+            biaya_bank: getVars("dpp") == 1 ? $('#biaya_bank').val() : 0,
           },
           function(data) {
             if (data == 'S') {
@@ -632,7 +648,7 @@ if (isset($_POST['tambah_laporan'])) {
                 icon: 'success',
                 confirmButtonText: 'OK',
               })
-              loading_jual();
+              // loading_jual();
               getDataBarang();
             } else {
               Swal.fire({
@@ -674,7 +690,14 @@ if (isset($_POST['tambah_laporan'])) {
     } else {
       url = "data/tabel_jual_no_dpp.php";
     }
-    $.get(url,
+    $.get(url, {
+        ongkir: getVars("dpp") == 1 ? $('#ongkir').val() : $('#ongkir2').val(),
+        diskon: getVars("dpp") == 1 ? $('#diskon').val() : $('#diskon2').val(),
+        ppn: getVars("dpp") == 1 ? $('#ppn').val() : $('#ppn2').val(),
+        pph: getVars("dpp") == 1 ? $('#pph').val() : 0,
+        zakat: getVars("dpp") == 1 ? $('#zakat').val() : 0,
+        biaya_bank: getVars("dpp") == 1 ? $('#biaya_bank').val() : 0,
+      },
       function(data) {
         $('#tabel_jual').html(data);
       }
@@ -723,7 +746,13 @@ if (isset($_POST['tambah_laporan'])) {
         id_akse: $('#id_akse').val(),
         qty: $('#qty_jual').val(),
         ongkirr: $('#ongkir_jual').val(),
-        inc: no_include == true ? '0' : '1'
+        inc: no_include == true ? '0' : '1',
+        ongkir: getVars("dpp") == 1 ? $('#ongkir').val() : $('#ongkir2').val(),
+        diskon: getVars("dpp") == 1 ? $('#diskon').val() : $('#diskon2').val(),
+        ppn: getVars("dpp") == 1 ? $('#ppn').val() : $('#ppn2').val(),
+        pph: getVars("dpp") == 1 ? $('#pph').val() : 0,
+        zakat: getVars("dpp") == 1 ? $('#zakat').val() : 0,
+        biaya_bank: getVars("dpp") == 1 ? $('#biaya_bank').val() : 0,
       },
       function(data) {
         // alert(data);
@@ -738,7 +767,7 @@ if (isset($_POST['tambah_laporan'])) {
             icon: 'success',
             confirmButtonText: 'OK',
           });
-          loading_jual();
+          // loading_jual();
           getDataBarang();
         } else if (data == 'SAMA') {
           $('#modal-tambah').modal('hide');
@@ -751,7 +780,7 @@ if (isset($_POST['tambah_laporan'])) {
             icon: 'warning',
             confirmButtonText: 'OK',
           })
-          loading_jual();
+          // loading_jual();
           getDataBarang();
         } else if (data == 'SA') {
           $('#modal-tambah').modal('hide');
@@ -764,7 +793,7 @@ if (isset($_POST['tambah_laporan'])) {
             icon: 'error',
             confirmButtonText: 'OK',
           });
-          loading_jual();
+          // loading_jual();
           getDataBarang();
         } else {
           $('#modal-tambah').modal('hide');
@@ -777,7 +806,7 @@ if (isset($_POST['tambah_laporan'])) {
             icon: 'error',
             confirmButtonText: 'OK',
           })
-          loading_jual();
+          // loading_jual();
           getDataBarang();
         }
       }
@@ -795,7 +824,7 @@ if (isset($_POST['tambah_laporan'])) {
       },
       function() {
         $('#modal-ongkir1').modal('hide');
-        loading_jual();
+        // loading_jual();
         getDataBarang();
       }
     );
@@ -803,7 +832,7 @@ if (isset($_POST['tambah_laporan'])) {
 
   function simpanLainnya2() {
     $.post("data/simpan_barang_jual_lainnya.php", {
-        ongkir: 0,
+        ongkir: $('#ongkir2').val(),
         diskon: $('#diskon2').val(),
         ppn: $('#ppn2').val(),
         pph: 0,
@@ -812,7 +841,7 @@ if (isset($_POST['tambah_laporan'])) {
       },
       function() {
         $('#modal-ongkir11').modal('hide');
-        loading_jual();
+        // loading_jual();
         getDataBarang();
       }
     );

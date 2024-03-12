@@ -139,14 +139,14 @@ error_reporting(0);
     </tr>
     <tr>
         <td colspan="7" align="right">Total Ongkir
-            <button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs" onclick="$('#ongkir').focus();"><span class="fa fa-edit"></span></button>
+            <button type="button" data-toggle="modal" data-target="#modal-ongkir11" class="btn btn-info btn-xs" onclick="$('#ongkir').focus();"><span class="fa fa-edit"></span></button>
         </td>
         <td align="right" bgcolor="#FFFF00">
             <?php
-            if (isset($_SESSION['ongkir'])) {
-                $ongkir = $_SESSION['ongkir'];
-                echo number_format($_SESSION['ongkir'], 2, ',', '.');
-            } elseif ($_SESSION['ongkir'] == '') {
+            if (isset($_GET['ongkir'])) {
+                $ongkir = str_replace(".","",$_GET['ongkir']);
+                echo number_format($ongkir, 2, ',', '.');
+            } else {
                 $ongkir = 0;
                 echo $ongkir;
             }
@@ -159,16 +159,16 @@ error_reporting(0);
         <td colspan="7" align="right"><strong>T O T A L</strong></td>
         <td align="right"><?php
                             $total2 = $total1['total1'] + $ongkir;
-                            echo number_format($total1['total1'], 2, ',', '.');
+                            echo number_format($total2, 2, ',', '.');
                             ?></td>
-        <td align="center" bgcolor="#FFFF00"></td>
+        <td align="center"></td>
         <td align="center"></td>
     </tr>
     <tr>
         <td colspan="7" align="right">Diskon (
             <?php
-            if (isset($_SESSION['diskon']) && $_SESSION['diskon'] != '') {
-                echo $_SESSION['diskon'];
+            if (isset($_GET['diskon']) && $_GET['diskon'] != '') {
+                echo $_GET['diskon'];
             } else {
                 echo "...";
             }
@@ -177,8 +177,8 @@ error_reporting(0);
             <button type="button" data-toggle="modal" data-target="#modal-ongkir11" class="btn btn-info btn-xs" onclick="$('#diskon').focus();"><span class="fa fa-edit"></span></button>
         </td>
         <td align="right"><?php
-                            if (isset($_SESSION['diskon'])) {
-                                $diskon = $total2 * ($_SESSION['diskon'] / 100);
+                            if (isset($_GET['diskon'])) {
+                                $diskon = $total2 * ($_GET['diskon'] / 100);
                                 echo number_format($diskon, 2, ',', '.');
                             } else {
                                 echo "....";
@@ -189,16 +189,16 @@ error_reporting(0);
     </tr>
     <tr>
         <td colspan="7" align="right">PPN (<?php
-                                            if (isset($_SESSION['ppn']) and $_SESSION['ppn'] != '') {
-                                                echo $_SESSION['ppn'];
+                                            if (isset($_GET['ppn']) and $_GET['ppn'] != '') {
+                                                echo $_GET['ppn'];
                                             } else {
                                                 echo "...";
                                             }
                                             ?> %) <button type="button" data-toggle="modal" data-target="#modal-ongkir11" class="btn btn-info btn-xs" onclick="$('#ppn').focus();"><span class="fa fa-edit"></span></button></td>
         <td align="right">
             <?php
-            if (isset($_SESSION['ppn'])) {
-                $ppn = $_SESSION['ppn'] / 100 * ($total1['total1']);
+            if (isset($_GET['ppn'])) {
+                $ppn = $_GET['ppn'] / 100 * ($total2);
                 echo number_format($ppn, 2, ',', '.');
             } else {
                 echo "....";

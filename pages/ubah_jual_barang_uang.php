@@ -877,7 +877,6 @@ if (isset($_POST['tambah_riwayat'])) {
         biaya_bank: $('#biaya_bank').val(),
       },
       function(data) {
-        alert(data)
         if (data == 'S') {
           $('#modal-lainnya').modal('hide');
           alertSimpan('S')

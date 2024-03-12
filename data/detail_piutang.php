@@ -67,7 +67,7 @@ $dt = mysqli_fetch_array($que2);
         <tr>
             <td colspan="7" align="right">Total Ongkir
                 <!-- <button type="button" data-toggle="modal" data-target="#modal-ongkir1" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button> -->
-                <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button>
+                <!-- <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button> -->
             </td>
             <td align="right" bgcolor="#FFFF00"><?php
                                                 $data3 = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dijual where id=" . $dt['id'] . ""));
@@ -95,7 +95,7 @@ $dt = mysqli_fetch_array($que2);
         </tr>
         <tr>
             <td colspan="7" align="right">PPN (<?php echo $data3['ppn_jual'] . "%"; ?>)
-                <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button>
+                <!-- <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button> -->
             </td>
             <td align="right">
                 <?php
@@ -106,7 +106,9 @@ $dt = mysqli_fetch_array($que2);
             <td align="center"></td>
         </tr>
         <tr>
-            <td colspan="7" align="right">PPh (<?php echo $data3['pph'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
+            <td colspan="7" align="right">PPh (<?php echo $data3['pph'] . "%"; ?>)
+                <!-- <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button> -->
+            </td>
             <td align="right"><?php
                                 $pph = ($dpp) * $data3['pph'] / 100;
                                 echo number_format($pph, 2, ',', '.');
@@ -115,13 +117,17 @@ $dt = mysqli_fetch_array($que2);
         </tr>
 
         <tr>
-            <td colspan="7" align="right">Zakat (<?php echo $data3['zakat'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
+            <td colspan="7" align="right">Zakat (<?php echo $data3['zakat'] . "%"; ?>)
+                <!-- <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button> -->
+            </td>
             <td align="right"><?php $zakat = $dpp * $data3['zakat'] / 100;
                                 echo number_format($dpp * $data3['zakat'] / 100, 2, ',', '.'); ?></td>
             <td align="center"></td>
         </tr>
         <tr>
-            <td colspan="7" align="right">Biaya Bank <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
+            <td colspan="7" align="right">Biaya Bank
+                <!-- <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button> -->
+            </td>
             <td align="right"><?php echo number_format($data3['biaya_bank'], 2, ',', '.'); ?></td>
             <td align="center"></td>
         </tr>
@@ -139,7 +145,9 @@ $dt = mysqli_fetch_array($que2);
             <td align="center"></td>
         </tr>
         <tr>
-            <td colspan="7" align="right">Diskon (<?php echo $data3['diskon_jual'] . "%"; ?>) <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button></td>
+            <td colspan="7" align="right">Diskon (<?php echo $data3['diskon_jual'] . "%"; ?>)
+                <!-- <button type="button" onclick="openModalLainnya();" class="btn btn-info btn-xs"><span class="fa fa-edit"></span></button> -->
+            </td>
             <td align="right"><?php
                                 $diskon = $data3['diskon_jual'];
                                 echo $diskon . "%";
