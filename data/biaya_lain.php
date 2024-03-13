@@ -126,7 +126,7 @@ $jml2 = $file2;
 
                 <td>
                     <?php echo $json[$i]['deskripsi'];  ?></td>
-                <td><?php echo "Rp " . number_format($json[$i]['harga'], 2, ',', '.'); ?></td>
+                <td><?php echo "Rp" . number_format($json[$i]['harga'], 2, ',', '.'); ?></td>
                 <td>
                     <!-- <a href="index.php?page=biaya_lain&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
                     <a href="javascript:void()" onclick="hapus('<?php echo $json[$i]['idd']; ?>')" class="btn btn-xs btn-danger">

@@ -77,9 +77,9 @@ error_reporting(0);
                     <td><?php echo $json[$i]['no_po_jual'];
                         ?></td>
                     <td>
-                        <?php if ($_GET['tampil'] == 1) { ?>
+                        <?php /* if ($_GET['tampil'] == 1) { ?>
                             <?php
-                            $q23 = mysqli_query($koneksi, "select *,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_qty.barang_dijual_id=" . $json[$i]['idd'] . "");
+                            $q23 = mysqli_query($koneksi, "select ,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_qty.barang_dijual_id=" . $json[$i]['idd'] . "");
                             $n2 = 0;
                             while ($d1 = mysqli_fetch_array($q23)) {
                                 $n2++;
@@ -90,12 +90,12 @@ error_reporting(0);
                                 <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['qty_jual'] . "]"; ?>
                                 <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
-                        <?php } else { ?>
+                        <?php } else { */ ?>
                             <a href="javascript:void()" onclick="modalDetailBarang('<?php echo $json[$i]['idd']; ?>'); return false;"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
-                        <?php } ?>
+                        <?php //} ?>
                     </td>
                     <td>
-                        <?php if ($_GET['tampil'] == 1) { ?>
+                        <?php /* if ($_GET['tampil'] == 1) { ?>
                             <?php
                             $q24 = mysqli_query($koneksi, "select status_kembali_ke_gudang, qty_jual, nama_brg,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_qty.barang_dijual_id=" . $json[$i]['idd'] . "");
                             $nn2 = 0;
@@ -122,9 +122,9 @@ error_reporting(0);
                                 } ?>
                                 <hr style="margin:0px; border-top:1px double" />
                             <?php } ?>
-                        <?php } else { ?>
+                        <?php } else { */ ?>
                             <a href="javascript:void()" onclick="modalSisaKirim('<?php echo $json[$i]['idd']; ?>')"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
-                        <?php } ?>
+                        <?php //} ?>
                     </td>
                     <td>
                         <a href="javascript:void()" onclick="modalPembeli('<?php echo $json[$i]['pembeli_id']; ?>')" style="color:#060" title="Klik Untuk Lebih Lengkap">
@@ -146,14 +146,14 @@ error_reporting(0);
                             <!--<a href="index.php?page=jual_barang&id=<?php echo $json[$i]['idd']; ?>#openKirim"><small data-toggle="tooltip" title="Kirim Alkes" class="label bg-blue">Kirim</small></a>-->
                             <!-- <a href="#" data-toggle="modal" data-target="#modal-kirim<?php echo $json[$i]['idd']; ?>"> -->
                             <?php
-                            $q_cek = mysqli_query($koneksi, "select *,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_qty.barang_dijual_id=" . $json[$i]['idd'] . "");
+                            $q_cek = mysqli_query($koneksi, "select qty_jual,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_qty.barang_dijual_id=" . $json[$i]['idd'] . "");
                             $jml_cek = 0;
 
                             while ($d1 = mysqli_fetch_array($q_cek)) {
-                                $q4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail where barang_dijual_qty_id=" . $d1['id_det_jual'] . ""));
+                                $q4 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim_detail where barang_dijual_qty_id=" . $d1['id_det_jual'] . ""));
                             ?>
                                 <?php
-                                if ($d1['qty_jual'] - $q4 != 0) {
+                                if ($d1['qty_jual'] - $q4['jml'] != 0) {
                                     $jml_cek += 1;
                                 }
                                 ?>

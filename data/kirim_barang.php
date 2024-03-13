@@ -86,7 +86,7 @@ error_reporting(0);
                         <?php echo $json[$i]['no_po_jual']; ?>
                     </td>
                     <td>
-                        <?php if ($_GET['tampil'] == 1) { ?>
+                        <?php /*if ($_GET['tampil'] == 1) { ?>
                             <?php
                             $q23 = mysqli_query($koneksi, "select nama_brg,no_seri_brg,status_spi,status_kerusakan,status_batal,tipe_brg from barang_gudang,barang_gudang_detail,barang_dikirim_detail where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_id=" . $json[$i]['idd'] . "");
                             $n2 = 0;
@@ -106,11 +106,11 @@ error_reporting(0);
                                 <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['no_seri_brg'] . "]"; ?>
                                 <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
-                        <?php } else { ?>
+                        <?php } else { */?>
                             <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
                             <a href="javascript:void()" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
                             <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
-                        <?php } ?>
+                        <?php //} ?>
                     </td>
                     <td><?php
                         $data3 = mysqli_fetch_array(mysqli_query($koneksi, "select nama_pembeli,kontak_rs from pembeli,barang_dijual,barang_dikirim where pembeli.id=barang_dijual.pembeli_id and barang_dijual.id=barang_dikirim.barang_dijual_id and barang_dikirim.id=" . $json[$i]['idd'] . ""));

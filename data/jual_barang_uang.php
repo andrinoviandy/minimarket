@@ -102,7 +102,7 @@ error_reporting(0);
                     <td><?php echo $json[$i]['no_kontrak'];
                         ?></td>
                     <td>
-                        <?php if ($_GET['tampil'] == 1) { ?>
+                        <?php /*if ($_GET['tampil'] == 1) { ?>
                             <?php
                             $jml_deal = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dijual where status_deal=1 and no_po_jual='" . $json[$i]['no_po_jual'] . "'"));
                             if ($jml_deal['jml'] == 0) {
@@ -123,12 +123,12 @@ error_reporting(0);
                                 <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['qty_jual'] . "]"; ?>
                                 <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
-                        <?php } else { ?>
+                        <?php } else { */?>
                             <button data-toggle="tooltip" title="Detail Barang" class="btn btn-xs bg-primary" onclick="modalBarang('<?php echo $json[$i]['no_po_jual']; ?>')"><span class="fa fa-folder-open"></span></button>
-                        <?php } ?>
+                        <?php //} ?>
                     </td>
                     <td><a href="javascript:void();" onclick="modalPembeli('<?php echo $json[$i]['pembeli_id'] ?>')" style="color:#060" title="Klik Untuk Lebih Lengkap"><u><?php
-                                                                                                                                                                            $data_pem = mysqli_fetch_array(mysqli_query($koneksi, "select pembeli.*, pemakai.nama_pemakai from barang_dijual,pembeli,pemakai where pembeli.id=barang_dijual.pembeli_id and pemakai.id=barang_dijual.pemakai_id and barang_dijual.id=" . $json[$i]['idd'] . ""));
+                                                                                                                                                                            $data_pem = mysqli_fetch_array(mysqli_query($koneksi, "select pembeli.nama_pembeli, pemakai.nama_pemakai from barang_dijual,pembeli,pemakai where pembeli.id=barang_dijual.pembeli_id and pemakai.id=barang_dijual.pemakai_id and barang_dijual.id=" . $json[$i]['idd'] . ""));
                                                                                                                                                                             echo $data_pem['nama_pembeli']; ?></u></a></td>
                     <td><?php echo $data_pem['nama_pemakai']; ?></td>
                     <td align="center"><?php echo $json[$i]['marketing']; ?></td>
