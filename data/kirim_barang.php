@@ -52,7 +52,7 @@ error_reporting(0);
                 <tr>
                     <th align="center">No</th>
                     <th bgcolor="#99FFCC">Tanggal Kirim</th>
-                    <th width="20%">Nama Paket</th>
+                    <th>Nama Paket</th>
                     <th>No_Surat_Jalan</th>
                     <th>No_PO</th>
                     <th>Barang</th>

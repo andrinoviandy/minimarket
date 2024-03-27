@@ -10,6 +10,7 @@ error_reporting(0);
             <tr>
                 <th width="">No</th>
                 <th width=""><strong>Nama Barang</strong></th>
+                <th width=""><strong>Tipe</strong></th>
                 <th width="">Harga Beli</th>
                 <th width="">Harga Jual</th>
                 <th width="">Qty</th>
@@ -26,6 +27,7 @@ error_reporting(0);
             <tr>
                 <td><?php echo $no; ?></td>
                 <td><?php echo $d['nama_brg']; ?></td>
+                <td><?php echo $d['tipe_brg']; ?></td>
                 <td><?php echo number_format($d['harga_beli'], 0, '.', ','); ?></td>
                 <td><?php echo number_format($d['harga_satuan'], 0, '.', ','); ?></td>
                 <td><?php echo $d['qty']; ?></td>

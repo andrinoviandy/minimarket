@@ -120,6 +120,7 @@ if (isset($_POST['simpan_perubahan'])) {
                 <table width="100%" id="example1" class="table table-bordered table-hover">
                   <thead>
                     <tr>
+                      <th>Kategori</th>
                       <th><strong>Nama Alkes</strong></th>
                       <th>Merk</th>
 
@@ -139,6 +140,7 @@ if (isset($_POST['simpan_perubahan'])) {
                     $no++;
                   ?>
                     <tr>
+                      <td><?php echo $d['kategori_brg']; ?></td>
                       <td><?php echo $d['nama_brg']; ?></td>
                       <td><?php echo $d['merk_brg']; ?></td>
                       <td><?php echo $d['tipe_brg']; ?></td>
@@ -147,10 +149,10 @@ if (isset($_POST['simpan_perubahan'])) {
                           echo $d['qty'] - $stok_sudah_mutasi['stok_sudah']; ?></td>
                       <td><?php echo $stok_sudah_mutasi['stok_sudah']; ?></td>
                       <td><?php
-                      $simbol = mysqli_fetch_array(mysqli_query($koneksi, "select jenis_mu,simbol from mata_uang where id=".$d['mata_uang_id'].""));
-                      echo $simbol['simbol']." ".number_format($d['harga_perunit'], 0, ',', ',') . ".00"; ?></td>
+                          $simbol = mysqli_fetch_array(mysqli_query($koneksi, "select jenis_mu,simbol from mata_uang where id=" . $d['mata_uang_id'] . ""));
+                          echo $simbol['simbol'] . " " . number_format($d['harga_perunit'], 0, ',', ',') . ".00"; ?></td>
                       <td align="center"><?php echo $d['diskon'] . " %"; ?></td>
-                      <td><?php echo $simbol['simbol']." ".number_format($d['harga_total'], 0, ',', ',') . ".00"; ?></td>
+                      <td><?php echo $simbol['simbol'] . " " . number_format($d['harga_total'], 0, ',', ',') . ".00"; ?></td>
                       <td align="center">
                         <?php
 

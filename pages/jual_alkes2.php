@@ -44,12 +44,6 @@
 	  }
   </script>-->
 <?php
-if (isset($_POST['simpan_rs'])) {
-  $insert_pembeli = mysqli_query($koneksi, "insert into pembeli values('','" . $_POST['nama_pembeli'] . "','" . $_POST['provinsi'] . "','" . $_POST['kabupaten'] . "','" . $_POST['kecamatan'] . "','" . $_POST['kelurahan'] . "','" . $_POST['alamat'] . "','" . $_POST['kontak_rs'] . "')");
-  if ($insert_pembeli) {
-    echo "<script>history.back(-1)</script>";
-  }
-}
 
 if (isset($_POST['lapor'])) {
   $jml = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual where no_po_jual='" . $_POST['no_faktur'] . "'"));
@@ -133,9 +127,9 @@ if (isset($_POST['lapor'])) {
                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                   <button type="button" class="btn btn-primary" onclick="modalPembeli();"><i class="fa fa-search"></i> Pilih RS/Dinas/Puskesmas/Klinik/Dll</button>
                 </div>
-                <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                   <button type="button" class="btn btn-success pull-right" onclick="modalTambahPembeli();"><i class="fa fa-plus"></i> Tambah Baru</button>
-                </div> -->
+                </div>
               </div><br />
               <div class="well">
                 <div class="box-header" align="center"><strong>Data RS/Dinas/Puskesmas/Klinik/Dll</strong></div>
@@ -233,7 +227,7 @@ if (isset($_POST['lapor'])) {
   <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="modal-tambahrs">
+<div class="modal fade" id="modal-tambahrs" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -255,11 +249,34 @@ if (isset($_POST['lapor'])) {
     });
   }
 
+  function tambahPembeli() {
+    var dataform = $('#formPembeli')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/tambah-pelanggan.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response == 'S') {
+          dataform.reset();
+          $('#modal-tambahrs').modal('hide');
+          alertSimpan('S')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
   function modalTambahPembeli() {
     $('#modal-tambahrs').modal('show');
+    loading2("#tambah-pembeli");
     $.get("data/modal-tambah-pembeli.php",
-      function (data) {
-        $('#tambah-pembeli').html(data);
+    function (data) {
+      $('#tambah-pembeli').html(data);
       }
     );
   }

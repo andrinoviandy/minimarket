@@ -13,7 +13,7 @@ if (isset($_POST['tambah_aksesoris'])) {
     echo "<script>alert('Barang Sudah Terdaftar !')</script>";
   } else {
     if ($_POST['kategori_brg'] == 'Set') {
-      $Result = mysqli_query($koneksi, "insert into barang_gudang values('','Set','" . $_POST['nama_barang'] . "','" . $_POST['nie_brg'] . "','" . $_POST['tipe'] . "','" . $_POST['merk'] . "','" . $_POST['negara_asal'] . "', '" . $_POST['jenis_barang'] . "', '0', '" . $_POST['deskripsi'] . "','" . str_replace(".", "", $_POST['harga_beli']) . "','" . str_replace(".", "", $_POST['harga_satuan']) . "','" . $_POST['satuan'] . "','0')");
+      $Result = mysqli_query($koneksi, "insert into barang_gudang values('','Set','" . $_POST['nama_barang'] . "','" . $_POST['nie_brg'] . "','" . $_POST['tipe'] . "','" . $_POST['merk'] . "','" . $_POST['negara_asal'] . "', '" . $_POST['jenis_barang'] . "', '0', '" . $_POST['deskripsi'] . "','" . str_replace(".", "", $_POST['harga_beli']) . "','" . str_replace(".", "", $_POST['harga_satuan']) . "','" . $_POST['satuan'] . "','','','0')");
       if ($Result) {
         $data = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as mx from barang_gudang"));
         $_SESSION['id_barang'] = $data['mx'];

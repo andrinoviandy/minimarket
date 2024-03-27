@@ -87,7 +87,7 @@ error_reporting(0);
                             </a>
                         </td>
                         <td>
-                            <?php if (isset($_GET['tampil']) &&  $_GET['tampil'] == 1) { ?>
+                            <?php /*if (isset($_GET['tampil']) &&  $_GET['tampil'] == 1) { ?>
                                 <?php
                                 $q23 = mysqli_query($koneksi, "select nama_brg,tipe_brg,qty,status_ke_stok from barang_pesan_detail,barang_gudang where barang_gudang.id=barang_pesan_detail.barang_gudang_id and barang_pesan_detail.barang_pesan_id=" . $json[$i]['idd'] . "");
                                 $n2 = 0;
@@ -100,14 +100,14 @@ error_reporting(0);
                                     <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['qty']; ?>
                                     <hr style="margin:0px; border-top:1px double; width:100%" />
                                 <?php } ?>
-                            <?php } else { ?>
+                            <?php } else { */?>
                                 <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
                                 <a href="javascript:void();" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
                                     <button class="btn btn-primary btn-xs">
                                         <span class="fa fa-folder-open"></span>
                                     </button>
                                 </a>
-                            <?php } ?>
+                            <?php //} ?>
                         </td>
                         <td><?php echo $json[$i]['ppn'] . "%"; ?></td>
                         <td><?php echo $json[$i]['cara_pembayaran']; ?></td>
@@ -128,8 +128,8 @@ error_reporting(0);
                                         </button>
                                     </a><?php } ?>
                                 <?php
-                                $cek_uang = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_pesan,utang_piutang,utang_piutang_bayar where barang_pesan.no_po_pesan=utang_piutang.no_faktur_no_po and utang_piutang.id=utang_piutang_bayar.utang_piutang_id and no_po_pesan='" . $json[$i]['no_po_pesan'] . "'"));
-                                if ($cek_uang == 0 and isset($_SESSION['adminpodalam']) or isset($_SESSION['user_administrator'])) {
+                                $cek_uang = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_pesan,utang_piutang,utang_piutang_bayar where barang_pesan.no_po_pesan=utang_piutang.no_faktur_no_po and utang_piutang.id=utang_piutang_bayar.utang_piutang_id and no_po_pesan='" . $json[$i]['no_po_pesan'] . "'"));
+                                if ($cek_uang['jml'] == 0 and isset($_SESSION['adminpodalam']) or isset($_SESSION['user_administrator'])) {
                                 ?>
                                     <a href="index.php?page=ubah_pembelian_alkes&id=<?php echo $json[$i]['idd']; ?>">
                                         <button class="btn btn-warning btn-xs">

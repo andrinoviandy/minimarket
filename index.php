@@ -852,6 +852,7 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
     <script src="js/pencarian.js"></script>
     <script src="js/paging.js"></script>
     <script src="js/loading.js"></script>
+    <script src="js/loadingCustom.js"></script>
     <script src="js/showLoading.js"></script>
     <script src="js/cekPaging.js"></script>
     <script src="js/alert.js"></script>

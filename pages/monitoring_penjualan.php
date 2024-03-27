@@ -203,8 +203,8 @@
         //--------------
         let dataa;
         // Get context with jQuery - using jQuery's .get() method.
-        await $.get("http://localhost/ALKES_2/json/monitoring_penjualan.php", {
-                // await $.get("http://localhost/ALKES_2/json/beranda_penjualan.php", {
+        // await $.get("http://localhost/ALKES_2/json/monitoring_penjualan.php", {
+        await $.get("http://173.212.225.28/ALKES_2/json/monitoring_penjualan.php", {
                 alkes: alkes ? alkes : 'all',
                 filter: filter ? filter : '',
                 pembeli: pembeli ? pembeli : 'all',
