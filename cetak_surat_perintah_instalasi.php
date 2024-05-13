@@ -114,33 +114,36 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as
               Utan Kayu Utara, Matraman<br>
               Jakarta Timur</strong></td>
           <td width="2%" rowspan="3">&nbsp;</td>
-          <td width="17%" height="21">
+          <td width="13%" height="21">
             <font>Nomor</font>
           </td>
-          <td width="25%" align="right"><?php echo $data['no_spk']; ?></td>
+          <td width="2%">:</td>
+          <td width="25%" align="left"><?php echo $data['no_spk']; ?></td>
         </tr>
         <tr>
           <td height="21">
             <font>Tanggal</font>
           </td>
-          <td width="25%" align="right"><?php echo date("d M Y", strtotime($data['tgl_spk'])); ?></td>
+          <td>:</td>
+          <td width="25%" align="left"><?php echo date("d M Y", strtotime($data['tgl_spk'])); ?></td>
         </tr>
         <tr>
           <td height="21">
             <font>No. PO/ID</font>
           </td>
-          <td width="25%" align="right"><?php echo $data['no_po_jual']; ?></td>
+          <td>:</td>
+          <td width="25%" align="left"><?php echo $data['no_po_jual']; ?></td>
         </tr>
         <tr>
           <td colspan="4">&nbsp;</td>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="4">&nbsp;</td>
         </tr>
         <tr>
           <td width="5%" valign="top">Paket</td>
           <td width="2%" valign="top">:</td>
           <td width="31%" align="left" valign="top"><?php echo $data['nama_paket']; ?></td>
           <td width="5%" valign="top">&nbsp;</td>
-          <td colspan="3" valign="top" style="font-size:14px"><strong>Kepada Yth,</strong><br />
+          <td colspan="4" valign="top" style="font-size:14px"><strong>Kepada Yth,</strong><br />
             <b><?php echo $data['nama_pembeli']; ?></b><br>
             <?php echo $data['jalan'] . " Kel." . $data['kelurahan_id']; ?><br>
             <?php echo "Kec." . ucwords(strtolower($data['nama_kecamatan'])) . ", Kab." . ucwords(strtolower($data['nama_kabupaten'])) . ", " . ucwords(strtolower($data['nama_provinsi'])); ?><br>
@@ -319,6 +322,10 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as
                 <td colspan="4" valign="top" style="font-size:12px"><?php echo $data['subdis']; ?></td>
               </tr>
             </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" valign="top" style="height: 80px;">
           </td>
         </tr>
         <tr>
