@@ -134,20 +134,48 @@ if (isset($_POST['simpan_akse'])) {
                         <td align="center" valign="bottom"><strong>Kode QRCode</strong></td>
                         <td align="center" valign="bottom"><strong>Tgl Expired</strong></td>
                       </tr>
+                      <tr>
+                        <td align="center" valign="bottom">All</td>
+
+                        <td align="center" valign="bottom">
+                          <div class="input-group col-lg-12">
+                            <input id="no_bath_all" name="no_bath_all" class="form-control" type="text" placeholder="" size="3" />
+                            <span class="input-group-btn">
+                              <button type="submit" name="tampilkan" onclick="handleBath(); return false" class="btn btn-success"><span class="fa fa-check"></span></button>
+                            </span>
+                          </div>
+                        </td>
+                        <td align="center" valign="bottom">
+                          <div class="input-group col-lg-12">
+                            <input id="no_lot_all" name="no_lot_all" class="form-control" type="text" placeholder="" size="3" />
+                            <span class="input-group-btn">
+                              <button type="submit" name="tampilkan" onclick="handleLot(); return false" class="btn btn-success"><span class="fa fa-check"></span></button>
+                            </span>
+                          </div>
+                        </td>
+                        <td align="center" valign="bottom"></td>
+                        <td align="center" valign="bottom"></td>
+                        <td align="center" valign="bottom">
+                          <div class="input-group col-lg-12">
+                            <input id="expired_all" name="expired_all" class="form-control" type="date" placeholder="" size="3" />
+                            <span class="input-group-btn">
+                              <button type="submit" name="tampilkan" onclick="handleExpired(); return false" class="btn btn-success"><span class="fa fa-check"></span></button>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
                     </thead>
-
-
                     <?php
                     for ($i = 0; $i < $_SESSION['stok']; $i++) {
                     ?>
                       <tr>
                         <td align="center" bgcolor="#00FF00"><b><?php echo $i + 1; ?></b></td>
 
-                        <td align="center"><input id="" name="no_bath[]" class="form-control" type="text" placeholder="" size="3" /></td>
-                        <td align="center"><input name="no_lot[]" class="form-control" type="text" placeholder="" size="3" /></td>
+                        <td align="center"><input id="no_bath<?php echo $i ?>" name="no_bath[]" class="form-control" type="text" placeholder="" size="3" /></td>
+                        <td align="center"><input id="no_lot<?php echo $i ?>" name="no_lot[]" class="form-control" type="text" placeholder="" size="3" /></td>
                         <td align="center"><input name="no_seri[]" class="form-control" type="text" placeholder="" size="3" /></td>
                         <td align="center"><input name="qrcode[]" class="form-control" type="text" placeholder="" size="" /></td>
-                        <td align="center"><input name="tgl_expired[]" class="form-control" type="date" placeholder="" value="<?php echo $_SESSION['tgl_expired']; ?>" /></td>
+                        <td align="center"><input id="expired<?php echo $i ?>" name="tgl_expired[]" class="form-control" type="date" placeholder="" value="<?php echo $_SESSION['tgl_expired']; ?>" /></td>
                       </tr>
                     <?php } ?>
                     <tr>
@@ -233,3 +261,28 @@ if (isset($_POST['tambah_laporan'])) {
 
   </div>
 </div>
+
+<script>
+  let stok = parseInt(<?php echo $_SESSION['stok']; ?>)
+
+  function handleBath() {
+    let bath = $('#no_bath_all').val();
+    for (let i = 0; i < stok; i++) {
+      $('#no_bath' + i).val(bath);
+    }
+  }
+
+  function handleLot() {
+    let bath = $('#no_lot_all').val();
+    for (let i = 0; i < stok; i++) {
+      $('#no_lot' + i).val(bath);
+    }
+  }
+
+  function handleExpired() {
+    let bath = $('#expired_all').val();
+    for (let i = 0; i < stok; i++) {
+      $('#expired' + i).val(bath);
+    }
+  }
+</script>

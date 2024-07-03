@@ -158,7 +158,7 @@ if (isset($_GET['id_hapus'])) {
             icon: 'success',
             confirmButtonText: 'OK',
           });
-          loading_akse();
+          // loading_akse();
           getDataBarang();
         } else if (data == 'SAMA') {
           $('#modal-tambah').modal('hide');
@@ -171,8 +171,8 @@ if (isset($_GET['id_hapus'])) {
             icon: 'warning',
             confirmButtonText: 'OK',
           })
-          loading_akse();
-          getDataBarang();
+          // loading_akse();
+          // getDataBarang();
         } else {
           $('#modal-tambah').modal('hide');
           Swal.fire({
@@ -184,8 +184,8 @@ if (isset($_GET['id_hapus'])) {
             icon: 'error',
             confirmButtonText: 'OK',
           })
-          loading_akse();
-          getDataBarang();
+          // loading_akse();
+          // getDataBarang();
         }
       }
     );
@@ -215,7 +215,7 @@ if (isset($_GET['id_hapus'])) {
 
   $(document).ready(function() {
     getNamaBarang();
-    loading_akse();
+    // loading_akse();
     getDataBarang();
   });
 </script>

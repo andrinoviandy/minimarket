@@ -20,22 +20,30 @@ $jml = count($json);
 $jml2 = $file2;
 
 ?>
-<div>
-    <em>
-        <?php
-        if ($_GET['status'] == 'Tersedia') {
-            $textJml = 'Tersedia : ';
-        } else if ($_GET['status'] == 'Terjual') {
-            $textJml = 'Terjual : ';
-        } else if ($_GET['status'] == 'Rusak') {
-            $textJml = 'Rusak : ';
-        } else if ($_GET['status'] == 'Tidak_Layak') {
-            $textJml = 'Tidak Layak : ';
-        } else {
-            $textJml = 'Tersedia : ';
-        }
-        echo $textJml . $jml2 ?>
-    </em>
+<div class="row" style="margin-bottom: 8px;">
+    <div class="col-lg-12">
+        <em>
+            <?php
+            if ($_GET['status'] == 'Tersedia') {
+                $textJml = 'Tersedia : ';
+            } else if ($_GET['status'] == 'Terjual') {
+                $textJml = 'Terjual : ';
+            } else if ($_GET['status'] == 'Rusak') {
+                $textJml = 'Rusak : ';
+            } else if ($_GET['status'] == 'Tidak_Layak') {
+                $textJml = 'Tidak Layak : ';
+            } else {
+                $textJml = 'Tersedia : ';
+            }
+            echo $textJml . $jml2 ?>
+        </em>
+        <?php if ($_GET['status'] == 'Terjual') { ?>
+        <div class="pull-right">
+            <div class="label label-danger">&nbsp;</div> Tanggal Keluar Sebelumnya
+            <div class="label label-success">&nbsp;</div> Tanggal Keluar Terakhir (Actual)
+        </div>
+        <?php } ?>
+    </div>
 </div>
 <div class="table-responsive no-padding">
     <table width="100%" id="" class="table table-bordered table-hover">
@@ -45,8 +53,8 @@ $jml2 = $file2;
                 <th><strong>Tgl Masuk</strong></th>
                 <th>No PO</th>
                 <?php
-                $no_bath = mysqli_num_rows(mysqli_query($koneksi, "select * form barang_gudang_detail where barang_gudang_id=" . $_GET['id'] . " and no_bath!=''"));
-                if ($no_bath != 0) {
+                $no_bath = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml form barang_gudang_detail where barang_gudang_id=" . $_GET['id'] . " and no_bath!=''"));
+                if ($no_bath['jml'] != 0) {
                 ?>
                     <th><strong>No. Bath</strong></th>
                 <?php } ?>
@@ -54,7 +62,10 @@ $jml2 = $file2;
                 <th><strong>No. Seri</strong></th>
                 <th>Expired</th>
                 <th>Status</th>
-                <th><strong>Aksi</strong></th>
+                <?php if ($_GET['status'] == 'Terjual') { ?>
+                    <th>Tgl Keluar</th>
+                <?php } ?>
+                <td align="center"><strong>Aksi</strong></td>
             </tr>
         </thead>
         <?php
@@ -66,7 +77,7 @@ $jml2 = $file2;
                 <td align="center"><?php echo $start += 1 ?></td>
                 <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_po_gudang'])); ?></td>
                 <td><?php echo $json[$i]['no_po_gudang']; ?></td>
-                <?php if ($no_bath != 0) { ?>
+                <?php if ($no_bath['jml'] != 0) { ?>
                     <td><?php echo $json[$i]['no_bath']; ?></td>
                 <?php } ?>
                 <td><?php echo $json[$i]['no_lot']; ?></td>
@@ -86,6 +97,22 @@ $jml2 = $file2;
                     } else {
                         echo "-";
                     } ?></td>
+                <?php if ($_GET['status'] == 'Terjual') { ?>
+                    <td><?php
+                        $dt_kirim = mysqli_fetch_array(mysqli_query($koneksi, "select tgl_kirim, (select tgl_kirim from barang_dikirim_detail left join barang_dikirim on barang_dikirim.id = barang_dikirim_detail.barang_dikirim_id and barang_dikirim_detail.barang_gudang_detail_id = " . $json[$i]['idd'] . " and status_batal = 1 order by tgl_kirim desc limit 1) as tgl_kirim_batal from barang_dikirim_detail left join barang_dikirim on barang_dikirim.id = barang_dikirim_detail.barang_dikirim_id and barang_dikirim_detail.barang_gudang_detail_id = " . $json[$i]['idd'] . " and status_batal = 0 order by tgl_kirim desc limit 1"));
+                        if ($dt_kirim['tgl_kirim_batal'] == '0000-00-00' || $dt_kirim['tgl_kirim_batal'] == '') {
+                            echo "";
+                        } else {
+                            echo "<div class='label label-danger'>" . date("d-m-Y", strtotime($dt_kirim['tgl_kirim_batal'])) . "</div><br>";
+                        }
+                        if ($dt_kirim['tgl_kirim'] == '0000-00-00' || $dt_kirim['tgl_kirim'] == '') {
+                            echo "";
+                        } else {
+                            echo "<div class='label label-success'>" . date("d-m-Y", strtotime($dt_kirim['tgl_kirim'])) . "</div>";
+                        }
+                        ?>
+                    </td>
+                <?php } ?>
                 <td align="center">
                     <?php if ($json[$i]['status_kirim'] == 0) {
                     ?>
@@ -113,8 +140,9 @@ $jml2 = $file2;
                     <a href="javascript:void()" onclick="modalUbahBarcode('<?php echo $json[$i]['idd']; ?>');"><small data-toggle="tooltip" title="Buat QRCode" class="label bg-blue" onclick="dataAwal(<?php echo $json[$i]['idd']; ?>)"><span class="fa fa-barcode"></span>&nbsp; Buat QRCode</small></a>
                     <?php if ($json[$i]['qrcode'] != "") { ?>
                         <!-- <a href="#" data-toggle="modal" data-target="#barcode<?php echo $json[$i]['idd']; ?>"> -->
+                        <br>
                         <a href="javascript:void()" onclick="modalCetakBarcode('<?php echo $json[$i]['idd']; ?>')">
-                        <small data-toggle="tooltip" title="Cetak QRCode" class="label bg-red"><span class="fa fa-barcode"></span>&nbsp; Cetak QRCode</small></a>
+                            <small data-toggle="tooltip" title="Cetak QRCode" class="label bg-red"><span class="fa fa-barcode"></span>&nbsp; Cetak QRCode</small></a>
                     <?php } ?>
                 </td>
             </tr>

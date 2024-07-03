@@ -393,6 +393,8 @@
             alertSimpan('S');
           } else if (data == 'SA') {
             alertCustom('F', 'Perbaiki Data !', 'Ada No Seri Yang Sudah Ditambahkan Sebelumnya')
+          } else if (data == 'F') {
+            alertSimpan('F')
           } else {
             var cek = data.split('&');
             if (cek[0]) {
@@ -452,7 +454,7 @@
   }
 
   function ambilDataNoSeri(param) {
-    loading_no_seri();
+    loading2('#isi_no_seri');
     var kategori = param.split("-");
     var id_gudang = kategori[1];
     var id_qty = kategori[2];

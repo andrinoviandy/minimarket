@@ -171,7 +171,7 @@ error_reporting(0);
                         echo number_format($fee, 0, ',', '.'); ?></td>
 
                     <td align="center"><?php
-                                        $ttl = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim where barang_dijual_id=" . $data_deal['idd'] . ""));
+                                        $ttl = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim where no_po_jual = '". $json[$i]['no_po_jual'] . "'"));
                                         $brg_sm = mysqli_fetch_array(mysqli_query($koneksi, "select tgl_sampai from barang_dikirim where barang_dijual_id=" . $data_deal['idd'] . ""));
                                         if ($ttl['jml'] > 0) {
                                             if ($brg_sm['tgl_sampai'] != '0000-00-00') {
