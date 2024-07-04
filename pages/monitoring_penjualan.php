@@ -136,15 +136,17 @@
     }
 
     function loadingLine() {
-        $.get("include/getLoading.php", function(data) {
-            $('#areaChart').html(data);
-        });
+        // $.get("include/getLoading.php", function(data) {
+        //     $('#areaChart').html(data);
+        // });
+        $('#areaChart').html('<center><div class="overlay"><h1><i class="fa fa-refresh fa-spin"></i></h1></div></center>');
     }
 
     function loadingTable() {
-        $.get("include/getLoading.php", function(data) {
-            $('#tabelTransaksi').html(data);
-        });
+        // $.get("include/getLoading.php", function(data) {
+        //     $('#tabelTransaksi').html(data);
+        // });
+        $('#tabelTransaksi').html('<center><div class="overlay"><h1><i class="fa fa-refresh fa-spin"></i></h1></div></center>');
     }
 
     function setTableTransaksi() {
