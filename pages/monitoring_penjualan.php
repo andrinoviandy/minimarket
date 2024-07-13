@@ -14,7 +14,7 @@
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <?php
-        if (isset($_SESSION['user_administrator'])) {
+        if (isset($_SESSION['user_administrator']) || isset($_SESSION['user_admin_keuangan']) || isset($_SESSION['user_manajer_keuangan'])) {
         ?>
             <div class="row">
                 <div class="col-md-12">

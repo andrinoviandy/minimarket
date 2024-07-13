@@ -53,6 +53,7 @@ if (isset($_POST['simpan_perubahan'])) {
     <!-- Main row -->
     <div class="row">
       <!-- Left col -->
+      <?php if (!isset($_SESSION['adminpjt'])) { ?>
       <section class="col-lg-4 connectedSortable">
         <!-- Custom tabs (Charts with tabs)-->
         <!-- /.nav-tabs-custom -->
@@ -103,15 +104,15 @@ if (isset($_POST['simpan_perubahan'])) {
                 <label>Satuan (Detail)</label>
                 <input name="satuan" class="form-control" type="text" placeholder="Satuan" value="<?php echo $data['satuan']; ?>"><br />
                 <div class="well">
-                <font style="color: red;">* Abaikan/Kosongkan Jika Tidak Memiliki Jenis Satuan Lain</font>
-                <br>
-                <label>Satuan (Header)</label>
-                <input name="satuan_header" class="form-control" type="text" placeholder="Satuan Header" value="<?php echo $data['satuan_header']; ?>"><br />
-                <label>Jumlah Per Satuan (Detail) Untuk Mencapat 1 Satuan (Header)</label>
-                <input name="jumlah_rincian_to_satuan" class="form-control" type="number" placeholder="Jumlah" value="<?php echo $data['jumlah_rincian_to_satuan']; ?>"><br />
+                  <font style="color: red;">* Abaikan/Kosongkan Jika Tidak Memiliki Jenis Satuan Lain</font>
+                  <br>
+                  <label>Satuan (Header)</label>
+                  <input name="satuan_header" class="form-control" type="text" placeholder="Satuan Header" value="<?php echo $data['satuan_header']; ?>"><br />
+                  <label>Jumlah Per Satuan (Detail) Untuk Mencapat 1 Satuan (Header)</label>
+                  <input name="jumlah_rincian_to_satuan" class="form-control" type="number" placeholder="Jumlah" value="<?php echo $data['jumlah_rincian_to_satuan']; ?>"><br />
                 </div>
                 <!--<label>Kode Barcode</label>
-              <input name="kode_barcode" class="form-control" type="text" placeholder="Hanya Angka" value="<?php echo $data['kode_barcode']; ?>"><br />-->
+                <input name="kode_barcode" class="form-control" type="text" placeholder="Hanya Angka" value="<?php echo $data['kode_barcode']; ?>"><br />-->
                 <label>Status Pengecekan</label>
                 <select name="status_cek" class="form-control select2" style="width:100%">
                   <?php if ($data['status_cek'] == 0) { ?>
@@ -137,8 +138,8 @@ if (isset($_POST['simpan_perubahan'])) {
 
         <!-- quick email widget -->
       </section>
-
-      <section class="col-lg-8 connectedSortable">
+      <?php } ?>
+      <section class="<?php if (!isset($_SESSION['adminpjt'])) {echo "col-lg-8";} else {echo "col-lg-12";} ?> connectedSortable">
         <!-- Custom tabs (Charts with tabs)-->
         <!-- /.nav-tabs-custom -->
 
@@ -373,7 +374,7 @@ if (isset($_POST['tambah_detail'])) {
       processData: false,
       contentType: false,
       cache: false,
-      success: function (response) {
+      success: function(response) {
         if (response == 'S') {
           alertSimpan('S');
           $('#modal-ubah-item').modal('hide');

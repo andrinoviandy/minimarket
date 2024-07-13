@@ -226,7 +226,7 @@ $jml2 = $file2;
                         <?php } ?>
                     <?php } ?>
                     <?php
-                    if (isset($_SESSION['adminpoluar']) or isset($_SESSION['adminpodalam'])) { ?>
+                    if (isset($_SESSION['adminpoluar']) or isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpjt'])) { ?>
                         <?php if ($json[$i]['kategori_brg'] !== 'Set') { ?>
                             <a href="index.php?page=ubah_barang_masuk&id=<?php echo $json[$i]['idd']; ?>">
                                 <button class="btn btn-info btn-xs">

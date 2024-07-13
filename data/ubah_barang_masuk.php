@@ -65,7 +65,9 @@ $jml2 = $file2;
                 <?php if ($_GET['status'] == 'Terjual') { ?>
                     <th>Tgl Keluar</th>
                 <?php } ?>
+                <?php if (!isset($_SESSION['adminpjt'])) { ?>
                 <td align="center"><strong>Aksi</strong></td>
+                <?php } ?>
             </tr>
         </thead>
         <?php
@@ -113,6 +115,7 @@ $jml2 = $file2;
                         ?>
                     </td>
                 <?php } ?>
+                <?php if (!isset($_SESSION['adminpjt'])) { ?>
                 <td align="center">
                     <?php if ($json[$i]['status_kirim'] == 0) {
                     ?>
@@ -145,6 +148,7 @@ $jml2 = $file2;
                             <small data-toggle="tooltip" title="Cetak QRCode" class="label bg-red"><span class="fa fa-barcode"></span>&nbsp; Cetak QRCode</small></a>
                     <?php } ?>
                 </td>
+                <?php } ?>
             </tr>
         <?php } ?>
     </table>

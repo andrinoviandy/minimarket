@@ -69,7 +69,7 @@ if (isset($_POST['simpan_qrcode'])) {
                   </div>
                 </form>
                 <div class="pull pull-right">
-                  <?php //include "include/getFilter.php"; 
+                  <?php include "include/rekapBulanan.php"; 
                   ?>
                   <?php include "include/atur_halaman.php"; ?>
                 </div>
