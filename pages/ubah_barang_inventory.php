@@ -3,7 +3,7 @@ $query = mysqli_query($koneksi, "select * from barang_inventory where id='".$_GE
 $data = mysqli_fetch_array($query);
 
 if (isset($_POST['simpan_perubahan'])) {
-	$Result = mysqli_query($koneksi, "update barang_inventory set nama_brg='".$_POST['nama_barang']."', nie_brg='".$_POST['nie_brg']."', merk_brg='".$_POST['merk']."', tipe_brg='".$_POST['tipe']."', negara_asal='".$_POST['negara_asal']."', stok_total='".$_POST['stok']."' , deskripsi_alat='".$_POST['deskripsi']."', harga_beli='".$_POST['harga_beli']."',harga_satuan='".$_POST['harga_satuan']."', status_cek='".$_POST['status_cek']."' where id=".$_GET['id']."");
+	$Result = mysqli_query($koneksi, "update barang_inventory set nama_brg='".$_POST['nama_barang']."', nie_brg='".$_POST['nie_brg']."', merk_brg='".$_POST['merk']."', tipe_brg='".$_POST['tipe']."', negara_asal='".$_POST['negara_asal']."', stok_total='".$_POST['stok']."' , deskripsi_alat='".$_POST['deskripsi']."', harga_beli='".$_POST['harga_beli']."',harga_satuan='".$_POST['harga_satuan']."' where id=".$_GET['id']."");
 	if ($Result) {
 		echo "<script type='text/javascript'>
 		alert('Data Berhasil Diubah !');
@@ -66,17 +66,6 @@ if (isset($_POST['simpan_perubahan'])) {
               <label>Stok</label>
               <input name="stok" class="form-control" type="text" placeholder="Stok" value="<?php echo $data['stok_total']; ?>" disabled="disabled"><br />
               <?php } ?>
-              
-              <label>Status Pengecekan</label>
-              <select name="status_cek" class="form-control">
-              <?php if ($data['status_cek']==0) { ?>
-              <option value="0">Belum Di Cek</option>
-              <option value="1">Sudah Di Cek</option>
-              <?php } else { ?>
-              <option value="1">Sudah Di Cek</option>
-              <option value="0">Belum Di Cek</option>
-			  <?php } ?>
-              </select>
               <br />
               <button name="simpan_perubahan" class="btn btn-success" type="submit"><span class="fa fa-edit"></span> Simpan Perubahan</button>
               <br /><br />

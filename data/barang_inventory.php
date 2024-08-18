@@ -49,7 +49,6 @@ $jml2 = $file2;
           <th align="center" valign="top"><strong>Harga Jual
             </strong></th>
         <?php } ?>
-        <th align="center" valign="top"><strong>Pengecekan Teknisi</strong> </th>
         <th align="center" valign="top"><strong>Aksi</strong></th>
       </tr>
     </thead>
@@ -107,13 +106,6 @@ $jml2 = $file2;
           <td align="center"><?php echo "Rp " . number_format($json[$i]['harga_beli'], 0, ',', '.') . ",-"; ?></td>
           <td align="center"><?php echo "Rp " . number_format($json[$i]['harga_satuan'], 0, ',', '.') . ",-"; ?></td>
         <?php } ?>
-        <td align="center">
-          <?php if ($json[$i]['status_cek'] == 1) { ?>
-            <span class="fa fa-check"></span>
-          <?php } else { ?>
-            <span class="fa fa-close"></span>
-          <?php } ?>
-        </td>
         <td align="center">
 
           <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator'])) { ?>

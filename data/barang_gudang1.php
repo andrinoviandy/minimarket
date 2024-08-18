@@ -107,7 +107,7 @@ error_reporting(0);
                         <?php } else { ?>
                             <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
                             <a href="javascript:void()" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
-                            <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
+                                <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
                         <?php } ?>
                     </td>
                     <?php if (!isset($_SESSION['user_admin_gudang'])) { ?>
@@ -139,9 +139,10 @@ error_reporting(0);
                     <td align="center">
                         <?php if ($json[$i]['status_po_batal'] == 0) { ?>
                             <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['user_admin_gudang']) or isset($_SESSION['user_manajer_gudang'])) { ?>
-                                <!-- <a href="#" data-toggle="modal" data-target="#modal-tglmasuk<?php //echo $json[$i]['idd']; ?>"> -->
+                                <!-- <a href="#" data-toggle="modal" data-target="#modal-tglmasuk<?php //echo $json[$i]['idd']; 
+                                                                                                    ?>"> -->
                                 <a href="javascript:void();" onclick="modalTanggalMasuk('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['tgl_masuk_gudang'] ?>')">
-                                <small data-toggle="tooltip" title="Tgl Masuk Gudang" class="label bg-green">Tgl Masuk Gudang</small></a>
+                                    <small data-toggle="tooltip" title="Tgl Masuk Gudang" class="label bg-green">Tgl Masuk Gudang</small></a>
                                 <br />
                                 <?php if ($json[$i]['status_lunas'] == 1 or $json[$i]['tgl_masuk_gudang'] != '0000-00-00') { ?>
                                     <a href="index.php?page=mutasi&id=<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Mutasi Ke Gudang" class="label bg-yellow">Mutasi</small></a><br />
@@ -152,7 +153,11 @@ error_reporting(0);
                                     <span data-toggle="tooltip" title="Detail" class="fa fa-caret-square-o-right"></span>
                                 </button>
                             </a>
-
+                            <a href="cetak_surat_po_pemesanan_gudang.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank">
+                                <button class="btn btn-primary btn-xs">
+                                    <span data-toggle="tooltip" title="Cetak" class="fa fa-print"></span>
+                                </button>
+                            </a>
                         <?php } else {
                             echo "DIBATALKAN";
                         } ?>

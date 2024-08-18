@@ -226,7 +226,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan.id as i
           <td>&nbsp;</td>
         </tr>
         <?php
-        $q_akse = mysqli_query($koneksi, "select * from aksesoris_alkes,aksesoris where aksesoris.id=aksesoris_alkes.aksesoris_id and aksesoris_alkes.barang_gudang_id=" . $d['barang_gudang_id'] . "");
+        $q_akse = mysqli_query($koneksi, "select * from barang_gudang_detail_akse, barang_gudang where barang_gudang.id=barang_gudang_detail_akse.barang_gudang_akse_id and barang_gudang_detail_akse.barang_gudang_id=" . $d['barang_gudang_id'] . "");
         $no = 0;
         $total_akse = 0;
         while ($d_akse = mysqli_fetch_array($q_akse)) {
@@ -235,7 +235,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan.id as i
           <tr>
             <td>&nbsp;</td>
             <td style="padding-left:20px">
-              <?php echo $no . ". " . $d_akse['nama_akse']; ?><font style="padding-left:50px"><?php echo $d_akse['qty'] . " Unit"; ?></font>
+              <?php echo $no . ". " . $d_akse['nama_brg']; ?><font style="padding-left:50px"><?php echo $d_akse['qty'] . " Unit"; ?></font>
             </td>
             <td align="center"><!--<?php echo $d_akse['qty'] . " Unit"; ?>--></td>
             <td align="center"><!--<?php echo "€ " . number_format($d_akse['harga_akse'], 0, ',', ',') . ".00"; ?>--></td>
@@ -428,7 +428,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan.id as i
 
     </div>
     -->
-    <script type="text/javascript">
+  <script type="text/javascript">
     function PrintPage() {
       window.print();
     }

@@ -39,7 +39,7 @@ if (isset($_POST['button_urut'])) {
         <div class="box box-body">
           <div class="input-group pull pull-left col-xs-1" style="padding-right:10px">
             <?php if (!isset($_SESSION['user_admin_teknisi'])) { ?>
-              <button name="tambah_laporan" class="btn btn-success" type="button" data-toggle="modal" data-target="#modal-tambah"><span class="fa fa-plus"></span> Tambah</button>
+              <button name="tambah_laporan" class="btn btn-success" type="button" data-toggle="modal" data-target="#modal-tambah" onclick="getNamaBarang();"><span class="fa fa-plus"></span> Tambah</button>
             <?php } ?>
           </div>
 
@@ -94,3 +94,90 @@ if (isset($_POST['button_urut'])) {
   </section>
   <!-- /.content -->
 </div>
+
+<div class="modal fade" id="modal-tambah">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Tambah Barang Rusak</h4>
+      </div>
+      <form id="formUbah" onsubmit="inputBarangRusak(); return false;">
+      <!-- <form> -->
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Tanggal Input</label>
+            <input id="" name="tgl_input" class="form-control" type="date" value="<?php echo date('Y-m-d'); ?>" />
+          </div>
+          <div class="form-group">
+            <label>Nama Alkes</label>
+            <div id="nama_barang"></div>
+          </div>
+          <div class="form-group">
+            <label>No Seri</label>
+            <div id="no_seri">
+              <select disabled class="form-control"></select>
+            </div>
+          </div>
+          <label>Deskripsi Kerusakan</label>
+          <textarea class="form-control" rows="3" name="kerusakan"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="simpan_tambah_aksesoris" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<script>
+  async function getNamaBarang() {
+    $('#nama_barang').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
+    await $.get("data/get_data_barang.php",
+      function(data) {
+        $('#nama_barang').html(data);
+      }
+    );
+  }
+
+  async function changeBarang(id) {
+    $('#no_seri').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
+    await $.get("data/get_data_no_seri.php", {
+        id: id
+      },
+      function(data) {
+        $('#no_seri').html(data);
+      }
+    );
+  }
+
+  async function inputBarangRusak() {
+    showLoading(1)
+    var dataform = $('#formUbah')[0];
+    var data = new FormData(dataform);
+    await $.ajax({
+      type: "post",
+      url: "data/simpan-barang-rusak-belum-terjual.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        showLoading(0)
+        if (response == 'S') {
+          $('#modal-tambah').modal('hide');
+          dataform.reset();
+          loading()
+          loadMore(load_flag, key, status_b)
+          alertSimpan('S')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+</script>

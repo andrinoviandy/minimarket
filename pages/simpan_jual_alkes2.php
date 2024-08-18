@@ -348,11 +348,11 @@ if (isset($_POST['tambah_laporan'])) {
             </label>
             <br>
           </div>
-          <label>Stok Total</label>
-          <input id="stok_total" name="stok_total" class="form-control" type="text" placeholder="Stok" disabled="disabled" size="4" />
+          <!-- <label>Stok Total</label>
+          <input id="stok_total" name="stok_total" class="form-control" type="text" placeholder="Stok" disabled="disabled" size="4" /> -->
           <br />
           <!-- <label>Harga (<font size="-2" color="#FF0000">Harga tidak boleh 0</font>)</label> -->
-          <label>Harga</label>
+          <!-- <label>Harga</label>
           <input id="harga" name="harga" class="form-control" type="text" placeholder="Harga" disabled="disabled" size="8" />
           <br />
           <label>Tipe</label>
@@ -360,7 +360,7 @@ if (isset($_POST['tambah_laporan'])) {
           <br />
           <label>Merk</label>
           <input id="merk_brg" name="merk_brg" class="form-control" type="text" placeholder="Merk" disabled="disabled" size="15" />
-          <br />
+          <br /> -->
           <label>Qty</label>
           <input id="qty_jual" name="qty" class="form-control" type="number" placeholder="" size="2" />
           <br />

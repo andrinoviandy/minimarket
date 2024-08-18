@@ -46,6 +46,9 @@
                   </table>
                 </span>
                 <br /><br /><br /><br />
+                <div class="pull pull-left">
+                  <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak Rekap</button>
+                </div>
                 <div class="pull pull-right">
                   <?php include "include/getFilter.php"; ?>
                   <?php include "include/atur_halaman.php"; ?>
@@ -175,7 +178,61 @@
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-cetak">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">
+          <center>Cetak Rekapan Pembelian Barang</center>
+        </h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" onsubmit="cetakRekapan(); return false;">
+        <div class="modal-body">
+          <label>Dari Tanggal</label>
+          <input name="tgl1" id="tglRekap1" type="date" class="form-control" required placeholder="" value=""><br />
+          <label>Sampai Tanggal</label>
+          <input name="tgl2" id="tglRekap2" type="date" class="form-control" required placeholder="" value=""><br />
+          <label>Jenis PO</label>
+          <input disabled class="form-control" value="Dalam Negeri">
+          <!-- <label>Filter Berdasarkan</label>
+          <select class="form-control select2" id="filterRekap" onchange="filterCetak(this.value)" style="width:100%" name="filter">
+            <option value="0">...</option>
+            <option value="1">Nama Principle</option>
+            <option value="2">Provinsi/Kabupaten/Kecamatan</option>
+          </select>
+          <br><br>
+          <div id="filterData"></div> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-info" name="cetak"><i class="fa fa-print"></i> Cetak</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
+  function cetakRekapan() {
+    var tgl1 = $('#tglRekap1').val();
+    var tgl2 = $('#tglRekap2').val();
+    var filter = $('#filterRekap').val();
+    var pembeli = $('#pembeli').val();
+    var provinsi = $('#provinsi1').val();
+    var kabupaten = $('#kabupaten1').val();
+    var kecamatan = $('#kecamatan1').val();
+    // $.post("cetak_laporan_penjualan_alkes.php",
+    //   function(data) {
+    window.location.href = 'cetak_laporan_pembelian_alkes.php?tgl1=' + tgl1 + '&tgl2=' + tgl2 + '&jenis_po=1';
+    
+    //   }
+    // );
+  }
+
   function modalPrinciple(id) {
     $.get("data/modal-principle.php", {
         id: id

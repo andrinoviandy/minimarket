@@ -777,7 +777,7 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
       $(function() {
         //Initialize Select2 Elements
         $('.select2').select2()
-        $('.select1').select1()
+        // $('.select1').select1()
         //Datemask dd/mm/yyyy
         $('#datemask').inputmask('dd/mm/yyyy', {
           'placeholder': 'dd/mm/yyyy'

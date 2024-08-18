@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => '5e8209012e652a5bda4721fb53b7d7fcbbff8d0e',
         'name' => 'almasaeed2010/adminlte',
         'dev' => true,
     ),
     'versions' => array(
         'almasaeed2010/adminlte' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '5e8209012e652a5bda4721fb53b7d7fcbbff8d0e',
             'dev_requirement' => false,
         ),
         'markbaker/complex' => array(

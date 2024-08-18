@@ -208,7 +208,10 @@
             <a href="index.php?page=pelatihan_alat">
               <i class="fa fa-cube"></i> <span>Pelatihan Alat</span></a>
           </li>
-
+          <li class="<?php echo $rekapan_instalasi; ?>">
+            <a href="index.php?page=rekapan_instalasi">
+              <i class="fa fa-calendar"></i> <span>Rekapan Instalasi</span></a>
+          </li>
           <li class="header"><strong style="color:#F90"><em>KERUSAKAN ALKES (SERVICE)</em></strong></li>
           <li class="header"><strong style="color:#F90">
               <center><em>- Belum Terjual (Masih Di Gudang)</em></center>
@@ -361,7 +364,21 @@ if ($data1 == 0) { ?>
                 </li>-->
             </ul>
           </li>
-
+          <li class="<?php echo $monitoring_penjualan; ?>">
+            <a href="index.php?page=monitoring_penjualan">
+              <i class="fa fa-bar-chart"></i> <span>Monitoring Penjualan</span>
+            </a>
+          </li>
+          <li class="<?php echo $pemasok; ?>">
+            <a href="index.php?page=pemasok">
+              <i class="fa fa-money"></i> <span>Pemasok</span>
+            </a>
+          </li>
+          <li class="<?php echo $pembeli; ?>">
+            <a href="index.php?page=pembeli">
+              <i class="fa fa-users"></i> <span>Pelanggan</span>
+            </a>
+          </li>
         </ul>
       </li>
       <li><a href="javascript:void()" onclick="prosesLogout();"><i class="fa fa-close"></i> <span>Logout</span></a></li>

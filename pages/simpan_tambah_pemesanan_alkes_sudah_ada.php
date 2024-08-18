@@ -206,17 +206,17 @@ if (isset($_POST['tambah_laporan'])) {
             } ?>
 
           </select><br /><br />
-          <input id="tipe_akse" name="tipe_akse" class="form-control" type="text" placeholder="Tipe" disabled="disabled" />
+          <!-- <input id="tipe_akse" name="tipe_akse" class="form-control" type="text" placeholder="Tipe" disabled="disabled" />
           <br />
           <input id="merk_akse" name="merk_akse" class="form-control" type="text" placeholder="Merk" disabled="disabled" />
-          <br />
+          <br /> -->
           <input id="qty" required="required" name="qty" class="form-control" type="text" placeholder="Qty" onkeyup="sum();" size="2" />
           <br />
-          <input name="mata" class="form-control" type="text" placeholder="Mata Uang" disabled="disabled" value="<?php
+          <!-- <input name="mata" class="form-control" type="text" placeholder="Mata Uang" disabled="disabled" value="<?php
                                                                                                                   $q_uang = mysqli_fetch_array(mysqli_query($koneksi, "select * from mata_uang where id=" . $_SESSION['mata_uang'] . ""));
                                                                                                                   echo $q_uang['jenis_mu'];
                                                                                                                   ?>" />
-          <br />
+          <br /> -->
           <input id="harga_perunit" name="harga_perunit" class="form-control" type="text" onkeyup="sum();" required="required" size="10" placeholder="Harga Perunit" />
           <br />
           <input id="diskon" name="diskon" onkeyup="sum();" class="form-control" type="text" placeholder="Diskon" required="required" size="5" />

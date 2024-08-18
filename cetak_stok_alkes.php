@@ -64,8 +64,8 @@ header("Content-Disposition: attachment; filename=Stok Alkes - MERK $_POST[merk]
 		echo $q1; ?></td>
         <td align="center" bgcolor="#FF0000"><?php 
 		$q1_1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual) as total_jual from barang_dijual_qty where barang_gudang_id=".$data_sel['id'].""));
-		$q1_1_set = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_barang_gudang*qty_set) as stok_po_set from barang_dijual_qty_set_detail,barang_dijual_qty_set where barang_dijual_qty_set.id=barang_dijual_qty_set_detail.barang_dijual_qty_set_id and barang_gudang_id=".$data_sel['id'].""));
-		echo $q1_1['total_jual']+$q1_1_set['stok_po_set']; ?></td>
+		// $q1_1_set = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_barang_gudang*qty_set) as stok_po_set from barang_dijual_qty_set_detail,barang_dijual_qty_set where barang_dijual_qty_set.id=barang_dijual_qty_set_detail.barang_dijual_qty_set_id and barang_gudang_id=".$data_sel['id'].""));
+		echo $q1_1['total_jual']; //+$q1_1_set['stok_po_set']; ?></td>
         <td align="center" bgcolor="#FF0000">
         <?php 
 		$q1_2 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_id=".$data_sel['id']." and status_kerusakan=1"));
@@ -79,7 +79,8 @@ header("Content-Disposition: attachment; filename=Stok Alkes - MERK $_POST[merk]
         <td bgcolor="#00CC00">
         <?php 
 		$q1_4 = mysqli_fetch_array(mysqli_query($koneksi, "select stok_total from barang_gudang where id=".$data_sel['id'].""));
-		echo $q+$q1-($q1_1['total_jual']+$q1_1_set['stok_po_set'])-$q1_2-$q1_3; ?>
+		echo $q+$q1-($q1_1['total_jual'])-$q1_2-$q1_3; ?>
+		<!-- echo $q+$q1-($q1_1['total_jual']+$q1_1_set['stok_po_set'])-$q1_2-$q1_3; ?> -->
         </td>
       </tr>
       <?php } ?>

@@ -202,7 +202,7 @@ function sum_total_keseluruhan() {
   ?>
   <tr>
     <td><?php echo $no; ?></td>
-    <td><?php echo $data_akse['nama_barang']; ?>
+    <td><?php echo $data_akse['nama_brg']; ?>
     </td>
     
     <td align="center"><?php echo $data_akse['qty']; ?></td>

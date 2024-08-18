@@ -92,7 +92,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan.id as i
     <td align="center"><strong>
       <?php 
       // echo $d['qty']." Units"; 
-      if ($d['satuan_header'] != '') {
+      if ($brg['satuan_header'] != '') {
         // echo $d['qty_jual'];
         if ($d['qty'] % $brg['jumlah_rincian_to_satuan'] == 0) {
           $qtyy = $d['qty'] / $brg['jumlah_rincian_to_satuan'];
@@ -125,7 +125,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan.id as i
   </tr>
   
   <?php 
-  $q_akse = mysqli_query($koneksi, "select * from aksesoris_alkes,aksesoris where aksesoris.id=aksesoris_alkes.aksesoris_id and aksesoris_alkes.barang_gudang_id=".$d['barang_gudang_id']."");
+  $q_akse = mysqli_query($koneksi, "select * from barang_gudang_detail_akse, barang_gudang where barang_gudang.id=barang_gudang_detail_akse.barang_gudang_akse_id and barang_gudang_detail_akse.barang_gudang_id=".$d['barang_gudang_id']."");
   $no=0;
   $total_akse=0;
   while ($d_akse = mysqli_fetch_array($q_akse)) {

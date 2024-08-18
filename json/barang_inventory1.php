@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 header("Content-type:application/json");
 
 //koneksi ke database
@@ -23,7 +23,7 @@ if (isset($_GET['start'])) {
         if (isset($_GET['cari'])) {
             $sql = "select *,barang_pesan_inventory.id as idd from barang_pesan_inventory,mata_uang,principle where mata_uang.id=barang_pesan_inventory.mata_uang_id and principle.id=barang_pesan_inventory.principle_id and (no_po_pesan like '%$_GET[cari]%' or jenis_po like '%$_GET[cari]%' or nama_principle like '%$_GET[cari]%' or alamat_pengiriman like '%$_GET[cari]%') order by tgl_po_pesan DESC, barang_pesan_inventory.id DESC LIMIT $start, $limit";
         } else {
-            $sql = "select *,barang_pesan_inventory.id as idd from barang_pesan_inventory,mata_uang,principle where mata_uang.id=barang_pesan_inventory.mata_uang_id and principle.id=barang_pesan_inventory.principle_id order by tgl_po_pesan DESC, barang_pesan_inventory.id DESC LIMIT $start, $limit";
+            $sql = "select *,barang_pesan_inventory.id as idd from barang_pesan_inventory,principle where principle.id=barang_pesan_inventory.principle_id order by tgl_po_pesan DESC, barang_pesan_inventory.id DESC LIMIT $start, $limit";
         }
     }
     $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));

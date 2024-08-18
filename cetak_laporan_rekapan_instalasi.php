@@ -29,7 +29,7 @@ header("Content-Disposition: attachment; filename=Rekapan Instalasi & Uji Fungsi
   <?php
 
   // membuka file JSON
-  $file = file_get_contents("http://localhost/ALKES/json/ubah_uji.php?tgl1=" . $_POST['tgl1'] . "&tgl2=" . $_POST['tgl2'] . "");
+  $file = file_get_contents("http://localhost/ALKES_2/json/cetak_rekapan_instalasi_old.php?tgl1=" . $_POST['tgl1'] . "&tgl2=" . $_POST['tgl2'] . "");
   $json = json_decode($file, true);
   $jml = count($json);
   for ($i = 0; $i < $jml; $i++) {

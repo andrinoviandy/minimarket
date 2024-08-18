@@ -9,11 +9,11 @@ if ($cek == 0) {
     $jml_sel = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail where barang_dikirim_id=" . $_POST['id_hapus'] . ""));
     $up2 = mysqli_query($koneksi, "update barang_gudang,barang_gudang_detail,barang_dikirim_detail set stok_total=stok_total+$jml_sel where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_id=" . $_POST['id_hapus'] . "");
     $del1 = mysqli_query($koneksi, "delete from barang_dikirim_detail where barang_dikirim_id=" . $_POST['id_hapus'] . "");
-    $count = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail where barang_dikirim_id = " . $_POST['id_hapus'] . ""));
-    if ($count['jml'] <= 0) {
-        $del2 = mysqli_query($koneksi, "delete from barang_dikirim where id=" . $_POST['id_hapus'] . "");
-    }
     if ($up && $up2 && $del1) {
+        $count = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dikirim_detail where barang_dikirim_id = " . $_POST['id_hapus'] . ""));
+        if ($count['jml'] <= 0) {
+            $del2 = mysqli_query($koneksi, "delete from barang_dikirim where id=" . $_POST['id_hapus'] . "");
+        }
         echo "S";
     } else {
         echo "F";

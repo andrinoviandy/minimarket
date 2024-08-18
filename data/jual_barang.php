@@ -148,12 +148,18 @@ error_reporting(0);
                             <?php
                             $q_cek = mysqli_query($koneksi, "select qty_jual,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_qty.barang_dijual_id=" . $json[$i]['idd'] . "");
                             $jml_cek = 0;
-
+                            $qty_jual = 0;
                             while ($d1 = mysqli_fetch_array($q_cek)) {
+                                $q5 = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml_row, jml_total from barang_dijual_qty_detail where barang_dijual_qty_id = " . $d1['id_det_jual'] . ""));
                                 $q4 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim_detail where barang_dijual_qty_id=" . $d1['id_det_jual'] . ""));
+                                if ($q5['jml_row'] > 0) {
+                                    $qty_jual = $q5['jml_total'] + $d1['qty_jual'];
+                                } else {
+                                    $qty_jual = $d1['qty_jual'];
+                                }
                             ?>
                                 <?php
-                                if ($d1['qty_jual'] - $q4['jml'] != 0) {
+                                if ($qty_jual - $q4['jml'] != 0) {
                                     $jml_cek += 1;
                                 }
                                 ?>
