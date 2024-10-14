@@ -31,7 +31,7 @@ $ALKES=$data['nama_brg'];
 $TIPE=$data['tipe_brg'];
 $MERK=$data['merk_brg'];
 $NOSERI=$data['no_seri_brg'];
-$NAMASET=$data['nama_set'];
+// $NAMASET=$data['nama_set'];
 
 // memanggil dan membaca template dokumen yang telah kita buat
 $document = file_get_contents("laporan/kartu_garansi/kartu_garansi.rtf");
@@ -40,7 +40,7 @@ $document = str_replace("#ALKES", $ALKES, $document);
 $document = str_replace("TYPE", $TIPE, $document);
 $document = str_replace("#MERK", $MERK, $document);
 $document = str_replace("#SERI", $NOSERI, $document);
-$document = str_replace("#SET", $NAMASET, $document);
+// $document = str_replace("#SET", $NAMASET, $document);
 $document = str_replace("#PERIODE", "1 Tahun", $document);
 
 // header untuk membuka file output RTF dengan MS. Word

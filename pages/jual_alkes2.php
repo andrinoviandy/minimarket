@@ -243,12 +243,6 @@ if (isset($_POST['lapor'])) {
 </div>
 
 <script>
-  function loading_jual() {
-    $.get("include/getLoading.php", function(data) {
-      $('#modal-data-pembeli').html(data);
-    });
-  }
-
   function tambahPembeli() {
     var dataform = $('#formPembeli')[0];
     var data = new FormData(dataform);
@@ -294,10 +288,10 @@ if (isset($_POST['lapor'])) {
     alertCustom('S','Berhasil Dipilih !','');
   }
 
-  async function modalPembeli() {
+  function modalPembeli() {
     $('#modal-pembeli').modal('show');
-    loading_jual();
-    await $.get("data/modal-pembeli-all.php",
+    loading2('#modal-data-pembeli')
+    $.get("data/modal-pembeli-all.php",
       function(data) {
         $('#modal-data-pembeli').html(data)
       }

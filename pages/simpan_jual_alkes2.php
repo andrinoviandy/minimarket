@@ -181,7 +181,7 @@ if (isset($_POST['input_pph'])) {
 
                 <!--<font color="#FF0000">* Jika Ingin Menambah Data Aksesoris Yang Baru ! Klik Disini <a href="index.php?page=simpan_tambah_aksesoris&id=<?php //echo $_GET['id']; 
                                                                                                                                                           ?>#openAkse"><small data-toggle="tooltip" title="Tambah Aksesoris Baru" class="label bg-blue">+ New Accessories</small></a></font>-->
-                <button name="tambah" class="btn btn-success" type="submit" data-toggle="modal" data-target="#modal-tambah" onclick=""><span class="fa fa-plus"></span> Tambah</button>
+                <button name="tambah" class="btn btn-success" type="submit" data-toggle="modal" data-target="#modal-tambah" onclick="getNamaBarang();"><span class="fa fa-plus"></span> Tambah</button>
                 <button class="btn btn-info pull pull-right" data-toggle="modal" data-target="#modal-ubah-harga"><i class="fa fa-edit"></i> Perubahan Harga Jual</button>
                 <br />
                 <div class="table-responsive no-padding" style="margin-top: 15px; margin-bottom: 15px;">
@@ -333,34 +333,6 @@ if (isset($_POST['tambah_laporan'])) {
         <div class="modal-body">
           <label>Nama Barang</label>
           <div id="nama_barang"></div>
-          <br />
-          <label>Kategori Barang</label>
-          <input id="kategori_brg" name="kategori_brg" class="form-control" type="text" placeholder="Kategori" readonly size="4" />
-          <br />
-          <div class="form-group" id="include-aksesoris" style="display: none;">
-            <label class="col-lg-6 no-padding">
-              <input type="radio" name="r3" id="no_include" value="0" class="flat-red" checked style="width: 20px;">
-              Tidak Include Aksesoris
-            </label>
-            <label class="col-lg-6">
-              <input type="radio" name="r3" id="yes_include" value="1" class="flat-red" style="width: 20px;">
-              Include Aksesoris
-            </label>
-            <br>
-          </div>
-          <!-- <label>Stok Total</label>
-          <input id="stok_total" name="stok_total" class="form-control" type="text" placeholder="Stok" disabled="disabled" size="4" /> -->
-          <br />
-          <!-- <label>Harga (<font size="-2" color="#FF0000">Harga tidak boleh 0</font>)</label> -->
-          <!-- <label>Harga</label>
-          <input id="harga" name="harga" class="form-control" type="text" placeholder="Harga" disabled="disabled" size="8" />
-          <br />
-          <label>Tipe</label>
-          <input id="tipe_brg" name="tipe_akse" class="form-control" type="text" placeholder="Tipe" disabled="disabled" size="15" />
-          <br />
-          <label>Merk</label>
-          <input id="merk_brg" name="merk_brg" class="form-control" type="text" placeholder="Merk" disabled="disabled" size="15" />
-          <br /> -->
           <label>Qty</label>
           <input id="qty_jual" name="qty" class="form-control" type="number" placeholder="" size="2" />
           <br />
@@ -369,7 +341,6 @@ if (isset($_POST['tambah_laporan'])) {
           <br />
           <label>Total</label>
           <input id="" name="total" class="form-control" type="text" placeholder="" size="" value="Auto" disabled="disabled" />
-
         </div>
 
         <div class="modal-footer">
@@ -669,7 +640,8 @@ if (isset($_POST['tambah_laporan'])) {
   }
 
   function getNamaBarang() {
-    $.get("data/get_nama_barang.php",
+    $('#nama_barang').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
+    $.get("data/get_nama_barang_uang.php",
       function(data) {
         $('#nama_barang').html(data);
       }
@@ -677,9 +649,7 @@ if (isset($_POST['tambah_laporan'])) {
   }
 
   function loading_jual() {
-    $.get("include/getLoading.php", function(data) {
-      $('#tabel_jual').html(data);
-    });
+    $('#tabel_jual').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
   }
 
   function getDataBarang() {
@@ -742,75 +712,82 @@ if (isset($_POST['tambah_laporan'])) {
 
   function simpanBarang() {
     var no_include = $('#no_include').prop('checked');
-    $.post("data/simpan_barang_jual.php", {
-        id_akse: $('#id_akse').val(),
-        qty: $('#qty_jual').val(),
-        ongkirr: $('#ongkir_jual').val(),
-        inc: no_include == true ? '0' : '1',
-        ongkir: getVars("dpp") == 1 ? $('#ongkir').val() : $('#ongkir2').val(),
-        diskon: getVars("dpp") == 1 ? $('#diskon').val() : $('#diskon2').val(),
-        ppn: getVars("dpp") == 1 ? $('#ppn').val() : $('#ppn2').val(),
-        pph: getVars("dpp") == 1 ? $('#pph').val() : 0,
-        zakat: getVars("dpp") == 1 ? $('#zakat').val() : 0,
-        biaya_bank: getVars("dpp") == 1 ? $('#biaya_bank').val() : 0,
-      },
-      function(data) {
-        // alert(data);
-        if (data == 'S') {
-          $('#modal-tambah').modal('hide');
-          Swal.fire({
-            customClass: {
-              confirmButton: 'bg-green',
-              cancelButton: 'bg-white',
-            },
-            title: 'Berhasil Disimpan',
-            icon: 'success',
-            confirmButtonText: 'OK',
-          });
-          // loading_jual();
-          getDataBarang();
-        } else if (data == 'SAMA') {
-          $('#modal-tambah').modal('hide');
-          Swal.fire({
-            customClass: {
-              confirmButton: 'bg-yellow',
-              cancelButton: 'bg-white',
-            },
-            title: 'Harga Jual Alat Tidak Boleh Kosong !',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-          })
-          // loading_jual();
-          getDataBarang();
-        } else if (data == 'SA') {
-          $('#modal-tambah').modal('hide');
-          Swal.fire({
-            customClass: {
-              confirmButton: 'bg-red',
-              cancelButton: 'bg-white',
-            },
-            title: 'Barang Sudah Ada !',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          });
-          // loading_jual();
-          getDataBarang();
-        } else {
-          $('#modal-tambah').modal('hide');
-          Swal.fire({
-            customClass: {
-              confirmButton: 'bg-red',
-              cancelButton: 'bg-white',
-            },
-            title: 'Gagal Disimpan',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          })
-          // loading_jual();
-          getDataBarang();
+    let nie_brg = $('#nie_brg').val();
+    if ((nie_brg.replace(/\s+/g, '')) === '-' || nie_brg === '') {
+      alertCustom('E','NIE Wajib Terisi','Mohon jangan gunakan tanda "-"');
+    } else {
+      $.post("data/simpan_barang_jual.php", {
+          id_akse: $('#id_akse').val(),
+          nie_brg: $('#nie_brg').val(),
+          qty: $('#qty_jual').val(),
+          ongkirr: $('#ongkir_jual').val(),
+          inc: no_include == true ? '0' : '1',
+          ongkir: getVars("dpp") == 1 ? $('#ongkir').val() : $('#ongkir2').val(),
+          diskon: getVars("dpp") == 1 ? $('#diskon').val() : $('#diskon2').val(),
+          ppn: getVars("dpp") == 1 ? $('#ppn').val() : $('#ppn2').val(),
+          pph: getVars("dpp") == 1 ? $('#pph').val() : 0,
+          zakat: getVars("dpp") == 1 ? $('#zakat').val() : 0,
+          biaya_bank: getVars("dpp") == 1 ? $('#biaya_bank').val() : 0,
+        },
+        function(data) {
+          // alert(data);
+          if (data == 'S') {
+            $('#form-tambah').trigger('reset');
+            $('#modal-tambah').modal('hide');
+            Swal.fire({
+              customClass: {
+                confirmButton: 'bg-green',
+                cancelButton: 'bg-white',
+              },
+              title: 'Berhasil Disimpan',
+              icon: 'success',
+              confirmButtonText: 'OK',
+            });
+            // loading_jual();
+            getDataBarang();
+          } else if (data == 'SAMA') {
+            $('#modal-tambah').modal('hide');
+            Swal.fire({
+              customClass: {
+                confirmButton: 'bg-yellow',
+                cancelButton: 'bg-white',
+              },
+              title: 'Harga Jual Alat Tidak Boleh Kosong !',
+              icon: 'warning',
+              confirmButtonText: 'OK',
+            })
+            // loading_jual();
+            getDataBarang();
+          } else if (data == 'SA') {
+            $('#modal-tambah').modal('hide');
+            Swal.fire({
+              customClass: {
+                confirmButton: 'bg-red',
+                cancelButton: 'bg-white',
+              },
+              title: 'Barang Sudah Ada !',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+            // loading_jual();
+            getDataBarang();
+          } else {
+            $('#modal-tambah').modal('hide');
+            Swal.fire({
+              customClass: {
+                confirmButton: 'bg-red',
+                cancelButton: 'bg-white',
+              },
+              title: 'Gagal Disimpan',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            })
+            // loading_jual();
+            getDataBarang();
+          }
         }
-      }
-    );
+      );
+    }
   }
 
   function simpanLainnya() {
@@ -856,7 +833,7 @@ if (isset($_POST['tambah_laporan'])) {
   }
 
   $(document).ready(function() {
-    getNamaBarang();
+    // getNamaBarang();
     loading_jual();
     getDataBarang();
   });

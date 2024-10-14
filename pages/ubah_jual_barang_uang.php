@@ -285,7 +285,7 @@ if (isset($_POST['tambah_riwayat'])) {
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" align="center">Ubah Data Umum</h4>
       </div>
-      <form method="post" enctype="multipart/form-data" onsubmit="simpanDataUmum(); return false;">
+      <form onsubmit="simpanDataUmum(); return false;">
         <div class="modal-body">
           <label>Tanggal Jual</label>
           <input type="date" name="tgl_jual" id="tgl_jual" value="<?php echo $data['tgl_jual']; ?>" class="form-control" />
@@ -298,7 +298,7 @@ if (isset($_POST['tambah_riwayat'])) {
           <br />
           <label>Nama RS/Dinas/Puskesmas/Klinik/Dll</label>
           <div class="form-group">
-            <select name="pembeli" id="pembeli" onchange="changeValue(this.value)" required class="form-control select2" style="width:100%">
+            <select name="pembeli" id="pembeli" required class="form-control select2" style="width:100%">
               <option value="">...</option>
 
               <?php
@@ -506,33 +506,6 @@ if (isset($_POST['tambah_riwayat'])) {
           <input type="hidden" id="idd" name="idd" value="<?php echo $_GET['id'] ?>" />
           <label>Nama Barang</label>
           <div id="nama_barang"></div>
-          <br />
-          <label>Kategori Barang</label>
-          <input id="kategori_brg" name="kategori_brg" class="form-control" type="text" placeholder="Kategori" disabled="disabled" size="4" />
-          <br />
-          <div class="form-group" id="include-aksesoris" style="display: none;">
-            <label class="col-lg-6 no-padding">
-              <input type="radio" name="r3" id="no_include" value="0" class="flat-red" checked style="width: 20px;">
-              Tidak Include Aksesoris
-            </label>
-            <label class="col-lg-6">
-              <input type="radio" name="r3" id="yes_include" value="1" class="flat-red" style="width: 20px;">
-              Include Aksesoris
-            </label>
-            <br>
-          </div>
-          <label>Stok Total</label>
-          <input id="stok_total" name="stok_total" class="form-control" type="text" placeholder="Stok" disabled="disabled" size="4" />
-          <br />
-          <label>Harga (<font size="-2" color="#FF0000">Harga tidak boleh 0</font>)</label>
-          <input id="harga" name="harga" class="form-control" type="text" placeholder="Harga" disabled="disabled" size="8" />
-          <br />
-          <label>Tipe</label>
-          <input id="tipe_brg" name="tipe_akse" class="form-control" type="text" placeholder="Tipe" disabled="disabled" size="15" />
-          <br />
-          <label>Merk</label>
-          <input id="merk_brg" name="merk_brg" class="form-control" type="text" placeholder="Merk" disabled="disabled" size="15" />
-          <br />
           <label>Qty</label>
           <input id="qty_jual" name="qty" class="form-control" type="number" placeholder="" size="2" />
           <br />
@@ -1187,15 +1160,11 @@ if (isset($_POST['tambah_riwayat'])) {
   }
 
   function loading_data_umum() {
-    $.get("include/getLoading.php", function(data) {
-      $('#data-umum').html(data);
-    });
+    $('#data-umum').html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
   }
 
   function loading_data(id) {
-    $.get("include/getLoading.php", function(data) {
-      $(id).html(data);
-    });
+    $(id).html('<center><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></center>');
   }
 
   function getDataUmum(id) {
@@ -1217,7 +1186,7 @@ if (isset($_POST['tambah_riwayat'])) {
   }
 
   $(document).ready(function() {
-    // loading_data('#isi_barang_jual');
+    loading_data('#isi_barang_jual');
     reloadBarang('<?php echo $reload; ?>')
     // loading_data_umum();
     getDataUmum('<?php echo $_GET['id'] ?>')

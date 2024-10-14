@@ -427,12 +427,13 @@ if (isset($_POST['kirim_pengganti'])) {
   }
 
   function modalBarang(id) {
+    $('#modal-detailbarang').modal('show');
+    loading2('#data-detailbarang');
     $.get("data/modal-detailbarang.php", {
         id: id
       },
       function(data) {
         $('#data-detailbarang').html(data);
-        $('#modal-detailbarang').modal('show');
       }
     );
   }
@@ -503,6 +504,8 @@ if (isset($_POST['kirim_pengganti'])) {
               alertHapus('S');
               loading()
               loadMore(load_flag, key, status_b)
+            } else if (data == 'SD') {
+              alertCustom('W', 'Tidak Dapat Dihapus','Data Sudah Dibuat SPI');
             } else {
               alertHapus('F');
             }

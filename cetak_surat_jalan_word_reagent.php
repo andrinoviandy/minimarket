@@ -137,6 +137,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
       <br>
       <table width="100%" class="mytable" style="font-size:13px">
         <tr>
+          <td align="center"><strong>NIE</strong></td>
           <td width="16%" align="center"><strong>Item</strong></td>
           <td width="37%" align="center"><strong>Item Description</strong></td>
           <td width="13%" align="center"><strong>Qty</strong></td>
@@ -146,10 +147,13 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $data2['id_kirim'] . " group by nama_brg");
         while ($d = mysqli_fetch_array($q)) { ?>
           <tr>
+            <td align="center" valign="top">
+              <?php echo $d['nie_brg']; ?>
+            </td>
             <td height="100%" align="center" valign="top">
               <p><?php echo $d['tipe_brg']; ?></p>
             </td>
-            <td valign="top"><?php echo $d['nama_brg']; ?></td>
+            <td valign="top"><?php echo $d['merk_brg'] . ' - ' . $d['nama_brg']; ?></td>
             <td align="center" valign="top">
               <?php
               $jm = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail,barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.barang_dikirim_id=$data2[id_kirim] and barang_gudang.id=$d[id_gudang]"));

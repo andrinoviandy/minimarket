@@ -1,3 +1,14 @@
+<?php
+if (isset($_POST['tambah_spk_masuk'])) {
+  echo "<script type='text/javascript'>
+		window.location='index.php?page=tambah_spk_masuk2';
+		</script>";
+  $_SESSION['tgl_spi'] = $_POST['tgl_spk'];
+  $_SESSION['no_spi'] = $_POST['no_spk'];
+  $_SESSION['keterangan'] = $_POST['keterangan'];
+  mysqli_query($koneksi, "delete from barang_teknisi_hash where akun_id=" . $_SESSION['id'] . "");
+}
+?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -28,8 +39,9 @@
             <div class="box-body table-responsive no-padding">
               <div class="">
                 <?php if (!isset($_SESSION['id_b'])) { ?>
-                  <a href="index.php?page=tambah_spk_masuk">
-                    <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah </button></a>
+                  <!-- <a href="index.php?page=tambah_spk_masuk"> -->
+                  <button data-toggle="modal" data-target="#modal-tambah-spi" name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah </button>
+                  <!-- </a> -->
                 <?php } ?>
                 <span class="pull pull-right">
                   <table>
@@ -302,6 +314,40 @@ $d_t = mysqli_fetch_array(mysqli_query($koneksi, "select * from tb_teknisi where
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 
       </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-tambah-spi">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Tambah SPI</h4>
+      </div>
+      <form id="frm-mhs" name="example_form" action="" method="POST" data-validate="parsley" enctype="multipart/form-data" >
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Tanggal SPI</label>
+            <input name="tgl_spk" type="date" class="form-control" autofocus="autofocus" required="required" />
+          </div>
+          <div class="form-group">
+            <label>Nomor SPI</label>
+            <input name="no_spk" type="text" class="form-control" required="required" />
+          </div>
+          <div class="form-group">
+            <label>Deskripsi</label>
+            <input name="keterangan" type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button type="submit" name="tambah_spk_masuk" class="btn btn-success pull-right">Next</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>

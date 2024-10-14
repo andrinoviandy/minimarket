@@ -20,6 +20,7 @@ error_reporting(0);
         $jsArray223 .= "dtBrg223['" . $d['id'] . "'] = {tipe_brg:'" . addslashes($d['tipe_brg']) . "',
                         kategori_brg:'" . addslashes($d['kategori_brg']) . "',
 						merk_brg:'" . addslashes($d['merk_brg']) . "',
+						nie_brg:'" . addslashes($d['nie_brg']) . "',
 						stok_total:'" . addslashes($stok_total['jml'] - ($stok_po1['stok_po'] - $stok_po2['jml'])) . "',
 						harga:'" . addslashes("Rp " . number_format($d['harga_satuan'], 2, ',', '.')) . "'
 						};";
@@ -52,6 +53,9 @@ error_reporting(0);
 <label>Merk</label>
 <input id="merk_brg" name="merk_brg" class="form-control" type="text" placeholder="Merk" disabled="disabled" size="15" />
 <br />
+<label>NIE</label>
+<input id="nie_brg" name="nie_brg" class="form-control" type="text" required placeholder="NIE" size="15" />
+<br />
 <script type="text/javascript">
     <?php
     echo $jsArray223;
@@ -63,7 +67,7 @@ error_reporting(0);
         document.getElementById('stok_total').value = dtBrg223[id_akse].stok_total;
         document.getElementById('tipe_brg').value = dtBrg223[id_akse].tipe_brg;
         document.getElementById('merk_brg').value = dtBrg223[id_akse].merk_brg;
-
+        document.getElementById('nie_brg').value = dtBrg223[id_akse].nie_brg;
     };
 </script>
 <script src="bower_components/select2/dist/js/select2.full.min.js"></script>

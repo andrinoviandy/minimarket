@@ -71,9 +71,10 @@ $jml2 = $file2;
                         <?php echo "[" . $json[$i]['nie_brg'] . "]-[" . $json[$i]['negara_asal'] . "]"; ?>
                         <hr style="margin:0px; border-top:1px double; width:100%" />
                     <?php } else { ?>
-                        <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php //echo $json[$i]['idd']; ?>"> -->
+                        <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php //echo $json[$i]['idd']; 
+                                                                                                ?>"> -->
                         <a href="javascript:void();" onclick="modalDetailBarang('<?php echo $json[$i]['idd']; ?>');">
-                        <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
+                            <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
                     <?php } ?>
                 </td>
                 <td>
@@ -88,7 +89,7 @@ $jml2 = $file2;
                                     echo $stok_beli['jml']; ?></td>
                 <td align="center"><?php
                                     $stok_gudang = 0;
-                                    if ($json[$i]['kategori_brg']=='Set') {
+                                    if ($json[$i]['kategori_brg'] == 'Set') {
                                         $stok_gudang = $json[$i]['stok_total'];
                                     } else {
                                         $stok_total = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_gudang_detail where status_kirim=0 and status_kerusakan=0 and status_kembali_ke_gudang=0 and barang_gudang_id=" . $json[$i]['idd'] . ""));
@@ -96,7 +97,7 @@ $jml2 = $file2;
                                     }
                                     echo $stok_gudang;
                                     ?>
-                                    </td>
+                </td>
                 <td align="center"><?php
                                     $stok_po1 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual) as stok_po from barang_dijual_qty where barang_gudang_id=" . $json[$i]['idd'] . ""));
                                     $stok_po11 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(jml_total) as stok_po from barang_dijual_qty_detail where barang_gudang_id=" . $json[$i]['idd'] . ""));
@@ -147,20 +148,27 @@ $jml2 = $file2;
                 <?php } ?>
 
                 <td align="center">
-                    <?php if (isset($_SESSION['user_admin_keuangan']) && isset($_SESSION['pass_admin_keuangan'])) { ?>
+                    <?php if ((isset($_SESSION['user_admin_keuangan']) && isset($_SESSION['pass_admin_keuangan'])) || (isset($_SESSION['user_manajer_keuangan']) && isset($_SESSION['pass_manajer_keuangan']))) { ?>
                         <?php if ($json[$i]['kategori_brg'] !== 'Set') { ?>
                             <a href="index.php?page=ubah_barang_masuk&id=<?php echo $json[$i]['idd']; ?>">
                                 <button class="btn btn-info btn-xs">
                                     <span data-toggle="tooltip" title="Ubah" class="fa fa-folder-open"></span>
                                 </button>
                             </a>
+                            &nbsp;
                         <?php } else { ?>
                             <a href="index.php?page=ubah_barang_set&id=<?php echo $json[$i]['idd']; ?>">
                                 <button class="btn btn-info btn-xs">
                                     <span data-toggle="tooltip" title="Ubah" class="fa fa-folder-open"></span>
                                 </button>
                             </a>
+                            &nbsp;
                         <?php } ?>
+                        <a href="#" onclick="hapus(<?php echo $json[$i]['idd']; ?>)">
+                            <button class="btn btn-danger btn-xs">
+                                <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                            </button>
+                        </a>
                     <?php } ?>
                     <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator'])) { ?>
                         <?php if ($json[$i]['kategori_brg'] !== 'Set') { ?>

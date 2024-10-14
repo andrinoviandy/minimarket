@@ -165,6 +165,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
       <table width="100%" class="mytable" style="font-size:13px">
         <tr>
           <th align="center"><strong>No</strong></th>
+          <th align="center"><strong>NIE</strong></th>
           <th align="center"><strong>Item</strong></th>
           <th align="center" colspan="2"><strong>Item Description</strong></th>
           <th align="center" width="12%"><strong>Qty</strong></th>
@@ -173,7 +174,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         <?php
         $no = 0;
         // $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $id . "");
-        $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, nama_brg, satuan, satuan_header, jumlah_rincian_to_satuan, barang_gudang.kategori_brg, barang_gudang.id as id_gudang from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $id . "");
+        $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, merk_brg, nama_brg, nie_brg, satuan, satuan_header, jumlah_rincian_to_satuan, barang_gudang.kategori_brg, barang_gudang.id as id_gudang from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $id . "");
         while ($d = mysqli_fetch_array($q)) {
           $no++;
           $rincian_set = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id]) as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
@@ -182,11 +183,14 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
           <tr>
             <td align="center" valign="top"><?php echo $no; ?></td>
             <td align="center" valign="top">
+              <?php echo $d['nie_brg']; ?>
+            </td>
+            <td align="center" valign="top">
               <?php echo $d['tipe_brg']; ?>
             </td>
             <td valign="top" colspan="2">
               <?php
-              echo $d['nama_brg'];
+              echo $d['merk_brg'] . ' - ' . $d['nama_brg'];
               ?>
             </td>
             <td align="center" valign="top">

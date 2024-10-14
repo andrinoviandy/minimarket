@@ -994,8 +994,7 @@
           </li>
         </ul>
       </li>
-
-
+      <?php /* ?>
       <li class="header"><strong><em>LAPORAN ALKES</em></strong></li>
       <li class="treeview <?php echo $act12; ?>">
         <a href="#">
@@ -1025,6 +1024,7 @@
                         ?>><a href="index.php?page=laporan_teknisi"><i class="fa fa-circle-o"></i> Teknisi </a></li>-->
         </ul>
       </li>
+      <?php */ ?>
       <li class="header"><strong><em>PENGATURAN TEKNISI, PIC, AKUN & Dll</em></strong></li>
       <li class="treeview <?php echo $act10; ?>">
         <a href="#">

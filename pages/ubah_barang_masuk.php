@@ -159,7 +159,7 @@ if (isset($_POST['simpan_perubahan'])) {
             <div class="box-body">
               <div class="row">
                 <div class="col-lg-12">
-                  <?php if (isset($_SESSION['pass_admin_gudang']) or isset($_SESSION['pass_administrator'])) { ?>
+                  <?php if (isset($_SESSION['pass_admin_gudang']) || isset($_SESSION['pass_administrator']) || isset($_SESSION['pass_manajer_keuangan'])) { ?>
                     <br />
                     <a href="index.php?page=simpan_tambah_barang_masuk5&id=<?php echo $_GET['id']; ?>"><button name="tambah_detail" class="btn btn-success" type="submit"><span class="fa fa-edit"></span> Tambah Stok</button></a>&nbsp;&nbsp;
                     <!-- <a href="index.php?page=ubah_barang_masuk_terjual&id=<?php echo $_GET['id']; ?>"><button name="tambah_detail" class="btn btn-warning" type="button"> Stok Terjual</button></a>

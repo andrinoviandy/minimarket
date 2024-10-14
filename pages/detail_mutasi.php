@@ -22,73 +22,73 @@ if (isset($_GET['id_hapus']) and isset($_GET['id_po'])) {
   }
 }
 
-if (isset($_GET['batal_mutasi'])) {
-  $sel1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan_detail.id as idd from barang_pesan,barang_pesan_detail,barang_gudang where barang_gudang.id=barang_pesan_detail.barang_gudang_id and barang_pesan.id=barang_pesan_detail.barang_pesan_id and barang_pesan_detail.id=" . $_GET['id_detail'] . ""));
-  if ($sel1['kategori_brg'] == 'Set') {
-    $sel2 = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_gudang_po where no_po_gudang='" . $sel1['no_po_pesan'] . "' and barang_gudang_id=" . $_GET['id_gudang'] . " and stok=" . $_GET['stok'] . ""));
-    $sel3 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and status_kirim=1"));
-    $sel5 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and status_demo=1"));
+// if (isset($_GET['batal_mutasi'])) {
+//   $sel1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_pesan_detail.id as idd from barang_pesan,barang_pesan_detail,barang_gudang where barang_gudang.id=barang_pesan_detail.barang_gudang_id and barang_pesan.id=barang_pesan_detail.barang_pesan_id and barang_pesan_detail.id=" . $_GET['id_detail'] . ""));
+//   if ($sel1['kategori_brg'] == 'Set') {
+//     $sel2 = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_gudang_po where no_po_gudang='" . $sel1['no_po_pesan'] . "' and barang_gudang_id=" . $_GET['id_gudang'] . " and stok=" . $_GET['stok'] . ""));
+//     $sel3 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and status_kirim=1"));
+//     $sel5 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and status_demo=1"));
 
-    // window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
-    $cek = 0;
-    $detail = mysqli_query($koneksi, "select * from barang_gudang_detail_set where barang_gudang_set_id = $_GET[id_gudang]");
-    while ($dt = mysqli_fetch_array($detail)) {
-      $sel33 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and barang_gudang_id = $dt[barang_gudang_id] and status_kirim=1"));
-      if ($sel33 > 0) {
-        $cek = $cek + 1;
-      }
-      $sel55 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and barang_gudang_id = $dt[barang_gudang_id] and status_demo=1"));
-      if ($sel55 > 0) {
-        $cek = $cek + 1;
-      }
-    }
-    if ($sel3 != 0 or $sel5 != 0) {
-      echo "<script type='text/javascript'>
-      alertCustom('F','Pembatalan Mutasi Barang (Set) GAGAL !','Barang Dengan No Po Ini Sudah Ada Yang Terjual atau Sedang Didemokan !');
-      </script>";
-    } else if ($cek > 0) {
-      echo "<script type='text/javascript'>
-      alertCustom('F','Pembatalan Mutasi Barang GAGAL !','Rincian Barang Dengan No Po Ini Sudah Ada Yang Terjual atau Sedang Didemokan !');
-      </script>";
-    } else {
-      $sel4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and barang_gudang_id = $_GET[id_gudang]"));
-      $del1 = mysqli_query($koneksi, "delete from barang_gudang_detail where barang_gudang_po_id=$sel2[id]");
-      $del2 = mysqli_query($koneksi, "delete from barang_gudang_po where id=$sel2[id]");
-      $del3 = mysqli_query($koneksi, "update barang_gudang set stok_total=stok_total-$sel4 where id=$_GET[id_gudang]");
-      $detail2 = mysqli_query($koneksi, "select * from barang_pesan_detail_set where barang_pesan_detail_id = $_GET[id_detail]");
-      while ($dt = mysqli_fetch_array($detail2)) {
-        $del4 = mysqli_query($koneksi, "update barang_gudang set stok_total=stok_total-($dt[qty]*$_GET[stok]) where id=$dt[barang_gudang_id]");
-      }
-      if ($del1 and $del2 and $del3) {
-        echo "<script type='text/javascript'>
-      alert('Pembatalan Mutasi Barang BERHASIL !');
-      window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
-      </script>";
-      }
-    }
-  } else {
-    $sel2 = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_gudang_po where no_po_gudang='" . $sel1['no_po_pesan'] . "' and barang_gudang_id=" . $_GET['id_gudang'] . " and stok=" . $_GET['stok'] . ""));
-    $sel3 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and status_kirim=1"));
-    $sel5 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and status_demo=1"));
-    if ($sel3 != 0 or $sel5 != 0) {
-      echo "<script type='text/javascript'>
-      alert('Pembatalan Mutasi Barang GAGAL !\nBarang Dengan No Po Ini Sudah Ada Yang Terjual atau Sedang Didemokan !');
-      window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
-      </script>";
-    } else {
-      $sel4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . ""));
-      $del1 = mysqli_query($koneksi, "delete from barang_gudang_detail where barang_gudang_po_id=$sel2[id]");
-      $del2 = mysqli_query($koneksi, "delete from barang_gudang_po where id=$sel2[id]");
-      $del3 = mysqli_query($koneksi, "update barang_gudang set stok_total=stok_total-$sel4 where id=$_GET[id_gudang]");
-      if ($del1 and $del2 and $del3) {
-        echo "<script type='text/javascript'>
-      alert('Pembatalan Mutasi Barang BERHASIL !');
-      window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
-      </script>";
-      }
-    }
-  }
-}
+//     // window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
+//     $cek = 0;
+//     $detail = mysqli_query($koneksi, "select * from barang_gudang_detail_set where barang_gudang_set_id = $_GET[id_gudang]");
+//     while ($dt = mysqli_fetch_array($detail)) {
+//       $sel33 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and barang_gudang_id = $dt[barang_gudang_id] and status_kirim=1"));
+//       if ($sel33 > 0) {
+//         $cek = $cek + 1;
+//       }
+//       $sel55 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and barang_gudang_id = $dt[barang_gudang_id] and status_demo=1"));
+//       if ($sel55 > 0) {
+//         $cek = $cek + 1;
+//       }
+//     }
+//     if ($sel3 != 0 or $sel5 != 0) {
+//       echo "<script type='text/javascript'>
+//       alertCustom('F','Pembatalan Mutasi Barang (Set) GAGAL !','Barang Dengan No Po Ini Sudah Ada Yang Terjual atau Sedang Didemokan !');
+//       </script>";
+//     } else if ($cek > 0) {
+//       echo "<script type='text/javascript'>
+//       alertCustom('F','Pembatalan Mutasi Barang GAGAL !','Rincian Barang Dengan No Po Ini Sudah Ada Yang Terjual atau Sedang Didemokan !');
+//       </script>";
+//     } else {
+//       $sel4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . " and barang_gudang_id = $_GET[id_gudang]"));
+//       $del1 = mysqli_query($koneksi, "delete from barang_gudang_detail where barang_gudang_po_id=$sel2[id]");
+//       $del2 = mysqli_query($koneksi, "delete from barang_gudang_po where id=$sel2[id]");
+//       $del3 = mysqli_query($koneksi, "update barang_gudang set stok_total=stok_total-$sel4 where id=$_GET[id_gudang]");
+//       $detail2 = mysqli_query($koneksi, "select * from barang_pesan_detail_set where barang_pesan_detail_id = $_GET[id_detail]");
+//       while ($dt = mysqli_fetch_array($detail2)) {
+//         $del4 = mysqli_query($koneksi, "update barang_gudang set stok_total=stok_total-($dt[qty]*$_GET[stok]) where id=$dt[barang_gudang_id]");
+//       }
+//       if ($del1 and $del2 and $del3) {
+//         echo "<script type='text/javascript'>
+//       alert('Pembatalan Mutasi Barang BERHASIL !');
+//       window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
+//       </script>";
+//       }
+//     }
+//   } else {
+//     // $sel2 = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_gudang_po where no_po_gudang='" . $sel1['no_po_pesan'] . "' and barang_gudang_id=" . $_GET['id_gudang'] . " and stok=" . $_GET['stok'] . ""));
+//     $sel3 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $_GET['barang_gudang_po_id'] . " and status_kirim=1"));
+//     $sel5 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $_GET['barang_gudang_po_id'] . " and status_demo=1"));
+//     if ($sel3 != 0 or $sel5 != 0) {
+//       echo "<script type='text/javascript'>
+//       alert('Pembatalan Mutasi Barang GAGAL !\nBarang Dengan No Po Ini Sudah Ada Yang Terjual atau Sedang Didemokan !');
+//       window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
+//       </script>";
+//     } else {
+//       $sel4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang_detail where barang_gudang_po_id=" . $sel2['id'] . ""));
+//       $del1 = mysqli_query($koneksi, "delete from barang_gudang_detail where barang_gudang_po_id=$sel2[id]");
+//       $del2 = mysqli_query($koneksi, "delete from barang_gudang_po where id=$sel2[id]");
+//       $del3 = mysqli_query($koneksi, "update barang_gudang set stok_total=stok_total-$sel4 where id=$_GET[id_gudang]");
+//       if ($del1 and $del2 and $del3) {
+//         echo "<script type='text/javascript'>
+//       alert('Pembatalan Mutasi Barang BERHASIL !');
+//       window.location='index.php?page=detail_mutasi&id=$_GET[id]&id_gudang=$_GET[id_gudang]&id_detail=$_GET[id_detail]';
+//       </script>";
+//       }
+//     }
+//   }
+// }
 
 if (isset($_POST['simpan_perubahan'])) {
   $Result = mysqli_query($koneksi, "update barang_pesan set tgl_po_pesan='" . $_POST['tgl_po'] . "',no_po_pesan='" . $_POST['no_po'] . "',ppn='" . $_POST['ppn'] . "',cara_pembayaran='" . $_POST['cara_pembayaran'] . "',alamat_pengiriman='" . str_replace("\n", "<br>", $_POST['alamat_pengiriman']) . "',jalur_pengiriman='" . $_POST['jalur_pengiriman'] . "', catatan='" . $_POST['catatan'] . "' where id=" . $_GET['id'] . "");
@@ -203,31 +203,7 @@ if (isset($_POST['simpan_perubahan'])) {
               <div style="width:100%">
                 <h3 align="center">Data Mutasi</h3>
               </div>
-              <div class="table-responsive" style="width:100%">
-                <table width="100%" id="example1" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th><strong>Tanggal Masuk</strong></th>
-                      <th>Stok Mutasi</th>
-                      <td align="center"><strong>Aksi</strong></td>
-                    </tr>
-                  </thead>
-                  <?php
-                  $q22 = mysqli_query($koneksi, "select *,barang_gudang_po.id as idd from barang_gudang_po,barang_pesan where barang_pesan.no_po_pesan=barang_gudang_po.no_po_gudang and barang_pesan.id=" . $_GET['id'] . " and barang_gudang_id=" . $_GET['id_gudang'] . "");
-                  $no = 0;
-                  while ($d = mysqli_fetch_array($q22)) {
-                    $no++;
-                  ?>
-                    <tr>
-                      <td><?php echo date("d/m/Y", strtotime($d['tgl_po_gudang'])); ?></td>
-                      <td><?php echo $d['stok']; ?></td>
-                      <td align="center">
-                        <a href="index.php?page=detail_mutasi&batal_mutasi=1&id=<?php echo $_GET['id']; ?>&id_gudang=<?php echo $_GET['id_gudang']; ?>&id_detail=<?php echo $_GET['id_detail']; ?>&stok=<?php echo $d['stok']; ?>" onclick="return confirm('Anda Yakin Ingin Membatalkan Mutasi Stok Ini ?')"><small data-toggle="tooltip" title="Batalkan Mutasi" class="label bg-red"><span class="fa fa-close"></span> Batalkan Mutasi</small></a>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </table>
-              </div>
+              <div id="data-mutasi"></div>
               <br />
               <center><a href="?page=mutasi&id=<?php echo $_GET['id'] ?>"><button class="btn btn-success">Kembali</button></a></center>
             </div>
@@ -427,3 +403,60 @@ if (isset($_POST['simpan_ubah_sudah_ada'])) {
     </form>
   </div>
 </div>
+
+<script>
+  function getDataMutasi() {
+    loading2('#data-mutasi')
+    $.get("data/data-mutasi.php", {
+      id: <?php echo $_GET['id'] ?>,
+      id_gudang: <?php echo $_GET['id_gudang'] ?>,
+      id_detail: <?php echo $_GET['id_detail'] ?>,
+    },
+      function (data) {
+        $('#data-mutasi').html(data);
+      }
+    );
+  }
+
+  function batalkanMutasi(id, id_gudang, id_detail, stok, barang_gudang_po_id) {
+    Swal.fire({
+      customClass: {
+        confirmButton: 'bg-red',
+        cancelButton: 'bg-white',
+      },
+      title: 'Anda Yakin Akan Membatalkan Data Mutasi Ini ?',
+      text: 'Data Akan Berhasil Jika Belum Ada Penjualan Pada Data Mutasi Ini',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya , Batalkan',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        showLoading(1)
+        setTimeout(() => {
+          $.get("data/batalkan-mutasi.php", {
+              id: id,
+              id_gudang: id_gudang,
+              id_detail: id_detail,
+              stok: stok,
+              barang_gudang_po_id: barang_gudang_po_id,
+            },
+            function(data) {
+              showLoading(0)
+              if (data == 'S') {
+                alertCustom('S', 'Mutasi Berhasil Dibatalkan', '');
+                getDataMutasi();
+              } else {
+                alertCustom('F', 'Mutasi Gagal Dibatalkan', '');
+              }
+            }
+          );
+        }, 1000);
+      }
+    })
+  }
+
+  $(document).ready(function () {
+    getDataMutasi()
+  });
+</script>
