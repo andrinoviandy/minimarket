@@ -158,13 +158,18 @@ if (isset($_POST['tambah_riwayat'])) {
                                                                                                                                                                             } ?></a></li>
                       <?php } ?>
                       <?php
-                      $jm_deal = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dijual where no_po_jual='" . $data['no_po_jual'] . "' and status_deal=1 order by id ASC"));
-                      if ($jm_deal['jml'] == 0) {
+                      $jm_deal = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml_deal from barang_dijual where no_po_jual='" . $data['no_po_jual'] . "' and status_deal=1 order by id ASC"));
+                      $jm_kirim = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml_kirim from barang_dikirim where barang_dijual_id='" . $data['id'] . "'"));
+                      if ($jm_kirim['jml_kirim'] == 0) {
+                        if ($jm_deal['jml_deal'] == 0) {
                       ?>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#modal-riwayat"><i class="fa fa-calendar"></i> &nbsp;Tambah Riwayat</button>
-                      <?php } else { ?>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#modal-teks-riwayat"><i class="fa fa-calendar"></i> &nbsp;Tambah Riwayat</button>
-                      <?php } ?>
+                          <button class="btn btn-warning" data-toggle="modal" data-target="#modal-riwayat"><i class="fa fa-calendar"></i> &nbsp;Tambah Riwayat</button>
+                        <?php } else { ?>
+                          <button class="btn btn-warning" data-toggle="modal" data-target="#modal-teks-riwayat"><i class="fa fa-calendar"></i> &nbsp;Tambah Riwayat</button>
+                      <?php
+                        }
+                      }
+                      ?>
                     </ul>
                     <div id="isi_barang_jual"></div>
                     <!-- /.tab-content -->
@@ -373,7 +378,7 @@ if (isset($_POST['tambah_riwayat'])) {
           <br><br>
           <label>Riwayat Po yang deal</label>
           <select name="status_deal" id="status_deal" class="form-control select2" style="width:100%">
-            <option <?php if ($jm_deal == 0) {
+            <option <?php if ($jm_deal['jml_deal'] == 0) {
                       echo "selected";
                     } ?> value="0">Belum Ada</option>
             <?php $s2 = mysqli_query($koneksi, "select id, status_deal from barang_dijual where no_po_jual='" . $data['no_po_jual'] . "' order by id ASC");

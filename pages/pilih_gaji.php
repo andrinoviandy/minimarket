@@ -16,7 +16,7 @@ if (isset($_GET['simpan'])==1) {
 	$total_home_pay=$total1['total1']-$total2['total1'];
 	$simpan1 = mysqli_query($koneksi,"insert into keuangan values('','".$_SESSION['tgl_gaji']."','Gaji Karyawan','".$_SESSION['bulan_tahun']."','".$total_home_pay."')");
 	$max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_max from keuangan"));
-	$simpan1=mysqli_query($koneksi, "insert into gaji_karyawan values('$id','$max[id_max]','".$_SESSION['tgl_gaji']."','".$_SESSION['karyawan_id']."','".$_SESSION['bulan_tahun']."','".$_SESSION['jumlah_hari_kerja']."','".$_SESSION['catatan']."')");
+	$simpan1=mysqli_query($koneksi, "insert into gaji_karyawan values('$id','".$_SESSION['tgl_gaji']."','".$_SESSION['karyawan_id']."','".$_SESSION['bulan_tahun']."','".$_SESSION['jumlah_hari_kerja']."','".$_SESSION['catatan']."')");
 	$simpan2 = mysqli_query($koneksi,"insert into keuangan_detail values('','$max[id_max]','2','12','62','db')");
 	$simpan3 = mysqli_query($koneksi,"insert into keuangan_detail values('','$max[id_max]','3','31','','cr')");
 	

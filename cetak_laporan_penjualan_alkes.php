@@ -50,6 +50,7 @@ error_reporting(0);
       <th align="center">Nama Barang</th>
       <th align="center">Tipe</th>
       <th align="center">Qty</th>
+      <th align="center">No Seri</th>
       <th align="center"><strong>Dinas/RS/Puskemas/Klinik</strong></th>
       <th align="center">Provinsi</th>
       <th align="center">Kabupaten</th>
@@ -136,6 +137,18 @@ error_reporting(0);
               <td valign="top"><?php echo $d1['nama_brg'] ?></td>
               <td valign="top"><?php echo $d1['tipe_brg'] ?></td>
               <td valign="top" align="center"><?php echo $d1['qty_jual'] ?>
+              </td>
+              <td>
+                <table border="1">
+                  <?php
+                  $q_serial = mysqli_query($koneksi, "select * from barang_dikirim_detail b inner join barang_dikirim a on a.id = b.barang_dikirim_id inner join barang_gudang_detail c on c.id = b.barang_gudang_detail_id where a.barang_dijual_id = " . $d1['barang_dijual_id'] . "");
+                  while ($dd = mysqli_fetch_array($q_serial)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $dd['no_seri_brg'] ?></td>
+                    </tr>
+                  <?php } ?>
+                </table>
               </td>
             </tr>
           <?php } ?>

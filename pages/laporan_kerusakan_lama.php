@@ -69,7 +69,7 @@
   <?php
  
 // membuka file JSON
-$file = file_get_contents("http://localhost/ALKES/json/laporan_kerusakan_lama_cs.php?id=$_GET[id]");
+$file = file_get_contents("http://localhost/ALKES_2/json/laporan_kerusakan_lama_cs.php?id=$_GET[id]");
 $json = json_decode($file, true);
 $jml=count($json); 
 for ($i=0; $i<$jml; $i++) {

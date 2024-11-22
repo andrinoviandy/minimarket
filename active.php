@@ -115,6 +115,9 @@ if (isset($_GET['page'])) {
 	} else if ($_GET['page'] == 'karyawan' or $_GET['page'] == 'tambah_karyawan' or $_GET['page'] == 'ubah_karyawan') {
 		$bagian_keuangan = "active";
 		$karyawan = "active";
+	} else if ($_GET['page'] == 'monitoring_penjualan') {
+		$bagian_keuangan = "active";
+		$monitoring_penjualan = "active";
 	} else if ($_GET['page'] == 'reimburse' or $_GET['page'] == 'tambah_reimburse' or $_GET['page'] == 'ubah_reimburse') {
 		$bagian_keuangan = "active";
 		$reimburse = "active";

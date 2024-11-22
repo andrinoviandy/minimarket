@@ -157,9 +157,9 @@ if (isset($_POST['simpan_tambah_aksesoris'])) {
 
                     // membuka file JSON
                     if (isset($_SESSION['id_b'])) {
-                      $file = file_get_contents("http://localhost/ALKES/json/barang_rusak.php?id_gudang=$_GET[id_gudang]&id_b=$_SESSION[id_b]");
+                      $file = file_get_contents("http://localhost/ALKES_2/json/barang_rusak.php?id_gudang=$_GET[id_gudang]&id_b=$_SESSION[id_b]");
                     } else {
-                      $file = file_get_contents("http://localhost/ALKES/json/barang_rusak.php?id_gudang=$_GET[id_gudang]");
+                      $file = file_get_contents("http://localhost/ALKES_2/json/barang_rusak.php?id_gudang=$_GET[id_gudang]");
                     }
                     $json = json_decode($file, true);
                     $jml = count($json);

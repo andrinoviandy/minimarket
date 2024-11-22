@@ -6,7 +6,7 @@ error_reporting(0);
 <select name="id_akse" id="id_akse" class="form-control select2" required onchange="changeValue(this.value); cekInclude();" style="width:100%">
     <option value="">...</option>
     <?php
-    $q = mysqli_query($koneksi, "select id, nama_brg, tipe_brg, harga_satuan, merk_brg, kategori_brg from barang_gudang order by nama_brg ASC");
+    $q = mysqli_query($koneksi, "select id, nama_brg, tipe_brg, harga_satuan, merk_brg, kategori_brg, nie_brg from barang_gudang order by nama_brg ASC");
     $jsArray223 = "var dtBrg223 = new Array();
             ";
     while ($d = mysqli_fetch_array($q)) { ?>

@@ -18,14 +18,19 @@ error_reporting(0);
         </button>
         <?php
         $jm_riwayat = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml from barang_dijual where no_po_jual='" . $dt['no_po_jual'] . "'"));
-        if (($jm_riwayat['jml'] > 1 and $_SESSION['user_administrator'] or $jm_riwayat['jml'] > 1 and $_SESSION['user_admin_keuangan'] or $jm_riwayat['jml'] > 1 and $_SESSION['user_manajer_keuangan']) and $dt['status_awal'] != 1) {
+        $jm_kirim = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml_kirim from barang_dikirim where barang_dijual_id='" . $dt['id'] . "'"));
+        if ($jm_kirim['jml_kirim'] == 0) {
+            if (($jm_riwayat['jml'] > 1 and $_SESSION['user_administrator'] or $jm_riwayat['jml'] > 1 and $_SESSION['user_admin_keuangan'] or $jm_riwayat['jml'] > 1 and $_SESSION['user_manajer_keuangan']) and $dt['status_awal'] != 1) {
         ?>
-            <!-- <a href="?page=ubah_jual_barang_uang&id=<?php //echo $_GET['idd'] 
-                                                            ?>&hapus_riwayat=<?php //echo $_GET['id']; 
-                                                                                ?>" class="pull-right" onclick="return confirm('Anda yakin akan menghapus Riwayat Ini ?')"> -->
-            <button class="pull pull-right btn btn-danger" onclick="hapusRiwayat('<?php echo $_GET['id']; ?>')"><span data-toggle="tooltip" title="Hapus Riwayat" class="fa fa-close"></span> Hapus Riwayat Ini</button>
-            <!-- </a> -->
-        <?php } ?>
+                <!-- <a href="?page=ubah_jual_barang_uang&id=<?php //echo $_GET['idd'] 
+                                                                ?>&hapus_riwayat=<?php //echo $_GET['id']; 
+                                                                                    ?>" class="pull-right" onclick="return confirm('Anda yakin akan menghapus Riwayat Ini ?')"> -->
+                <button class="pull pull-right btn btn-danger" onclick="hapusRiwayat('<?php echo $_GET['id']; ?>')"><span data-toggle="tooltip" title="Hapus Riwayat" class="fa fa-close"></span> Hapus Riwayat Ini</button>
+                <!-- </a> -->
+        <?php
+            }
+        }
+        ?>
         <br /><br />
         <div class="table-responsive">
             <table width="100%" id="example1" class="table table-bordered table-hover">
@@ -63,7 +68,7 @@ error_reporting(0);
                             <td align="left"><?php echo $data_akse['satuan']; ?>
                                 <?php
                                 if ($data_akse['satuan_header'] != '') {
-                                    echo "<br>(" . $data_akse['jumlah_rincian_to_satuan'] . " " . $data_akse['satuan'] . "=1 " . $data_akse['satuan_header'].")";
+                                    echo "<br>(" . $data_akse['jumlah_rincian_to_satuan'] . " " . $data_akse['satuan'] . "=1 " . $data_akse['satuan_header'] . ")";
                                 }
                                 ?>
                             </td>
@@ -73,20 +78,32 @@ error_reporting(0);
                             <td align="right" bgcolor="#FFFF00"><?php echo "Rp" . number_format($data_akse['okr'], 2, ',', '.'); ?></td>
                             <td align="center" style="width: 7%;">
                                 <div class="row">
-                                    <?php if ($jm >= 2) { ?>
-                                        <!-- <a href="index.php?page=ubah_jual_barang_uang&id=<?php //echo $_GET['id']; 
-                                                                                                ?>&id_hapus=<?php //echo $data_akse['idd']; 
-                                                                                                            ?>&id_barang_jual=<?php //echo $dt['id'] 
-                                                                                                                                ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"> -->
-                                        <a class="btn btn-xs btn-danger" onclick="hapusBarangJual('<?php echo $data_akse['idd']; ?>')">
-                                            <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
-                                        </a>
+                                    <?php
+                                    $jm_kirim_detail = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim_detail where barang_dijual_qty_id='" . $data_akse['idd'] . "'"));
+                                    if ($jm_kirim_detail['jml'] == 0) {
+                                        if ($jm >= 2) {
+                                    ?>
+                                            <!-- <a href="index.php?page=ubah_jual_barang_uang&id=<?php //echo $_GET['id']; 
+                                                                                                    ?>&id_hapus=<?php //echo $data_akse['idd']; 
+                                                                                                                ?>&id_barang_jual=<?php //echo $dt['id'] 
+                                                                                                                                    ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"> -->
+                                            <a class="btn btn-xs btn-danger" onclick="hapusBarangJual('<?php echo $data_akse['idd']; ?>')">
+                                                <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                                            </a>
+                                    <?php }
+                                    } ?>
+                                    <?php
+                                    // $jm_kirim2 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim_detail where barang_dijual_qty_id=" . $data_akse['idd'] . " and kategori_brg = '" . $data_akse['kategori_brg'] . "' and status_batal = 0"));
+                                    if ($jm_kirim_detail['jml'] == 0) {
+                                    ?>
+                                        <a class="btn btn-xs btn-warning" onclick="openUbah('<?php echo $dt['id']; ?>', '<?php echo $data_akse['idd']; ?>', '<?php echo $data_akse['qty_jual']; ?>','<?php echo number_format($data_akse['harga_jual_saat_itu'], 0, ',', '.'); ?>')"><span data-toggle="tooltip" title="Ubah Qty" class="fa fa-edit"></span></a>
                                     <?php } ?>
-                                    <a class="btn btn-xs btn-warning" onclick="openUbah('<?php echo $dt['id']; ?>', '<?php echo $data_akse['idd']; ?>', '<?php echo $data_akse['qty_jual']; ?>','<?php echo number_format($data_akse['harga_jual_saat_itu'],0,',','.'); ?>')"><span data-toggle="tooltip" title="Ubah Qty" class="fa fa-edit"></span></a>
-                                    <?php if ($data_akse['kategori_brg'] !== 'Aksesoris') { ?>
-                                        <br>
+                                    <?php if ($jm_kirim_detail['jml'] == 0 && $data_akse['kategori_brg'] !== 'Aksesoris') { ?>
                                         <a class="btn btn-xs btn-info" onclick="openDetail('<?php echo $data_akse['idd']; ?>','<?php echo $data_akse['kategori_brg']; ?>', '<?php echo $data_akse['qty_jual']; ?>')"><span data-toggle="tooltip" title="Detail" class="fa fa-folder-open-o"></span></a>
-                                    <?php } ?>
+                                    <?php }
+                                    if ($jm_kirim_detail['jml'] > 0) {
+                                        echo "On Delivery";
+                                    } ?>
                                 </div>
                             </td>
                         </tr>

@@ -163,6 +163,37 @@ if (isset($_GET['id_batal'])) {
   <!-- /.content -->
 </div>
 
+<div class="modal fade" id="modal-cetak">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">
+          <center>
+            Rekapan Pengiriman Barang
+          </center>
+        </h4>
+      </div>
+      <form method="post" enctype="multipart/form-data" action="cetak_rekapan_pengiriman_alkes.php">
+        <div class="modal-body">
+          <label>Dari Tanggal</label>
+          <input name="tgl1" type="date" class="form-control" placeholder="" value=""><br />
+          <label>Sampai Tanggal</label>
+          <input name="tgl2" type="date" class="form-control" placeholder="" value=""><br />
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-info" name="cetak">Cetak</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <div class="modal fade" id="modal-pembeli">
   <div class="modal-dialog">
     <div class="modal-content">

@@ -65,6 +65,10 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
       padding: 5px 10px;
     }
 
+    .mytable tr td.border-bottom {
+      border-bottom: 1px solid black;
+    }
+
     .mytable tr.bordered {
       border-bottom: 1px solid black;
     }
@@ -185,10 +189,10 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
             <td align="center" valign="top">
               <?php echo $d['nie_brg']; ?>
             </td>
-            <td align="center" valign="top">
+            <td align="center" valign="top" class="border-bottom">
               <?php echo $d['tipe_brg']; ?>
             </td>
-            <td valign="top" colspan="2">
+            <td valign="top" colspan="2" class="border-bottom">
               <?php
               echo $d['merk_brg'] . ' - ' . $d['nama_brg'];
               ?>
@@ -241,7 +245,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
               <tr>
                 <td></td>
                 <td></td>
-                <td colspan="2">Kelengkapan :</td>
+                <td colspan="3">Kelengkapan :</td>
                 <td></td>
                 <td></td>
               </tr>
@@ -254,7 +258,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
                   <td></td>
                   <td></td>
                   <td class="noborder" width="5px" valign="top">-</td>
-                  <td valign="top"><?php echo $d3['nama_brg'] ?></td>
+                  <td valign="top" colspan="2"><?php echo $d3['nama_brg'] ?></td>
                   <td align="center">
                     <?php
                     $q4 = mysqli_query($koneksi, "select barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id] and barang_dikirim_detail.barang_gudang_akse_id = $d3[id_detail]");
@@ -293,7 +297,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
               <tr>
                 <td></td>
                 <td></td>
-                <td colspan="2">Kelengkapan :</td>
+                <td colspan="3">Kelengkapan :</td>
                 <td></td>
                 <td></td>
               </tr>
@@ -306,7 +310,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
                   <td></td>
                   <td></td>
                   <td class="noborder" width="5px" valign="top">-</td>
-                  <td valign="top"><?php echo $d3['nama_brg'] ?></td>
+                  <td valign="top" colspan="2"><?php echo $d3['nama_brg'] ?></td>
                   <td align="center">
                     <?php
                     $q4 = mysqli_query($koneksi, "select barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id] and barang_dikirim_detail.barang_gudang_akse_id = $d3[id_detail]");
@@ -342,7 +346,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
             <td></td>
             <td></td>
             <td class="noborder" width="5px"></td>
-            <td></td>
+            <td colspan="2"></td>
             <td></td>
             <td></td>
           </tr>

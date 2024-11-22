@@ -57,8 +57,8 @@ error_reporting(0);
                     <th align="center">No_Kontrak</th>
                     <!--<th align="center">No_PO</th>-->
                     <th align="center">Barang</th>
-                    <th align="center"><strong>Dinas/RS/Puskemas/Klinik</strong></th>
-                    <th align="center">Nama_Pemakai</th>
+                    <th align="center">Partner</th>
+                    <th align="center">Pemakai</th>
                     <th align="center">Marketing</th>
                     <th align="center">Subdis</th>
 
@@ -123,9 +123,10 @@ error_reporting(0);
                                 <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['qty_jual'] . "]"; ?>
                                 <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
-                        <?php } else { */?>
-                            <button data-toggle="tooltip" title="Detail Barang" class="btn btn-xs bg-primary" onclick="modalBarang('<?php echo $json[$i]['no_po_jual']; ?>')"><span class="fa fa-folder-open"></span></button>
-                        <?php //} ?>
+                        <?php } else { */ ?>
+                        <button data-toggle="tooltip" title="Detail Barang" class="btn btn-xs bg-primary" onclick="modalBarang('<?php echo $json[$i]['no_po_jual']; ?>')"><span class="fa fa-folder-open"></span></button>
+                        <?php //} 
+                        ?>
                     </td>
                     <td><a href="javascript:void();" onclick="modalPembeli('<?php echo $json[$i]['pembeli_id'] ?>')" style="color:#060" title="Klik Untuk Lebih Lengkap"><u><?php
                                                                                                                                                                             $data_pem = mysqli_fetch_array(mysqli_query($koneksi, "select pembeli.nama_pembeli, pemakai.nama_pemakai from barang_dijual,pembeli,pemakai where pembeli.id=barang_dijual.pembeli_id and pemakai.id=barang_dijual.pemakai_id and barang_dijual.id=" . $json[$i]['idd'] . ""));
@@ -149,7 +150,7 @@ error_reporting(0);
                     <td><?php echo $data_deal['diskon_jual'] . " %"; ?>
                     </td>
                     <td><?php echo $data_deal['ppn_jual'] . " %"; ?><br />
-                        <?php 
+                        <?php
                         $tot_ppn = $json[$i]['include_dpp'] == 1 ? $dpp : $data_deal['total_harga'];
                         echo "(" . number_format(($data_deal['ppn_jual'] / 100) * ($tot_ppn), 2, ',', '.') . ")"; ?>
                     </td>
@@ -170,20 +171,23 @@ error_reporting(0);
                         $fee = ($dpp_m - ($pph_m + $zakat_m + $biaya_bank_m)) * $data_deal['diskon_jual'] / 100;
                         echo number_format($fee, 0, ',', '.'); ?></td>
 
-                    <td align="center"><?php
-                                        $ttl = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim where no_po_jual = '". $json[$i]['no_po_jual'] . "'"));
-                                        $brg_sm = mysqli_fetch_array(mysqli_query($koneksi, "select tgl_sampai from barang_dikirim where barang_dijual_id=" . $data_deal['idd'] . ""));
-                                        if ($ttl['jml'] > 0) {
-                                            if ($brg_sm['tgl_sampai'] != '0000-00-00') {
-                                                echo "<span class='label bg-green'>Sudah Sampai</span><br>";
-                                                echo date("d/m/Y", strtotime($brg_sm['tgl_sampai']));
-                                            } else {
-                                                echo "<span class='label bg-yellow'>Dalam Pengiriman</span>";
-                                            }
-                                        } else {
-                                            echo "<span class='label bg-gray'>Belum Dikirim</span>";
-                                        }
-                                        ?></td>
+                    <td align="center">
+                        <button data-toggle="tooltip" title="Detail" class="btn btn-xs bg-primary" onclick="modalPengiriman('<?php echo $json[$i]['idd']; ?>')"><span class="fa fa-eye"></span></button>
+                        <?php
+                        $ttl = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim where no_po_jual = '" . $json[$i]['no_po_jual'] . "'"));
+                        // $brg_sm = mysqli_fetch_array(mysqli_query($koneksi, "select tgl_sampai from barang_dikirim where barang_dijual_id=" . $data_deal['idd'] . ""));
+                        // if ($ttl['jml'] > 0) {
+                        //     if ($brg_sm['tgl_sampai'] != '0000-00-00') {
+                        //         echo "<span class='label bg-green'>Sudah Sampai</span><br>";
+                        //         echo date("d/m/Y", strtotime($brg_sm['tgl_sampai']));
+                        //     } else {
+                        //         echo "<span class='label bg-yellow'>Dalam Pengiriman</span>";
+                        //     }
+                        // } else {
+                        //     echo "<span class='label bg-gray'>Belum Dikirim</span>";
+                        // }
+                        ?>
+                    </td>
                     <td align="center">
                         <button data-toggle="tooltip" title="Detail" class="btn btn-xs bg-primary" onclick="modalInstalasi('<?php echo $json[$i]['no_po_jual']; ?>')"><span class="fa fa-folder-open"></span></button>
                     </td>
@@ -191,17 +195,18 @@ error_reporting(0);
                         <td align="center">
                             <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator']) or isset($_SESSION['user_admin_keuangan']) && isset($_SESSION['pass_admin_keuangan']) or isset($_SESSION['user_manajer_keuangan']) && isset($_SESSION['pass_manajer_keuangan'])) { ?>
                                 <!--<a href="pages/delete_barang_jual.php?id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;-->
-                                <?php if ($ttl['jml'] == 0) { ?>
-                                    <div class="row">
-                                        <a href="index.php?page=ubah_jual_barang_uang&id=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-warning">
-                                            <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                                        </a>&nbsp;
+                                <div class="row">
+                                    <a href="index.php?page=ubah_jual_barang_uang&id=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-warning">
+                                        <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
+                                    </a>
+                                    <?php if ($ttl['jml'] == 0) { ?>
+                                        &nbsp;
                                         <!-- <a href="index.php?page=jual_barang_uang&id_batal=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Yakin Akan Membatalkan Penjualan Item Ini ? . Proses ini akan berhasil jika bagian gudang belum memilih no seri atau belum ada pembayaran di keuangan !')"> -->
                                         <button class="btn btn-xs btn-danger" onclick="batalkanPenjualan('<?php echo $json[$i]['idd']; ?>')">
                                             <span data-toggle="tooltip" title="Batalkan Penjualan" class="fa fa-close"></span>
                                         </button>
-                                    </div>
-                                <?php } ?>
+                                    <?php } ?>
+                                </div>
                                 <?php } ?><?php if (!isset($_SESSION['user_admin_gudang'])) { ?>
                                 <!-- <a target="blank" href="cetak_faktur_penjualan_uang.php?id=<?php echo $data_deal['idd']; ?>" class="btn btn-xs btn-primary"> -->
                                 <a onclick="modalCetak('<?php echo $data_deal['idd']; ?>')" class="btn btn-xs btn-primary">

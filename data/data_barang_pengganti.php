@@ -44,7 +44,7 @@ error_reporting(0);
                 Ganti</button>&nbsp;
                 <!-- <a href="?page=<?php echo $_GET['page']; ?>&id_hapus=<?php echo $data['idd'] ?>"> -->
                 <a href="javascript:void()" onclick="hapusPengganti('<?php echo $data['idd'] ?>')">
-                <button class="btn btn-xs btn-danger">Hapus</button></a>
+                <button class="btn btn-xs btn-danger">Hapus Pengganti</button></a>
             </td>
         </tr>
         <!--<div class="modal fade" id="modal-pilihnoseri<?php echo $data_akse['idd'] ?>">

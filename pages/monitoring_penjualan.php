@@ -22,7 +22,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Grafik Penjualan Alkes</h3>
                             <div class="box-tools pull-right">
-                                <button class="btn btn-sm btn-primary" onclick="modalFilterPenjualan()"><i class="fa fa-cog"></i> Filter</button>
+                                <button class="btn btn-sm btn-primary" onclick="modalFilterPenjualan(); return false"><i class="fa fa-cog"></i> Filter</button>
                             </div>
                         </div>
                         <div class="box-header no-padding">
@@ -126,13 +126,14 @@
         }
     }
 
-    function modalFilterPenjualan() {
-        $.get("data/modal-monitoring-penjualan.php",
+    async function modalFilterPenjualan() {
+        $('#modal-filter-penjualan').modal('show')
+        loading2('#data-modal-jual')
+        await $.get("data/modal-monitoring-penjualan.php",
             function(data) {
                 $('#data-modal-jual').html(data);
             }
         );
-        $('#modal-filter-penjualan').modal('show')
     }
 
     function loadingLine() {
@@ -149,7 +150,7 @@
         $('#tabelTransaksi').html('<center><div class="overlay"><h1><i class="fa fa-refresh fa-spin"></i></h1></div></center>');
     }
 
-    function setTableTransaksi() {
+    async function setTableTransaksi() {
         loadingTable();
         let alkes = $('#alkes').val();
         let filter = $('#filterRekap').val();
@@ -158,7 +159,7 @@
         let kab = $('#kabupaten1').val();
         let kec = $('#kecamatan1').val();
         let thn = $('#tahun_now1').val();
-        $.get("data/table-transaksi.php", {
+        await $.get("data/table-transaksi.php", {
                 alkes: alkes ? alkes : 'all',
                 filter: filter ? filter : '',
                 pembeli: pembeli ? pembeli : 'all',
@@ -173,8 +174,8 @@
         );
     }
 
-    function setFilter() {
-        $.get("data/filter-monitoring.php", {
+    async function setFilter() {
+        await $.get("data/filter-monitoring.php", {
                 alkes: $('#alkes').val(),
                 pembeli: $('#pembeli').val(),
                 provinsi: $('#provinsi1').val(),

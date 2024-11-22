@@ -57,110 +57,141 @@ header("Content-Disposition: attachment; filename=Rekapan Penjualan _ Marketing 
 
                       <th align="center"><strong>Tanggal Dijual</strong></th>
                       <th align="center">No PO</th>
-                      <th align="center">Nama Barang</th>
-                      <th align="center">Tipe Barang</th>
-                      <th align="center">Merk Barang</th>
-
-                      <th align="center"><strong>Dinas/RS/Puskemas/Klinik<br />(Tempat Tujuan)</strong></th>
+                      <th align="center"><strong>Dinas/RS/Puskemas/Klinik/Dll</strong></th>
                       <th align="center">Provinsi</th>
                       <th align="center">Kabupaten/Kota</th>
                       <th align="center">Kecamatan</th>
                       <th align="center">Kelurahan</th>
-                      <th align="center">Marketing</th>
+                      <th align="center">Jalan</th>
+                      <th align="center">Telp. Dinas/RS/Dll</th>
+                      <th align="center">Pemakai</th>
+                      <th align="center">Email Pemakai</th>
+                      <th align="center">Marketing/PIC</th>
                       <th align="center">SubDis</th>
-                      <th align="center"><strong>Qty</strong></th>
+                      <th align="center">Nama Barang</th>
+                      <th align="center">Tipe Barang</th>
+                      <th align="center">Merk Barang</th>
+                      <th align="center"><strong>Qty | No Seri</strong></th>
                       <th align="center">Harga Satuan</th>
+                      <th align="center">Sub Total</th>
                       <th align="center">Harga Total</th>
                     </tr>
                   </thead>
                   <?php
                   if ($_POST['marketing'] == 'all') {
-                    $query = mysqli_query($koneksi, "select *,barang_dijual.id as idd from barang_dijual, pembeli, alamat_provinsi, alamat_kabupaten, alamat_kecamatan where pembeli.id=barang_dijual.pembeli_id and alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id and year(barang_dijual.tgl_jual)='" . $_POST['tahun'] . "' order by barang_dijual.tgl_jual DESC, barang_dijual.id DESC");
+                    $query = mysqli_query($koneksi, "select *,barang_dijual.id as idd from barang_dijual, pembeli, alamat_provinsi, alamat_kabupaten, alamat_kecamatan, pemakai where pembeli.id=barang_dijual.pembeli_id and alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id and pemakai.id = barang_dijual.pemakai_id and year(barang_dijual.tgl_jual)='" . $_POST['tahun'] . "' order by barang_dijual.tgl_jual DESC, barang_dijual.id DESC");
                   } else {
-                    $query = mysqli_query($koneksi, "select *,barang_dijual.id as idd from barang_dijual, pembeli, alamat_provinsi, alamat_kabupaten, alamat_kecamatan where pembeli.id=barang_dijual.pembeli_id and alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id and barang_dijual.marketing='" . $_POST['marketing'] . "' and year(barang_dijual.tgl_jual)='$_POST[tahun]' order by barang_dijual.tgl_jual DESC");
+                    $query = mysqli_query($koneksi, "select *,barang_dijual.id as idd from barang_dijual, pembeli, alamat_provinsi, alamat_kabupaten, alamat_kecamatan, pemakai where pembeli.id=barang_dijual.pembeli_id and alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id and pemakai.id = barang_dijual.pemakai_id and barang_dijual.marketing='" . $_POST['marketing'] . "' and year(barang_dijual.tgl_jual)='$_POST[tahun]' order by barang_dijual.tgl_jual DESC");
                   }
                   $no = 0;
                   while ($data = mysqli_fetch_array($query)) {
                     $no++;
                   ?>
                     <tr>
-                      <td align="center"><?php echo $no; ?></td>
-                      <td>
+                      <td align="center" valign="top"><?php echo $no; ?></td>
+                      <td align="center" valign="top">
                         <?php echo date("d F Y", strtotime($data['tgl_jual']));
                         ?>
                       </td>
-                      <td><?php echo $data['no_po_jual']; ?></td>
-                      <td>
+                      <td align="center" valign="top"><?php echo $data['no_po_jual']; ?></td>
+                      <td valign="top"><?php echo $data['nama_pembeli']; ?></td>
+                      <td valign="top"><?php echo $data['nama_provinsi']; ?></td>
+                      <td valign="top"><?php echo $data['nama_kabupaten']; ?></td>
+                      <td valign="top"><?php echo $data['nama_kecamatan']; ?></td>
+                      <td valign="top"><?php echo $data['kelurahan_id']; ?></td>
+                      <td valign="top"><?php echo $data['jalan']; ?></td>
+                      <td valign="top"><?php echo $data['kontak_rs']; ?></td>
+                      <td valign="top"><?php echo $data['nama_pemakai']; ?></td>
+                      <td valign="top"><?php echo $data['email_pemakai']; ?></td>
+                      <td valign="top" align="center"><?php echo $data['marketing']; ?></td>
+                      <td valign="top" align="center"><?php echo $data['subdis']; ?></td>
+                      <td valign="top">
                         <table width="100%" border="1">
                           <?php
                           $brg = mysqli_query($koneksi, "select nama_brg from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $data['idd'] . " order by nama_brg ASC");
                           while ($d_brg = mysqli_fetch_array($brg)) {
                           ?>
                             <tr>
-                              <td><?php echo $d_brg['nama_brg'] ?></td>
+                              <td valign="top"><?php echo $d_brg['nama_brg'] ?></td>
                             </tr>
                           <?php } ?>
                         </table>
                       </td>
-                      <td>
+                      <td valign="top">
                         <table width="100%" border="1">
                           <?php
                           $brg2 = mysqli_query($koneksi, "select tipe_brg from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $data['idd'] . " order by nama_brg ASC");
                           while ($d_tipe = mysqli_fetch_array($brg2)) {
                           ?>
                             <tr>
-                              <td><?php echo $d_tipe['tipe_brg'] ?></td>
+                              <td valign="top"><?php echo $d_tipe['tipe_brg'] ?></td>
                             </tr>
                           <?php } ?>
                         </table>
                       </td>
-                      <td>
+                      <td valign="top">
                         <table width="100%" border="1">
                           <?php
                           $brg3 = mysqli_query($koneksi, "select merk_brg from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $data['idd'] . " order by nama_brg ASC");
                           while ($d_merk = mysqli_fetch_array($brg3)) {
                           ?>
                             <tr>
-                              <td><?php echo $d_merk['merk_brg'] ?></td>
+                              <td valign="top"><?php echo $d_merk['merk_brg'] ?></td>
                             </tr>
                           <?php } ?>
                         </table>
                       </td>
-
-                      <td><?php echo $data['nama_pembeli']; ?></td>
-                      <td><?php echo $data['nama_provinsi']; ?></td>
-                      <td><?php echo $data['nama_kabupaten']; ?></td>
-                      <td><?php echo $data['nama_kecamatan']; ?></td>
-                      <td><?php echo $data['kelurahan_id']; ?></td>
-                      <td align="center"><?php echo $data['marketing']; ?></td>
-                      <td align="center"><?php echo $data['subdis']; ?></td>
-                      <td align="center">
+                      <td align="center" valign="top">
                         <table width="100%" border="1">
                           <?php
-                          $qty = mysqli_query($koneksi, "select qty_jual from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $data['idd'] . " order by nama_brg ASC");
+                          $qty = mysqli_query($koneksi, "select barang_dijual_qty.id as idd, qty_jual from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $data['idd'] . " order by nama_brg ASC");
                           while ($d_brg = mysqli_fetch_array($qty)) {
                           ?>
                             <tr>
-                              <td><?php echo $d_brg['qty_jual'] ?></td>
+                              <td valign="top" align="center"><?php echo $d_brg['qty_jual'] ?></td>
+                              <td>
+                                <table width="100%" border="1">
+                                  <?php
+                                  $no_seri = mysqli_query($koneksi, "select no_seri_brg from barang_dikirim_detail, barang_gudang_detail where barang_gudang_detail.id = barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty_id=" . $d_brg['idd'] . " order by no_seri_brg ASC");
+                                  while ($dd = mysqli_fetch_array($no_seri)) {
+                                  ?>
+                                    <tr>
+                                      <td valign="top"><?php echo $dd['no_seri_brg'] ?></td>
+                                    </tr>
+                                  <?php } ?>
+                                </table>
+                              </td>
                             </tr>
                           <?php } ?>
                         </table>
                       </td>
-                      <td align="right">
+                      <td align="right" valign="top">
                         <table width="100%" border="1">
                           <?php
                           $harga_jual = mysqli_query($koneksi, "select harga_jual_saat_itu from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $data['idd'] . " order by nama_brg ASC");
                           while ($d_brg = mysqli_fetch_array($harga_jual)) {
                           ?>
                             <tr>
-                              <td><?php echo $d_brg['harga_jual_saat_itu'] ?></td>
+                              <td valign="top"><?php echo $d_brg['harga_jual_saat_itu'] ?></td>
                             </tr>
                           <?php } ?>
                         </table>
                       </td>
-                      <td align="right">
+                      <td align="right" valign="top">
+                        <table width="100%" border="1">
+                          <?php
+                          $sub_total = mysqli_query($koneksi, "select (qty_jual*harga_jual_saat_itu) as sub_total from barang_gudang,barang_dijual_qty where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual_id=" . $data['idd'] . " order by nama_brg ASC");
+                          while ($d_brg = mysqli_fetch_array($sub_total)) {
+                          ?>
+                            <tr>
+                              <td valign="top"><?php echo $d_brg['sub_total'] ?></td>
+                            </tr>
+                          <?php } ?>
+                        </table>
+                      </td>
+                      <td align="right" valign="top">
                         <?php
-                        $q_total = mysqli_fetch_array(mysqli_query($koneksi, "select (qty_jual*harga_jual_saat_itu) as total from barang_dijual_qty where barang_dijual_id = " . $data['idd'] . ""));
+                        $q_total = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as total from barang_dijual_qty where barang_dijual_id = " . $data['idd'] . ""));
                         echo $q_total['total'];
                         ?>
                       </td>

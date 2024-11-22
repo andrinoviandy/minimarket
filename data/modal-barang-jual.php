@@ -11,6 +11,7 @@ error_reporting(0);
                 <th>No</th>
                 <th>Kategori</th>
                 <th>Nama Barang</th>
+                <th>Nomor Izin Edar</th>
                 <th>Tipe Barang</th>
                 <th>Kuantitas</th>
             </tr>
@@ -40,6 +41,7 @@ error_reporting(0);
                         <font class="pull pull-right" size="+1">Kembali Ke Gudang</font>
                     <?php } ?>
                 </td>
+                <td><?php echo $d1['nie_brg']; ?></td>
                 <td><?php echo $d1['tipe_brg']; ?></td>
                 <td><?php echo $d1['qty_jual']; ?></td>
             </tr>

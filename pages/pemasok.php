@@ -96,7 +96,7 @@ if (isset($_GET['id_hapus'])) {
   <?php
  
 // membuka file JSON
-$file = file_get_contents("http://localhost/ALKES/json/pemasok.php");
+$file = file_get_contents("http://localhost/ALKES_2/json/pemasok.php");
 $json = json_decode($file, true);
 $jml=count($json); 
 for ($i=0; $i<$jml; $i++) {

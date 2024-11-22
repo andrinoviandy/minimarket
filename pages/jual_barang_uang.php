@@ -209,7 +209,7 @@ if (isset($_POST['pos'])) {
 </div>
 
 <div class="modal fade" id="modal-barang">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -271,6 +271,26 @@ if (isset($_POST['pos'])) {
 
         </div>
       </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-pengiriman">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Status Pengiriman</h4>
+      </div>
+      <div class="modal-body">
+        <div id="modal-data-pengiriman"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+      </div>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -382,11 +402,24 @@ if (isset($_POST['pos'])) {
 
   function modalInstalasi(no_po) {
     $('#modal-instalasi').modal('show');
+    loading2('#modal-data-instalasi');
     $.get("data/modal-instalasi-jual.php", {
         no_po_jual: no_po
       },
       function(data) {
         $('#modal-data-instalasi').html(data)
+      }
+    );
+  }
+
+  function modalPengiriman(id) {
+    $('#modal-pengiriman').modal('show');
+    loading2('#modal-data-pengiriman');
+    $.get("data/modal-pengiriman-jual.php", {
+        barang_dijual_id: id
+      },
+      function(data) {
+        $('#modal-data-pengiriman').html(data)
       }
     );
   }

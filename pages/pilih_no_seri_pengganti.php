@@ -1,35 +1,8 @@
 <?php
 $nopo = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dikirim where id=" . $_SESSION['no_po'] . ""));
-if (isset($_GET['simpan_barang']) == 1) {
-  $cek4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail_pengganti_hash where akun_id=" . $_SESSION['id'] . ""));
-  if ($cek4 != 0) {
-    $s1 = mysqli_query($koneksi, "insert into barang_dikirim values('','" . $nopo['barang_dijual_id'] . "','" . $_SESSION['nama_paket'] . "','" . $_SESSION['no_pengiriman'] . "','" . $_SESSION['tgl_pengiriman'] . "','" . $nopo['no_po_jual'] . "','" . $_SESSION['ekspedisi'] . "','" . $_SESSION['via_pengiriman'] . "','" . $_SESSION['estimasi'] . "','" . $_SESSION['biaya_pengiriman'] . "','','','1')");
-    if ($s1) {
-      $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_max from barang_dikirim"));
-      $q = mysqli_query($koneksi, "select * from barang_dikirim_detail_pengganti_hash where akun_id=" . $_SESSION['id'] . "");
-      while ($d = mysqli_fetch_array($q)) {
-        $s = mysqli_query($koneksi, "insert into barang_dikirim_detail values('','" . $max['id_max'] . "','" . $d['barang_dijual_qty_id'] . "','" . $d['jml_kirim'] . "', '" . $d['kategori_brg'] . "','" . $d['barang_gudang_set_id'] . "', '" . $d['barang_gudang_satuan_id'] . "', '" . $d['barang_gudang_akse_id'] . "','" . $d['barang_gudang_detail_id'] . "','0','0')");
-        $up_stok = mysqli_query($koneksi, "update barang_gudang,barang_gudang_detail set stok_total=stok_total-1 where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=" . $d['barang_gudang_detail_id'] . "");
-        $up_status = mysqli_query($koneksi, "update barang_gudang_detail set status_kirim=1 where id=" . $d['barang_gudang_detail_id'] . "");
-      }
-      if ($s1 and $s and $up_stok and $up_status) {
-        //$Result = mysqli_query($koneksi, "insert into utang_piutang values('','Hutang','".$_SESSION['no_po']."','".$_POST['tgl_input']."','".$_POST['jatuh_tempo']."','".$_POST['nominal']."','".$_POST['klien']."','".$_POST['deskripsi']."','0')");
-        mysqli_query($koneksi, "delete from barang_dikirim_detail_pengganti_hash where akun_id=" . $_SESSION['id'] . "");
-        echo "<script>
-		alert('Berhasil disimpan !');
-		window.location='index.php?page=kirim_barang'</script>";
-      }
-    } else {
-      echo "<script>
-		alert('Gagal disimpan ! Hindari Penggunaan Tanda Petik (')');
-		window.location='index.php?page=pilih_no_seri_pengganti'</script>";
-    }
-  } else {
-    echo "<script>
-		alert('Data Belum Diisi !');
-		window.location='index.php?page=pilih_no_seri_pengganti'</script>";
-  }
-}
+// if (isset($_GET['simpan_barang']) == 1) {
+
+// }
 
 
 // if (isset($_POST['simpan_tambah_aksesoris'])) {
@@ -147,7 +120,12 @@ if (isset($_GET['simpan_barang']) == 1) {
                     <div id="data-pengganti"></div>
                   </div>
                 </div>
-                <center><a href="index.php?page=pilih_no_seri_pengganti&simpan_barang=1"><button name="simpan_barang" class="btn btn-warning" type="button"><span class="fa fa-check"></span> Simpan & Kirim Barang</button></a>&nbsp;&nbsp;<a href="index.php?page=kirim_barang"><button name="simpan_barang" class="btn btn-success" type="button"><span class="fa fa-close"></span> Kembali</button></a></center>
+                <center>
+                  <!-- <a href="index.php?page=pilih_no_seri_pengganti&simpan_barang=1"> -->
+                  <a href="javascript:void()" onclick="simpanBarangPengganti(); return false;">
+                    <button name="simpan_barang" class="btn btn-warning" type="button"><span class="fa fa-check"></span> Simpan & Kirim Barang</button></a>&nbsp;&nbsp;<a href="index.php?page=kirim_barang"><button name="simpan_barang" class="btn btn-success" type="button"><span class="fa fa-close"></span> Kembali</button>
+                  </a>
+                </center>
                 <!--
 <center><a href="index.php?page=simpan_jual_alkes2&simpan_barang=1"><button name="simpan_barang" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button></a>&nbsp;&nbsp;<a href="index.php?page=jual_barang"><button name="batal" class="btn btn-success" type="submit"><span class="fa  fa-times-circle"></span> Batal</button></a></center>
 -->
@@ -203,6 +181,37 @@ if (isset($_GET['simpan_barang']) == 1) {
   <!-- /.modal-dialog -->
 </div>
 <script>
+  function simpanBarangPengganti() {
+    showLoading(1)
+    $.post("data/simpan-barang-pengganti.php",
+      function(data, textStatus, jqXHR) {
+        showLoading(0)
+        if (data === 'S') {
+          Swal.fire({
+            customClass: {
+              confirmButton: 'bg-green',
+              cancelButton: 'bg-white',
+            },
+            title: 'Suksess !',
+            text: 'Data Berhasil Disimpan',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonText: 'OK',
+            allowOutsideClick: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.href = 'index.php?page=kirim_barang'
+            }
+          })
+        } else if (data === 'KOSONG') {
+          alertCustom('F', 'Gagal !', 'Data Masih Kosong !')
+        } else {
+          alertSimpan('F')
+        }
+      }
+    );
+  }
+
   function UbahNoSeriPengganti() {
     var dataform = $('#formData')[0];
     var data = new FormData(dataform);
@@ -227,13 +236,16 @@ if (isset($_GET['simpan_barang']) == 1) {
   }
 
   function showModal(id) {
-    $.get("data/ubah_no_seri_pengganti.php", {id: id},
-      function (data) {
+    $.get("data/ubah_no_seri_pengganti.php", {
+        id: id
+      },
+      function(data) {
         $('#ubah_no_seri_pengganti').html(data);
         $('#modal-ubahnoseri').modal('show')
       }
     );
   }
+
   function hapusPengganti(id_hapus) {
     Swal.fire({
       customClass: {
@@ -263,6 +275,7 @@ if (isset($_GET['simpan_barang']) == 1) {
       }
     })
   }
+
   function getDataPengganti() {
     // loading_data('#data-detail-kirim');
     $.get("data/data_barang_pengganti.php", {

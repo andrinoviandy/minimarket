@@ -83,10 +83,12 @@ if (isset($_GET['id_hapus'])) {
 
 if (isset($_POST['simpan_perubahan'])) {
   $ppn = $_POST['ppn'] / 100;
+  $sel = mysqli_fetch_array(mysqli_query($koneksi, "select no_po_pesan from barang_pesan where id = ".$_GET['id'].""));
   $up_uang = mysqli_query($koneksi, "update utang_piutang set no_faktur_no_po='" . $_POST['no_po'] . "' where no_faktur_no_po='" . $data['no_po_pesan'] . "'");
   $Result = mysqli_query($koneksi, "update barang_pesan set tgl_po_pesan='" . $_POST['tgl_po'] . "',no_po_pesan='" . $_POST['no_po'] . "',ppn='" . $_POST['ppn'] . "',cara_pembayaran='" . $_POST['cara_pembayaran'] . "',mata_uang_id='" . $_POST['mata_uang'] . "',alamat_pengiriman='" . str_replace("\n", "<br>", $_POST['alamat_pengiriman']) . "',jalur_pengiriman='" . $_POST['jalur_pengiriman'] . "',estimasi_pengiriman='" . $_POST['estimasi_pengiriman'] . "', catatan='" . $_POST['catatan'] . "' where id=" . $_GET['id'] . "");
   if ($Result) {
     mysqli_query($koneksi, "update barang_pesan_detail set mata_uang_id=" . $_POST['mata_uang'] . " where barang_pesan_id=" . $_GET['id'] . "");
+    mysqli_query($koneksi, "update barang_gudang_po set no_po_gudang=" . $_POST['no_po'] . " where no_po_gudang=" . $sel['no_po_pesan'] . "");
     echo "<script>
       Swal.fire({
         customClass: {
