@@ -48,7 +48,7 @@ error_reporting(0);
                                 </td>
                                 <td style="padding: 3px">
                                     <?php
-                                    if ($d2['tgl_expired'] != '0000-00-00' || $d2['tgl_expired'] != null) {
+                                    if ($d2['tgl_expired'] !== '0000-00-00') {
                                         echo date("d/M/Y", strtotime($d2['tgl_expired']));
                                     }
                                     ?>
