@@ -220,7 +220,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         </tr>
         <tr>
           <td align="center">
-            <hr>Habib Nurrohman
+            <hr>Prasetyo Kristiadi
           </td>
           <td>&nbsp;</td>
           <td>
@@ -247,7 +247,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td align="center">Prasetyo Kristiadi</td>
+          <td align="center">Puji Astutik</td>
           <td>&nbsp;</td>
         </tr>
       </table>

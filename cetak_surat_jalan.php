@@ -375,7 +375,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         </tr>
         <tr>
           <td align="center">
-            <hr>Habib Nurrohman
+            <hr>Prasetyo Kristiadi
           </td>
           <td>&nbsp;</td>
           <td>
@@ -402,7 +402,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td align="center">Prasetyo Kristiadi</td>
+          <td align="center">Puji Astutik</td>
           <td>&nbsp;</td>
         </tr>
       </table>

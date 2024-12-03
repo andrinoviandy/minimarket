@@ -183,7 +183,7 @@ body {
     </td>
   </tr>
   <tr>
-    <td align="center"><hr>Habib Nurrohman</td>
+    <td align="center"><hr>Prasetyo Kristiadi</td>
     <td>&nbsp;</td>
     <td><hr></td>
   </tr>
@@ -203,7 +203,7 @@ body {
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td align="center">Prasetyo Kristiadi</td>
+    <td align="center">Puji Astutik</td>
     <td>&nbsp;</td>
   </tr>
 </table>

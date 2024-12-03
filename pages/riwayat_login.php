@@ -1,15 +1,3 @@
-<?php
-if (isset($_GET['id_hapus'])) {
-  $delete = mysqli_query($koneksi, "delete from mata_uang where id=" . $_GET['id_hapus'] . "");
-  if ($delete) {
-    echo "<script>window.location='index.php?page=mata_uang'</script>";
-  } else {
-    echo "<script type='text/javascript'>alert('Tidak Dapat Dihapus !');
-		window.location='index.php?page=mata_uang';
-		</script>";
-  }
-}
-?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -32,6 +20,33 @@ if (isset($_GET['id_hapus'])) {
     <!-- Main row -->
     <div class="row">
       <!-- Left col -->
+      <section class="col-lg-12">
+        <!-- Custom tabs (Charts with tabs)-->
+        <!-- /.nav-tabs-custom -->
+
+        <!-- Chat box -->
+        <div class="box box-default">
+          <!-- /.chat -->
+          <div class="box-footer">
+            <div class="box-body">
+              <div class="">
+                <div class="pull pull-right">
+                  <?php //include "include/getFilter.php"; 
+                  ?>
+                  <?php include "include/atur_halaman.php"; ?>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box (chat box) -->
+
+        <!-- TO DO List -->
+        <!-- /.box -->
+
+        <!-- quick email widget -->
+      </section>
+      <?php include "include/header_pencarian.php"; ?>
       <section class="col-lg-12 connectedSortable">
         <!-- Custom tabs (Charts with tabs)-->
         <!-- /.nav-tabs-custom -->
@@ -39,16 +54,20 @@ if (isset($_GET['id_hapus'])) {
         <!-- Chat box -->
         <div class="box box-success">
           <div class="box-footer">
-            <div class="box-body table-responsive no-padding">
+            <div class="box-body">
               <div class="">
-                <div class="row">
-                  <div class="col-md-4 pull-right">
-                    <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Enter the keyword you want to search..." />
-                  </div>
-                </div>
+                <?php include "include/getInputSearch.php"; ?>
                 <div id="table" style="margin-top: 10px;">
                 </div>
-
+                <section class="col-lg-12">
+                  <center>
+                    <ul class="pagination">
+                      <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
+                      <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
+                    </ul>
+                    <?php include "include/getInfoPagingData.php"; ?>
+                  </center>
+                </section>
               </div>
             </div>
             <!-- /.box (chat box) -->

@@ -61,15 +61,31 @@ if (isset($_GET['id_keuangan'])) {
 	if (isset($_GET['start'])) {
 		if (isset($_GET['tgl1']) and isset($_GET['tgl2'])) {
 			if (isset($_GET['id'])) {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=$_GET[id] and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				if (isset($_GET['cari'])) {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=$_GET[id] and (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				} else {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=$_GET[id] and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				}
 			} else {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain where tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				if (isset($_GET['cari'])) {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain where (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				} else {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain where tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				}
 			}
 		} else {
 			if (isset($_GET['id'])) {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=" . $_GET['id'] . " order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				if (isset($_GET['cari'])) {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=" . $_GET['id'] . " and (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				} else {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=" . $_GET['id'] . " order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				}
 			} else {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				if (isset($_GET['cari'])) {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain where (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				} else {
+					$sql = "select *,biaya_lain.id as idd from biaya_lain order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				}
 			}
 		}
 		$result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
@@ -86,15 +102,31 @@ if (isset($_GET['id_keuangan'])) {
 		// untuk jumlah
 		if (isset($_GET['tgl1']) and isset($_GET['tgl2'])) {
 			if (isset($_GET['id'])) {
-				$sql = "select COUNT(*) as jml from biaya_lain where buku_kas_id=$_GET[id] and tgl between '$_GET[tgl1]' and '$_GET[tgl2]'";
+				if (isset($_GET['cari'])) {
+					$sql = "select COUNT(*) as jml from biaya_lain where buku_kas_id=$_GET[id] and tgl between '$_GET[tgl1]' and '$_GET[tgl2]'";
+				} else {
+					$sql = "select COUNT(*) as jml from biaya_lain where buku_kas_id=$_GET[id] and tgl between '$_GET[tgl1]' and '$_GET[tgl2]'";
+				}
 			} else {
-				$sql = "select COUNT(*) as jml from biaya_lain where tgl between '$_GET[tgl1]' and '$_GET[tgl2]'";
+				if (isset($_GET['cari'])) {
+					$sql = "select COUNT(*) as jml from biaya_lain where tgl between '$_GET[tgl1]' and '$_GET[tgl2]'";
+				} else {
+					$sql = "select COUNT(*) as jml from biaya_lain where tgl between '$_GET[tgl1]' and '$_GET[tgl2]'";
+				}
 			}
 		} else {
 			if (isset($_GET['id'])) {
-				$sql = "select COUNT(*) as jml from biaya_lain where buku_kas_id=" . $_GET['id'] . "";
+				if (isset($_GET['cari'])) {
+					$sql = "select COUNT(*) as jml from biaya_lain where buku_kas_id=" . $_GET['id'] . "";
+				} else {
+					$sql = "select COUNT(*) as jml from biaya_lain where buku_kas_id=" . $_GET['id'] . "";
+				}
 			} else {
-				$sql = "select COUNT(*) as jml from biaya_lain";
+				if (isset($_GET['cari'])) {
+					$sql = "select COUNT(*) as jml from biaya_lain";
+				} else {
+					$sql = "select COUNT(*) as jml from biaya_lain";
+				}
 			}
 		}
 		$result = mysqli_fetch_array(mysqli_query($koneksi, $sql));

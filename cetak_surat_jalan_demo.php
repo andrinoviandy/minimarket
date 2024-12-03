@@ -150,7 +150,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_demo_kirim.id
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td align="center">Prasetyo Kristiadi</td>
+    <td align="center">Puji Astutik</td>
     <td>&nbsp;</td>
   </tr>
 </table>

@@ -1,65 +1,103 @@
-<?php include("../config/koneksi.php"); ?>
-<table width="100%" id="" class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <td align="center"><strong>No</strong></td>
-      <td><strong>Username<span class="active"></span></strong></td>
-      <td><strong>Tgl Jam Masuk</strong></td>
-      <td><strong>Tgl Jam Keluar</strong></td>
-      <td><strong>Aktifitas</strong></td>
-    </tr>
-  </thead>
+<?php
+include("../config/koneksi.php");
+include("../include/API.php");
+session_start();
+error_reporting(0);
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+
+</head>
+
+<body>
   <?php
-  $start = mysqli_real_escape_string($koneksi, $_GET['start']);
-  
+  $start = $_GET['start'];
+
   if (isset($_GET['cari'])) {
-    $search = $_GET['cari'];
-    $jml = mysqli_num_rows(mysqli_query($koneksi, "select * from riwayat_admin where username LIKE '%$search%' order by tgl_jam_masuk DESC, id DESC"));
-    $query = mysqli_query($koneksi, "select * from riwayat_admin where username LIKE '%$search%' order by tgl_jam_masuk DESC, id DESC limit $start");
+    $search = str_replace(" ", "%20", $_GET['cari']);
+    $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "");
+    $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "");
   } else {
-    $jml = mysqli_num_rows(mysqli_query($koneksi, "select * from riwayat_admin order by tgl_jam_masuk DESC, id DESC"));
-    $query = mysqli_query($koneksi, "select * from riwayat_admin order by tgl_jam_masuk DESC, id DESC limit $start");
+    $file = file_get_contents($API . "json/$_GET[page].php?start=$start");
+    $file2 = file_get_contents($API . "json/$_GET[page].php");
   }
-  $no = 0;
-  while ($data = mysqli_fetch_assoc($query)) {
-    $no++;
+  $json = json_decode($file, true);
+  $jml = count($json);
+
+  $json2 = json_decode($file2, true);
+  $jml2 = $file2;
+
   ?>
-    <tr>
-      <td align="center"><?php echo $no; ?></td>
-      <td><?php echo $data['username']; ?></td>
-      <td><?php echo date("d-m-Y", strtotime($data['tgl_jam_masuk'])) . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . date("H:i:s", strtotime($data['tgl_jam_masuk'])); ?></td>
-      <td><?php
-          if ($data['tgl_jam_keluar'] != '0000-00-00 00:00:00') {
-            echo date("d-m-Y H:i:s", strtotime($data['tgl_jam_keluar']));
-          } else {
-            echo "Belum Logout";
-          } ?>
-      </td>
-      <td>
-      <a onclick="alert('Sedang dalam pengerjaan')"><small data-toggle="tooltip" title="Aktifitas" class="label bg-primary"><span class="fa fa-folder-open"></span>
-        </small>
-      </a>
-      </td>
-    </tr>
-  <?php } ?>
-  <?php
-  if ($start <= $jml) {
-  ?>
-    <tr>
-      <td colspan="5">
-        <center>
-          <img src="loaderr.gif" width="5%" id="loader" style="z-index : -1 ;" />
-        </center>
-      </td>
-    </tr>
-  <?php } ?>
-  <thead>
-    <tr>
-      <td colspan="5" align="right">
-        <?php
-        echo "<b>Data Found : " . $jml . "</b>";
-        ?>
-      </td>
-    </tr>
-  </thead>
-</table>
+  <div>
+    <em><?php echo "Jumlah Data Yang Ditemukan : " . $jml2 ?></em>
+  </div>
+  <div class="table-responsive">
+    <table width="100%" id="example1" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th align="center">No</th>
+          <th valign="top"><strong>Username</strong></th>
+          <th valign="top"><strong>Tanggal Masuk</strong></th>
+          <th valign="top"><strong>Tanggal Keluar</strong></th>
+          <th valign="top">Aktifitas</th>
+        </tr>
+      </thead>
+      <?php
+      // membuka file JSON
+      // $file = file_get_contents("http://localhost/ALKES/json/pembeli.php");
+      // $json = json_decode($file, true);
+      // $jml = count($json);
+      for ($i = 0; $i < $jml; $i++) {
+        //echo "Nama Barang ke-".$i." : " . $json[$i]['nama_brg'] . "<br />";
+        //echo 'Nama Anggota ke-3 : ' . $json['2']['nama_brg'];
+      ?>
+        <tr>
+          <td align="center"><?php echo $start += 1; ?></td>
+
+          <td>
+            <?php echo $json[$i]['username']; ?>
+          </td>
+          <td>
+            <?php
+            if ($json[$i]['tgl_jam_masuk'] != '0000-00-00 00:00:00') {
+              echo date("d-m-Y H:i:s", strtotime($json[$i]['tgl_jam_masuk']));
+            } else {
+              echo "-";
+            }
+            ?>
+          </td>
+          <td>
+            <?php
+            if ($json[$i]['tgl_jam_keluar'] != '0000-00-00 00:00:00') {
+              echo date("d-m-Y H:i:s", strtotime($json[$i]['tgl_jam_keluar']));
+            } else {
+              echo "-";
+            }
+            ?>
+          </td>
+          <td align="">
+            <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['user_admin_gudang']) or isset($_SESSION['user_admin_keuangan'])) { ?>
+              <!-- <a href="index.php?page=ubah_pembeli&nama_pembeli=<?php echo $json[$i]['nama_pembeli']; ?>"> -->
+                <button class="btn btn-xs btn-info">
+                  <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
+                </button>
+              <!-- </a> -->
+              <!--<a href="index.php?page=barang_masuk&id=<?php //echo $json[$i]['idd']; 
+                                                          ?>#openPilihan"><small data-toggle="tooltip" title="Jual Alkes" class="label bg-blue">Jual</small></a>-->
+            <?php } ?>
+          </td>
+
+        </tr>
+      <?php } ?>
+    </table>
+  </div>
+
+</body>
+
+</html>
