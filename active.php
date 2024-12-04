@@ -731,7 +731,11 @@ if (isset($_GET['page'])) {
 		$bagian_teknisi = "active";
 	} else if ($_GET['page'] == 'penyebaran_alkes') {
 		$act_penyebaran_alkes = "active";
-		$act2 = "active";
+		// $act2 = "active";
+		$gudang = "active";
+	} else if ($_GET['page'] == 'grafik_in_out') {
+		$grafik_in_out = "active";
+		// $act2 = "active";
 		$gudang = "active";
 	} else if ($_GET['page'] == 'deposit_ke_gudang') {
 		$act_deposit = "active";

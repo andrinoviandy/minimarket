@@ -367,6 +367,14 @@
 
             </ul>
           </li>
+          <li class="<?php echo $grafik_in_out; ?>">
+            <a href="index.php?page=grafik_in_out">
+              <i class="fa fa-bar-chart"></i> <span>Grafik IN/OUT Barang</span>
+              <span class="pull-right-container">
+
+              </span>
+            </a>
+          </li>
           <li class="<?php echo $migrasi_stok; ?>">
             <a href="index.php?page=migrasi_stok">
               <i class="fa fa-share"></i> <span>Migrasi Stok</span>
