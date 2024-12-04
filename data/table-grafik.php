@@ -5,7 +5,7 @@ session_start();
 // error_reporting(0);
 ?>
 <div class="table-responsive no-padding">
-    <table class="table table-hover table-bordered" id="example3">
+    <table class="table table-hover table-bordered" id="example6">
         <thead>
             <tr>
                 <!-- <th class="bg-info">RS/Dinas/Dll</th>
@@ -107,6 +107,93 @@ from dual";
                 <td class="bg-info"><?php echo $data['okt_in']; ?></td>
                 <td class="bg-info"><?php echo $data['nov_in']; ?></td>
                 <td class="bg-info"><?php echo $data['des_in']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <?php if (($data['jan_in'] - $data['jan_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['feb_in'] - $data['feb_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['mar_in'] - $data['mar_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['apr_in'] - $data['apr_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['mei_in'] - $data['mei_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['jun_in'] - $data['jun_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['jul_in'] - $data['jul_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['agu_in'] - $data['agu_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['sep_in'] - $data['sep_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['okt_in'] - $data['okt_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['nov_in'] - $data['nov_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if (($data['des_in'] - $data['des_out']) < 0) { ?>
+                        <span class="fa fa-arrow-up" style="color: green;"></span>
+                    <?php } else { ?>
+                        <span class="fa fa-arrow-down" style="color: red"></span>
+                    <?php } ?>
+                </td>
             </tr>
             <tr>
                 <td style="background-color: rgba(60,141,188,0.9);">OUT</td>
