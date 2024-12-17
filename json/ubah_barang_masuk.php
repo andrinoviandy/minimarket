@@ -21,9 +21,9 @@ if (isset($_GET['start'])) {
 		}
 	} else if ($_GET['status'] == 'Terjual') {
 		if (isset($_GET['cari'])) {
-			$sql = "select *,barang_gudang_detail.id as idd,barang_gudang_po.id as id_po,barang_gudang_po.stok as stok_masuk from barang_gudang_detail,barang_gudang_po,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_po.id=barang_gudang_detail.barang_gudang_po_id and status_kirim!=0 and barang_gudang_detail.barang_gudang_id=" . $_GET['id'] . " and (no_po_gudang like '%$_GET[cari]%' or no_lot like '%$_GET[cari]%' or no_seri_brg like '%$_GET[cari]%' or DATE_FORMAT(tgl_po_gudang, '%d-%m-%Y') like '%$_GET[cari]%' or qrcode like '%$_GET[cari]%') order by no_po_gudang DESC LIMIT $start, $limit";
+			$sql = "select *,barang_gudang_detail.id as idd,barang_gudang_po.id as id_po,barang_gudang_po.stok as stok_masuk from barang_gudang_detail,barang_gudang_po,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_po.id=barang_gudang_detail.barang_gudang_po_id and status_kirim!=0 and barang_gudang_detail.barang_gudang_id=" . $_GET['id'] . " and (no_po_gudang like '%$_GET[cari]%' or no_lot like '%$_GET[cari]%' or no_seri_brg like '%$_GET[cari]%' or DATE_FORMAT(tgl_po_gudang, '%d-%m-%Y') like '%$_GET[cari]%' or qrcode like '%$_GET[cari]%') order by tgl_po_gudang DESC LIMIT $start, $limit";
 		} else {
-			$sql = "select *,barang_gudang_detail.id as idd,barang_gudang_po.id as id_po,barang_gudang_po.stok as stok_masuk from barang_gudang_detail,barang_gudang_po,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_po.id=barang_gudang_detail.barang_gudang_po_id and status_kirim!=0 and barang_gudang_detail.barang_gudang_id=" . $_GET['id'] . " order by no_po_gudang DESC LIMIT $start, $limit";
+			$sql = "select *,barang_gudang_detail.id as idd,barang_gudang_po.id as id_po,barang_gudang_po.stok as stok_masuk from barang_gudang_detail,barang_gudang_po,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_po.id=barang_gudang_detail.barang_gudang_po_id and status_kirim!=0 and barang_gudang_detail.barang_gudang_id=" . $_GET['id'] . " order by tgl_po_gudang DESC LIMIT $start, $limit";
 		}
 	} else if ($_GET['status'] == 'Rusak') {
 		if (isset($_GET['cari'])) {

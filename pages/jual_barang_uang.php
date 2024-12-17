@@ -208,9 +208,9 @@ if (isset($_POST['pos'])) {
   <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="modal-barang">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+<div class="modal fade" id="modal-barang" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" style="max-width: 90%; width: 90%;">
+    <div class="modal-content overflow-auto" style="min-height: 90vh; height: 100%;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>

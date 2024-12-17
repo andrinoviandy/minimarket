@@ -226,7 +226,7 @@
     // $.post("cetak_laporan_penjualan_alkes.php",
     //   function(data) {
     window.location.href = 'cetak_laporan_pembelian_alkes.php?tgl1=' + tgl1 + '&tgl2=' + tgl2 + '&jenis_po=2';
-    
+
     //   }
     // );
   }
@@ -283,6 +283,7 @@
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('DELETE', 'barang_dipesan', id, 'Menghapus Pemesanan Luar Negeri')
               alertHapus('S');
               loadMore(load_flag, key, status_b);
             } else {
@@ -313,6 +314,7 @@
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('UPDATE', 'barang_dipesan', id, 'Memulihkan Pembatalan Pemesanan Luar Negeri')
               alertCustom('S', 'Berhasil Dipulihkan !', '');
               loadMore(load_flag, key, status_b);
             } else {

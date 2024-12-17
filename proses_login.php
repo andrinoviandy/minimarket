@@ -46,7 +46,7 @@ if ($total_row > 0) {
 	echo "<script type='text/javascript'>
 	window.location='index.php?page=beranda';
 	</script>";
-	$jam = date("h") + 5;
+	$jam = date("h");
 
 	mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 	$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
@@ -67,7 +67,7 @@ if ($total_row > 0) {
 		echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-		$jam = date("h") + 5;
+		$jam = date("h");
 		mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 		$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 		//header("location: index.php");
@@ -89,7 +89,7 @@ if ($total_row > 0) {
 			echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-			$jam = date("h") + 5;
+			$jam = date("h");
 			mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 			$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 			//header("location: index.php");
@@ -110,7 +110,7 @@ if ($total_row > 0) {
 				echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-				$jam = date("h") + 5;
+				$jam = date("h");
 				mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 				$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 				//header("location: index.php");
@@ -131,7 +131,7 @@ if ($total_row > 0) {
 					echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-					$jam = date("h") + 5;
+					$jam = date("h");
 					mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 					$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 					//header("location: index.php");
@@ -153,7 +153,7 @@ if ($total_row > 0) {
 		alert('Update Kurs Mata Uang Untuk Hari Ini');
 		window.location='index.php?page=mata_uang';
 		</script>";
-						$jam = date("h") + 5;
+						$jam = date("h");
 						mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 						$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 						//header("location: index.php");
@@ -174,7 +174,7 @@ if ($total_row > 0) {
 							echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-							$jam = date("h") + 5;
+							$jam = date("h");
 							mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 							$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 							//header("location: index.php");
@@ -195,7 +195,7 @@ if ($total_row > 0) {
 								echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-								$jam = date("h") + 5;
+								$jam = date("h");
 								mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 								$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 								//header("location: index.php");
@@ -216,7 +216,7 @@ if ($total_row > 0) {
 									echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-									$jam = date("h") + 5;
+									$jam = date("h");
 									mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 									$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 									//header("location: index.php");
@@ -237,7 +237,7 @@ if ($total_row > 0) {
 										echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-										$jam = date("h") + 5;
+										$jam = date("h");
 										mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 										$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 										//header("location: index.php");
@@ -258,7 +258,7 @@ if ($total_row > 0) {
 											echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-											$jam = date("h") + 5;
+											$jam = date("h");
 											mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 											$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 											//header("location: index.php");
@@ -279,7 +279,7 @@ if ($total_row > 0) {
 												echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-												$jam = date("h") + 5;
+												$jam = date("h");
 												mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 												$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 												//header("location: index.php");
@@ -300,7 +300,7 @@ if ($total_row > 0) {
 													echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-													$jam = date("h") + 5;
+													$jam = date("h");
 													mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 													$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 													//header("location: index.php");
@@ -321,7 +321,7 @@ if ($total_row > 0) {
 														echo "<script type='text/javascript'>
 		window.location='index.php?page=beranda';
 		</script>";
-														$jam = date("h") + 5;
+														$jam = date("h");
 														mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
 														$sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from riwayat_admin order by id DESC limit 1"));
 														//header("location: index.php");

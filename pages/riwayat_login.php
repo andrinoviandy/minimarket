@@ -98,3 +98,37 @@
   </section>
   <!-- /.content -->
 </div>
+<div class="modal fade" id="modal-lihat">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Riwayat Aktifitas</h4>
+      </div>
+      <form method="post">
+        <div class="modal-body">
+          <div id="modal-data-aktifitas"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<script>
+  function modalLihat(id) {
+    $('#modal-lihat').modal('show')
+    loading2('#modal-data-aktifitas')
+    $.get("data/modal-data-aktifitas.php", {id: id},
+      function (data, textStatus, jqXHR) {
+        $('#modal-data-aktifitas').html(data);
+      }
+    );
+  }
+</script>

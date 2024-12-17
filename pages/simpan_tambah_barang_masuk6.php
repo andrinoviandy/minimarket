@@ -32,6 +32,7 @@ if (isset($_POST['simpan_barang'])) {
 			}
 			if ($s) {
 				echo "<script type='text/javascript'>
+				addRiwayat('INSERT', 'barang_gudang', $nilai_maks, 'Menambah Barang Baru')
 		alert('Data Alkes Berhasil Disimpan ! Silakan Tambah Lagi !');		window.location='index.php?page=simpan_tambah_barang_masuk5&id=$_GET[id]';
 		</script>
 		";
@@ -89,6 +90,7 @@ if (isset($_POST['simpan_barang_baru'])) {
 			}
 			if ($s) {
 				echo "<script type='text/javascript'>
+				addRiwayat('INSERT', 'barang_gudang', $nilai_maks, 'Menambah Barang Baru')
 		alert('Data Alkes Berhasil Disimpan !');		window.location='index.php?page=tambah_barang_masuk';
 		</script>
 		";
@@ -147,6 +149,7 @@ if (isset($_POST['simpan_akse'])) {
 			}
 			if ($s) {
 				echo "<script type='text/javascript'>
+				addRiwayat('INSERT', 'barang_gudang', $nilai_maks, 'Menambah Barang Baru')
 		alert('Data Alkes Berhasil Disimpan !');		window.location='index.php?page=ubah_barang_masuk&id=$_GET[id]';
 		</script>
 		";

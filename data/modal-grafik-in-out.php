@@ -5,18 +5,20 @@ session_start();
 // error_reporting(0);
 ?>
 <label>Merk Barang</label>
-<select class="form-control select2" style="width:100%" name="alkes" id="alkes" onchange="changeMerk(this.value)">
+<select class="form-control select2" style="width:100%" name="alkes" id="alkes" onchange="changeMerk(this.value);">
     <option value="all">Semua</option>
     <?php
     $q_brg = mysqli_query($koneksi, "select merk_brg from barang_gudang group by merk_brg order by merk_brg asc");
     while ($dt = mysqli_fetch_array($q_brg)) {
     ?>
-        <option value="<?php echo $dt['merk_brg'] ?>"><?php echo $dt['merk_brg'] ?></option>
+        <option <?php if (strtolower($_GET['merk']) == strtolower($dt['merk_brg'])) {
+                    echo "selected";
+                } ?> value="<?php echo $dt['merk_brg'] ?>"><?php echo $dt['merk_brg'] ?></option>
     <?php } ?>
 </select>
 <br><br>
 <label>Tipe Barang</label>
-<div id="tipe_barang">
+<div id="data_tipe_barang">
     <select class="form-control" disabled>
         <option value="">...</option>
     </select>
@@ -37,38 +39,14 @@ session_start();
     $dd = mysqli_fetch_array($q99);
     while ($d = mysqli_fetch_array($q99)) {
     ?>
-        <option <?php
-                if (isset($_GET['thn'])) {
-                    if ($_GET['thn'] != 'all') {
-                        if ($_GET['thn'] == $d['thn']) {
-                            echo "selected";
-                        }
-                    }
-                } else {
-                    if (!isset($_GET['pilihan'])) {
-                        if (date('Y') == $d['thn']) {
-                            echo "selected";
-                        }
-                    }
-                }
-                ?> value="<?php echo $d['thn']; ?>"><?php echo $d['thn']; ?></option>
+        <option <?php if (($_GET['tahun'] == $d['thn']) && $_GET['tahun'] !== 'All') {
+                    echo "selected";
+                } ?> value="<?php echo $d['thn']; ?>"><?php echo $d['thn']; ?></option>
     <?php } ?>
     <?php for ($i = (intval($dd['maks_thn']) + 1); $i <= intval(date('Y')); $i++) { ?>
-        <option <?php
-                if (isset($_GET['thn'])) {
-                    if ($_GET['thn'] != 'all') {
-                        if ($_GET['thn'] == $i) {
-                            echo "selected";
-                        }
-                    }
-                } else {
-                    if (!isset($_GET['pilihan'])) {
-                        if (date('Y') == $i) {
-                            echo "selected";
-                        }
-                    }
-                }
-                ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+        <option <?php if (($_GET['tahun'] == $i) && $_GET['tahun'] !== 'All') {
+                    echo "selected";
+                } ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
     <?php } ?>
 </select>
 
@@ -119,9 +97,12 @@ session_start();
     }
 
     function changeMerk(merk) {
-        $.get("data/getTipeBarang.php", {merk: merk},
-            function (data, textStatus, jqXHR) {
-                $('#tipe_barang').html(data);
+        $.get("data/getTipeBarang.php", {
+                merk: merk,
+                tipe: '<?php echo $_GET['tipe'] ?>'
+            },
+            function(data) {
+                $('#data_tipe_barang').html(data);
             }
         );
     }

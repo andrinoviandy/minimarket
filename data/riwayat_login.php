@@ -38,7 +38,7 @@ error_reporting(0);
     <em><?php echo "Jumlah Data Yang Ditemukan : " . $jml2 ?></em>
   </div>
   <div class="table-responsive">
-    <table width="100%" id="example1" class="table table-bordered table-hover">
+    <table width="100%" id="" class="table table-bordered table-hover">
       <thead>
         <tr>
           <th align="center">No</th>
@@ -82,10 +82,10 @@ error_reporting(0);
             ?>
           </td>
           <td align="">
-            <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['user_admin_gudang']) or isset($_SESSION['user_admin_keuangan'])) { ?>
+            <?php if (isset($_SESSION['user_administrator'])) { ?>
               <!-- <a href="index.php?page=ubah_pembeli&nama_pembeli=<?php echo $json[$i]['nama_pembeli']; ?>"> -->
-                <button class="btn btn-xs btn-info">
-                  <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
+                <button class="btn btn-xs btn-primary" onclick="modalLihat('<?php echo $json[$i]['idd']; ?>')">
+                  <span data-toggle="tooltip" title="Lihat" class="fa fa-eye"></span>
                 </button>
               <!-- </a> -->
               <!--<a href="index.php?page=barang_masuk&id=<?php //echo $json[$i]['idd']; 

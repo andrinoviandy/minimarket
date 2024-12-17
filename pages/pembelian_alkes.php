@@ -285,6 +285,7 @@
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('DELETE', 'barang_dipesan', id, 'Menghapus Pemesanan Dalam Negeri')
               alertHapus('S');
               loadMore(load_flag, key, status_b);
             } else {

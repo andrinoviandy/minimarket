@@ -25,6 +25,7 @@ if (isset($_POST['simpan_barang'])) {
 		}
 		if ($s) {
 			echo "<script type='text/javascript'>
+			addRiwayat('INSERT', 'barang_gudang', $nilai_maks, 'Menambah Barang Baru')
 		alert('Data Alkes Berhasil Disimpan ! Silakan Tambah Lagi !');		window.location='index.php?page=simpan_tambah_barang_masuk';
 		</script>
 		";

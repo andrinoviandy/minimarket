@@ -3,7 +3,9 @@ if (isset($_POST['simpan_barang'])) {
   if ($_POST['stok'] <= 0) {
     $insert = mysqli_query($koneksi, "insert into barang_gudang values('', '" . $_SESSION['kategori_brg'] . "','" . $_SESSION['nama_barang'] . "','" . $_SESSION['nie_brg'] . "','" . $_SESSION['tipe'] . "','" . $_SESSION['merk'] . "','" . $_SESSION['negara_asal'] . "','" . $_SESSION['jenis_barang'] . "','0','" . $_SESSION['deskripsi_alat'] . "','" . $_SESSION['harga_beli'] . "','" . $_SESSION['harga'] . "','" . $_SESSION['satuan'] . "','','','0')");
     if ($insert) {
+      $max = mysqli_fetch_array(mysqli_query($koneksi,"select max(id) as idd from barang_gudang"));
       echo "<script type='text/javascript'>
+      addRiwayat('INSERT', 'barang_gudang', $max[idd], 'Menambah Barang Baru')
 			alert('Karena Stok 0 , Maka Data Langsung Tersimpan !');
 			window.location='index.php?page=barang_masuk';
 		</script>";

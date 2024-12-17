@@ -217,6 +217,7 @@ if (isset($_POST['simpan_qrcode'])) {
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('DELETE', 'barang_gudang', id, 'Menghapus Barang')
               alertHapus('S');
               loadMore(load_flag, key, status_b);
             } else {

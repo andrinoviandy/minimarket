@@ -13,33 +13,62 @@
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"></h3>
-                            <div class="box-tools pull-right">
-                                <button class="btn btn-sm btn-primary" onclick="modalFilterPenjualan(); return false"><i class="fa fa-cog"></i> Filter</button>
-                            </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-sm btn-primary" onclick="modalFilterPenjualan(); return false"><i class="fa fa-cog"></i> Filter</button>
                         </div>
-                        <div class="box-header no-padding">
-                            <div class="row">
-                                <center>
-                                    <div id="dataFilter"></div>
-                                </center>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart">
-                                <canvas id="areaChart" style="height:250px;"></canvas>
-                            </div>
-                            <hr>
-                            <div id="tabelTransaksi"></div>
-                        </div>
-                        <!-- /.box-body -->
                     </div>
+                    <div class="box-header no-padding">
+                        <div class="row">
+                            <center>
+                                <table align="center">
+                                    <tr>
+                                        <td style="padding: 10px" align="center" class="bg-info" colspan="3" width="300px"><strong>Filter</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" width="45%">Merk Barang</td>
+                                        <td width="5%" align="center">:</td>
+                                        <td>
+                                            <div id="filterMerkBarang"></div>
+                                            <input type="hidden" id="inputMerkBarang" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" width="45%">Tipe Barang</td>
+                                        <td width="5%" align="center">:</td>
+                                        <td>
+                                            <div id="filterTipeBarang"></div>
+                                            <input type="hidden" id="inputTipeBarang" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">Tahun</td>
+                                        <td align="center">:</td>
+                                        <td>
+                                            <div id="filterTahun"></div>
+                                            <input type="hidden" id="inputTahun" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="areaChart" style="height:250px;"></canvas>
+                        </div>
+                        <hr>
+                        <div id="tabelTransaksi"></div>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
             </div>
+        </div>
         <!-- /.row -->
         <!-- Main row -->
         <!-- /.row (main row) -->
@@ -55,7 +84,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
             </div>
-            <form method="post" id="formJual" enctype="multipart/form-data" onsubmit="areaChart(); setFilter(); setTableTransaksi(); return false;">
+            <form method="post" id="formJual" enctype="multipart/form-data" onsubmit="goFilter(); return false;">
                 <div class="modal-body">
                     <div id="data-modal-jual"></div>
                 </div>
@@ -103,11 +132,25 @@
     async function modalFilterPenjualan() {
         $('#modal-filter-penjualan').modal('show')
         loading2('#data-modal-jual')
-        await $.get("data/modal-grafik-in-out.php",
+        await $.get("data/modal-grafik-in-out.php", {
+                merk: $('#inputMerkBarang').val(),
+                tipe: $('#inputTipeBarang').val(),
+                tahun: $('#inputTahun').val()
+            },
             function(data) {
                 $('#data-modal-jual').html(data);
             }
         );
+
+        await $.get("data/getTipeBarang.php", {
+                merk: $('#inputMerkBarang').val(),
+                tipe: $('#inputTipeBarang').val(),
+            },
+            function(data) {
+                $('#data_tipe_barang').html(data);
+            }
+        );
+
     }
 
     function loadingLine() {
@@ -151,20 +194,29 @@
     }
 
     async function setFilter() {
-        await $.get("data/filter-grafik.php", {
-                alkes: $('#alkes').val() ? $('#alkes').val() : 'All',
-                tipe: $('#tipe').val() ? $('#tipe').val() : 'All',
-                // pembeli: $('#pembeli').val(),
-                // provinsi: $('#provinsi1').val(),
-                // kabupaten: $('#kabupaten1').val(),
-                // kecamatan: $('#kecamatan1').val(),
-                tahun: $('#tahun_now1').val() ? $('#tahun_now1').val() : new Date().getFullYear(),
-            },
-            function(data) {
-                $('#dataFilter').html(data);
-                $('#dataFilter2').html(data);
-            }
-        );
+        // await $.get("data/filter-grafik.php", {
+        //         alkes: $('#alkes').val() ? $('#alkes').val() : 'All',
+        //         tipe: $('#tipe').val() ? $('#tipe').val() : 'All',
+        //         // pembeli: $('#pembeli').val(),
+        //         // provinsi: $('#provinsi1').val(),
+        //         // kabupaten: $('#kabupaten1').val(),
+        //         // kecamatan: $('#kecamatan1').val(),
+        //         tahun: $('#tahun_now1').val() ? $('#tahun_now1').val() : new Date().getFullYear(),
+        //     },
+        //     function(data) {
+        //         $('#dataFilter').html(data);
+        //         $('#dataFilter2').html(data);
+        //     }
+        // );
+        let merk = $('#alkes').val() ? $('#alkes').val() : 'All'
+        let tipe = $('#tipe').val() ? $('#tipe').val() : 'All'
+        let tahun = $('#tahun_now1').val() ? $('#tahun_now1').val() : new Date().getFullYear()
+        $('#filterMerkBarang').html(merk);
+        $('#filterTipeBarang').html(tipe);
+        $('#filterTahun').html(tahun);
+        $('#inputMerkBarang').val(merk);
+        $('#inputTipeBarang').val(tipe);
+        $('#inputTahun').val(tahun);
     }
 
     async function areaChart() {
@@ -297,6 +349,15 @@
         areaChart.Bar(areaChartData, areaChartOptions)
 
         $('#modal-filter-penjualan').modal('hide')
+
+    }
+
+    async function goFilter() {
+        showLoading(1)
+        await areaChart(); 
+        await setFilter(); 
+        await setTableTransaksi();
+        showLoading(0)
 
     }
 

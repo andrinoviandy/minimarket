@@ -301,6 +301,7 @@ if (isset($_POST['print'])) {
       function(data) {
         if (data == 'S') {
           $('#modal-tglmasuk').modal('hide');
+          // addRiwayat('INSERT', 'barang_gudang', id, 'Menghapus Barang')
           loadMore(load_flag, key, status_b)
           alertSimpan('S');
         } else {

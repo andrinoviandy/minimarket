@@ -430,6 +430,7 @@ if (isset($_POST['kirim_pengganti'])) {
       function(data) {
         if (data == 'S') {
           $('#modal-status').modal('hide');
+          addRiwayat('UPDATE', 'barang_dikirim', $('#id_status').val(), 'Mengubah Tanggal Sampai Pengiriman Barang')
           alertSimpan('S');
           loading()
           loadMore(load_flag, key, status_b)
@@ -450,6 +451,7 @@ if (isset($_POST['kirim_pengganti'])) {
       function(data) {
         if (data == 'S') {
           $('#modal-alamat2').modal('hide');
+          addRiwayat('UPDATE', 'barang_dikirim', $('#id_tujuan').val(), 'Menyimpan Alamat Kedua Untuk Customer')
           alertSimpan('S');
           loading()
           loadMore(load_flag, key, status_b)
@@ -504,6 +506,7 @@ if (isset($_POST['kirim_pengganti'])) {
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('UPDATE', 'barang_dikirim', id, 'Batalkan Tanggal Sampai Pengiriman Barang')
               alertSimpan('S');
               loading()
               loadMore(load_flag, key, status_b)
@@ -535,6 +538,7 @@ if (isset($_POST['kirim_pengganti'])) {
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('DELETE', 'barang_dikirim', id_hapus, 'Menghapus Pengiriman Barang')
               alertHapus('S');
               loading()
               loadMore(load_flag, key, status_b)

@@ -899,6 +899,20 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
           }
         })
       }
+
+      function addRiwayat(aktifitas, nama_tabel, id_tabel, keterangan) {
+        $.post("data/simpan_riwayat_aktifitas.php", {
+            aktifitas: aktifitas,
+            nama_tabel: nama_tabel,
+            id_tabel: id_tabel,
+            page: '<?php echo $_GET['page'] ?>',
+            keterangan: keterangan
+          },
+          function(data, textStatus, jqXHR) {
+            console.log('simpan riwayat - ', data);
+          }
+        );
+      }
     </script>
   </body>
 

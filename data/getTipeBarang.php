@@ -10,7 +10,9 @@ session_start();
     $q_brg = mysqli_query($koneksi, "select tipe_brg from barang_gudang where merk_brg = '" . $_GET['merk'] . "' group by tipe_brg order by tipe_brg asc");
     while ($dt = mysqli_fetch_array($q_brg)) {
     ?>
-        <option value="<?php echo $dt['tipe_brg'] ?>"><?php echo $dt['tipe_brg'] ?></option>
+        <option <?php if (strtolower($_GET['tipe']) == strtolower($dt['tipe_brg'])) {
+                    echo "selected";
+                } ?> value="<?php echo $dt['tipe_brg'] ?>"><?php echo $dt['tipe_brg'] ?></option>
     <?php } ?>
 </select>
 <br><br>

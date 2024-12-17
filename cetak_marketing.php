@@ -152,7 +152,7 @@ header("Content-Disposition: attachment; filename=Rekapan Penjualan _ Marketing 
                               <td>
                                 <table width="100%" border="1">
                                   <?php
-                                  $no_seri = mysqli_query($koneksi, "select no_seri_brg from barang_dikirim_detail, barang_gudang_detail where barang_gudang_detail.id = barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty_id=" . $d_brg['idd'] . " order by no_seri_brg ASC");
+                                  $no_seri = mysqli_query($koneksi, "select no_seri_brg from barang_dikirim_detail, barang_gudang_detail where barang_gudang_detail.id = barang_dikirim_detail.barang_gudang_detail_id and barang_dijual_qty_id=" . $d_brg['idd'] . " and kategori_brg != 'Aksesoris' order by no_seri_brg ASC");
                                   while ($dd = mysqli_fetch_array($no_seri)) {
                                   ?>
                                     <tr>

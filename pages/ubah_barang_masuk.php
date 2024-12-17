@@ -54,92 +54,96 @@ if (isset($_POST['simpan_perubahan'])) {
     <div class="row">
       <!-- Left col -->
       <?php if (!isset($_SESSION['adminpjt'])) { ?>
-      <section class="col-lg-4 connectedSortable">
-        <!-- Custom tabs (Charts with tabs)-->
-        <!-- /.nav-tabs-custom -->
+        <section class="col-lg-4 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <!-- /.nav-tabs-custom -->
 
-        <!-- Chat box -->
-        <div class="box box-success">
-          <!-- /.chat -->
-          <div class="box-footer">
-            <div class="box-header with-border">
-              <h3 class="box-title">Ubah Data Alkes</h3>
-            </div>
-            <div class="box-body"><br />
-              <form method="post">
+          <!-- Chat box -->
+          <div class="box box-success">
+            <!-- /.chat -->
+            <div class="box-footer">
+              <div class="box-header with-border">
+                <h3 class="box-title">Ubah Data Alkes</h3>
+              </div>
+              <div class="box-body"><br />
+                <form method="post">
 
-                <label>Nama Alkes</label>
-                <input name="nama_barang" class="form-control" placeholder="Nama Barang" type="text" value="<?php echo $data['nama_brg']; ?>"><br />
-                <label>NIE Alkes</label>
-                <input name="nie_brg" class="form-control" placeholder="NIE Barang" type="text" value="<?php echo $data['nie_brg']; ?>"><br />
+                  <label>Nama Alkes</label>
+                  <input name="nama_barang" class="form-control" placeholder="Nama Barang" type="text" value="<?php echo $data['nama_brg']; ?>"><br />
+                  <label>NIE Alkes</label>
+                  <input name="nie_brg" class="form-control" placeholder="NIE Barang" type="text" value="<?php echo $data['nie_brg']; ?>"><br />
 
-                <label>Merk</label>
-                <input name="merk" class="form-control" type="text" placeholder="Merk" value="<?php echo $data['merk_brg']; ?>"><br />
+                  <label>Merk</label>
+                  <input name="merk" class="form-control" type="text" placeholder="Merk" value="<?php echo $data['merk_brg']; ?>"><br />
 
-                <label>Tipe</label>
-                <input name="tipe" class="form-control" type="text" placeholder="Tipe" value="<?php echo $data['tipe_brg']; ?>"><br />
+                  <label>Tipe</label>
+                  <input name="tipe" class="form-control" type="text" placeholder="Tipe" value="<?php echo $data['tipe_brg']; ?>"><br />
 
-                <label>Negara Asal</label>
-                <input name="negara_asal" class="form-control" type="text" placeholder="Kepemilikan" value="<?php echo $data['negara_asal']; ?>"><br />
-                <label>Jenis Barang</label>
-                <select name="jenis_barang" class="form-control select2" required style="width:100%">
-                  <option value="">-- Pilih Jenis Barang --</option>
-                  <option <?php if ($data['jenis_barang'] == 1) {
-                            echo "selected";
-                          } ?> value="1">E-Katalog</option>
-                  <option <?php if ($data['jenis_barang'] == 0) {
-                            echo "selected";
-                          } ?> value="0">Bukan E-Katalog</option>
-                </select>
-                <br />
-                <br />
-                <label>Deskripsi Alat</label>
-                <textarea name="deskripsi" class="form-control" type="text" rows="5" placeholder="Deskripsi Alat" required><?php echo $data['deskripsi_alat']; ?></textarea><br />
-                <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['user_admin_keuangan'])) { ?>
-                  <label>Harga Beli</label>
-                  <input name="harga_beli" class="form-control" type="text" placeholder="Harga Beli" value="<?php echo number_format($data['harga_beli'], 0, ',', '.'); ?>" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"><br />
-                  <label>Harga Jual</label>
-                  <input name="harga_satuan" class="form-control" type="text" placeholder="Harga Satuan" value="<?php echo number_format($data['harga_satuan'], 0, ',', '.'); ?>" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"><br />
-                <?php } ?>
-                <label>Satuan (Detail)</label>
-                <input name="satuan" class="form-control" type="text" placeholder="Satuan" value="<?php echo $data['satuan']; ?>"><br />
-                <div class="well">
-                  <font style="color: red;">* Abaikan/Kosongkan Jika Tidak Memiliki Jenis Satuan Lain</font>
-                  <br>
-                  <label>Satuan (Header)</label>
-                  <input name="satuan_header" class="form-control" type="text" placeholder="Satuan Header" value="<?php echo $data['satuan_header']; ?>"><br />
-                  <label>Jumlah Per Satuan (Detail) Untuk Mencapat 1 Satuan (Header)</label>
-                  <input name="jumlah_rincian_to_satuan" class="form-control" type="number" placeholder="Jumlah" value="<?php echo $data['jumlah_rincian_to_satuan']; ?>"><br />
-                </div>
-                <!--<label>Kode Barcode</label>
-                <input name="kode_barcode" class="form-control" type="text" placeholder="Hanya Angka" value="<?php echo $data['kode_barcode']; ?>"><br />-->
-                <label>Status Pengecekan</label>
-                <select name="status_cek" class="form-control select2" style="width:100%">
-                  <?php if ($data['status_cek'] == 0) { ?>
-                    <option value="0">Belum Di Cek</option>
-                    <option value="1">Sudah Di Cek</option>
-                  <?php } else { ?>
-                    <option value="1">Sudah Di Cek</option>
-                    <option value="0">Belum Di Cek</option>
+                  <label>Negara Asal</label>
+                  <input name="negara_asal" class="form-control" type="text" placeholder="Kepemilikan" value="<?php echo $data['negara_asal']; ?>"><br />
+                  <label>Jenis Barang</label>
+                  <select name="jenis_barang" class="form-control select2" required style="width:100%">
+                    <option value="">-- Pilih Jenis Barang --</option>
+                    <option <?php if ($data['jenis_barang'] == 1) {
+                              echo "selected";
+                            } ?> value="1">E-Katalog</option>
+                    <option <?php if ($data['jenis_barang'] == 0) {
+                              echo "selected";
+                            } ?> value="0">Bukan E-Katalog</option>
+                  </select>
+                  <br />
+                  <br />
+                  <label>Deskripsi Alat</label>
+                  <textarea name="deskripsi" class="form-control" type="text" rows="5" placeholder="Deskripsi Alat" required><?php echo $data['deskripsi_alat']; ?></textarea><br />
+                  <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['user_admin_keuangan'])) { ?>
+                    <label>Harga Beli</label>
+                    <input name="harga_beli" class="form-control" type="text" placeholder="Harga Beli" value="<?php echo number_format($data['harga_beli'], 0, ',', '.'); ?>" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"><br />
+                    <label>Harga Jual</label>
+                    <input name="harga_satuan" class="form-control" type="text" placeholder="Harga Satuan" value="<?php echo number_format($data['harga_satuan'], 0, ',', '.'); ?>" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"><br />
                   <?php } ?>
-                </select>
-                <br />
-                <br />
-                <button name="simpan_perubahan" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan Perubahan</button>
-                <br /><br />
-              </form>
+                  <label>Satuan (Detail)</label>
+                  <input name="satuan" class="form-control" type="text" placeholder="Satuan" value="<?php echo $data['satuan']; ?>"><br />
+                  <div class="well">
+                    <font style="color: red;">* Abaikan/Kosongkan Jika Tidak Memiliki Jenis Satuan Lain</font>
+                    <br>
+                    <label>Satuan (Header)</label>
+                    <input name="satuan_header" class="form-control" type="text" placeholder="Satuan Header" value="<?php echo $data['satuan_header']; ?>"><br />
+                    <label>Jumlah Per Satuan (Detail) Untuk Mencapat 1 Satuan (Header)</label>
+                    <input name="jumlah_rincian_to_satuan" class="form-control" type="number" placeholder="Jumlah" value="<?php echo $data['jumlah_rincian_to_satuan']; ?>"><br />
+                  </div>
+                  <!--<label>Kode Barcode</label>
+                <input name="kode_barcode" class="form-control" type="text" placeholder="Hanya Angka" value="<?php echo $data['kode_barcode']; ?>"><br />-->
+                  <label>Status Pengecekan</label>
+                  <select name="status_cek" class="form-control select2" style="width:100%">
+                    <?php if ($data['status_cek'] == 0) { ?>
+                      <option value="0">Belum Di Cek</option>
+                      <option value="1">Sudah Di Cek</option>
+                    <?php } else { ?>
+                      <option value="1">Sudah Di Cek</option>
+                      <option value="0">Belum Di Cek</option>
+                    <?php } ?>
+                  </select>
+                  <br />
+                  <br />
+                  <button name="simpan_perubahan" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan Perubahan</button>
+                  <br /><br />
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- /.box (chat box) -->
+          <!-- /.box (chat box) -->
 
-        <!-- TO DO List -->
-        <!-- /.box -->
+          <!-- TO DO List -->
+          <!-- /.box -->
 
-        <!-- quick email widget -->
-      </section>
+          <!-- quick email widget -->
+        </section>
       <?php } ?>
-      <section class="<?php if (!isset($_SESSION['adminpjt'])) {echo "col-lg-8";} else {echo "col-lg-12";} ?> connectedSortable">
+      <section class="<?php if (!isset($_SESSION['adminpjt'])) {
+                        echo "col-lg-8";
+                      } else {
+                        echo "col-lg-12";
+                      } ?> connectedSortable">
         <!-- Custom tabs (Charts with tabs)-->
         <!-- /.nav-tabs-custom -->
 
@@ -351,6 +355,7 @@ if (isset($_POST['tambah_detail'])) {
       },
       function(data) {
         if (data == 'S') {
+          addRiwayat('UPDATE', 'barang_gudang_detail', $('#idd').val(), 'Mengubah Barcode Barang')
           alertSimpan('S');
           $('#modal-ubah-barcode').modal('hide');
           loading();
@@ -376,6 +381,7 @@ if (isset($_POST['tambah_detail'])) {
       cache: false,
       success: function(response) {
         if (response == 'S') {
+          addRiwayat('UPDATE', 'barang_gudang_detail', $('#idd').val(), 'Mengubah Detail Barang')
           alertSimpan('S');
           $('#modal-ubah-item').modal('hide');
           loading();
@@ -447,6 +453,7 @@ if (isset($_POST['tambah_detail'])) {
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('DELETE', 'barang_gudang_detail', id_hapus, 'Menghapus No Seri (ID_PO:' + id_po + ')')
               alertHapus('S')
               dataStok();
               loading();
