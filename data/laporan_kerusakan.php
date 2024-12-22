@@ -91,7 +91,11 @@ error_reporting(0);
                             ?>
                         </td>
                         <td align="center">
-                            <a href="index.php?page=laporan_kerusakan_lama&id=<?php echo $json[$i]['idd']; ?>"><span data-toggle="tooltip" title="Detail" class="fa fa-caret-square-o-right"></span></a>
+                            <a href="index.php?page=laporan_kerusakan_lama&id=<?php echo $json[$i]['idd']; ?>">
+                                <button data-toggle="tooltip" title="Detail" class="btn btn-xs btn-primary">
+                                    <span class="fa fa-caret-square-o-right"></span>
+                                </button>
+                            </a>
                         </td>
 
                     </tr>
