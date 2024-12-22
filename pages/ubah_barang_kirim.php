@@ -1,5 +1,4 @@
 <?php
-
 $q1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as idd from barang_dikirim,barang_dijual,pemakai where barang_dijual.id=barang_dikirim.barang_dijual_id and pemakai.id=barang_dijual.pemakai_id and barang_dikirim.id=" . $_GET['id'] . ""));
 ?>
 <div class="content-wrapper">
@@ -36,6 +35,7 @@ $q1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as i
                 <label>Nama Paket</label>
                 <input name="nama_paket" class="form-control" type="text" value="<?php echo $q1['nama_paket'] ?>"><br />
                 <label>No Surat Jalan</label>
+                <input name="no_sj" id="no_sj" class="form-control" type="hidden" value="<?php echo $q1['no_pengiriman'] ?>">
                 <input name="no_pengiriman" class="form-control" type="text" value="<?php echo $q1['no_pengiriman'] ?>">
                 <br />
                 <label>Ekspedisi</label>
@@ -86,7 +86,7 @@ $q1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as i
             </div>
             <div class="box-body">
               <form method="post" onsubmit="ubahDataPemakai(); return false;" id="formUbahPemakai">
-                <input type="hidden" id="id" name="id" value="<?php echo $q1['pemakai_id']; ?>" />
+                <input type="hidden" id="id_pemakai" name="id" value="<?php echo $q1['pemakai_id']; ?>" />
                 <label>Nama Pemakai</label>
                 <input name="nama_pemakai" class="form-control" type="text" value="<?php echo $q1['nama_pemakai'] ?>"><br />
                 <label>Kontak 1</label>
@@ -131,19 +131,19 @@ $q1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as i
 
 <script>
   function ubahDataUmum() {
-    var dataform = $('#formUbah')[0];
-    var data = new FormData(dataform);
+    var dataform1 = $('#formUbah')[0];
+    var data1 = new FormData(dataform1);
     $.ajax({
       type: "post",
       url: "data/ubah-data-umum-pengiriman.php",
-      data: data,
+      data: data1,
       enctype: "multipart/form-data",
       contentType: false,
       processData: false,
       success: function(response) {
         if (response == 'S') {
+          addRiwayat('UPDATE', 'barang_dikirim', <?php echo $_GET['id'] ?>, `Mengubah Data Umum Pengiriman Barang (NO_SJ : ${$('#no_sj').val()})`);
           alertSimpan('S')
-          // addRiwayat('UPDATE', 'barang_dikirim', <?php echo $q1['idd'] ?>, 'Mengubah Data Umum Pengiriman Barang (NO_SJ : ' + <?php echo $q1['no_pengiriman'] ?> + ')')
         } else {
           alertSimpan('F')
         }
@@ -152,18 +152,18 @@ $q1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as i
   }
 
   function ubahDataPemakai() {
-    var dataform = $('#formUbahPemakai')[0];
-    var data = new FormData(dataform);
+    var dataform2 = $('#formUbahPemakai')[0];
+    var data2 = new FormData(dataform2);
     $.ajax({
       type: "post",
       url: "data/ubah-pemakai-pengiriman.php",
-      data: data,
+      data: data2,
       enctype: "multipart/form-data",
       contentType: false,
       processData: false,
       success: function(response) {
         if (response == 'S') {
-          addRiwayat('UPDATE', 'pemakai', <?php $q1['pemakai_id'] ?>, 'Mengubah Data Pemakai Pada Pengiriman Barang (NO_PO : ' + <?php echo $q1['no_po_jual'] ?> + ', NO_SJ : ' + <?php echo $q1['no_pengiriman'] ?> + ')')
+          addRiwayat('UPDATE', 'pemakai', $('#id_pemakai').val(), 'Mengubah Data Pemakai Pada Pengiriman Barang (NO_SJ : ' + $('#no_sj').val() + ')');
           alertSimpan('S')
         } else {
           alertSimpan('F')
