@@ -27,7 +27,6 @@ if (isset($_POST['simpan_barang'])) {
     }
     if ($update_stok && $simpan_po && $s) {
       echo "<script type='text/javascript'>
-            addRiwayat('INSERT', 'barang_pesan&barang_gudang', '$nilai_maks', 'Mutasi Stok Sejumlah $_POST[stok]')
             alert('Data Alkes Berhasil Dimutasi !');		window.location='index.php?page=mutasi&id=$_GET[id_pesan]';
             </script>
             ";

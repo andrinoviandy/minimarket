@@ -237,11 +237,13 @@
     }).then((result) => {
       if (result.isConfirmed) {
         showLoading(1);
+        let no_sj = '<?php echo $_SESSION['no_pengiriman'] ?>';
         $.post("data/simpan_kirim.php", {
             id: '<?php echo $_GET['id']; ?>'
           },
           function(data) {
-            if (data == 'S') {
+            if (data === 'S') {
+              addRiwayat('INSERT', 'barang_dikirim', <?php echo $_GET['id']; ?>, 'Menyimpan Data Pengiriman Barang (ID_KIRIM : ' + <?php echo $_GET['id']; ?> + ', NO_SJ : ' + no_sj + ')');
               showLoading(0);
               Swal.fire({
                 customClass: {
@@ -258,7 +260,7 @@
                   window.location = 'index.php?page=kirim_barang';
                 }
               })
-            } else if (data == 'K') {
+            } else if (data === 'K') {
               showLoading(0);
               alertCustom('F', 'Data Masih Kosong !', 'Lengkapi Data Yang Ingin Dikirim')
             } else {
@@ -509,7 +511,7 @@
   }
 
   function getDataKirim() {
-    // loading_data('#data-detail-kirim');
+    // loading2('#data-detail-kirim');
     $.get("data/data_detail_kirim.php", {
         id: '<?php echo $_GET['id']; ?>'
       },

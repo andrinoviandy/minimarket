@@ -110,7 +110,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         <font size="+2" style="font-family:Arial, Helvetica, sans-serif"><b>SURAT JALAN</b></font>
       </center><br>
       <table width="100%">
-      <tr>
+        <tr>
           <td colspan="3" rowspan="4" valign="top" style="font-size:17px; font-family:Arial" width="40%"><b>PT. CIPTA VARIA KHARISMA UTAMA<br>Jl. Utan Kayu Raya No.105A<br>
               Utan Kayu Utara, Matraman<br>
               Jakarta Timur</b></td>
@@ -239,7 +239,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
             </td>
           </tr>
           <?php
-          if ($d['kategori_brg'] == 'Set') {
+          if ($d['kategori_brg'] == 'Set' && !preg_match("/hebu/i", $d['nama_brg']) && $d['merk_brg'] !== 'Hebu Medical GmbH') {
             if ($rincian_set['jml'] > 0) {
           ?>
               <tr>
@@ -342,14 +342,22 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
               <?php } ?>
             <?php } ?>
           <?php } ?>
-          <tr class="bordered">
-            <td></td>
-            <td></td>
-            <td class="noborder" width="5px"></td>
-            <td colspan="2"></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <?php
+          if ($d['kategori_brg'] == 'Set' && preg_match("/hebu/i", $d['nama_brg']) && $d['merk_brg'] == 'Hebu Medical GmbH') {
+          ?>
+            <tr class="bordered">
+              <td colspan="7" style="line-height: 0; height: 0; padding:0;"></td>
+            </tr>
+          <?php } else { ?>
+            <tr class="bordered">
+              <td></td>
+              <td></td>
+              <td class="noborder" width="5px"></td>
+              <td colspan="2"></td>
+              <td></td>
+              <td></td>
+            </tr>
+          <?php } ?>
         <?php } ?>
       </table>
       <br>

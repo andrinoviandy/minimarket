@@ -202,7 +202,7 @@ error_reporting(0);
                                     <?php if ($ttl['jml'] == 0) { ?>
                                         &nbsp;
                                         <!-- <a href="index.php?page=jual_barang_uang&id_batal=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Yakin Akan Membatalkan Penjualan Item Ini ? . Proses ini akan berhasil jika bagian gudang belum memilih no seri atau belum ada pembayaran di keuangan !')"> -->
-                                        <button class="btn btn-xs btn-danger" onclick="batalkanPenjualan('<?php echo $json[$i]['idd']; ?>')">
+                                        <button class="btn btn-xs btn-danger" onclick="batalkanPenjualan('<?php echo $json[$i]['idd']; ?>','<?php echo $json[$i]['no_po_jual']; ?>')">
                                             <span data-toggle="tooltip" title="Batalkan Penjualan" class="fa fa-close"></span>
                                         </button>
                                     <?php } ?>

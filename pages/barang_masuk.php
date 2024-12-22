@@ -69,7 +69,7 @@ if (isset($_POST['simpan_qrcode'])) {
                   </div>
                 </form>
                 <div class="pull pull-right">
-                  <?php include "include/rekapBulanan.php"; 
+                  <?php include "include/rekapBulanan.php";
                   ?>
                   <?php include "include/atur_halaman.php"; ?>
                 </div>
@@ -191,14 +191,16 @@ if (isset($_POST['simpan_qrcode'])) {
 <script>
   function modalDetailBarang(id) {
     $('#modal-detailbarang').modal('show');
-    $.get("data/modal-barang-masuk.php", {id : id}, 
-      function (data) {
-       $('#data-detail').html(data); 
+    $.get("data/modal-barang-masuk.php", {
+        id: id
+      },
+      function(data) {
+        $('#data-detail').html(data);
       }
     );
   }
 
-  function hapus(id) {
+  function hapus(id, nm_brg) {
     Swal.fire({
       customClass: {
         confirmButton: 'bg-red',
@@ -217,9 +219,11 @@ if (isset($_POST['simpan_qrcode'])) {
           },
           function(data) {
             if (data == 'S') {
-              addRiwayat('DELETE', 'barang_gudang', id, 'Menghapus Barang')
+              addRiwayat('DELETE', 'barang_gudang', id, 'Menghapus Barang (Nama : ' + nm_brg + ')')
               alertHapus('S');
               loadMore(load_flag, key, status_b);
+            } else if (data == 'T') {
+              alertCustom('F', 'Tidak Dapat Dihapus !', 'Data Ini Sedang Digunakan');
             } else {
               alertHapus('F');
             }

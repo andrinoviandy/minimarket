@@ -572,6 +572,7 @@ if (isset($_POST['tambah_laporan'])) {
       function(data) {
         // alert(data);
         if (data == 'S') {
+          addRiwayat('UPDATE', 'barang_dijual_qty', $('#id_ubah').val(), 'Mengubah Rincian Barang (ID_QTY : ' + id + ')')
           $('#modal-ubah').modal('hide');
           alertSimpan('S');
           // loading_jual();
@@ -610,6 +611,7 @@ if (isset($_POST['tambah_laporan'])) {
           },
           function(data) {
             if (data == 'S') {
+              addRiwayat('DELETE', 'barang_dijual_qty', id, 'Menghapus Rincian Barang (ID_QTY : ' + id + ')')
               Swal.fire({
                 customClass: {
                   confirmButton: 'bg-green',
@@ -684,6 +686,7 @@ if (isset($_POST['tambah_laporan'])) {
       },
       function(data) {
         if (data == 'S') {
+          addRiwayat('UPDATE', 'barang_gudang', id_brg, 'Mengubah Harga Barang (ID_BRG : ' + id_brg + ')')
           $('#modal-ubah-harga').modal('hide');
           Swal.fire({
             customClass: {
@@ -714,7 +717,7 @@ if (isset($_POST['tambah_laporan'])) {
     var no_include = $('#no_include').prop('checked');
     let nie_brg = $('#nie_brg').val();
     if ((nie_brg.replace(/\s+/g, '')) === '-' || nie_brg === '') {
-      alertCustom('E','NIE Wajib Terisi','Mohon jangan gunakan tanda "-"');
+      alertCustom('E', 'NIE Wajib Terisi', 'Mohon jangan gunakan tanda "-"');
     } else {
       $.post("data/simpan_barang_jual.php", {
           id_akse: $('#id_akse').val(),
@@ -732,6 +735,7 @@ if (isset($_POST['tambah_laporan'])) {
         function(data) {
           // alert(data);
           if (data == 'S') {
+            addRiwayat('INSERT', 'barang_dijual_qty', $('#id_akse').val(), 'Menambah Rincian Barang (ID_PO : ' + $('#id_akse').val() + ')')
             $('#form-tambah').trigger('reset');
             $('#modal-tambah').modal('hide');
             Swal.fire({

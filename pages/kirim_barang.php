@@ -380,7 +380,7 @@ if (isset($_POST['kirim_pengganti'])) {
   <!-- /.modal-dialog -->
 </div>
 <div class="modal fade" id="modal-detailbarang">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="max-width: 90%; width: 90%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -519,7 +519,7 @@ if (isset($_POST['kirim_pengganti'])) {
     })
   }
 
-  function hapus(id, id_jual) {
+  function hapus(id, id_jual, no_sj) {
     Swal.fire({
       customClass: {
         confirmButton: 'bg-red',
@@ -538,12 +538,12 @@ if (isset($_POST['kirim_pengganti'])) {
           },
           function(data) {
             if (data == 'S') {
-              addRiwayat('DELETE', 'barang_dikirim', id_hapus, 'Menghapus Pengiriman Barang')
+              addRiwayat('DELETE', 'barang_dikirim', id, 'Menghapus Pengiriman Barang (NO_SJ : ' + no_sj + ', ID_PO : ' + id_jual + ')')
               alertHapus('S');
               loading()
               loadMore(load_flag, key, status_b)
             } else if (data == 'SD') {
-              alertCustom('W', 'Tidak Dapat Dihapus','Data Sudah Dibuat SPI');
+              alertCustom('W', 'Tidak Dapat Dihapus', 'Data Sudah Dibuat SPI');
             } else {
               alertHapus('F');
             }

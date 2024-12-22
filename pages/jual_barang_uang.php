@@ -345,7 +345,7 @@ if (isset($_POST['pos'])) {
     $('#modal-cetak-faktur').modal('show');
   }
 
-  function batalkanPenjualan(id) {
+  function batalkanPenjualan(id, no_po) {
     Swal.fire({
       customClass: {
         confirmButton: 'bg-red',
@@ -365,6 +365,7 @@ if (isset($_POST['pos'])) {
           function(data) {
             if (data == 'S') {
               loadMore(load_flag, key, status_b)
+              addRiwayat('DELETE', 'barang_dijual', id, 'Membatalkan Penjualan (NO PO : ' + no_po + ')')
               alertCustom('S', 'Penjualan Berhasil Dibatalkan !', '')
             } else if (data == 'TB') {
               alertCustom('W', 'Penjualan Tidak Dapat Dibatalkan !', 'Karena Sudah Ada Pengiriman atau Sudah Ada Pembayaran! Silakan Cek Data Pengiriman atau Data Piutang')

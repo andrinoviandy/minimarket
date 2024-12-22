@@ -25,7 +25,6 @@ if (isset($_POST['simpan_barang'])) {
 		}
 		if ($s) {
 			echo "<script type='text/javascript'>
-			addRiwayat('INSERT', 'barang_gudang', $nilai_maks, 'Menambah Barang Baru')
 		alert('Data Alkes Berhasil Disimpan ! Silakan Tambah Lagi !');		window.location='index.php?page=simpan_tambah_barang_masuk';
 		</script>
 		";
@@ -154,9 +153,10 @@ if (isset($_POST['simpan_selesai'])) {
 
 			$s = mysqli_query($koneksi, "insert into barang_gudang_detail values('','$nilai_maks','" . $max_po['max_po'] . "','" . $_POST['no_bath'][$j] . "','" . $_POST['no_lot'][$j] . "','" . $_POST['no_seri'][$j] . "','" . $_POST['tgl_expired'][$j] . "','" . $_POST['qrcode'][$j] . "','0','0','0','0')");
 		}
-		if ($s) {
+		if ($simpan) {
 			echo "<script type='text/javascript'>
-		alert('Data Alkes Berhasil Disimpan !;		window.location='index.php?page=barang_masuk';
+		alert('Data Alkes Berhasil Disimpan !');
+		window.location='index.php?page=barang_masuk';
 		</script>
 		";
 			unset($_SESSION['tgl_masuk']);

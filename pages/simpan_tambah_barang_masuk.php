@@ -5,7 +5,7 @@ if (isset($_POST['simpan_barang'])) {
     if ($insert) {
       $max = mysqli_fetch_array(mysqli_query($koneksi,"select max(id) as idd from barang_gudang"));
       echo "<script type='text/javascript'>
-      addRiwayat('INSERT', 'barang_gudang', $max[idd], 'Menambah Barang Baru')
+      addRiwayat('INSERT', 'barang_gudang', $max[idd], 'Menambah Barang Dengan Stok 0');
 			alert('Karena Stok 0 , Maka Data Langsung Tersimpan !');
 			window.location='index.php?page=barang_masuk';
 		</script>";

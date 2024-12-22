@@ -38,8 +38,7 @@ if (isset($_POST['simpan_akse'])) {
           mysqli_query($koneksi, "update barang_pesan_detail set status_ke_stok=1 where id=" . $_GET['id_detail'] . "");
         }
         echo "<script type='text/javascript'>
-        addRiwayat('INSERT', 'barang_pesan&barang_gudang', '$nilai_maks', 'Mutasi Stok Sejumlah $_SESSION[stok]')
-		alert('Data Alkes Berhasil Dimutasi !');		window.location='index.php?page=mutasi&id=$_GET[id_pesan]';
+        alert('Data Alkes Berhasil Dimutasi !');		window.location='index.php?page=mutasi&id=$_GET[id_pesan]';
 		</script>
 		";
         unset($_SESSION['tgl_masuk']);

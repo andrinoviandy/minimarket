@@ -58,7 +58,7 @@ session_start()
                     <th valign="top"><strong>Negara Asal</strong></th>
                     <th align="center" valign="top"><strong>Deskripsi Alat
                         </strong></th>
-                    <th align="center" valign="top"><strong>Banyak</strong> </th>
+                    <th align="center" valign="top"><strong>Jumlah</strong> </th>
                     <th align="center" valign="top"><strong>Detail</strong></th>
                 </tr>
             </thead>

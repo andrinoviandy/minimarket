@@ -164,7 +164,7 @@ $jml2 = $file2;
                             </a>
                             &nbsp;
                         <?php } ?>
-                        <a href="#" onclick="hapus(<?php echo $json[$i]['idd']; ?>)">
+                        <a href="#" onclick="hapus(<?php echo $json[$i]['idd']; ?>, '<?php echo $json[$i]['nama_brg']; ?>')">
                             <button class="btn btn-danger btn-xs">
                                 <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
                             </button>

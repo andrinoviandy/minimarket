@@ -58,7 +58,7 @@ error_reporting(0);
                     <th align="center" valign="top"><strong>Deskripsi Alat
                         </strong></th>
 
-                    <th align="center" valign="top"><strong>Banyak</strong> </th>
+                    <th align="center" valign="top"><strong>Jumlah</strong> </th>
                     <th align="center" valign="top"><strong>Detail</strong></th>
                 </tr>
             </thead>
@@ -84,7 +84,11 @@ error_reporting(0);
                             echo $que;
                             ?></td>
                         <td>
-                            <a href="index.php?page=progress_rusak_dalam_detail&id_gudang=<?php echo $json[$i]['id_gudang']; ?>"><span data-toggle="tooltip" title="Detail" class="fa fa-caret-square-o-right"></span></a>
+                            <a href="index.php?page=progress_rusak_dalam_detail&id_gudang=<?php echo $json[$i]['id_gudang']; ?>">
+                                <button class="btn btn-xs btn-info">
+                                    <span data-toggle="tooltip" title="Detail" class="fa fa-caret-square-o-right"></span>
+                                </button>
+                            </a>
 
                         </td>
                     </tr>

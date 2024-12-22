@@ -5,13 +5,13 @@ async function hitungBaris(keyword) {
     const page = getVars("page").replace('#', '');
     if (keyword == '') {
         if (tgl1 === undefined && tgl2 === undefined) {
-            await $.get("json/" + page + ".php",
+            await $.get("json/" + page + ".php?id_gudang=" + id_gudang,
                 function (data) {
                     jmll = data;
                 }
             );
         } else {
-            await $.get("json/" + page + ".php?tgl1=" + tgl1 + "&tgl2=" + tgl2,
+            await $.get("json/" + page + ".php?tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&id_gudang=" + id_gudang,
                 function (data) {
                     jmll = data;
                 }
@@ -19,13 +19,13 @@ async function hitungBaris(keyword) {
         }
     } else {
         if (tgl1 === undefined && tgl2 === undefined) {
-            await $.get("json/" + page + ".php?cari=" + keyword,
+            await $.get("json/" + page + ".php?cari=" + keyword + "&id_gudang=" + id_gudang,
                 function (data) {
                     jmll = data;
                 }
             );
         } else {
-            await $.get("json/" + page + ".php?cari=" + keyword + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
+            await $.get("json/" + page + ".php?cari=" + keyword + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&id_gudang=" + id_gudang,
                 function (data) {
                     jmll = data;
                 }
@@ -43,14 +43,14 @@ async function loadMore(start, keyword) {
     if (keyword == '') {
         if (tgl1 === undefined && tgl2 === undefined) {
             console.log('test1');
-            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil,
+            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&id_gudang=" + id_gudang,
                 function (data) {
                     $('#table').html(data);
                 }
             );
         } else {
             console.log('test2');
-            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
+            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&id_gudang=" + id_gudang + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
                 function (data) {
                     $('#table').html(data);
                 }
@@ -59,14 +59,14 @@ async function loadMore(start, keyword) {
     } else {
         if (tgl1 === undefined && tgl2 === undefined) {
             console.log('test3');
-            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil,
+            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&id_gudang=" + id_gudang,
                 function (data) {
                     $('#table').html(data);
                 }
             );
         } else {
             console.log('test4');
-            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
+            $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&id_gudang=" + id_gudang + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
                 function (data) {
                     $('#table').html(data);
                 }

@@ -161,7 +161,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         <?php
         $no = 0;
         // $q = mysqli_query($koneksi, "select *,barang_dikirim.id as idd, barang_gudang.id as id_gudang from barang_dikirim,barang_dikirim_detail, barang_gudang_detail,barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=0 and barang_dikirim.id=" . $id . "");
-        $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, merk_brg,nama_brg, nie_brg, satuan, satuan_header, jumlah_rincian_to_satuan, barang_gudang.kategori_brg, barang_gudang.id as id_gudang from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $id . "");
+        $q = mysqli_query($koneksi, "select distinct barang_dikirim_detail.barang_dijual_qty_id, barang_dikirim_detail.jml_kirim, tipe_brg, merk_brg, nama_brg, nie_brg, satuan, satuan_header, jumlah_rincian_to_satuan, barang_gudang.kategori_brg, barang_gudang.id as id_gudang from barang_dikirim_detail left join barang_dijual_qty on barang_dijual_qty.id = barang_dikirim_detail.barang_dijual_qty_id left join barang_gudang on barang_gudang.id=barang_dijual_qty.barang_gudang_id where barang_dikirim_detail.barang_dikirim_id=" . $id . "");
         while ($d = mysqli_fetch_array($q)) {
           $no++;
           $rincian_set = mysqli_fetch_array(mysqli_query($koneksi, "select count(*) as jml, (select count(*) from barang_dikirim_detail where barang_dijual_qty_id = $d[barang_dijual_qty_id]) as jmm from barang_dijual_qty_detail left join barang_gudang on barang_gudang.id = barang_dijual_qty_detail.barang_gudang_id where barang_dijual_qty_id = $d[barang_dijual_qty_id]"));
@@ -172,10 +172,10 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
             <td align="center" valign="top">
               <?php echo $d['nie_brg']; ?>
             </td>
-            <td align="center" valign="top">
+            <td align="center" valign="top" class="border-bottom">
               <?php echo $d['tipe_brg']; ?>
             </td>
-            <td valign="top" colspan="2">
+            <td valign="top" colspan="2" class="border-bottom">
               <?php
               echo $d['merk_brg'] . ' - ' . $d['nama_brg'];
               ?>
@@ -222,13 +222,13 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
             </td>
           </tr>
           <?php
-          if ($d['kategori_brg'] == 'Set') {
+          if ($d['kategori_brg'] == 'Set' && !preg_match("/hebu/i", $d['nama_brg']) && $d['merk_brg'] !== 'Hebu Medical GmbH') {
             if ($rincian_set['jml'] > 0) {
           ?>
               <tr>
                 <td></td>
                 <td></td>
-                <td colspan="2">Kelengkapan :</td>
+                <td colspan="3">Kelengkapan :</td>
                 <td></td>
                 <td></td>
               </tr>
@@ -241,7 +241,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
                   <td></td>
                   <td></td>
                   <td class="noborder" width="5px" valign="top">-</td>
-                  <td valign="top"><?php echo $d3['nama_brg'] ?></td>
+                  <td valign="top" colspan="2"><?php echo $d3['nama_brg'] ?></td>
                   <td align="center">
                     <?php
                     $q4 = mysqli_query($koneksi, "select barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id] and barang_dikirim_detail.barang_gudang_akse_id = $d3[id_detail]");
@@ -280,7 +280,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
               <tr>
                 <td></td>
                 <td></td>
-                <td colspan="2">Kelengkapan :</td>
+                <td colspan="3">Kelengkapan :</td>
                 <td></td>
                 <td></td>
               </tr>
@@ -293,7 +293,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
                   <td></td>
                   <td></td>
                   <td class="noborder" width="5px" valign="top">-</td>
-                  <td valign="top"><?php echo $d3['nama_brg'] ?></td>
+                  <td valign="top" colspan="2"><?php echo $d3['nama_brg'] ?></td>
                   <td align="center">
                     <?php
                     $q4 = mysqli_query($koneksi, "select barang_gudang_detail.no_seri_brg from barang_dikirim_detail,barang_gudang_detail, barang_gudang where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_detail.kategori_brg = 'Aksesoris' and barang_dikirim_detail.barang_dijual_qty_id=$d[barang_dijual_qty_id] and barang_dikirim_detail.barang_gudang_akse_id = $d3[id_detail]");
@@ -325,14 +325,22 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
               <?php } ?>
             <?php } ?>
           <?php } ?>
-          <tr class="bordered">
-            <td></td>
-            <td></td>
-            <td class="noborder" width="5px"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <?php
+          if ($d['kategori_brg'] == 'Set' && preg_match("/hebu/i", $d['nama_brg']) && $d['merk_brg'] == 'Hebu Medical GmbH') {
+          ?>
+            <tr class="bordered">
+              <td colspan="7" style="line-height: 0; height: 0; padding:0;"></td>
+            </tr>
+          <?php } else { ?>
+            <tr class="bordered">
+              <td></td>
+              <td></td>
+              <td class="noborder" width="5px"></td>
+              <td colspan="2"></td>
+              <td></td>
+              <td></td>
+            </tr>
+          <?php } ?>
         <?php } ?>
       </table>
       <br>

@@ -180,7 +180,7 @@
           </span></a>
         <ul class="treeview-menu">
           <li class="<?php echo $kirim_teknisi; ?>">
-            <a href="index.php?page=kirim_barang_teknisi">
+            <a href="index.php?page=kirim_barang">
               <i class="fa fa-cube"></i> <span>Lokasi Alkes</span>
               <span class="pull-right-container">
 
@@ -214,17 +214,18 @@
           </li>
           <li class="header"><strong style="color:#F90"><em>KERUSAKAN ALKES (SERVICE)</em></strong></li>
           <li class="header"><strong style="color:#F90">
-              <center><em>- Belum Terjual (Masih Di Gudang)</em></center>
+              <em>- Belum Terjual (Masih Di Gudang)</em></>
             </strong></li>
           <li class="<?php echo $barang_gudang_rusak; ?>">
-            <a href="index.php?page=barang_rusak"><i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
+            <a href="index.php?page=barang_rusak" style="border-left: 2px solid #ccc; margin-left: 20px">
+              <i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
               <span class="pull-right-container">
 
               </span>
             </a>
           </li>
           <li class="<?php echo $progress_dalam; ?>">
-            <a href="index.php?page=progress_rusak_dalam">
+            <a href="index.php?page=progress_rusak_dalam" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-archive"></i> <span>Progress Pengerjaan</span>
             </a>
           </li>
@@ -292,18 +293,21 @@ if ($data1 == 0) { ?>
             </span>
         </a></li>
         -->
-          <li class="header">
-            <center><strong style="color:#F90"><em>- Barang Yg Dikembalikan Karena Rusak</em></strong></center>
+          <li class="">
+            <a href="#" style="border-left: 2px solid #ccc; margin-left: 20px; pointer-events: none;">
+              <center style="color:#F90; font-size: 12px"><em>Gudang</em></center>
+            </a>
           </li>
           <li class="<?php echo $barang_kembali_teknisi; ?>">
-            <a href="index.php?page=barang_kembali_teknisi"><i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
+            <a href="index.php?page=barang_kembali_teknisi" style="border-left: 2px solid #ccc; margin-left: 20px">
+              <i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
               <span class="pull-right-container">
 
               </span>
             </a>
           </li>
           <li class="<?php echo $progress_barang_kembali; ?>">
-            <a href="index.php?page=progress_barang_kembali">
+            <a href="index.php?page=progress_barang_kembali" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-archive"></i> <span>Progress Pengerjaan</span>
             </a>
           </li>

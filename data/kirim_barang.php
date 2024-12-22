@@ -151,7 +151,7 @@ error_reporting(0);
                                     <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator']) or isset($_SESSION['user_admin_gudang'])) { ?>
                                         <li>
                                             <!-- <a href="index.php?page=kirim_barang&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
-                                            <a href="javascript:void()" onclick="hapus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['barang_dijual_id']; ?>')">
+                                            <a href="javascript:void()" onclick="hapus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['barang_dijual_id']; ?>', '<?php echo $json[$i]['no_pengiriman']; ?>')">
                                                 <span data-toggle="tooltip" title="Hapus" class="fa fa-trash"></span> Hapus
                                             </a>
                                         </li>

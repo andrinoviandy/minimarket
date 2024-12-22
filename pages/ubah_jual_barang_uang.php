@@ -752,6 +752,7 @@ if (isset($_POST['tambah_riwayat'])) {
               $('#data-detail-jual').html(data);
             }
           );
+          addRiwayat('UPDATE', 'barang_dijual_qty_detail', $('#id_jual4').val(), 'Menambah Detail Rincian Barang (ID_PO : ' + $('#id_jual4').val() + ', ID_GUDANG : ' + $('#id_akse4').val() + ')')
           $('#modal-tambah-detail').modal('hide');
           alertSimpan('S')
         } else {
@@ -777,6 +778,7 @@ if (isset($_POST['tambah_riwayat'])) {
             }
           );
           $('#modal-ubah-detail2').modal('hide');
+          addRiwayat('UPDATE', 'barang_dijual_qty_detail', $('#id_ubah_brg').val(), 'Mengubah Detail Rincian Barang (ID_PO : ' + $('#id_ubah_brg').val() + ', ID_GUDANG : ' + $('#id_akse3').val() + ')')
           alertCustom('S', 'Perubahan Berhasil Disimpan !', '')
         } else {
           alertCustom('F', 'Perubahan Gagal Disimpan !', '')
@@ -836,6 +838,7 @@ if (isset($_POST['tambah_riwayat'])) {
             id_hapus: id
           },
           function(data) {
+            addRiwayat('DELETE', 'barang_dijual', id, 'Menghapus Riwayat PO (ID_PO : ' + id + ')')
             location.reload(true);
           }
         );
@@ -857,6 +860,7 @@ if (isset($_POST['tambah_riwayat'])) {
       function(data) {
         if (data == 'S') {
           $('#modal-lainnya').modal('hide');
+          addRiwayat('UPDATE', 'barang_dijual', id, 'Mengubah Nilai ongkir , diskon , ppn, pph, zakat dan biaya bank (ID_PO : ' + id + ')')
           alertSimpan('S')
           reloadBarang(id);
         } else {
@@ -877,6 +881,7 @@ if (isset($_POST['tambah_riwayat'])) {
       function(data) {
         if (data == 'S') {
           $('#modal-lainnya2').modal('hide');
+          addRiwayat('UPDATE', 'barang_dijual', id, 'Mengubah Nilai ongkir , diskon , ppn (ID_PO : ' + id + ')')
           alertSimpan('S')
           reloadBarang(id);
         } else {
@@ -925,6 +930,7 @@ if (isset($_POST['tambah_riwayat'])) {
       },
       function(data) {
         if (data == 'S') {
+          addRiwayat('UPDATE', 'barang_dijual_qty', id, 'Mengubah Kuantitas Barang (ID_PO : ' + id_jual + ', ID_QTY : ' + id_ubah + ')')
           $('#modal-ubahitem').modal('hide');
           Swal.fire({
             customClass: {
@@ -974,6 +980,7 @@ if (isset($_POST['tambah_riwayat'])) {
             dpp: <?php echo $data['include_dpp']; ?>
           },
           function(data) {
+            addRiwayat('DELETE', 'barang_dijual_qty', id, 'Menghapus Rincian Barang (ID_QTY : ' + id + ')')
             reloadBarang($('#id_pilih').val());
           }
         );
@@ -994,6 +1001,7 @@ if (isset($_POST['tambah_riwayat'])) {
       },
       function(data) {
         if (data == 'S') {
+          addRiwayat('INSERT', 'barang_dijual_qty', id, 'Menambah Rincian Barang (ID_PO : ' + id + ')')
           $('#modal-tambah').modal('hide');
           Swal.fire({
             customClass: {
@@ -1074,6 +1082,7 @@ if (isset($_POST['tambah_riwayat'])) {
         if (data == 'S') {
           $('#modal-ubah-harga').modal('hide');
           $('#harga_brg').val('');
+          addRiwayat('UPDATE', 'barang_gudang', id, 'Mengubah Harga Barang (ID_BRG : ' + id_brg + ')')
           Swal.fire({
             customClass: {
               confirmButton: 'bg-green',
@@ -1127,6 +1136,7 @@ if (isset($_POST['tambah_riwayat'])) {
       function(data) {
         if (data == 'S') {
           if ($('#status_deal').val() != '<?php echo $data['status_deal'] ?>') {
+            addRiwayat('UPDATE', 'barang_dijual', id, 'Mengubah Data Umum Penjualan (NO PO : ' + <?php echo $data['no_po_jual'] ?> + ')')
             alertSimpan('S');
             location.reload(true);
           } else if ($('#include_dpp').val() != '<?php echo $data['include_dpp'] ?>') {

@@ -522,26 +522,32 @@
           </li>
           <li class="header"><strong style="color:#F90"><em>KERUSAKAN ALKES (SERVICE)</em></strong></li>
           <li class="header"><strong style="color:#F90">
-              <center><em>- Belum Terjual (Masih Di Gudang)</em></center>
+              <em>- Belum Terjual (Masih Di Gudang)</em></>
             </strong></li>
           <li class="<?php echo $barang_gudang_rusak; ?>">
-            <a href="index.php?page=barang_rusak"><i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
+            <a href="index.php?page=barang_rusak" style="border-left: 2px solid #ccc; margin-left: 20px">
+              <i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
               <span class="pull-right-container">
 
               </span>
             </a>
           </li>
           <li class="<?php echo $progress_dalam; ?>">
-            <a href="index.php?page=progress_rusak_dalam">
+            <a href="index.php?page=progress_rusak_dalam" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-archive"></i> <span>Progress Pengerjaan</span>
             </a>
           </li>
           <li class="header">
-            <center><strong style="color:#F90"><em>- Sudah Terjual</em></strong></center>
+            <strong style="color:#F90"><em>- Sudah Terjual</em></strong>
+          </li>
+          <li class="">
+            <a href="#" style="border-left: 2px solid #ccc; margin-left: 20px; pointer-events: none;">
+              <center style="color:#F90; font-size: 12px"><em>Customer Service</em></center>
+            </a>
           </li>
 
           <li class="<?php echo $act_user; ?>">
-            <a href="index.php?page=pembeli">
+            <a href="index.php?page=pembeli" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-user"></i> <span>Customer</span></a>
             <span class="pull-right-container">
 
@@ -559,9 +565,9 @@
         </li>
         -->
           <li class="<?php echo $act6; ?>">
-            <a href="index.php?page=laporan_kerusakan">
+            <a href="index.php?page=laporan_kerusakan" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-indent"></i>
-              <span>Laporan - Pilih Teknisi/No Seri</span>
+              <span>Laporan - Pilih Teknisi</span>
             </a>
             <?php
             $data1 = mysqli_num_rows(mysqli_query($koneksi, "select * from tb_laporan_kerusakan where exp=0"));
@@ -578,7 +584,7 @@
 
           </li>
           <li class="<?php echo $act7; ?>">
-            <a href="index.php?page=pembuatan_spk">
+            <a href="index.php?page=pembuatan_spk" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-outdent"></i> <span> Teknisi Yang Menangani</span>
               <span class="pull-right-container">
                 <!--<small class="label pull-right bg-green">
@@ -590,7 +596,7 @@
             </a>
           </li>
           <li class="<?php echo $act8; ?>">
-            <a href="index.php?page=progress_pengerjaan">
+            <a href="index.php?page=progress_pengerjaan" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-archive"></i> <span>Progress Perbaikan</span>
               <span class="pull-right-container">
                 <!--<small class="label pull-right bg-red">
@@ -603,18 +609,21 @@
             </a>
           </li>
 
-          <li class="header">
-            <center><strong style="color:#F90"><em>- Barang Yg Dikembalikan Karena Rusak</em></strong></center>
+          <li class="">
+            <a href="#" style="border-left: 2px solid #ccc; margin-left: 20px; pointer-events: none;">
+              <center style="color:#F90; font-size: 12px"><em>Gudang</em></center>
+            </a>
           </li>
           <li class="<?php echo $barang_kembali_teknisi; ?>">
-            <a href="index.php?page=barang_kembali_teknisi"><i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
+            <a href="index.php?page=barang_kembali_teknisi" style="border-left: 2px solid #ccc; margin-left: 20px">
+              <i class="fa fa-cube"></i> <span class="">Data Alkes Rusak</span>
               <span class="pull-right-container">
 
               </span>
             </a>
           </li>
           <li class="<?php echo $progress_barang_kembali; ?>">
-            <a href="index.php?page=progress_barang_kembali">
+            <a href="index.php?page=progress_barang_kembali" style="border-left: 2px solid #ccc; margin-left: 20px">
               <i class="fa fa-archive"></i> <span>Progress Pengerjaan</span>
             </a>
           </li>
@@ -845,7 +854,7 @@
               </li> -->
               <!-- <li class="<?php echo $kirim_barang_uang2; ?>"> -->
               <!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-                <!-- <a href="index.php?page=pengiriman_aksesoris" class=""><i class="fa fa-circle-o"></i> Pengiriman Aksesoris</a>
+              <!-- <a href="index.php?page=pengiriman_aksesoris" class=""><i class="fa fa-circle-o"></i> Pengiriman Aksesoris</a>
               </li> -->
               <li class="<?php echo $kirim_barang_uang3; ?>"><!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
                 <a href="index.php?page=kirim_inventory_uang" class=""><i class="fa fa-circle-o"></i> Inventory</a>
