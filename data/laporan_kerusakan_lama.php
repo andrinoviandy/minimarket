@@ -37,7 +37,7 @@ error_reporting(0);
         <em><?php echo "Jumlah Data Yang Ditemukan : " . $jml2 ?></em>
     </div>
     <div class="table-responsive">
-        <table width="100%" id="example1" class="table table-bordered table-hover">
+        <table width="100%" class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th align="center">#</th>
@@ -100,7 +100,7 @@ error_reporting(0);
                         </table>
                     </td>
                     <td align="center">
-                        <button class="btn btn-sm btn-primary" onclick="showDetail();">
+                        <button class="btn btn-sm btn-primary" onclick="showDetail('<?php echo $json[$i]['idd']; ?>');">
                             <span class="fa fa-eye"></span>
                         </button>
                     </td>

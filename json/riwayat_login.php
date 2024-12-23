@@ -14,7 +14,7 @@ $start = mysqli_real_escape_string($koneksi, $_GET['start']);
 
 if (isset($_GET['start'])) {
     if (isset($_GET['cari'])) {
-        $sql = "select *,riwayat_admin.id as idd from riwayat_admin where (username like '%$_GET[cari]%') order by id desc LIMIT $start, $limit";
+        $sql = "select *,riwayat_admin.id as idd from riwayat_admin where (username like '%$_GET[cari]%' or date_format(tgl_jam_masuk, '%d-%m-%Y') like '%$_GET[cari]%') order by id desc LIMIT $start, $limit";
     } else {
         $sql = "select *,riwayat_admin.id as idd from riwayat_admin order by id desc LIMIT $start, $limit";
     }
@@ -33,7 +33,7 @@ if (isset($_GET['start'])) {
     //untuk jumlah
 
     if (isset($_GET['cari'])) {
-        $sql = "select COUNT(DISTINCT id) as jml from riwayat_admin where (username like '%$_GET[cari]%')";
+        $sql = "select COUNT(DISTINCT id) as jml from riwayat_admin where (username like '%$_GET[cari]%' or date_format(tgl_jam_masuk, '%d-%m-%Y') like '%$_GET[cari]%')";
     } else {
         $sql = "select COUNT(DISTINCT id) as jml from riwayat_admin";
     }

@@ -115,6 +115,26 @@
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-view">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" align="center">Detail</h4>
+      </div>
+      <div class="modal-body">
+        <div id="data-modal-view"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
   function pilihNoSeri(id) {
     var dataform1 = $('#formPilih')[0];
@@ -134,8 +154,7 @@
           alertSimpan('S')
         } else if (response == 'SA') {
           alertCustom('W', 'Gagal !', 'Data Ini Sudah Tersimpan');
-        } 
-        else {
+        } else {
           alertSimpan('F')
         }
       }
@@ -144,20 +163,26 @@
 
   async function showModal(id_lapor) {
     $('#modal-pilih').modal('show');
-    await $.get("data/form-modal-pilih-kerusakan-lama.php", {id: <?php echo $_GET['id'] ?>, id_lapor: id_lapor},
-      function (data, textStatus, jqXHR) {
+    await $.get("data/form-modal-pilih-kerusakan-lama.php", {
+        id: <?php echo $_GET['id'] ?>,
+        id_lapor: id_lapor
+      },
+      function(data, textStatus, jqXHR) {
         $('#data-modal-pilih').html(data);
       }
     );
   }
 
-  function showDetail() {
-    // $('#modal-pilih').modal('show');
-    // await $.get("data/form-modal-pilih-kerusakan-lama.php", {id: <?php echo $_GET['id'] ?>, id_lapor: id_lapor},
-    //   function (data, textStatus, jqXHR) {
-    //     $('#data-modal-pilih').html(data);
-    //   }
-    // );
-    alertCustom('W','Pemberitahuan !','Fitur View ini akan menampilkan no seri alat, dan fitur ini masih dalam proses pengembangan , Silakan Lihat di Menu "Teknisi Yang Menangani" dulu ya ! Isinya 100% sama ! Menunya tepat dibawah menu ini ya . Terima Kasih')
+  async function showDetail(id_lapor) {
+    loading2('#data-modal-view')
+    $('#modal-view').modal('show');
+    await $.get("data/modal-view-kerusakan-lama.php", {
+        id: id_lapor
+      },
+      function(data) {
+        $('#data-modal-view').html(data);
+      }
+    );
+    // alertCustom('W', 'Pemberitahuan !', 'Fitur View ini akan menampilkan no seri alat, dan fitur ini masih dalam proses pengembangan , Silakan Lihat di Menu "Teknisi Yang Menangani" dulu ya ! Isinya 100% sama ! Menunya tepat dibawah menu ini ya . Terima Kasih')
   }
 </script>
