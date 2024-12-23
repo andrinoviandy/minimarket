@@ -48,16 +48,16 @@ error_reporting(0);
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th rowspan="2" align="center">#</th>
-                    <th rowspan="2"><strong>Instansi</strong></th>
-                    <th rowspan="2"><strong>Alamat</strong></th>
-                    <th rowspan="2"><strong>Kontak</strong></th>
-                    <th colspan="2" align="center"><strong>Pilih Teknisi &amp; No Seri Per Barang</strong></th>
-                    <th rowspan="2" align="center"><strong>Aksi</strong></th>
+                    <th rowspan="2" style="vertical-align: middle;" align="center" valign="top">#</th>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>Instansi</strong></th>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>Alamat</strong></th>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>Kontak</strong></th>
+                    <th colspan="2" style="text-align: center;" width="25%"><strong>Pilih Teknisi & No Seri Per Barang</strong></th>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>Aksi</strong></th>
                 </tr>
                 <tr>
-                    <th align="center"><strong>Sudah </strong></th>
-                    <th align="center"><strong>Belum</strong></th>
+                    <th style="text-align: center;"><strong>Sudah </strong></th>
+                    <th style="text-align: center;"><strong>Belum</strong></th>
                 </tr>
             </thead>
             <tbody>
