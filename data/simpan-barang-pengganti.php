@@ -6,7 +6,7 @@ error_reporting(0);
 $nopo = mysqli_fetch_array(mysqli_query($koneksi, "select * from barang_dikirim where id=" . $_SESSION['no_po'] . ""));
 $cek4 = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dikirim_detail_pengganti_hash where akun_id=" . $_SESSION['id'] . ""));
 if ($cek4 != 0) {
-    $s1 = mysqli_query($koneksi, "insert into barang_dikirim values('','" . $nopo['barang_dijual_id'] . "','" . $_SESSION['nama_paket'] . "','" . $_SESSION['no_pengiriman'] . "','" . $_SESSION['tgl_pengiriman'] . "','" . $nopo['no_po_jual'] . "','" . $_SESSION['ekspedisi'] . "','" . $_SESSION['via_pengiriman'] . "','" . $_SESSION['estimasi'] . "','" . $_SESSION['biaya_pengiriman'] . "','','','1')");
+    $s1 = mysqli_query($koneksi, "insert into barang_dikirim values('','" . $nopo['barang_dijual_id'] . "','" . $_SESSION['nama_paket'] . "','" . $_SESSION['no_pengiriman'] . "','" . $_SESSION['tgl_pengiriman'] . "','" . $nopo['no_po_jual'] . "','" . $_SESSION['ekspedisi'] . "','" . $_SESSION['via_pengiriman'] . "','" . $_SESSION['estimasi'] . "','" . $_SESSION['biaya_pengiriman'] . "','','','1','" . $_SESSION['keterangan'] . "')");
     if ($s1) {
         $max = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as id_max from barang_dikirim"));
         $q = mysqli_query($koneksi, "select * from barang_dikirim_detail_pengganti_hash where akun_id=" . $_SESSION['id'] . "");

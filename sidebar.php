@@ -584,8 +584,8 @@
 
           </li>
           <li class="<?php echo $act7; ?>">
-            <a href="index.php?page=pembuatan_spk" style="border-left: 2px solid #ccc; margin-left: 20px">
-              <i class="fa fa-outdent"></i> <span> Teknisi Yang Menangani</span>
+            <a href="index.php?page=detail_laporan_kerusakan_cs" style="border-left: 2px solid #ccc; margin-left: 20px">
+              <i class="fa fa-outdent"></i> <span> Detail Lap. Kerusakan</span>
               <span class="pull-right-container">
                 <!--<small class="label pull-right bg-green">
               <?php $total11 = mysqli_num_rows(mysqli_query($koneksi, "select * from tb_maintenance_detail"));

@@ -39,6 +39,7 @@
                         <td align="center" valign="bottom"><strong>Via Pengiriman</strong></td>
                         <td align="center" valign="bottom"><strong>Estimasi Brg Sampai</strong></td>
                         <td align="center" valign="bottom"><strong>Biaya Jasa</strong></td>
+                        <td align="center" valign="bottom"><strong>Keterangan</strong></td>
                       </tr>
                       <tr>
                         <th valign="bottom"><?php echo $_SESSION['no_po']; ?></th>
@@ -52,6 +53,7 @@
                                                               echo date("d-m-Y", strtotime($_SESSION['estimasi']));
                                                             } ?></td>
                         <td align="center" valign="bottom"><?php echo number_format($_SESSION['biaya_kirim'], 2, ',', '.'); ?></td>
+                        <td align="center" valign="bottom"><?php echo $_SESSION['keterangan']; ?></td>
                       </tr>
                     </thead>
                     <?php

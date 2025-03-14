@@ -216,7 +216,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         <tr>
           <td width="31%"></td>
           <td width="36%" align="center" valign="top">
-            <p>Mengetahui<br>PJT</p>
+            <p>Mengetahui<br>PLTS PJT</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
           </td>

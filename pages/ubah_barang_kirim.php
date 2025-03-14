@@ -53,7 +53,11 @@ $q1 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id as i
                 <input name="biaya_jasa" class="form-control" type="text" value="<?php echo $q1['biaya_pengiriman'] ?>">
                 <br />
                 <label>Tanggal Sampai</label>
-                <input name="tgl_sampai" class="form-control" type="date" placeholder="Pembeli" value="<?php echo $q1['tgl_sampai'] ?>"><br />
+                <input name="tgl_sampai" class="form-control" type="date" placeholder="" value="<?php echo $q1['tgl_sampai'] ?>">
+                <br />
+                <label>Keterangan</label>
+                <input name="keterangan" class="form-control" type="text" value="<?php echo $q1['keterangan'] ?>">
+                <br>
                 <!--<label>Keterangan</label>
               <textarea name="ket_brg" class="form-control" type="text" rows="5" placeholder="Keterangan"><?php echo $q1['ket_brg'] ?></textarea><br />-->
 

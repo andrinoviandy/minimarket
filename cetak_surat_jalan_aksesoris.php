@@ -134,7 +134,7 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select *,aksesoris_kirim.id a
 <table width="100%">
   <tr>
     <td width="31%"></td>
-    <td width="36%" align="center" valign="top"><p>Mengetahui<br>PJT</p>
+    <td width="36%" align="center" valign="top"><p>Mengetahui<br>PLTS PJT</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p></td>
     <td width="33%" valign="top"></td>

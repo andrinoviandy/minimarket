@@ -166,7 +166,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         </tr>
       </table>
       <br>
-      <table width="100%" class="mytable" style="font-size:13px">
+      <table width="100%" class="mytable" style="font-size:13px; margin-bottom: 5px">
         <tr>
           <th align="center"><strong>No</strong></th>
           <th align="center"><strong>NIE</strong></th>
@@ -360,7 +360,8 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
           <?php } ?>
         <?php } ?>
       </table>
-      <br>
+      Keterangan : <?php echo $data2['keterangan']; ?>
+      <br><br>
       <table width="100%">
         <tr>
           <td width="31%">
@@ -395,7 +396,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         <tr>
           <td width="31%"></td>
           <td width="36%" align="center" valign="top">
-            <p>Mengetahui<br>PJT</p>
+            <p>Mengetahui<br>PLTS PJT</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
           </td>

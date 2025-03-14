@@ -13,6 +13,7 @@ if (isset($_POST['kirim_pengganti'])) {
   $_SESSION['estimasi'] = $_POST['estimasi_brg_sampai'];
   $_SESSION['biaya_kirim'] = $_POST['biaya_kirim'];
   $_SESSION['no_po'] = $_POST['no_po'];
+  $_SESSION['keterangan'] = $_POST['keterangan'];
 
   echo "<script type='text/javascript'>
 		window.location='index.php?page=pilih_no_seri_pengganti';
@@ -290,41 +291,55 @@ if (isset($_POST['kirim_pengganti'])) {
             <?php } ?>
           </select>
           <br /><br />
-          <label>Nama Paket</label>
-          <input type="text" class="form-control" placeholder="" name="nama_paket" required>
+          <div class="row">
+            <div class="col-lg-6">
+              <label>Nama Paket</label>
+              <input type="text" class="form-control" placeholder="" name="nama_paket" required>
+            </div>
+            <div class="col-lg-6">
+              <label>Keterangan</label>
+              <input type="text" class="form-control" placeholder="" name="keterangan">
+            </div>
+          </div>
           <br />
-          <label>No. Surat Jalan</label>
-          <input id="input" type="text" placeholder="" name="no_peng" required class="form-control">
-          <br /><br />
-          <label>Ekspedisi</label>
-          <input id="input" type="text" placeholder="" name="ekspedisi" required class="form-control">
-          <br /><br />
-          <label>Tanggal Pengiriman</label>
-          <input id="input" type="date" placeholder="" name="tgl_kirim" required class="form-control">
-          <br /><br />
-          <label>Via Pengiriman</label>
-          <input id="input" type="text" placeholder="" name="via_kirim" required class="form-control">
-          <br /><br />
-          <label>Estimasi Barang Sampai</label>
-          <input id="input" type="date" placeholder="" name="estimasi_brg_sampai" class="form-control">
-          <br /><br />
-          <label>Biaya Jasa</label>
-          <input id="input" type="text" placeholder="" name="biaya_kirim" class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+          <div class="row">
+            <div class="col-lg-6">
+              <label>No. Surat Jalan</label>
+              <input id="input" type="text" placeholder="" name="no_peng" required class="form-control">
+            </div>
+            <div class="col-lg-6">
+              <label>Ekspedisi</label>
+              <input id="input" type="text" placeholder="" name="ekspedisi" required class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6">
+              <label>Tanggal Pengiriman</label>
+              <input id="input" type="date" placeholder="" name="tgl_kirim" required class="form-control">
+            </div>
+            <div class="col-lg-6">
+              <label>Via Pengiriman</label>
+              <input id="input" type="text" placeholder="" name="via_kirim" required class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6">
+              <label>Estimasi Barang Sampai</label>
+              <input id="input" type="date" placeholder="" name="estimasi_brg_sampai" class="form-control">
+            </div>
+            <div class="col-lg-6">
+              <label>Biaya Jasa</label>
+              <input id="input" type="text" placeholder="" name="biaya_kirim" class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-success" name="kirim_pengganti">Next</button>
         </div>
       </form>
-      <script type="text/javascript">
-        <?php
-        echo $jsArray;
-        ?>
-
-        function changeValue(pilihan) {
-          document.getElementById('nama_paket').value = dtBrg[pilihan].nama_paket;
-        };
-      </script>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -403,6 +418,15 @@ if (isset($_POST['kirim_pengganti'])) {
 </div>
 
 <script>
+  async function kirimBarangPengganti() {
+    await $.get("data/modal-kirim-barang-pengganti.php",
+      function(data) {
+        $('#data-kirim-barang-pengganti').html(data);
+      }
+    );
+    $('#kirim-barang-pengganti').modal('show')
+  }
+
   function modal_cetak_surat_jalan(id) {
     $('#cetak1').prop('href', 'cetak_surat_jalan.php?id=' + id)
     $('#cetak1_reagent').prop('href', 'cetak_surat_jalan_reagent.php?id=' + id)

@@ -11,7 +11,7 @@ error_reporting(0);
             <select name="id_akse" id="id_akse" class="form-control select2" required style="width: 100%;" onchange="changeValue(this.value); getNoSeri(this.value);">
                 <option value="">...</option>
                 <?php
-                $q = mysqli_query($koneksi, "select *,barang_gudang.id as idd from pembeli,barang_demo,barang_demo_kirim,barang_demo_kirim_detail,barang_demo_qty,barang_gudang where pembeli.id=barang_demo.pembeli_id and barang_demo.id=barang_demo_qty.barang_demo_id and barang_demo_qty.id=barang_demo_kirim_detail.barang_demo_qty_id and barang_demo_kirim.id=barang_demo_kirim_detail.barang_demo_kirim_id and barang_gudang.id=barang_demo_qty.barang_gudang_id and barang_demo_kirim.id=" . $_GET['id'] . " group by barang_gudang.id order by tipe_brg ASC");
+                $q = mysqli_query($koneksi, "select *,barang_demo_qty.id as idd from pembeli,barang_demo,barang_demo_kirim,barang_demo_kirim_detail,barang_demo_qty,barang_gudang where pembeli.id=barang_demo.pembeli_id and barang_demo.id=barang_demo_qty.barang_demo_id and barang_demo_qty.id=barang_demo_kirim_detail.barang_demo_qty_id and barang_demo_kirim.id=barang_demo_kirim_detail.barang_demo_kirim_id and barang_gudang.id=barang_demo_qty.barang_gudang_id and barang_demo_kirim.id=" . $_GET['id'] . " group by barang_gudang.id order by tipe_brg ASC");
                 $jsArray = "var dtBrg = new Array();
                 ";
                 while ($d = mysqli_fetch_array($q)) { ?>
@@ -71,8 +71,9 @@ error_reporting(0);
             };
 
             function getNoSeri(id) {
+                loading2('#noseri-kembali')
                 $.get("data/noseri-kembali.php", {
-                        id: <?php echo $_GET['id']; ?>
+                        id: id
                     },
                     function(data) {
                         $('#noseri-kembali').html(data);

@@ -59,6 +59,7 @@ error_reporting(0);
                     <th><strong>Lokasi Tujuan</strong></th>
                     <th>Kontak</th>
                     <th>Pengiriman</th>
+                    <th>Keterangan</th>
                     <th bgcolor="#99FFCC"><strong>Tanggal Sampai</strong></th>
                     <th align="center"><strong>Aksi</strong></th>
                 </tr>
@@ -106,11 +107,12 @@ error_reporting(0);
                                 <?php echo $n2 . ".[" . $d1['nama_brg'] . "]-[" . $d1['tipe_brg'] . "]-[" . $d1['no_seri_brg'] . "]"; ?>
                                 <hr style="margin:0px; border-top:1px double; width:100%" />
                             <?php } ?>
-                        <?php } else { */?>
-                            <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
-                            <a href="javascript:void()" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
+                        <?php } else { */ ?>
+                        <!-- <a href="#" data-toggle="modal" data-target="#modal-detailbarang<?php echo $json[$i]['idd']; ?>"> -->
+                        <a href="javascript:void()" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
                             <small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
-                        <?php //} ?>
+                        <?php //} 
+                        ?>
                     </td>
                     <td><?php
                         $data3 = mysqli_fetch_array(mysqli_query($koneksi, "select nama_pembeli,kontak_rs from pembeli,barang_dijual,barang_dikirim where pembeli.id=barang_dijual.pembeli_id and barang_dijual.id=barang_dikirim.barang_dijual_id and barang_dikirim.id=" . $json[$i]['idd'] . ""));
@@ -124,9 +126,12 @@ error_reporting(0);
                     </td>
                     <td><?php echo $data3['kontak_rs']; ?></td>
                     <td>
-                        <!-- <a href="#" data-toggle="modal" data-target="#modal-kirim<?php //echo $json[$i]['idd']; ?>"> -->
+                        <!-- <a href="#" data-toggle="modal" data-target="#modal-kirim<?php //echo $json[$i]['idd']; 
+                                                                                        ?>"> -->
                         <a href="javascript:void()" onclick="modal_kirim('<?php echo $json[$i]['idd']; ?>');">
-                        <small data-toggle="tooltip" title="Detail Pengiriman" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a></td>
+                            <small data-toggle="tooltip" title="Detail Pengiriman" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a>
+                    </td>
+                    <td><?php echo $json[$i]['keterangan']; ?></td>
                     <?php
                     if ($json[$i]['tgl_sampai'] != 0000 - 00 - 00) {
                         $bg = "#99FFCC";
@@ -177,9 +182,10 @@ error_reporting(0);
                                     </li>
                                     <li><a href="index.php?page=kartu_garansi&id=<?php echo $json[$i]['idd']; ?>"><span data-toggle="tooltip" title="Cetak Kartu Garansi" class="fa fa-print"></span> Cet. Kartu Garansi</a></li>
                                     <li>
-                                        <!-- <a href="#" data-toggle="modal" data-target="#modal-cetak-surat-jalan<?php //echo $json[$i]['idd']; ?>"> -->
+                                        <!-- <a href="#" data-toggle="modal" data-target="#modal-cetak-surat-jalan<?php //echo $json[$i]['idd']; 
+                                                                                                                    ?>"> -->
                                         <a href="javascript:void()" onclick="modal_cetak_surat_jalan('<?php echo $json[$i]['idd']; ?>')">
-                                        <span data-toggle="tooltip" title="Cetak Surat Jalan" class="fa fa-print"></span> Cet. Surat Jalan</a>
+                                            <span data-toggle="tooltip" title="Cetak Surat Jalan" class="fa fa-print"></span> Cet. Surat Jalan</a>
                                     </li>
                                     <?php if (isset($_SESSION['user_admin_keuangan']) or isset($_SESSION['user_manajer_keuangan']) or isset($_SESSION['user_administrator'])) { ?><li><a target="blank" href="cetak_faktur_penjualan.php?id=<?php echo $json[$i]['idd']; ?>"><span data-toggle="tooltip" title="Cetak Faktur Penjualan" class="glyphicon glyphicon-print"></span> Cet. Faktur Penjualan</a></li><?php } ?>
                                 <?php } else { ?>

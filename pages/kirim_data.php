@@ -12,6 +12,7 @@ if (isset($_POST['kirim_barang'])) {
   $_SESSION['estimasi'] = $_POST['estimasi_brg_sampai'];
   $_SESSION['biaya_kirim'] = str_replace(".", "", $_POST['biaya_kirim']);
   $_SESSION['no_po'] = $_POST['no_po'];
+  $_SESSION['keterangan'] = $_POST['keterangan'];
 
   echo "<script type='text/javascript'>
 		window.location='index.php?page=pilih_no_seri&id=" . $_POST['id_kirim'] . "';
@@ -58,8 +59,8 @@ if (isset($_POST['kirim_barang'])) {
                   <input type="hidden" name="id_kirim" value="<?php echo $data['id']; ?>" />
                   <label>No. PO</label>
                   <input type="text" class="form-control" placeholder="" readonly="readonly" name="no_po" value="<?php
-                                                                                                        echo $data['no_po_jual'];
-                                                                                                        ?>">
+                                                                                                                  echo $data['no_po_jual'];
+                                                                                                                  ?>">
                   <br>
                   <label>Nama Paket</label>
                   <input type="text" class="form-control" placeholder="" name="nama_paket" required autofocus="autofocus">
@@ -81,7 +82,9 @@ if (isset($_POST['kirim_barang'])) {
                   <br>
                   <label>Biaya Jasa</label>
                   <input type="text" class="form-control" placeholder="" name="biaya_kirim" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
-
+                  <br>
+                  <label>Keterangan</label>
+                  <input type="text" class="form-control" placeholder="" name="keterangan">
                 </div>
                 <div class="box-footer">
                   <button name="kirim_barang" type="submit" class="btn btn-success">Next</button>

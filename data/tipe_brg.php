@@ -1,23 +1,23 @@
 <?php
 include("../config/koneksi.php");
-include("../include/API.php");
+// include("../include/API.php");
 session_start();
 error_reporting(0);
 ?>
-<select name="no_seri" id="no_seri" class="form-control select2" required style="width:100%">
-    <option value="">...</option>
+<select class="form-control select22" name="tipe" id="tipe" style="width: 100%;" multiple="multiple" data-placeholder="Pilih Tipe" onchange="pilihTipe()">
     <?php
-    $q_seri = mysqli_query($koneksi, "select *,barang_demo_kirim_detail.id as idd from pembeli,barang_demo,barang_demo_kirim,barang_demo_kirim_detail,barang_demo_qty,barang_gudang_detail where pembeli.id=barang_demo.pembeli_id and barang_demo.id=barang_demo_qty.barang_demo_id and barang_demo_qty.id=barang_demo_kirim_detail.barang_demo_qty_id and barang_demo_kirim.id=barang_demo_kirim_detail.barang_demo_kirim_id and barang_gudang_detail.id=barang_demo_kirim_detail.barang_gudang_detail_id and barang_demo_qty_id=" . $_GET['id'] . " and status_kembali=0 order by no_seri_brg ASC");
-    while ($d_seri = mysqli_fetch_array($q_seri)) {
+    $merk = '"' . implode('","', $_GET['merk_brg']) . '"';
+    $q2 = mysqli_query($koneksi, "select distinct tipe_brg from barang_gudang where merk_brg in ($merk) order by tipe_brg ASC");
+    while ($row2 = mysqli_fetch_array($q2)) {
     ?>
-        <option id="no_seri" value="<?php echo $d_seri['idd']; ?>" class="<?php echo $d_seri['barang_gudang_id']; ?>"><?php echo $d_seri['no_seri_brg'] . " / " . $d_seri['nama_set']; ?></option>
+        <option value="<?php echo $row2['tipe_brg']; ?>"><?php echo $row2['tipe_brg']; ?></option>
     <?php } ?>
 </select>
+
 <script>
     $(function() {
         //Initialize Select2 Elements
-        $('.select2').select2()
-        $('.select1').select1()
+        $('.select22').select2()
         //Datemask dd/mm/yyyy
         $('#datemask').inputmask('dd/mm/yyyy', {
             'placeholder': 'dd/mm/yyyy'

@@ -216,7 +216,7 @@ $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dikirim.id a
         <tr>
           <td width="31%"></td>
           <td width="36%" align="center" valign="top">
-            <p>Mengetahui<br>PJT</p>
+            <p>Mengetahui<br>PLTS PJT</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
           </td>

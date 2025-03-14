@@ -135,7 +135,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         </tr>
       </table>
       <br>
-      <table width="100%" class="mytable" style="font-size:13px">
+      <table width="100%" class="mytable" style="font-size:13px; margin-bottom: 5px">
         <tr>
           <td align="center"><strong>NIE</strong></td>
           <td width="16%" align="center"><strong>Item</strong></td>
@@ -161,9 +161,9 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
               if ($d['satuan_header'] != '') {
                 if ($jm % $d['jumlah_rincian_to_satuan'] == 0) {
                   $qtyy = $jm / $d['jumlah_rincian_to_satuan'];
-                  echo $qtyy." ".$d['satuan_header'];
+                  echo $qtyy . " " . $d['satuan_header'];
                 } else {
-                  echo $jm . " " . $d['satuan'];  
+                  echo $jm . " " . $d['satuan'];
                 }
               } else {
                 echo $jm . " " . $d['satuan'];
@@ -197,7 +197,8 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
           </tr>
         <?php } ?>
       </table>
-      <br>
+      Keterangan : <?php echo $data2['keterangan']; ?>
+      <br><br>
       <table width="100%">
         <tr>
           <td width="31%">
@@ -232,7 +233,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         <tr>
           <td width="31%"></td>
           <td width="36%" align="center" valign="top">
-            <p>Mengetahui<br>PJT</p>
+            <p>Mengetahui<br>PLTS PJT</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
           </td>

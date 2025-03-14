@@ -4,20 +4,50 @@ include("../include/API.php");
 session_start();
 error_reporting(0);
 ?>
-<select name="no_seri" id="no_seri" class="form-control select2" required style="width:100%">
-    <option value="">...</option>
-    <?php
-    $q_seri = mysqli_query($koneksi, "select *,barang_demo_kirim_detail.id as idd from pembeli,barang_demo,barang_demo_kirim,barang_demo_kirim_detail,barang_demo_qty,barang_gudang_detail where pembeli.id=barang_demo.pembeli_id and barang_demo.id=barang_demo_qty.barang_demo_id and barang_demo_qty.id=barang_demo_kirim_detail.barang_demo_qty_id and barang_demo_kirim.id=barang_demo_kirim_detail.barang_demo_kirim_id and barang_gudang_detail.id=barang_demo_kirim_detail.barang_gudang_detail_id and barang_demo_qty_id=" . $_GET['id'] . " and status_kembali=0 order by no_seri_brg ASC");
-    while ($d_seri = mysqli_fetch_array($q_seri)) {
-    ?>
-        <option id="no_seri" value="<?php echo $d_seri['idd']; ?>" class="<?php echo $d_seri['barang_gudang_id']; ?>"><?php echo $d_seri['no_seri_brg'] . " / " . $d_seri['nama_set']; ?></option>
-    <?php } ?>
-</select>
+<form method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <label>Pilih No PO / No Surat Jalan</label>
+        <select class="form-control select2" id="pilihan" name="no_po" required style="width:100%">
+            <option value="">...</option>
+            <?php
+            $q_no_po = mysqli_query($koneksi, "select *,barang_dikirim.id as idd from barang_dikirim,barang_dikirim_detail where barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and status_batal=1 group by no_pengiriman order by no_po_jual ASC");
+
+            while ($data = mysqli_fetch_array($q_no_po)) { ?>
+                <option value="<?php echo $data['idd'] ?>"><?php echo $data['no_po_jual'] . " @ " . $data['no_pengiriman'] ?></option>
+            <?php } ?>
+        </select>
+        <br /><br />
+        <label>Nama Paket</label>
+        <input type="text" class="form-control" placeholder="" name="nama_paket" required>
+        <br />
+        <label>No. Surat Jalan</label>
+        <input id="input" type="text" placeholder="" name="no_peng" required class="form-control">
+        <br /><br />
+        <label>Ekspedisi</label>
+        <input id="input" type="text" placeholder="" name="ekspedisi" required class="form-control">
+        <br /><br />
+        <label>Tanggal Pengiriman</label>
+        <input id="input" type="date" placeholder="" name="tgl_kirim" required class="form-control">
+        <br /><br />
+        <label>Via Pengiriman</label>
+        <input id="input" type="text" placeholder="" name="via_kirim" required class="form-control">
+        <br /><br />
+        <label>Estimasi Barang Sampai</label>
+        <input id="input" type="date" placeholder="" name="estimasi_brg_sampai" class="form-control">
+        <br /><br />
+        <label>Biaya Jasa</label>
+        <input id="input" type="text" placeholder="" name="biaya_kirim" class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" name="kirim_pengganti">Next</button>
+    </div>
+</form>
 <script>
     $(function() {
         //Initialize Select2 Elements
         $('.select2').select2()
-        $('.select1').select1()
+        // $('.select1').select1()
         //Datemask dd/mm/yyyy
         $('#datemask').inputmask('dd/mm/yyyy', {
             'placeholder': 'dd/mm/yyyy'

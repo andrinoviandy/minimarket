@@ -3,18 +3,19 @@
 var mutasi = getVars("mutasi");
 
 async function hitungBaris(keyword) {
+    let jenis_po = $('#jenis_po').val();
     let jmll = 0;
     const page = getVars("page").replace('#', '');
     if (keyword == '') {
         if (tgl1 === undefined && tgl2 === undefined) {
             if (mutasi === undefined) {
-                await $.get("json/" + page + ".php",
+                await $.get("json/" + page + ".php?jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
                 );
             } else {
-                await $.get("json/" + page + ".php?mutasi" + mutasi,
+                await $.get("json/" + page + ".php?mutasi" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
@@ -22,13 +23,13 @@ async function hitungBaris(keyword) {
             }
         } else {
             if (mutasi === undefined) {
-                await $.get("json/" + page + ".php?tgl1=" + tgl1 + "&tgl2=" + tgl2,
+                await $.get("json/" + page + ".php?tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
                 );
             } else {
-                await $.get("json/" + page + ".php?tgldari=" + tgl1 + "&tglsampai=" + tgl2 + "&mutasi" + mutasi,
+                await $.get("json/" + page + ".php?tgldari=" + tgl1 + "&tglsampai=" + tgl2 + "&mutasi" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
@@ -38,13 +39,13 @@ async function hitungBaris(keyword) {
     } else {
         if (tgl1 === undefined && tgl2 === undefined) {
             if (mutasi === undefined) {
-                await $.get("json/" + page + ".php?cari=" + keyword,
+                await $.get("json/" + page + ".php?cari=" + keyword + "&jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
                 );
             } else {
-                await $.get("json/" + page + ".php?cari=" + keyword + "&mutasi" + mutasi,
+                await $.get("json/" + page + ".php?cari=" + keyword + "&mutasi" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
@@ -52,13 +53,13 @@ async function hitungBaris(keyword) {
             }
         } else {
             if (mutasi === undefined) {
-                await $.get("json/" + page + ".php?cari=" + keyword + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
+                await $.get("json/" + page + ".php?cari=" + keyword + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
                 );
             } else {
-                await $.get("json/" + page + ".php?cari=" + keyword + "&tgldari=" + tgl1 + "&tglsampai=" + tgl2 + "&mutasi" + mutasi,
+                await $.get("json/" + page + ".php?cari=" + keyword + "&tgldari=" + tgl1 + "&tglsampai=" + tgl2 + "&mutasi" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         jmll = data;
                     }
@@ -74,16 +75,17 @@ async function loadMore(start, keyword) {
     const page = getVars("page").replace('#', '');
     // console.log('tgl1', tgl1);
     // console.log('tgl2', tgl2);
+    let jenis_po = $('#jenis_po').val();
     if (keyword == '') {
         if (tgl1 === undefined && tgl2 === undefined) {
             if (mutasi === undefined) {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }
                 );
             } else {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&mutasi=" + mutasi,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&mutasi=" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }
@@ -92,13 +94,13 @@ async function loadMore(start, keyword) {
             }
         } else {
             if (mutasi === undefined) {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }
                 );
             } else {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&mutasi=" + mutasi,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&mutasi=" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }
@@ -108,13 +110,13 @@ async function loadMore(start, keyword) {
     } else {
         if (tgl1 === undefined && tgl2 === undefined) {
             if (mutasi === undefined) {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }
                 );
             } else {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&mutasi=" + mutasi,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&mutasi=" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }
@@ -122,13 +124,13 @@ async function loadMore(start, keyword) {
             }
         } else {
             if (mutasi === undefined) {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }
                 );
             } else {
-                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&mutasi=" + mutasi,
+                $.get("data/" + page + ".php?start=" + start + "&page=" + page + "&cari=" + keyword + "&tampil=" + tampil + "&tgl1=" + tgl1 + "&tgl2=" + tgl2 + "&mutasi=" + mutasi + "&jenis_po=" + jenis_po,
                     function (data) {
                         $('#table').html(data);
                     }

@@ -52,9 +52,25 @@ header("Content-Disposition: attachment; filename=Rekapan Penjualan _ Marketing 
                 <table border="1" class="mytable">
                   <thead>
                     <tr>
-                      <td align="center" valign="top">&nbsp;<strong>No</strong>
-                        </th>
-
+                      <td colspan="20" align="right">Total Keseluruhan : </td>
+                      <td align="right">
+                        <?php
+                        if ($_POST['marketing'] == 'all') {
+                          $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and DATE_FORMAT(barang_dijual.tgl_jual,'%Y')='" . $_POST['tahun'] . "'");
+                          $data2 = mysqli_fetch_array($query2);
+                        } else {
+                          $query2 = mysqli_query($koneksi, "select sum(total_harga) as totall from barang_dijual,barang_dijual_qty, barang_gudang,pembeli, alamat_provinsi, alamat_kabupaten, alamat_kecamatan where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id and barang_dijual.marketing='" . $_POST['marketing'] . "' and DATE_FORMAT(barang_dijual.tgl_jual,'%Y')='" . $_POST['tahun'] . "'");
+                          $data2 = mysqli_fetch_array($query2);
+                        }
+                        echo number_format($data2['totall'], 2, ',', '.');
+                        ?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="21" style="height: 5px; background-color:cadetblue"></td>
+                    </tr>
+                    <tr>
+                      <th align="center" valign="top">&nbsp;<strong>No</strong></th>
                       <th align="center"><strong>Tanggal Dijual</strong></th>
                       <th align="center">No PO</th>
                       <th align="center"><strong>Dinas/RS/Puskemas/Klinik/Dll</strong></th>
@@ -74,7 +90,7 @@ header("Content-Disposition: attachment; filename=Rekapan Penjualan _ Marketing 
                       <th align="center"><strong>Qty | No Seri</strong></th>
                       <th align="center">Harga Satuan</th>
                       <th align="center">Sub Total</th>
-                      <th align="center">Harga Total</th>
+                      <th align="center">Total Harga</th>
                     </tr>
                   </thead>
                   <?php
@@ -197,19 +213,28 @@ header("Content-Disposition: attachment; filename=Rekapan Penjualan _ Marketing 
                       </td>
                     </tr>
                   <?php } ?>
-                  <!--
-  <tr>
-    <td colspan="13" align="right"><h3><strong>Total : </strong></h3></td>
-    <td align="right"><?php
+                  <tr>
+                    <td colspan="21" style="height: 5px; background-color:cadetblue"></td>
+                  </tr>
+                  <tr>
+                    <td colspan="20" align="right">Total Keseluruhan : </td>
+                    <td align="right">
+                      <?php
                       if ($_POST['marketing'] == 'all') {
-                        $query2 = mysqli_query($koneksi, "select sum(total_harga) as totall from barang_dijual,barang_dijual_qty, barang_gudang,pembeli, alamat_provinsi, alamat_kabupaten, alamat_kecamatan where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id and DATE_FORMAT(barang_dijual.tgl_jual,'%Y')='" . $_POST['tahun'] . "'");
+                        $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and DATE_FORMAT(barang_dijual.tgl_jual,'%Y')='" . $_POST['tahun'] . "'");
                         $data2 = mysqli_fetch_array($query2);
                       } else {
                         $query2 = mysqli_query($koneksi, "select sum(total_harga) as totall from barang_dijual,barang_dijual_qty, barang_gudang,pembeli, alamat_provinsi, alamat_kabupaten, alamat_kecamatan where barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and alamat_provinsi.id=pembeli.provinsi_id and alamat_kabupaten.id=pembeli.kabupaten_id and alamat_kecamatan.id=pembeli.kecamatan_id and barang_dijual.marketing='" . $_POST['marketing'] . "' and DATE_FORMAT(barang_dijual.tgl_jual,'%Y')='" . $_POST['tahun'] . "'");
                         $data2 = mysqli_fetch_array($query2);
                       }
-                      echo $data2['totall'];
+                      echo number_format($data2['totall'], 2, ',', '.');
                       ?>
+                    </td>
+                  </tr>
+                  <!--
+  <tr>
+    <td colspan="13" align="right"><h3><strong>Total : </strong></h3></td>
+    <td align="right">
     </td>
   </tr>
   -->

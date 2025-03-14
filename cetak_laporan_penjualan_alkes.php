@@ -41,6 +41,76 @@ error_reporting(0);
 <table width="100%" id="" border="1">
   <thead>
     <tr>
+      <td colspan="16" align="right">Total Keseluruhan : </td>
+      <td align="right">
+        <?php
+        if ($_GET['filter'] == '1') {
+          $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli_id = " . $_GET['pembeli'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+          $data2 = mysqli_fetch_array($query2);
+        } else if ($_GET['filter'] == '2') {
+          if ($_GET['provinsi'] == 'all') {
+            $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli.id=barang_dijual.pembeli_id and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+            $data2 = mysqli_fetch_array($query2);
+          } else {
+            if ($_GET['kabupaten'] == 'all') {
+              $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+              $data2 = mysqli_fetch_array($query2);
+            } else {
+              if ($_GET['kecamatan'] == 'all') {
+                $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+                $data2 = mysqli_fetch_array($query2);
+              } else {
+                $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and pembeli.kecamatan_id = " . $_GET['kecamatan'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+                $data2 = mysqli_fetch_array($query2);
+              }
+            }
+          }
+        } else {
+          $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+          $data2 = mysqli_fetch_array($query2);
+        }
+
+        echo number_format($data2['totall'], 2, ',', '.');
+        ?>
+      </td>
+      <!-- <td colspan="7" align="right">Neto Keseluruhan : </td>
+      <td>
+      <?php
+      if ($_GET['filter'] == '1') {
+        $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli_id = " . $_GET['pembeli'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+        $data22 = mysqli_fetch_array($query22);
+      } else if ($_GET['filter'] == '2') {
+        if ($_GET['provinsi'] == 'all') {
+          $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli.id=barang_dijual.pembeli_id and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+          $data22 = mysqli_fetch_array($query22);
+        } else {
+          if ($_GET['kabupaten'] == 'all') {
+            $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+            $data22 = mysqli_fetch_array($query22);
+          } else {
+            if ($_GET['kecamatan'] == 'all') {
+              $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+              $data22 = mysqli_fetch_array($query22);
+            } else {
+              $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and pembeli.kecamatan_id = " . $_GET['kecamatan'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+              $data22 = mysqli_fetch_array($query22);
+            }
+          }
+        }
+      } else {
+        $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+        $data22 = mysqli_fetch_array($query22);
+      }
+
+      echo number_format($data22['totall'], 2, ',', '.');
+      ?>
+      </td> -->
+      <td colspan="10"></td>
+    </tr>
+    <tr>
+      <td colspan="27" style="height: 5px; background-color:cadetblue"></td>
+    </tr>
+    <tr>
       <th align="center">No</th>
       <th align="center" width="5%"><strong>Status PO</strong></th>
       <th align="center"><strong>Tanggal_Jual</strong></th>
@@ -58,7 +128,6 @@ error_reporting(0);
       <th align="center">Nama Pemakai</th>
       <th align="center">Marketing</th>
       <th align="center">Subdis</th>
-
       <th align="center">Total Harga</th>
       <th align="center">Ongkir</th>
       <th align="center">DPP</th>
@@ -69,7 +138,6 @@ error_reporting(0);
       <th align="center">Biaya Bank</th>
       <th align="center">Neto</th>
       <th align="center">Fee Subdis</th>
-
       <th align="center">Status Pengiriman</th>
     </tr>
   </thead>
@@ -103,12 +171,14 @@ error_reporting(0);
   ?>
     <tr>
       <td align="center" valign="top"><?php echo $i + 1; ?></td>
-      <td valign="top"><?php $jm_deal = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual where no_po_jual='" . $json[$i]['no_po_jual'] . "' and status_deal=1"));
-                        if ($jm_deal != 0) {
-                          echo "Sudah Deal";
-                        } else {
-                          echo "Belum Deal";
-                        } ?></td>
+      <td valign="top">
+        <?php $jm_deal = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_dijual where no_po_jual='" . $json[$i]['no_po_jual'] . "' and status_deal=1"));
+        if ($jm_deal != 0) {
+          echo "Sudah Deal";
+        } else {
+          echo "Belum Deal";
+        } ?>
+      </td>
       <td valign="top">
         <?php if ($json[$i]['tgl_jual'] != '0000-00-00') {
           echo date("d F Y", strtotime($json[$i]['tgl_jual']));
@@ -119,13 +189,13 @@ error_reporting(0);
                         ?></td>
       <td valign="top"><?php echo $json[$i]['no_kontrak'];
                         ?></td>
-      <td colspan="3" valign="top">
+      <td colspan="4" valign="top">
         <table border="1">
           <?php
-          if ($jm_deal == 0) {
+          if ($jm_deal === 0) {
             $d2 = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dijual.id as idd from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.no_po_jual='" . $json[$i]['no_po_jual'] . "' order by barang_dijual.id DESC LIMIT 1"));
             $q23 = mysqli_query($koneksi, "select *,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.id=" . $d2['idd'] . "");
-            echo "<center><em>Riwayat Terakhir</em></center>";
+            // echo "<center><em>Riwayat Terakhir</em></center>";
           } else {
             $q23 = mysqli_query($koneksi, "select *,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.no_po_jual='" . $json[$i]['no_po_jual'] . "' and status_deal=1");
           }
@@ -163,9 +233,8 @@ error_reporting(0);
       <td valign="top"><?php echo $data_pem['nama_pemakai']; ?></td>
       <td align="center" valign="top"><?php echo $json[$i]['marketing']; ?></td>
       <td align="center" valign="top"><?php echo $json[$i]['subdis']; ?></td>
-
       <td valign="top"><?php
-                        if ($jm_deal == 0) {
+                        if ($jm_deal === 0) {
                           $data_deal = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dijual.id as idd,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.no_po_jual='" . $json[$i]['no_po_jual'] . "' order by barang_dijual.id DESC LIMIT 1"));
                         } else {
                           $data_deal = mysqli_fetch_array(mysqli_query($koneksi, "select *,barang_dijual.id as idd,barang_dijual_qty.id as id_det_jual from barang_dijual_qty,barang_dijual,barang_gudang where barang_dijual.id=barang_dijual_qty.barang_dijual_id and barang_gudang.id=barang_dijual_qty.barang_gudang_id and barang_dijual.no_po_jual='" . $json[$i]['no_po_jual'] . "' and status_deal=1"));
@@ -234,4 +303,74 @@ error_reporting(0);
                                       ?></td>
     </tr>
   <?php } ?>
+  <tr>
+    <td colspan="27" style="height: 5px; background-color:cadetblue"></td>
+  </tr>
+  <tr>
+    <td colspan="16" align="right">Total Keseluruhan : </td>
+    <td align="right">
+      <?php
+      if ($_GET['filter'] == '1') {
+        $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli_id = " . $_GET['pembeli'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+        $data2 = mysqli_fetch_array($query2);
+      } else if ($_GET['filter'] == '2') {
+        if ($_GET['provinsi'] == 'all') {
+          $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli.id=barang_dijual.pembeli_id and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+          $data2 = mysqli_fetch_array($query2);
+        } else {
+          if ($_GET['kabupaten'] == 'all') {
+            $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+            $data2 = mysqli_fetch_array($query2);
+          } else {
+            if ($_GET['kecamatan'] == 'all') {
+              $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+              $data2 = mysqli_fetch_array($query2);
+            } else {
+              $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and pembeli.kecamatan_id = " . $_GET['kecamatan'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+              $data2 = mysqli_fetch_array($query2);
+            }
+          }
+        }
+      } else {
+        $query2 = mysqli_query($koneksi, "select sum(qty_jual*harga_jual_saat_itu) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+        $data2 = mysqli_fetch_array($query2);
+      }
+
+      echo number_format($data2['totall'], 2, ',', '.');
+      ?>
+    </td>
+    <!-- <td colspan="7" align="right">Neto Keseluruhan : </td>
+    <td>
+      <?php
+      if ($_GET['filter'] == '1') {
+        $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli_id = " . $_GET['pembeli'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+        $data22 = mysqli_fetch_array($query22);
+      } else if ($_GET['filter'] == '2') {
+        if ($_GET['provinsi'] == 'all') {
+          $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and pembeli.id=barang_dijual.pembeli_id and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+          $data22 = mysqli_fetch_array($query22);
+        } else {
+          if ($_GET['kabupaten'] == 'all') {
+            $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+            $data22 = mysqli_fetch_array($query22);
+          } else {
+            if ($_GET['kecamatan'] == 'all') {
+              $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+              $data22 = mysqli_fetch_array($query22);
+            } else {
+              $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty,pembeli where barang_dijual.id=barang_dijual_qty.barang_dijual_id and pembeli.id=barang_dijual.pembeli_id and status_awal = 1 and pembeli.provinsi_id = " . $_GET['provinsi'] . " and pembeli.kabupaten_id = " . $_GET['kabupaten'] . " and pembeli.kecamatan_id = " . $_GET['kecamatan'] . " and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+              $data22 = mysqli_fetch_array($query22);
+            }
+          }
+        }
+      } else {
+        $query22 = mysqli_query($koneksi, "select sum(neto) as totall from barang_dijual,barang_dijual_qty where barang_dijual.id=barang_dijual_qty.barang_dijual_id and status_awal = 1 and barang_dijual.tgl_jual between '" . $_GET['tgl1'] . "' and '" . $_GET['tgl2'] . "'");
+        $data22 = mysqli_fetch_array($query22);
+      }
+
+      echo number_format($data22['totall'], 2, ',', '.');
+      ?>
+    </td> -->
+    <td colspan="10"></td>
+  </tr>
 </table>

@@ -143,7 +143,7 @@ header("Content-disposition: inline; filename=Surat Jalan Aksesoris - $data[no_p
 <table width="100%">
   <tr>
     <td width="31%"></td>
-    <td width="36%" align="center" valign="top"><p>Mengetahui<br>PJT</p>
+    <td width="36%" align="center" valign="top"><p>Mengetahui<br>PLTS PJT</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p></td>
     <td width="33%" valign="top"></td>

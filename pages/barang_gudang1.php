@@ -95,6 +95,13 @@ if (isset($_POST['print'])) {
           <div class="box-footer">
             <div class="box-body">
               <div class="">
+                <div class="pull pull-left">
+                  <select class="form-control" name="jenis_po" id="jenis_po" onchange="ubahJenisPO();">
+                    <option value="All" selected>Semua</option>
+                    <option value="Dalam Negeri">Dalam Negeri</option>
+                    <option value="Luar Negeri">Luar Negeri</option>
+                  </select>
+                </div>
                 <?php include "include/getInputSearch.php"; ?>
                 <div id="table" style="margin-top: 10px;"></div>
                 <section class="col-lg-12">
@@ -272,6 +279,7 @@ if (isset($_POST['print'])) {
 
   function modalBarang(id) {
     $('#modal-detailbarang').modal('show');
+    loading2('#modal-data-barang')
     $.get("data/modal-barang-gudang1.php", {
         id: id
       },
@@ -327,5 +335,11 @@ if (isset($_POST['print'])) {
     } else {
       $('#filterData').html('');
     }
+  }
+
+  function ubahJenisPO() {
+    let keyy = $('#keyword').val();
+    loading()
+    loadMore(load_flag, keyy)
   }
 </script>

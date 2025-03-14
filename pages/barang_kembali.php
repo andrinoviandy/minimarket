@@ -1,40 +1,3 @@
-<?php
-if (isset($_GET['id_hapus'])) {
-  //$sel = mysqli_fetch_array(mysqli_query($koneksi, "select barang_dikirim_id from barang_kembali where id=".$_GET['id_hapus'].""));
-  $sel = mysqli_query($koneksi, "select * from barang_kembali,barang_kembali_detail where barang_kembali.id=barang_kembali_detail.barang_kembali_id and barang_kembali.id=" . $_GET['id_hapus'] . "");
-  while ($up = mysqli_fetch_array($sel)) {
-    $update = mysqli_query($koneksi, "update barang_dikirim_detail,barang_gudang_detail set status_kirim=1, status_kerusakan=0, status_kembali_ke_gudang=0, status_batal=0 where where barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dikirim_id=" . $up['barang_dikirim_id'] . "");
-  }
-  $del = mysqli_query($koneksi, "delete from barang_kembali_detail where barang_kembali_id=" . $_GET['id_hapus'] . "");
-  $del2 = mysqli_query($koneksi, "delete from barang_kembali where id=" . $_GET['id_hapus'] . "");
-  if ($update and $del and $del2) {
-    //mysqli_query($koneksi, "update barang_dikirim set status_barang_kembali=0 where id=".$sel['barang_dikirim_id']."");
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-green',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Berhasil Dihapus',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    })
-    </script>";
-  } else {
-    echo "<script>
-    Swal.fire({
-      customClass: {
-        confirmButton: 'bg-red',
-        cancelButton: 'bg-white',
-      },
-      title: 'Data Gagal Dihapus',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    })
-    </script>";
-  }
-}
-?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -125,7 +88,7 @@ if (isset($_GET['id_hapus'])) {
 </div>
 
 <script>
-  function hapus(id_hapus) {
+  function hapus(id_hapus, no_retur) {
     Swal.fire({
       customClass: {
         confirmButton: 'bg-red',
@@ -139,7 +102,18 @@ if (isset($_GET['id_hapus'])) {
       cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id_hapus;
+        $.post("data/hapus-barang-kembali-tabel.php", {id_hapus: id_hapus},
+          function (data, textStatus, jqXHR) {
+            if (data === 'S') {
+              addRiwayat('DELETE', 'barang_kembali', id_hapus, 'Menghapus Data Pengembalian Barang Rusak (NO_RETUR : ' + no_retur + ')')
+              alertHapus('S');
+              loadMore(load_flag, key, status_b);
+            } else {
+              alertHapus('F');
+            }
+          }
+        );
+        // window.location.href = '?page=' + getVars("page").replace('#', '') + '&id_hapus=' + id_hapus;
       }
     })
   }

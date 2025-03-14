@@ -920,7 +920,7 @@ if (isset($_POST['tambah_riwayat'])) {
   }
 
   function ubahDataQty(id_jual, id_ubah) {
-    loading_data('#isi_barang_jual');
+    showLoading(1)
     $.post("data/ubah_qty_jual.php", {
         harga: $('#harga_ubah_jual').val(),
         qty: $('#qty_ubah_jual').val(),
@@ -930,7 +930,7 @@ if (isset($_POST['tambah_riwayat'])) {
       },
       function(data) {
         if (data == 'S') {
-          addRiwayat('UPDATE', 'barang_dijual_qty', id, 'Mengubah Kuantitas Barang (ID_PO : ' + id_jual + ', ID_QTY : ' + id_ubah + ')')
+          addRiwayat('UPDATE', 'barang_dijual_qty', id_ubah, 'Mengubah Kuantitas Barang (ID_PO : ' + id_jual + ', ID_QTY : ' + id_ubah + ')')
           $('#modal-ubahitem').modal('hide');
           Swal.fire({
             customClass: {
@@ -959,7 +959,7 @@ if (isset($_POST['tambah_riwayat'])) {
     );
   }
 
-  function hapusBarangJual(id) {
+  function hapusBarangJual(id, nm_brg) {
     Swal.fire({
       customClass: {
         confirmButton: 'bg-red',
@@ -980,7 +980,8 @@ if (isset($_POST['tambah_riwayat'])) {
             dpp: <?php echo $data['include_dpp']; ?>
           },
           function(data) {
-            addRiwayat('DELETE', 'barang_dijual_qty', id, 'Menghapus Rincian Barang (ID_QTY : ' + id + ')')
+            let no_po = '<?php echo $data['no_po_jual']; ?>';
+            addRiwayat('DELETE', 'barang_dijual_qty', id, 'Menghapus Rincian Barang (NO_PO : ' + no_po + ', BRG : ' + nm_brg + ')')
             reloadBarang($('#id_pilih').val());
           }
         );
@@ -1001,7 +1002,8 @@ if (isset($_POST['tambah_riwayat'])) {
       },
       function(data) {
         if (data == 'S') {
-          addRiwayat('INSERT', 'barang_dijual_qty', id, 'Menambah Rincian Barang (ID_PO : ' + id + ')')
+          let no_po = '<?php echo $data['no_po_jual']; ?>';
+          addRiwayat('INSERT', 'barang_dijual_qty', id, 'Menambah Rincian Barang (NO_PO : ' + no_po + ')')
           $('#modal-tambah').modal('hide');
           Swal.fire({
             customClass: {

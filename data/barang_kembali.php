@@ -121,7 +121,7 @@ error_reporting(0);
                     <td align="center">
                         <?php if (isset($_SESSION['user_administrator']) && isset($_SESSION['pass_administrator'])) { ?>
                             <!-- <a href="index.php?page=barang_kembali&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"> -->
-                            <a href="#" onclick="hapus(<?php echo $json[$i]['idd']; ?>)">
+                            <a href="#" onclick="hapus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['no_retur']; ?>')">
                                 <button class="btn btn-xs btn-danger">
                                     <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
                                 </button>

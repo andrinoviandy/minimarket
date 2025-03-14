@@ -581,6 +581,9 @@ if (isset($_GET['page'])) {
 	} else if ($_GET['page'] == 'progress_barang_kembali' or $_GET['page'] == 'progress_barang_kembali_detail' or $_GET['page'] == 'tambah_progress_barang_kembali' or $_GET['page'] == 'tambah_progress_barang_kembali2') {
 		$bagian_teknisi = "active";
 		$progress_barang_kembali = "active";
+	} else if ($_GET['page'] == 'detail_laporan_kerusakan_cs') {
+		$bagian_teknisi = "active";
+		$act7 = "active";
 	} else if ($_GET['page'] == 'pembuatan_spk') {
 		$bagian_teknisi = "active";
 		$act7 = "active";

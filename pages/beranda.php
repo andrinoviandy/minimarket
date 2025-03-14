@@ -15,91 +15,162 @@
   <section class="content">
     <!-- Small boxes (Stat box) -->
     <?php
+
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+
     if (isset($_SESSION['user_administrator'])) {
     ?>
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-12">
+          <div id="resetFilter"></div>
+          <button class="btn btn-sm btn-primary pull-right margin-r-5" onclick="modalFilterAlkes()"><i class="fa fa-cog"></i> Filter</button>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3><?php
-                  $data1 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_gudang"));
-                  $data1_1 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_gudang_detail"));
-                  if ($data1['jml'] == 0) {
-                    echo "0";
-                  } else {
-                    echo $data1['jml'] . "/<font style='font-size:16px'>" . $data1_1['jml'] . "</font>";
-                  }
-                  ?></h3>
+        <div class="col-lg-12 no-padding">
+          <div class="col-lg-6 no-padding">
+            <div class="col-lg-6 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner" style="height: 105px;">
+                  <h3><?php
+                      $data1 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_gudang"));
+                      $data1_1 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_gudang_detail"));
+                      if ($data1['jml'] == 0) {
+                        echo "0";
+                      } else {
+                        echo $data1['jml'] . "/<font style='font-size:16px'>" . $data1_1['jml'] . "</font>";
+                      }
+                      ?></h3>
 
-              <p>Jenis Alkes / Jumlah Alkes</p>
+                  <p>Jenis Alkes / Jumlah Alkes</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-cubes"></i>
+                </div>
+                <a href="index.php?page=barang_masuk" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-cubes"></i>
+            <div class="col-lg-6 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner" style="height: 105px;">
+                  <div id="jumlah_penjualan"></div>
+                  <p>Penjualan Alkes (<?php echo Date('Y') ?>)</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-sign-out"></i>
+                </div>
+                <a href="index.php?page=jual_barang" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
             </div>
-            <a href="index.php?page=barang_masuk" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
+            <div class="col-lg-6 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-purple">
+                <div class="inner" style="height: 105px;">
+                  <div id="jumlah_pembelian_dalam"></div>
+                  <p>Pembelian Alkes Dalam Negeri (<?php echo Date('Y') ?>)</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-sign-in"></i>
+                </div>
+                <a href="index.php?page=pembelian_alkes" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner" style="height: 105px;">
+                  <div id="jumlah_pembelian_luar"></div>
+                  <p>Pembelian Alkes Luar Negeri (<?php echo Date('Y') ?>)</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-sign-in"></i>
+                </div>
+                <a href="index.php?page=pembelian_alkes2" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3><?php
-                  $data2 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_dikirim_detail"));
-                  if ($data2['jml'] == 0) {
-                    echo "0";
-                  } else {
-                    echo $data2['jml'];
-                  }
-                  ?></h3>
-
-              <p>Penjualan Alkes</p>
+          <div class="col-lg-6">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Stok Barang</h3>
+                <div class="box-tools pull-right">
+                </div>
+              </div>
+              <div class="box-body table-responsive">
+                <table class="table table-hover">
+                  <thead style="position: sticky; top: 0; background-color: #fff; z-index: 1; display: table; table-layout: fixed; width: 100%">
+                    <tr>
+                      <th style="width: 46px;">Merk</th>
+                      <th style="width: 46px">Tipe</th>
+                      <th style="width: 56px">Alkes</th>
+                      <th style="width: 50px">Stok_Sisa</th>
+                      <th style="width: 50px">Stok_PO(Pemb)</th>
+                    </tr>
+                  </thead>
+                  <!-- <tbody>
+                    <tr>
+                      <td style="width: 120px;">Merk</td>
+                      <td style="width: 120px">Tipe</td>
+                      <td style="width: 150px">Alkes</td>
+                      <td style="width: 100px">20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Merk</td>
+                      <td>Tipe</td>
+                      <td>Alkes</td>
+                      <td>20</td>
+                    </tr>
+                  </tbody> -->
+                  <tbody id="stok_barang" style="display: block; height: 177px; overflow-y: scroll; width: 100%; table-layout: fixed">
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.box-body -->
             </div>
-            <div class="icon">
-              <i class="fa fa-sign-out"></i>
-            </div>
-            <a href="index.php?page=jual_barang" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-purple">
-            <div class="inner">
-              <h3><?php
-                  $data5 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty) as totall from barang_pesan_detail,barang_pesan where barang_pesan.id=barang_pesan_detail.barang_pesan_id and jenis_po='Dalam Negeri'"));
-                  if ($data5['totall'] == 0) {
-                    echo "0";
-                  } else {
-                    echo $data5['totall'];
-                  }
-                  ?></h3>
-
-              <p>Pembelian Alkes Dalam Negeri</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-sign-in"></i>
-            </div>
-            <a href="index.php?page=pembelian_alkes" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><?php
-                  $data6 = mysqli_fetch_array(mysqli_query($koneksi, "select sum(qty) as totall from barang_pesan_detail,barang_pesan where barang_pesan.id=barang_pesan_detail.barang_pesan_id and jenis_po='Luar Negeri'"));
-                  if ($data6['totall'] == 0) {
-                    echo "0";
-                  } else {
-                    echo $data6['totall'];
-                  }
-                  ?></h3>
-              <p>Pembelian Alkes Luar Negeri</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-sign-in"></i>
-            </div>
-            <a href="index.php?page=pembelian_alkes2" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>
@@ -415,6 +486,30 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="modal-filter-alkes">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class=""></i> Posisi Stok</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="post" id="formAlkes" enctype="multipart/form-data" onsubmit="filterAlkes(); return false;">
+        <div class="modal-body">
+          <div id="data-modal-alkes"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button name="alkesss" class="btn btn-primary pull-right" type="submit"><span class="fa fa-cog"></span> Filter</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <div class="modal fade" id="modal-filter-penjualan">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -461,6 +556,8 @@
   <!-- /.modal-dialog -->
 </div>
 <script>
+  var flagFilter = 'F';
+
   function ucwords(str) {
     // Memisahkan string menjadi array kata
     let words = str.toLowerCase().split(' ');
@@ -472,6 +569,15 @@
 
     // Menggabungkan kembali array kata menjadi sebuah string
     return words.join(' ');
+  }
+
+  function modalFilterAlkes() {
+    $.get("data/modal-filter-alkes.php",
+      function(data) {
+        $('#data-modal-alkes').html(data);
+      }
+    );
+    $('#modal-filter-alkes').modal('show')
   }
 
   function modalFilterPenjualan() {
@@ -642,6 +748,83 @@
     $('#modal-filter-penjualan').modal('hide')
   }
 
+  async function filterAlkes() {
+    var merk = $('#merk').val()
+    var tipe = $('#tipe').val()
+    var alkes = $('#alkes').val()
+
+    function getPenjualanAlkes1() {
+      loading2('#jumlah_penjualan')
+      $.get("data/getPenjualanAlkes.php", {
+          merk: merk,
+          tipe: tipe,
+          alkes: alkes
+        },
+        function(data) {
+          $('#jumlah_penjualan').html(data);
+        }
+      );
+    }
+
+    function getPembelianAlkesDalamNegeri1() {
+      loading2('#jumlah_pembelian_dalam')
+      $.get("data/getPembelianAlkesDalam.php", {
+          merk: merk,
+          tipe: tipe,
+          alkes: alkes
+        },
+        function(data) {
+          $('#jumlah_pembelian_dalam').html(data);
+        }
+      );
+    }
+
+    function getPembelianAlkesLuarNegeri1() {
+      loading2('#jumlah_pembelian_luar')
+      $.get("data/getPembelianAlkesLuar.php", {
+          merk: merk,
+          tipe: tipe,
+          alkes: alkes
+        },
+        function(data) {
+          $('#jumlah_pembelian_luar').html(data);
+        }
+      );
+    }
+
+    function getStokBarang1() {
+      loading2('#stok_barang')
+      $.get("data/getStokBarang.php", {
+          merk: merk,
+          tipe: tipe,
+          alkes: alkes
+        },
+        function(data) {
+          $('#stok_barang').html(data);
+        }
+      );
+    }
+
+    await getPenjualanAlkes1()
+    await getPembelianAlkesDalamNegeri1()
+    await getPembelianAlkesLuarNegeri1()
+    await getStokBarang1()
+
+    flagFilter = 'T'
+    $('#resetFilter').html("<button class='btn btn-sm btn-info pull-right' onclick='resetFilter()'>Reset</button>");
+
+    $('#modal-filter-alkes').modal('hide')
+  }
+
+  async function resetFilter() {
+    await getPenjualanAlkes()
+    await getPembelianAlkesDalamNegeri()
+    await getPembelianAlkesLuarNegeri()
+    $('#stok_barang').html("<tr><td colspan='4' width='500' height='177px' valign='center' align='center' style='padding-top:20px; font-size: 100px; color: gray'><span class='fa fa-folder-open-o'></span></td></tr>");
+    $('#resetFilter').html("");
+
+  }
+
   function loadingBar() {
     $.get("include/getLoading.php", function(data) {
       $('#barChart').html(data);
@@ -719,10 +902,55 @@
 
   }
 
+  function getPenjualanAlkes() {
+    loading2('#jumlah_penjualan')
+    $.get("data/getPenjualanAlkes.php", {},
+      function(data) {
+        $('#jumlah_penjualan').html(data);
+      }
+    );
+  }
+
+  function getPembelianAlkesDalamNegeri() {
+    loading2('#jumlah_pembelian_dalam')
+    $.get("data/getPembelianAlkesDalam.php", {
+        // id: id
+      },
+      function(data) {
+        $('#jumlah_pembelian_dalam').html(data);
+      }
+    );
+  }
+
+  function getPembelianAlkesLuarNegeri() {
+    loading2('#jumlah_pembelian_luar')
+    $.get("data/getPembelianAlkesLuar.php", {
+        // id: id
+      },
+      function(data) {
+        $('#jumlah_pembelian_luar').html(data);
+      }
+    );
+  }
+
+  function getStokBarang() {
+    // loading2('#stok_barang')
+    // $.get("data/getStokBarang.php", {},
+    //   function(data) {
+    //     $('#stok_barang').html(data);
+    //   }
+    // );
+    $('#stok_barang').html("<tr><td colspan='4' width='500' height='177px' valign='center' align='center' style='padding-top:20px; font-size: 100px; color: gray'><span class='fa fa-folder-open-o'></span></td></tr>");
+  }
+
   $(document).ready(function() {
     // setInterval(() => {
     // areaChart($('#tahun_now1').val());
     // barChart($('#tahun_now2').val());
+    getPenjualanAlkes()
+    getPembelianAlkesDalamNegeri()
+    getPembelianAlkesLuarNegeri()
+    getStokBarang()
     areaChart();
     barChart();
     // }, 3500);

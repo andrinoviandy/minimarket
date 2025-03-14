@@ -18,29 +18,29 @@ error_reporting(0);
 <body>
     <?php
     $start = $_GET['start'];
-
+    $jenis_po = str_replace(" ", "%20", $_GET['jenis_po']);
     if (isset($_GET['cari'])) {
         $search = str_replace(" ", "%20", $_GET['cari']);
         if (isset($_GET['mutasi'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "&jenis_po=".$jenis_po."");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&cari=" . $search . "&jenis_po=".$jenis_po."");
         } else if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "&jenis_po=".$jenis_po."");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "&jenis_po=".$jenis_po."");
         } else {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "&jenis_po=".$jenis_po."");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "&jenis_po=".$jenis_po."");
         }
     } else {
         if (isset($_GET['mutasi'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&jenis_po=".$jenis_po."");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?tgldari=" . $_GET['tgl1'] . "&tglsampai=" . $_GET['tgl2'] . "&mutasi=" . $_GET['mutasi'] . "&jenis_po=".$jenis_po."");
         } else if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start");
-            $file2 = file_get_contents($API . "json/$_GET[page].php");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&jenis_po=".$jenis_po."");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?jenis_po=".$jenis_po."");
         } else {
             $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+            $file2 = file_get_contents($API . "json/$_GET[page].php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "&jenis_po=".$jenis_po."");
         }
     }
     $json = json_decode($file, true);

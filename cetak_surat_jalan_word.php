@@ -149,7 +149,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         </tr>
       </table>
       <br>
-      <table width="100%" class="mytable" style="font-size:13px">
+      <table width="100%" class="mytable" style="font-size:13px; margin-botom: 5px">
         <tr>
           <th align="center"><strong>No</strong></th>
           <th align="center"><strong>NIE</strong></th>
@@ -343,7 +343,8 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
           <?php } ?>
         <?php } ?>
       </table>
-      <br>
+      Keterangan : <?php echo $data2['keterangan']; ?>
+      <br><br>
       <table width="100%">
         <tr>
           <td width="31%">
@@ -378,7 +379,7 @@ header("Content-disposition: inline; filename=Surat Jalan - $data2[no_pengiriman
         <tr>
           <td width="31%"></td>
           <td width="36%" align="center" valign="top">
-            <p>Mengetahui<br>PJT</p>
+            <p>Mengetahui<br>PLTS PJT</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
           </td>

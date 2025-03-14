@@ -81,7 +81,7 @@ error_reporting(0);
                                                                                                     ?>&id_hapus=<?php //echo $data_akse['idd']; 
                                                                                                                 ?>&id_barang_jual=<?php //echo $dt['id'] 
                                                                                                                                 ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"> -->
-                                            <a class="btn btn-xs btn-danger" onclick="hapusBarangJual('<?php echo $data_akse['idd']; ?>')">
+                                            <a class="btn btn-xs btn-danger" onclick="hapusBarangJual('<?php echo $data_akse['idd']; ?>', '<?php echo $data_akse['nama_brg']; ?>')">
                                                 <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
                                             </a>
                                     <?php }
