@@ -8,7 +8,7 @@ error_reporting(0);
     <table class="table table-hover table-bordered" id="example1">
         <thead>
             <tr>
-                <th class="bg-info">RS/Dinas/Dll</th>
+                <th class="bg-info">Dinas/Sekolah/Dll</th>
                 <th class="bg-info">Alkes</th>
                 <th class="bg-info">Tipe</th>
                 <th class="bg-primary">Januari</th>

@@ -145,23 +145,23 @@ error_reporting(0);
 
   // membuka file JSON
   if ($_GET['filter'] == '1') {
-    $file = file_get_contents("http://localhost/ALKES_2/json/rekapan_penjualan.php?filter=1&pembeli=" . $_GET['pembeli'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+    $file = file_get_contents("http://localhost/BANK/json/rekapan_penjualan.php?filter=1&pembeli=" . $_GET['pembeli'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
   } else if ($_GET['filter'] == '2') {
     if ($_GET['provinsi'] == 'all') {
-      $file = file_get_contents("http://localhost/ALKES_2/json/rekapan_penjualan.php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+      $file = file_get_contents("http://localhost/BANK/json/rekapan_penjualan.php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
     } else {
       if ($_GET['kabupaten'] == 'all') {
-        $file = file_get_contents("http://localhost/ALKES_2/json/rekapan_penjualan.php?filter=2&provinsi=" . $_GET['provinsi'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+        $file = file_get_contents("http://localhost/BANK/json/rekapan_penjualan.php?filter=2&provinsi=" . $_GET['provinsi'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
       } else {
         if ($_GET['kecamatan'] == 'all') {
-          $file = file_get_contents("http://localhost/ALKES_2/json/rekapan_penjualan.php?filter=2&provinsi=" . $_GET['provinsi'] . "&kabupaten=" . $_GET['kabupaten'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+          $file = file_get_contents("http://localhost/BANK/json/rekapan_penjualan.php?filter=2&provinsi=" . $_GET['provinsi'] . "&kabupaten=" . $_GET['kabupaten'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
         } else {
-          $file = file_get_contents("http://localhost/ALKES_2/json/rekapan_penjualan.php?filter=2&provinsi=" . $_GET['provinsi'] . "&kabupaten=" . $_GET['kabupaten'] . "&kecamatan=" . $_GET['kecamatan'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+          $file = file_get_contents("http://localhost/BANK/json/rekapan_penjualan.php?filter=2&provinsi=" . $_GET['provinsi'] . "&kabupaten=" . $_GET['kabupaten'] . "&kecamatan=" . $_GET['kecamatan'] . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
         }
       }
     }
   } else {
-    $file = file_get_contents("http://localhost/ALKES_2/json/rekapan_penjualan.php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+    $file = file_get_contents("http://localhost/BANK/json/rekapan_penjualan.php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
   }
   $json = json_decode($file, true);
   $jml = count($json);

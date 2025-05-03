@@ -29,7 +29,7 @@ Tanggal : <?php echo date("d/m/Y", strtotime($_POST['tgl1']))." - ".date("d/m/Y"
   <?php
  
 // membuka file JSON
-$file = file_get_contents("http://localhost/ALKES/json/spi.php?tgl1=".$_POST['tgl1']."&tgl2=".$_POST['tgl2']."");
+$file = file_get_contents("http://localhost/BANK/json/spi.php?tgl1=".$_POST['tgl1']."&tgl2=".$_POST['tgl2']."");
 $json = json_decode($file, true);
 $jml=count($json); 
 for ($i=0; $i<$jml; $i++) {

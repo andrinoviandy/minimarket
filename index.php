@@ -36,7 +36,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>MANAJEMEN ALKES (Registrasi)</title>
+    <title>Bank Mini</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- folder js -->
@@ -255,7 +255,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
         width: 100%;
       }
     </style>
-    <link href='kharisma.png' rel='icon'>
+    <link href='img/logo.png' rel='icon'>
 
     <script>
       function tandaPemisahTitik(b) {
@@ -351,9 +351,9 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
         <!-- Logo -->
         <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>KHR</b></span>
+          <span class="logo-mini"><b>SIMK</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Manajemen Alkes</b></span>
+          <span class="logo-lg"><b>Man. Keuangan</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->

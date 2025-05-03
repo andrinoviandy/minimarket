@@ -73,9 +73,9 @@
 
                   // membuka file JSON
                   if (isset($_SESSION['id_b'])) {
-                    $file = file_get_contents("http://localhost/ALKES_2/json/pembuatan_spk2.php?id=$_GET[id]&id_b=$_SESSION[id_b]");
+                    $file = file_get_contents("http://localhost/BANK/json/pembuatan_spk2.php?id=$_GET[id]&id_b=$_SESSION[id_b]");
                   } else {
-                    $file = file_get_contents("http://localhost/ALKES_2/json/pembuatan_spk2.php?id=$_GET[id]");
+                    $file = file_get_contents("http://localhost/BANK/json/pembuatan_spk2.php?id=$_GET[id]");
                   }
                   $json = json_decode($file, true);
                   $jml = count($json);

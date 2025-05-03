@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ALKES | Log in</title>
+  <title>Bank | Log In</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -27,16 +27,16 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link href='logo.png' rel='icon' />
+  <link href='img/logo.png' rel='icon' />
 </head>
 
-<body class="hold-transition login-page" style="overflow: hidden; background-image:url('img/bg_kharisma.jpg'); background-repeat:no-repeat; background-position:center; background-size:cover">
+<body class="hold-transition login-page" style="overflow: hidden; background-image:url('img/background.jpg'); background-repeat:no-repeat; background-position:center; background-size:cover">
   <div class="login-box">
     <div class="login-logo">
-      <a href=""><b style="color:#FFF"><img src="kharisma.png" width="70%" /></b></a>
+      <a href=""><b style="color:#FFF"><img src="img/logo.png" width="70%" /></b></a>
     </div>
     <div class="login-box-body" style="background: rgba(255, 255, 255, 0.6);">
-      <p class="login-box-msg"><strong style="font-size:20px">PT C.V. Kharisma Utama</strong></p>
+      <p class="login-box-msg"><strong style="font-size:20px">Bank Mini</strong></p>
 
       <form action="proses_login.php" method="post">
         <div class="form-group has-feedback">

@@ -127,11 +127,11 @@ if (isset($_GET['id_hapus'])) {
                     </thead>
                     <?php
                     if (isset($_GET['pilihan']) and isset($_GET['kunci'])) {
-                      $file = file_get_contents("http://localhost/ALKES_2/json/riwayat_hutang_piutang.php?id=$_GET[id]&pilihan=$_GET[pilihan]&kunci=" . str_replace(" ", "%20", $_GET['kunci']) . "");
+                      $file = file_get_contents("http://localhost/BANK/json/riwayat_hutang_piutang.php?id=$_GET[id]&pilihan=$_GET[pilihan]&kunci=" . str_replace(" ", "%20", $_GET['kunci']) . "");
                     } elseif (isset($_GET['tgl1']) and isset($_GET['tgl2'])) {
-                      $file = file_get_contents("http://localhost/ALKES_2/json/riwayat_hutang_piutang.php?id=$_GET[id]&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+                      $file = file_get_contents("http://localhost/BANK/json/riwayat_hutang_piutang.php?id=$_GET[id]&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
                     } else {
-                      $file = file_get_contents("http://localhost/ALKES_2/json/riwayat_hutang_piutang.php?id=$_GET[id]");
+                      $file = file_get_contents("http://localhost/BANK/json/riwayat_hutang_piutang.php?id=$_GET[id]");
                     }
                     $json = json_decode($file, true);
                     $jml = count($json);
@@ -342,11 +342,11 @@ if (isset($_GET['id_hapus'])) {
                     </thead>
                     <?php
                     if (isset($_GET['pilihan']) and isset($_GET['kunci'])) {
-                      $file = file_get_contents("http://localhost/ALKES_2/json/riwayat_hutang_piutang.php?id=$_GET[id]&pilihan=$_GET[pilihan]&kunci=" . str_replace(" ", "%20", $_GET['kunci']) . "");
+                      $file = file_get_contents("http://localhost/BANK/json/riwayat_hutang_piutang.php?id=$_GET[id]&pilihan=$_GET[pilihan]&kunci=" . str_replace(" ", "%20", $_GET['kunci']) . "");
                     } elseif (isset($_GET['tgl1']) and isset($_GET['tgl2'])) {
-                      $file = file_get_contents("http://localhost/ALKES_2/json/riwayat_hutang_piutang.php?id=$_GET[id]&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+                      $file = file_get_contents("http://localhost/BANK/json/riwayat_hutang_piutang.php?id=$_GET[id]&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
                     } else {
-                      $file = file_get_contents("http://localhost/ALKES_2/json/riwayat_hutang_piutang.php?id=$_GET[id]");
+                      $file = file_get_contents("http://localhost/BANK/json/riwayat_hutang_piutang.php?id=$_GET[id]");
                     }
                     $json = json_decode($file, true);
                     $jml = count($json);
@@ -546,19 +546,19 @@ if (isset($_GET['id_hapus'])) {
                       // membuka file JSON
                       if (isset($_GET['id_keuangan'])) {
                         if (isset($_GET['pilihan2']) and isset($_GET['kunci2'])) {
-                          $file = file_get_contents("http://localhost/ALKES_2/json/ubah_buku_kas.php?id_keuangan=$_GET[id_keuangan]&id=$_GET[id]&pilihan=$_GET[pilihan2]&kunci=" . str_replace(" ", "%20", $_GET['kunci2']) . "");
+                          $file = file_get_contents("http://localhost/BANK/json/ubah_buku_kas.php?id_keuangan=$_GET[id_keuangan]&id=$_GET[id]&pilihan=$_GET[pilihan2]&kunci=" . str_replace(" ", "%20", $_GET['kunci2']) . "");
                         } elseif (isset($_GET['tgl_awal']) and isset($_GET['tgl_akhir'])) {
-                          $file = file_get_contents("http://localhost/ALKES_2/json/ubah_buku_kas.php?id_keuangan=$_GET[id_keuangan]&id=$_GET[id]&tgl1=" . $_GET['tgl_awal'] . "&tgl2=" . $_GET['tgl_akhir'] . "");
+                          $file = file_get_contents("http://localhost/BANK/json/ubah_buku_kas.php?id_keuangan=$_GET[id_keuangan]&id=$_GET[id]&tgl1=" . $_GET['tgl_awal'] . "&tgl2=" . $_GET['tgl_akhir'] . "");
                         } else {
-                          $file = file_get_contents("http://localhost/ALKES_2/json/ubah_buku_kas.php?id_keuangan=$_GET[id_keuangan]&id=$_GET[id]");
+                          $file = file_get_contents("http://localhost/BANK/json/ubah_buku_kas.php?id_keuangan=$_GET[id_keuangan]&id=$_GET[id]");
                         }
                       } else {
                         if (isset($_GET['pilihan2']) and isset($_GET['kunci2'])) {
-                          $file = file_get_contents("http://localhost/ALKES_2/json/ubah_buku_kas.php?id=$_GET[id]&pilihan=$_GET[pilihan2]&kunci=" . str_replace(" ", "%20", $_GET['kunci2']) . "");
+                          $file = file_get_contents("http://localhost/BANK/json/ubah_buku_kas.php?id=$_GET[id]&pilihan=$_GET[pilihan2]&kunci=" . str_replace(" ", "%20", $_GET['kunci2']) . "");
                         } elseif (isset($_GET['tgl_awal']) and isset($_GET['tgl_akhir'])) {
-                          $file = file_get_contents("http://localhost/ALKES_2/json/ubah_buku_kas.php?id=$_GET[id]&tgl1=" . $_GET['tgl_awal'] . "&tgl2=" . $_GET['tgl_akhir'] . "");
+                          $file = file_get_contents("http://localhost/BANK/json/ubah_buku_kas.php?id=$_GET[id]&tgl1=" . $_GET['tgl_awal'] . "&tgl2=" . $_GET['tgl_akhir'] . "");
                         } else {
-                          $file = file_get_contents("http://localhost/ALKES_2/json/ubah_buku_kas.php?id=$_GET[id]");
+                          $file = file_get_contents("http://localhost/BANK/json/ubah_buku_kas.php?id=$_GET[id]");
                         }
                       }
                       $json = json_decode($file, true);
@@ -641,7 +641,7 @@ if (isset($_GET['id_hapus'])) {
                     <?php
 
                     // membuka file JSON
-                    $file = file_get_contents("http://localhost/ALKES_2/json/reimburse.php");
+                    $file = file_get_contents("http://localhost/BANK/json/reimburse.php");
                     $json = json_decode($file, true);
                     $jml = count($json);
                     for ($i = 0; $i < $jml; $i++) {

@@ -20,7 +20,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Grafik Penjualan Alkes</h3>
+                            <h3 class="box-title">Grafik Penjualan Barang</h3>
                             <div class="box-tools pull-right">
                                 <button class="btn btn-sm btn-primary" onclick="modalFilterPenjualan(); return false"><i class="fa fa-cog"></i> Filter</button>
                             </div>
@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Tabel Penjualan Alkes</h3>
+                            <h3 class="box-title">Tabel Penjualan Barang</h3>
 
                             <div class="box-tools pull-right">
                                 <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -206,7 +206,7 @@
         //--------------
         let dataa;
         // Get context with jQuery - using jQuery's .get() method.
-        // await $.get("http://localhost/ALKES_2/json/monitoring_penjualan.php", {
+        // await $.get("http://localhost/BANK/json/monitoring_penjualan.php", {
         await $.get("http://173.212.225.28/ALKES_2/json/monitoring_penjualan.php", {
                 alkes: alkes ? alkes : 'all',
                 filter: filter ? filter : '',

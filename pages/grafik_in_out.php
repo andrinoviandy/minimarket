@@ -236,7 +236,7 @@
         //--------------
         let data_in, data_out;
         // Get context with jQuery - using jQuery's .get() method.
-        // await $.get("http://localhost/ALKES_2/json/monitoring_penjualan.php", {
+        // await $.get("http://localhost/BANK/json/monitoring_penjualan.php", {
         await $.get("http://173.212.225.28/ALKES_2/json/in_barang.php", {
                 alkes: alkes ? alkes : 'all',
                 tipe: tipe ? tipe : 'all',

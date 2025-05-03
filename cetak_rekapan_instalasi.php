@@ -70,7 +70,7 @@ Filter From <?php echo $t1 . " - " . $t2; ?>
     <?php
 
     // membuka file JSON
-    $file = file_get_contents("http://localhost/ALKES_2/json/cetak_rekapan_instalasi.php?merk=" . str_replace(" ", "%20", $_GET['merk']) . "&tgl1=$_GET[tgl1]&tgl2=$_GET[tgl2]");
+    $file = file_get_contents("http://localhost/BANK/json/cetak_rekapan_instalasi.php?merk=" . str_replace(" ", "%20", $_GET['merk']) . "&tgl1=$_GET[tgl1]&tgl2=$_GET[tgl2]");
     $json = json_decode($file, true);
     $jml = count($json);
     for ($i = 0; $i < $jml; $i++) {

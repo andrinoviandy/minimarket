@@ -145,7 +145,7 @@ if (isset($_POST['pos'])) {
 </div>
 
 <div class="modal fade" id="modal-cetak">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -154,31 +154,55 @@ if (isset($_POST['pos'])) {
           <center>Cetak Rekapan Penjualan Barang</center>
         </h4>
       </div>
-      <form method="post" enctype="multipart/form-data" onsubmit="cetakRekapan(); return false;">
-        <div class="modal-body">
-          <label>Dari Tanggal</label>
-          <input name="tgl1" id="tglRekap1" type="date" class="form-control" required placeholder="" value=""><br />
-          <label>Sampai Tanggal</label>
-          <input name="tgl2" id="tglRekap2" type="date" class="form-control" required placeholder="" value=""><br />
-          <label>Filter Berdasarkan</label>
-          <select class="form-control select2" id="filterRekap" onchange="filterCetak(this.value)" style="width:100%" name="filter">
-            <option value="0">...</option>
-            <option value="1">Nama Dinas/RS/Dll</option>
-            <option value="2">Provinsi/Kabupaten/Kecamatan</option>
-          </select>
-          <br><br>
-          <div id="filterData"></div>
-          <label>Status Barang</label>
-          <select class="form-control select2" id="statusRekap" style="width:100%" name="status">
-            <option value="Semua">Semua</option>
-            <option value="Sudah Terkirim">Sudah Terkirim</option>
-          </select>
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#activity" data-toggle="tab">Format 1</a></li>
+          <li><a href="#timeline" data-toggle="tab">Format 2</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="active tab-pane" id="activity">
+            <form method="post" enctype="multipart/form-data" onsubmit="cetakRekapan(); return false;">
+              <div class="modal-body">
+                <label>Dari Tanggal</label>
+                <input name="tgl1" id="tglRekap1" type="date" class="form-control" required placeholder="" value=""><br />
+                <label>Sampai Tanggal</label>
+                <input name="tgl2" id="tglRekap2" type="date" class="form-control" required placeholder="" value=""><br />
+                <label>Filter Berdasarkan</label>
+                <select class="form-control select2" id="filterRekap" onchange="filterCetak(this.value)" style="width:100%" name="filter">
+                  <option value="0">...</option>
+                  <option value="1">Nama Dinas/RS/Dll</option>
+                  <option value="2">Provinsi/Kabupaten/Kecamatan</option>
+                </select>
+                <br><br>
+                <div id="filterData"></div>
+                <label>Status Barang</label>
+                <select class="form-control select2" id="statusRekap" style="width:100%" name="status">
+                  <option value="Semua">Semua</option>
+                  <option value="Sudah Terkirim">Sudah Terkirim</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-info" name="cetak"><i class="fa fa-print"></i> Cetak</button>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane" id="timeline">
+            <form method="post" enctype="multipart/form-data" onsubmit="cetakRekapan2(); return false;">
+              <div class="modal-body">
+                <label>Bulan</label>
+                <input name="month" id="month" type="month" class="form-control" required placeholder="" value=""><br />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-info" name="cetak"><i class="fa fa-print"></i> Cetak</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.tab-pane -->
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-info" name="cetak"><i class="fa fa-print"></i> Cetak</button>
-        </div>
-      </form>
+        <!-- /.tab-content -->
+      </div>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -318,6 +342,12 @@ if (isset($_POST['pos'])) {
     }
     //   }
     // );
+  }
+
+  function cetakRekapan2() {
+    var month = $('#month').val();
+    alert(month)
+    window.location.href = 'cetak_laporan_penjualan_alkes2.php?month=' + month;
   }
 
   function filterCetak(param) {

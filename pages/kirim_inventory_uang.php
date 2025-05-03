@@ -68,7 +68,7 @@ if (isset($_GET['id_hapus'])) {
   <tr>
     <td>&nbsp;</td>
     <td valign="top">2. </td>
-    <td>Jika <strong>Box</strong> Di <strong>Nama Alkes</strong> Berwarna <strong style="color:#F00">Merah</strong> , Itu menandakan<br /> 
+    <td>Jika <strong>Box</strong> Di <strong>Nama Barang</strong> Berwarna <strong style="color:#F00">Merah</strong> , Itu menandakan<br /> 
       barang telah dikembalikan karena mengalami kerusakan</td>
   </tr>
 </table>
@@ -86,7 +86,7 @@ if (isset($_GET['id_hapus'])) {
         <th>No_PO</th>
       <th><table width="150px">
         <tr>
-          <td>Nama Alkes</td>
+          <td>Nama Barang</td>
           
           <td>Qty</td>
         </tr>
@@ -103,7 +103,7 @@ if (isset($_GET['id_hapus'])) {
   </thead>
   <?php
 // membuka file JSON
-$file = file_get_contents("http://localhost/ALKES/json/kirim_inventory.php");
+$file = file_get_contents("http://localhost/BANK/json/kirim_inventory.php");
 $json = json_decode($file, true);
 $jml=count($json); 
 for ($i=0; $i<$jml; $i++) {

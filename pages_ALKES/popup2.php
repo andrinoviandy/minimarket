@@ -1,9 +1,0 @@
-<html>
-<head>
-<title>Ini Window Ke 2</title>
-</head>
-<body>
-<p>Jika anda dapat melihat saya maka anda berhasil</p>
-<a href="javascript: window.close()">Tutup Window[X]</a>
-</body>
-</html>

@@ -43,7 +43,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
                       }
                       ?></h3>
 
-                  <p>Jenis Alkes / Jumlah Alkes</p>
+                  <p>Jenis Barang / Jumlah Barang</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-cubes"></i>
@@ -56,7 +56,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
               <div class="small-box bg-green">
                 <div class="inner" style="height: 105px;">
                   <div id="jumlah_penjualan"></div>
-                  <p>Penjualan Alkes (<?php echo Date('Y') ?>)</p>
+                  <p>Penjualan Barang (<?php echo Date('Y') ?>)</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-sign-out"></i>
@@ -69,7 +69,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
               <div class="small-box bg-purple">
                 <div class="inner" style="height: 105px;">
                   <div id="jumlah_pembelian_dalam"></div>
-                  <p>Pembelian Alkes Dalam Negeri (<?php echo Date('Y') ?>)</p>
+                  <p>Pembelian Barang Dalam Negeri (<?php echo Date('Y') ?>)</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-sign-in"></i>
@@ -82,7 +82,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
               <div class="small-box bg-red">
                 <div class="inner" style="height: 105px;">
                   <div id="jumlah_pembelian_luar"></div>
-                  <p>Pembelian Alkes Luar Negeri (<?php echo Date('Y') ?>)</p>
+                  <p>Pembelian Barang Luar Negeri (<?php echo Date('Y') ?>)</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-sign-in"></i>
@@ -104,7 +104,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
                     <tr>
                       <th style="width: 46px;">Merk</th>
                       <th style="width: 46px">Tipe</th>
-                      <th style="width: 56px">Alkes</th>
+                      <th style="width: 56px">Barang</th>
                       <th style="width: 50px">Stok_Sisa</th>
                       <th style="width: 50px">Stok_PO(Pemb)</th>
                     </tr>
@@ -238,7 +238,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
                   $data3 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_gudang_detail_rusak"));
                   echo $data3['jml'];
                   ?></h3>
-              <p>Alkes Rusak Belum Terjual</p>
+              <p>Barang Rusak Belum Terjual</p>
             </div>
             <div class="icon">
               <i class="fa fa-remove"></i>
@@ -273,7 +273,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
                   echo $data7['jml'];
                   ?></h3>
 
-              <p>Alkes Rusak Sudah Terjual</p>
+              <p>Barang Rusak Sudah Terjual</p>
             </div>
             <div class="icon">
               <i class="fa fa-remove"></i>
@@ -289,7 +289,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
                   echo "-"; //$data8 = mysqli_num_rows(mysqli_query($koneksi, "select * from pembeli group by nama_pembeli"));
                   //echo $data8;
                   ?></h3>
-              <p>Pengembalian Alkes</p>
+              <p>Pengembalian Barang</p>
             </div>
             <div class="icon">
               <i class="fa fa-download"></i>
@@ -310,7 +310,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
                   $data3 = mysqli_fetch_array(mysqli_query($koneksi, "select COUNT(*) as jml from barang_gudang_detail_rusak"));
                   echo $data3['jml'];
                   ?></h3>
-              <p>Alkes Rusak Belum Terjual</p>
+              <p>Barang Rusak Belum Terjual</p>
             </div>
             <div class="icon">
               <i class="fa fa-remove"></i>
@@ -345,7 +345,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
                   echo $data7['jml'];
                   ?></h3>
 
-              <p>Alkes Rusak Sudah Terjual</p>
+              <p>Barang Rusak Sudah Terjual</p>
             </div>
             <div class="icon">
               <i class="fa fa-remove"></i>
@@ -438,14 +438,14 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 </div>
 <div class="modal fade" id="modal-beranda" data-backdrop="static">
   <div class="modal-dialog modal-md">
-    <div class="modal-content" style="background-image: url(img/beranda.png); background-position: center; background-repeat: no-repeat; background-size: contain; ">
+    <div class="modal-content" style="background-image: url(img/modal_beranda2.png); background-position: center; background-repeat: no-repeat; background-size: contain; ">
       <div class="modal-header">
         <h4 class="modal-title"><i class=""></i> </h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        <h2 align="center">Selamat Datang<br>Sistem Informasi Manajemen Alat Kesehatan<br>PT Cipta Varia Kharisma Utama</h2>
+        <h2 align="center">Selamat Datang<br>Sistem Informasi Bank Mini<br>SMK Negeri 1 Mempawah Hilir</h2>
         <br>
         <h4 align="justify">
           <center>
@@ -674,7 +674,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
     let dataa;
     // Get context with jQuery - using jQuery's .get() method.
     await $.get("http://173.212.225.28/ALKES_2/json/beranda_penjualan.php", {
-        // await $.get("http://localhost/ALKES_2/json/beranda_penjualan.php", {
+        // await $.get("http://localhost/BANK/json/beranda_penjualan.php", {
         // tahun: tahun
         provinsi: $('#provinsi1').val() != undefined ? $('#provinsi1').val() : 'all',
         kabupaten: $('#kabupaten1').val(),
@@ -839,7 +839,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
     //-------------
     let dataa;
     await $.get("http://173.212.225.28/ALKES_2/json/beranda_pembelian.php", {
-        // await $.get("http://localhost/ALKES_2/json/beranda_pembelian.php", {
+        // await $.get("http://localhost/BANK/json/beranda_pembelian.php", {
         // provinsi: $('#provinsi2').val(),
         // kabupaten: $('#kabupaten2').val(),
         // kecamatan: $('#kecamatan2').val(),

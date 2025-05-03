@@ -22,7 +22,7 @@ session_start();
     </select>
 </div>
 <br>
-<label>Nama Alkes</label>
+<label>Nama Barang</label>
 <div id="data_alkes">
     <select class="form-control select22" style="width: 100%;">
         <option>...</option>

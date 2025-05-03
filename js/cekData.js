@@ -13,7 +13,7 @@ let page = getVars("page").replace('#', '');
 // });
 // fetch("")
 let jml = 0;
-// fetch('http://localhost/ALKES_2/json/' + page + '.php')
+// fetch('http://localhost/BANK/json/' + page + '.php')
 fetch('http://173.212.225.28/ALKES_2/json/' + page + '.php')
     .then(response => response.text())
     .then(data => {
@@ -23,7 +23,7 @@ fetch('http://173.212.225.28/ALKES_2/json/' + page + '.php')
     }
     );
 setInterval(() => {
-    // fetch('http://localhost/ALKES_2/json/' + page + '.php')
+    // fetch('http://localhost/BANK/json/' + page + '.php')
     fetch('http://173.212.225.28/ALKES_2/json/' + page + '.php')
         .then(response => response.text())
         .then(data => {
