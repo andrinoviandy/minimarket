@@ -9,8 +9,7 @@
       <div class="pull-left info">
         <p>Bank Mini</p>
         <a href="#"><i class="fa fa-circle text-success"></i> <?php
-                                                              $sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from akun_admin_keuangan where id=" . $_SESSION['id'] . ""));
-                                                              echo $sel['nama'];
+                                                              echo $_SESSION['nama']
                                                               ?></a>
       </div>
     </div>
@@ -85,8 +84,8 @@
         </a>
       </li>
       <!-- <li class="<?php echo $reimburse; ?>"> -->
-        <!--<a href="index.php?page=reimburse">-->
-        <!-- <a href="#" data-toggle="modal" data-target="#modal-tidak">
+      <!--<a href="index.php?page=reimburse">-->
+      <!-- <a href="#" data-toggle="modal" data-target="#modal-tidak">
           <i class="fa fa-briefcase"></i> <span>Reimburse</span>
         </a>
       </li> -->
@@ -105,62 +104,6 @@
                 </li>
           </ul>
           </li>-->
-      <li class="treeview <?php echo $sub_act2_1; ?>">
-        <a href="#"><i class="fa fa-cube"></i> <span class="">Persediaan</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="<?php echo $sub_act2_1_3; ?>"> <a href="index.php?page=barang_inventory"> <i class="fa fa-cube"></i> <span class="">Barang Inventory</span> <span class="pull-right-container"> </span> </a> </li>
-          <!--
-            <li class="<?php echo $sub_act2_1_3; ?>"> <a href="index.php?page=barang_set"> <i class="fa fa-cube"></i> <span class="">Barang Set</span> <span class="pull-right-container"> </span> </a> </li>
-            -->
-        </ul>
-      </li>
-      <li class="treeview <?php echo $pembelian; ?>">
-        <a href="#">
-          <i class="fa fa-download"></i> <span> Pembelian</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="<?php echo $pembelian3; ?>"><!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-            <a href="index.php?page=barang_inventory1" class=""><i class="fa fa-circle-o"></i> Inventory</a>
-          </li>
-
-        </ul>
-      </li>
-      <li class="treeview <?php echo $act2_2; ?>"><a href="#">
-          <i class="fa fa-cart-plus"></i>
-          <span>Penjualan</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
-        <ul class="treeview-menu">
-          <li class="<?php echo $sub_act2_4; ?>">
-            <a href="index.php?page=penjualan_inventory" class=""><i class="fa fa-circle-o"></i> Inventory</a>
-          </li>
-          <!--
-                <li class="<?php echo $sub_act2_4; ?>">
-                <a href="index.php?page=penjualan_barang_set" class=""><i class="fa fa-circle-o"></i> Penjualan Barang Set</a>
-                </li>-->
-        </ul>
-      </li>
-      <li class="treeview <?php echo $kirim_barang_uang; ?>">
-        <a href="#">
-          <i class="fa fa-upload"></i> <span>Pengiriman</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="<?php echo $kirim_barang_uang3; ?>"><!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
-            <a href="index.php?page=kirim_inventory_uang" class=""><i class="fa fa-circle-o"></i> Inventory</a>
-          </li>
-          <!--
-                <li class="<?php echo $kirim_barang_uang3; ?>"><a href="index.php?page=pengiriman_barang_set" class=""><i class="fa fa-circle-o"></i> Pengiriman Barang Set</a>
-                </li>-->
-        </ul>
-      </li>
       <li class="<?php echo $monitoring_penjualan; ?>">
         <a href="index.php?page=monitoring_penjualan">
           <i class="fa fa-bar-chart"></i> <span>Monitoring Penjualan</span>
@@ -327,7 +270,64 @@
         </li>
         </ul>
         </li>-->
-      <li><a href="javascript:void()" onclick="prosesLogout();"><i class="fa fa-close"></i> <span>Logout</span></a></li>
+      <li class="header"><strong><em>MINI MARKET</em></strong></li>
+      <li class="treeview <?php echo $sub_act2_1; ?>">
+        <a href="#"><i class="fa fa-cube"></i> <span class="">Persediaan</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="<?php echo $sub_act2_1_3; ?>"> <a href="index.php?page=barang_inventory"> <i class="fa fa-cube"></i> <span class="">Barang Inventory</span> <span class="pull-right-container"> </span> </a> </li>
+          <!--
+            <li class="<?php echo $sub_act2_1_3; ?>"> <a href="index.php?page=barang_set"> <i class="fa fa-cube"></i> <span class="">Barang Set</span> <span class="pull-right-container"> </span> </a> </li>
+            -->
+        </ul>
+      </li>
+      <li class="treeview <?php echo $pembelian; ?>">
+        <a href="#">
+          <i class="fa fa-download"></i> <span> Pembelian</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="<?php echo $pembelian3; ?>"><!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+            <a href="index.php?page=barang_inventory1" class=""><i class="fa fa-circle-o"></i> Inventory</a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="treeview <?php echo $act2_2; ?>"><a href="#">
+          <i class="fa fa-cart-plus"></i>
+          <span>Penjualan</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+        <ul class="treeview-menu">
+          <li class="<?php echo $sub_act2_4; ?>">
+            <a href="index.php?page=penjualan_inventory" class=""><i class="fa fa-circle-o"></i> Inventory</a>
+          </li>
+          <!--
+                <li class="<?php echo $sub_act2_4; ?>">
+                <a href="index.php?page=penjualan_barang_set" class=""><i class="fa fa-circle-o"></i> Penjualan Barang Set</a>
+                </li>-->
+        </ul>
+      </li>
+      <li class="treeview <?php echo $kirim_barang_uang; ?>">
+        <a href="#">
+          <i class="fa fa-upload"></i> <span>Pengiriman</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="<?php echo $kirim_barang_uang3; ?>"><!--<a href="index.php?page=jual_akse" class="text-green"><i class="fa fa-circle-o text-green"></i> Penjualan Aksesoris</a>-->
+            <a href="index.php?page=kirim_inventory_uang" class=""><i class="fa fa-circle-o"></i> Inventory</a>
+          </li>
+          <!--
+                <li class="<?php echo $kirim_barang_uang3; ?>"><a href="index.php?page=pengiriman_barang_set" class=""><i class="fa fa-circle-o"></i> Pengiriman Barang Set</a>
+                </li>-->
+        </ul>
+      </li>
+      <!-- <li><a href="javascript:void()" onclick="prosesLogout();"><i class="fa fa-close"></i> <span>Logout</span></a></li> -->
       <!-- <li><a href="proses_logout.php" onclick="return confirm('Yakin Akan Keluar Dari Aplikasi ?')"><i class="fa fa-close"></i><span>Logout</span></a></li> -->
     </ul>
   </section>

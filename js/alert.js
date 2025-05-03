@@ -82,3 +82,20 @@ function alertCustom(param, titleP, textP) {
         })
     }
 }
+
+async function alertConfirm(title, text = '') {
+    const result = await Swal.fire({
+        customClass: {
+            confirmButton: 'bg-red',
+            cancelButton: 'bg-white',
+        },
+        title: title,
+        text: text,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal',
+    });
+
+    return result.isConfirmed;
+}
