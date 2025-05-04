@@ -1,27 +1,3 @@
-<?php
-if (isset($_POST['button_urut'])) {
-  echo "<script>window.location='cetak_stok_alkes.php?merk=$_POST[merk]'</script>";
-}
-?>
-<?php
-if (isset($_GET['id_hapus'])) {
-  $sel = mysqli_fetch_array(mysqli_query($koneksi, "select * from deposit where id=" . $_GET['id_hapus'] . ""));
-  $up1 = mysqli_query($koneksi, "update buku_kas set saldo=saldo+$sel[nominal_deposit] where id=" . $sel['dari_akun_id'] . "");
-  $up2 = mysqli_query($koneksi, "update buku_kas set saldo=saldo-$sel[nominal_deposit] where id=" . $sel['ke_akun_id'] . "");
-  if ($up1 and $up2) {
-    $del2 = mysqli_query($koneksi, "delete from deposit where id=" . $_GET['id_hapus'] . "");
-    if ($del2) {
-      echo "<script>
-	alert('Data Berhasil Dihapus !');
-	window.location='index.php?page=deposit'</script>";
-    } else {
-      echo "<script>
-	alert('Data Gagal Dihapus !');
-	window.location='index.php?page=deposit'</script>";
-    }
-  }
-}
-?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -100,3 +76,20 @@ if (isset($_GET['id_hapus'])) {
   </section>
   <!-- /.content -->
 </div>
+
+<script>
+  async function batalkan(id) {
+    const confirm = await alertConfirm('Anda Yakin Ingin Membatalkan Data Ini ?')
+    if (confirm) {
+      $.post("data/batalkan-deposit.php", {id: id},
+        function (data, textStatus, jqXHR) {
+          if (data == 'S') {
+            alertCustom('S', 'Proses Deposit Berhasil Dibatalkan !')
+          } else {
+            alertCustom('F', 'Proses Deposit Gagal Dibatalkan !')
+          }
+        }
+      );
+    }
+  }
+</script>

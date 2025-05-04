@@ -84,7 +84,8 @@ $jml2 = $file2;
                 <td><?php echo "Rp " . number_format($json[$i]['nominal_deposit'], 2, ',', '.'); ?></td>
                 <td><?php echo $json[$i]['deskripsi'] ?></td>
                 <td>
-                    <button href="index.php?page=deposit&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Membatalkan Proses Ini ?')" class="btn btn-xs btn-danger"><span data-toggle="tooltip" title="Batalkan" class="fa fa-close"></span></button>
+                <!-- href="index.php?page=deposit&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Membatalkan Proses Ini ?')" -->
+                    <button onclick="batalkan('<?php echo $json[$i]['idd']; ?>');" class="btn btn-xs btn-danger"><span data-toggle="tooltip" title="Batalkan" class="fa fa-close"></span></button>
                 </td>
             </tr>
         <?php } ?>

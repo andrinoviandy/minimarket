@@ -46,7 +46,7 @@ function alertHapus(param) {
     }
 }
 
-function alertCustom(param, titleP, textP) {
+function alertCustom(param, titleP, textP = '') {
     if (param == 'S') {
         Swal.fire({
             customClass: {
