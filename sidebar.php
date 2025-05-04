@@ -64,10 +64,10 @@
             <a href="index.php?page=nasabah" class=""><i class="fa fa-circle-o"></i> Data Nasabah</a>
           </li>
           <li class="<?php echo $tabungan; ?>">
-            <a href="index.php?page=laporan_laba_rugi" class=""><i class="fa fa-circle-o"></i> Tabungan</a>
+            <a href="index.php?page=tabungan" class=""><i class="fa fa-circle-o"></i> Tabungan</a>
           </li>
           <li class="<?php echo $pinjaman; ?>">
-            <a href="index.php?page=laporan_laba_rugi" class=""><i class="fa fa-circle-o"></i> Pinjaman</a>
+            <a href="index.php?page=pinjaman" class=""><i class="fa fa-circle-o"></i> Pinjaman</a>
           </li>
         </ul>
       </li>

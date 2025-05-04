@@ -794,6 +794,15 @@ if (isset($_GET['page'])) {
 		$laporan_kas = "active";
 		$harian = "active";
 		$bagian_keuangan = "active";
+	} else if ($_GET['page'] == 'nasabah') {
+		$nasabah = "active";
+		$simpan_pinjam = "active";
+	} else if ($_GET['page'] == 'tabungan') {
+		$tabungan = "active";
+		$simpan_pinjam = "active";
+	} else if ($_GET['page'] == 'pinjaman') {
+		$pinjaman = "active";
+		$simpan_pinjam = "active";
 	} else if ($_GET['page'] == 'laporan_neraca') {
 		$laporan_kas = "active";
 		$laporan_neraca = "active";
