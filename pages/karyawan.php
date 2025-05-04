@@ -1,17 +1,3 @@
-<?php
-if (isset($_GET['id_hapus'])) {
-  $del2 = mysqli_query($koneksi, "delete from karyawan where id=" . $_GET['id_hapus'] . "");
-  if ($del2) {
-    echo "<script>
-	alert('Data Berhasil Dihapus !');
-	window.location='index.php?page=karyawan'</script>";
-  } else {
-    echo "<script>
-	alert('Data Gagal Dihapus !');
-	window.location='index.php?page=karyawan'</script>";
-  }
-}
-?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -40,139 +26,47 @@ if (isset($_GET['id_hapus'])) {
                 <a href="index.php?page=tambah_karyawan">
                   <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah</button></a>
               </div>
-
-              <!--<form method="post" action="cetak_stok_alkes.php">--><!--<a href="cetak_stok_alkes.php">
-              <button name="tambah_laporan" class="btn btn-warning" type="submit"><span class="fa fa-print"></span> Cetak Stok Barang</button></a>
-              <span class="pull pull-right"><font color="#FF0000">Keterangan :</font> Klik Nama Barang Untuk Melihat Proses Penjualan</span>
-              --><br /><br />
-              <!--
-              <form method="post">
-              <div class="input-group pull pull-left col-xs-1">
-                
-                <select class="form-control" name="limiterr" style="margin-right:40px">
-                <option <?php if ($limiter['limiter'] == 10) {
-                          echo "selected";
-                        } ?> value="10">10</option>
-                <option <?php if ($limiter['limiter'] == 50) {
-                          echo "selected";
-                        } ?> value="50">50</option>
-                <option <?php if ($limiter['limiter'] == 100) {
-                          echo "selected";
-                        } ?> value="100">100</option>
-                <option <?php if ($limiter['limiter'] == 500) {
-                          echo "selected";
-                        } ?> value="500">500</option>
-                <option <?php if ($limiter['limiter'] == 1000) {
-                          echo "selected";
-                        } ?> value="1000">1000</option>
-                <?php
-                $total = mysqli_num_rows(mysqli_query($koneksi, "select * from barang_gudang"));
-                ?>
-                <option <?php if ($limiter['limiter'] == $total) {
-                          echo "selected";
-                        } ?> <?php if ($_POST['cari'] != '') {
-                                                                                        echo "selected";
-                                                                                      } ?> value="<?php echo $total; ?>">All</option>
-                </select>
-                
-                <span class="input-group-btn">
-                      <button type="submit" name="button_limit" class="btn btn-default btn-flat"><i class="fa fa-check"></i></button>
-                    </span>
-                
+              <div class="pull pull-right">
+                <?php //include "include/getFilter.php"; ?>
+                <?php include "include/atur_halaman.php"; ?>
               </div>
-              </form>
-              
-              <form method="post">
-              <div class="input-group pull pull-left col-xs-2">
-                
-                <select class="form-control" name="urutt" style="margin-right:40px">
-                <option <?php if ($limiter['urut'] == 'ASC') {
-                          echo "selected";
-                        } ?> value="ASC">Ascending</option>
-                <option <?php if ($limiter['urut'] == 'DESC') {
-                          echo "selected";
-                        } ?> value="DESC">Descending</option>
-                
-                </select>
-                
-                <span class="input-group-btn">
-                      <button type="submit" name="button_urut" class="btn btn-default btn-flat"><i class="fa fa-check"></i></button>
-                    </span>
-                
-              </div>
-              </form>
-              
-              <form method="post" class="">
-              <div class="input-group input-group-md col-xs-4 pull pull-right">
-                <input type="text" name="cari" placeholder="Keyword .. (Not ; Stok, Harga, Pengecekan)" class="form-control">
-                    <span class="input-group-btn">
-                      <button type="submit" name="button_cari" class="btn btn-info btn-flat"><i class="fa fa-search"></i> Cari </button>
-                    </span>
-              </div>
-              </form>-->
-              <br />
-
-              <?php
-              if ($_POST['cari'] != '') {
-                echo "Results  Of  '" . $_POST['cari'] . "'";
-              }
-              ?>
-              <div class="table-responsive">
-                <table width="100%" id="example1" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td width="" align="center"><strong>No</strong>
-                        </th>
-                      <th width="" valign="top">NIK</th>
-                      <th width="" valign="top"><strong>Nama Karyawan</strong></th>
-                      <th width="" valign="top">TTL</th>
-                      <th width="" valign="top">Alamat</th>
-                      <th width="" valign="top">Pendidikan Terakhir</th>
-                      <th width="" valign="top">Jabatan</th>
-                      <th width="" valign="top">Divisi</th>
-                      <th width="" valign="top">Tanggal Masuk</th>
-                      <th width="" valign="top">Email</th>
-                      <th width="" align="center" valign="top"><strong>Aksi</strong></th>
-                    </tr>
-                  </thead>
-                  <?php
-                  $query = mysqli_query($koneksi, "SELECT *,karyawan.id as idd FROM karyawan order by karyawan.nama_karyawan ASC");
-
-                  $no = 0;
-                  while ($data = mysqli_fetch_assoc($query)) {
-                    $no++;
-                  ?>
-                    <tr>
-                      <td align="center"><?php echo $no; ?></td>
-                      <td><?php echo $data['nik'];  ?></td>
-
-                      <td>
-                        <?php echo $data['nama_karyawan'];  ?>
-                      </td>
-                      <td><?php echo $data['tempat_lahir'] . ", " . date("d-m-Y", strtotime($data['tanggal_lahir']));  ?></td>
-                      <td><?php echo $data['alamat']; ?></td>
-                      <td><?php echo $data['pendidikan_terakhir'];  ?></td>
-                      <td><?php echo $data['nama_jabatan'];  ?></td>
-                      <td><?php echo $data['nama_divisi'];  ?></td>
-                      <td><?php echo date("d-m-Y", strtotime($data['tanggal_masuk']));  ?></td>
-
-                      <td><?php echo $data['email']; ?></td>
-                      <td>
-                        <a href="index.php?page=karyawan&id_hapus=<?php echo $data['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></a>&nbsp;&nbsp;<a href="index.php?page=ubah_karyawan&id_ubah=<?php echo $data['idd']; ?>"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a>
-
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </table>
-              </div>
-              <br />
-
             </div>
           </div>
         </div>
         <!-- /.box (chat box) -->
 
         <!-- TO DO List --><!-- /.box -->
+
+        <!-- quick email widget -->
+      </section>
+      <?php include "include/header_pencarian.php"; ?>
+      <section class="col-lg-12 connectedSortable">
+        <!-- Custom tabs (Charts with tabs)-->
+        <!-- /.nav-tabs-custom -->
+
+        <!-- Chat box -->
+        <div class="box box-warning">
+          <!-- /.chat -->
+          <div class="box-footer">
+            <div class="box-body">
+              <?php include "include/getInputSearch.php"; ?>
+              <div id="table" style="margin-top: 10px;"></div>
+              <section class="col-lg-12">
+                <center>
+                  <ul class="pagination">
+                    <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
+                    <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
+                  </ul>
+                  <?php include "include/getInfoPagingData.php"; ?>
+                </center>
+              </section>
+            </div>
+          </div>
+        </div>
+        <!-- /.box (chat box) -->
+
+        <!-- TO DO List -->
+        <!-- /.box -->
 
         <!-- quick email widget -->
       </section>
@@ -218,3 +112,21 @@ if (isset($_POST['ubahbukti'])) {
 
   </div>
 </div>
+
+<script>
+  async function hapusData(id) {
+    const confirm = await alertConfirm('Apakah Anda Yakin Menghapus Data Ini ?', 'Data Tidak Dapat Dikembalikan')
+    if (confirm) {
+      $.post("data/hapus-karyawan.php", {id: id},
+        function (data, textStatus, jqXHR) {
+          if (data == 'S') {
+            alertHapus('S')
+            loadMore(load_flag, key, status_b);
+          } else {
+            alertHapus('F')
+          }
+        }
+      );
+    }
+  }
+</script>

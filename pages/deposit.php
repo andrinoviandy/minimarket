@@ -85,6 +85,7 @@
         function (data, textStatus, jqXHR) {
           if (data == 'S') {
             alertCustom('S', 'Proses Deposit Berhasil Dibatalkan !')
+            loadMore(load_flag, key, status_b);
           } else {
             alertCustom('F', 'Proses Deposit Gagal Dibatalkan !')
           }

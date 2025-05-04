@@ -1,9 +1,14 @@
 <?php
-
+error_reporting(0);
 header("Content-type:application/json");
 
 //koneksi ke database
 require("../config/koneksi.php");
+$query = mysqli_query($koneksi, "SELECT jumlah_limit FROM limiter");
+list($surat_masuk) = mysqli_fetch_array($query);
+//pagging
+$limit = $surat_masuk;
+$start = mysqli_real_escape_string($koneksi, $_GET['start']);
 
 //menampilkan data dari database, table tb_anggota
 if (isset($_GET['start'])) {
@@ -22,7 +27,7 @@ if (isset($_GET['start'])) {
                         or bk2.nama_akun like ('%$_GET[cari]%')) 
                     order by
                         tgl_deposit desc,
-                        deposit.id desc";
+                        deposit.id desc LIMIT $start, $limit";
         } else {
             $sql = "select
                         deposit.*,
@@ -35,7 +40,7 @@ if (isset($_GET['start'])) {
                     where tgl_deposit between '$_GET[tgl1]' and '$_GET[tgl2]' 
                     order by
                         tgl_deposit desc,
-                        deposit.id desc";
+                        deposit.id desc LIMIT $start, $limit";
         }
     } else {
         if (isset($_GET['cari'])) {
@@ -52,7 +57,7 @@ if (isset($_GET['start'])) {
                         or bk2.nama_akun like ('%$_GET[cari]%') 
                     order by
                         tgl_deposit desc,
-                        deposit.id desc";
+                        deposit.id desc LIMIT $start, $limit";
         } else {
             $sql = "select
                         deposit.*,
@@ -64,7 +69,7 @@ if (isset($_GET['start'])) {
                         left join buku_kas bk2 on bk2.id = deposit.ke_akun_id 
                     order by
                         tgl_deposit desc,
-                        deposit.id desc";
+                        deposit.id desc LIMIT $start, $limit";
         }
     }
     $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));

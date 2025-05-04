@@ -38,12 +38,17 @@ $jml2 = $file2;
     <table width="100%" id="example1" class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th width="" align="center">No</th>
-                <th width="" valign="top"><strong>Tgl Deposit</strong></th>
-                <th width="" valign="top">Dari Akun</th>
-                <th width="" valign="top"><strong>Ke Akun</strong></th>
-                <th width="" valign="top">Nominal</th>
-                <th width="" align="center" valign="top">Deskripsi</th>
+                <td width="" align="center"><strong>No</strong>
+                    </th>
+                <th width="" valign="top">NIK</th>
+                <th width="" valign="top"><strong>Nama Karyawan</strong></th>
+                <th width="" valign="top">TTL</th>
+                <th width="" valign="top">Alamat</th>
+                <th width="" valign="top">Pendidikan Terakhir</th>
+                <th width="" valign="top">Jabatan</th>
+                <th width="" valign="top">Divisi</th>
+                <th width="" valign="top">Tanggal Masuk</th>
+                <th width="" valign="top">Email</th>
                 <th width="" align="center" valign="top"><strong>Aksi</strong></th>
             </tr>
         </thead>
@@ -51,21 +56,26 @@ $jml2 = $file2;
         for ($i = 0; $i < $jml; $i++) {
         ?>
             <tr>
-                <td><?php echo $start += 1; ?></td>
+                <td align="center"><?php echo $start += 1; ?></td>
+                <td><?php echo $json[$i]['nik'];  ?></td>
+
                 <td>
-                    <?php echo date("d M Y", strtotime($json[$i]['tgl_deposit']));  ?>
+                    <?php echo $json[$i]['nama_karyawan'];  ?>
                 </td>
-                <td><?php
-                    echo $json[$i]['dari_akun'];
-                    ?></td>
-                <td><?php
-                    echo $json[$i]['ke_akun'];
-                    ?></td>
-                <td><?php echo "Rp " . number_format($json[$i]['nominal_deposit'], 2, ',', '.'); ?></td>
-                <td><?php echo $json[$i]['deskripsi'] ?></td>
+                <td><?php echo $json[$i]['tempat_lahir'] . ", " . date("d-m-Y", strtotime($json[$i]['tanggal_lahir']));  ?></td>
+                <td><?php echo $json[$i]['alamat']; ?></td>
+                <td><?php echo $json[$i]['pendidikan_terakhir'];  ?></td>
+                <td><?php echo $json[$i]['jabatan'];  ?></td>
+                <td><?php echo $json[$i]['divisi'];  ?></td>
+                <td><?php echo date("d-m-Y", strtotime($json[$i]['tanggal_masuk']));  ?></td>
+
+                <td><?php echo $json[$i]['email']; ?></td>
                 <td>
-                    <!-- href="index.php?page=deposit&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Membatalkan Proses Ini ?')" -->
-                    <button onclick="batalkan('<?php echo $json[$i]['idd']; ?>');" class="btn btn-xs btn-danger"><span data-toggle="tooltip" title="Batalkan" class="fa fa-close"></span></button>
+                <!-- href="index.php?page=karyawan&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')" -->
+                    <button class="btn btn-xs btn-danger" onclick="hapusData('<?php echo $json[$i]['idd']; ?>')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></button>
+                    &nbsp;
+                    <a href="index.php?page=ubah_karyawan&id_ubah=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-info"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></a>
+
                 </td>
             </tr>
         <?php } ?>
