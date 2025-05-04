@@ -49,9 +49,6 @@
             <option <?php if ($dd['jumlah_limit'] == 20) {
                       echo "selected";
                     } ?> value="20">20</option>
-            <option <?php if ($dd['jumlah_limit'] == 50) {
-                      echo "selected";
-                    } ?> value="50">50</option>
           </select>
         </div>
         <div class="modal-footer">

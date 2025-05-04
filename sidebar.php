@@ -7,10 +7,8 @@
         <img src="img/logo.png" class="" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p>Bank Mini</p>
-        <a href="#"><i class="fa fa-circle text-success"></i> <?php
-                                                              echo $_SESSION['nama']
-                                                              ?></a>
+        <p><?php echo $_SESSION['nama'] ?></p>
+        <a href="#"><i class="fa fa-circle text-success"></i> <?php echo $_SESSION['waktu_login'] ?></a>
       </div>
     </div>
     <!-- search form -->
@@ -54,7 +52,26 @@
           <i class="fa fa-money"></i> <span>Penerimaan & Pembayaran</span>
         </a>
       </li>
-      <li class="treeview <?php echo $utang_piutang; ?>">
+      <li class="treeview <?php echo $simpan_pinjam; ?>">
+        <a href="#">
+          <i class="fa fa-bank"></i> <span>Simpan Pinjam</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="<?php echo $nasabah; ?>">
+            <a href="index.php?page=nasabah" class=""><i class="fa fa-circle-o"></i> Data Nasabah</a>
+          </li>
+          <li class="<?php echo $tabungan; ?>">
+            <a href="index.php?page=laporan_laba_rugi" class=""><i class="fa fa-circle-o"></i> Tabungan</a>
+          </li>
+          <li class="<?php echo $pinjaman; ?>">
+            <a href="index.php?page=laporan_laba_rugi" class=""><i class="fa fa-circle-o"></i> Pinjaman</a>
+          </li>
+        </ul>
+      </li>
+      <!-- <li class="treeview <?php echo $utang_piutang; ?>">
         <a href="#">
           <i class="fa fa-bank"></i> <span>Bayar Hutang / Piutang</span>
           <span class="pull-right-container">
@@ -74,7 +91,7 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li> -->
       <li class="<?php echo $deposit; ?>">
         <a href="index.php?page=deposit">
           <i class="fa fa-refresh"></i> <span>Transfer Antar Kas & Bank</span>
@@ -83,27 +100,6 @@
           </span>
         </a>
       </li>
-      <!-- <li class="<?php echo $reimburse; ?>"> -->
-      <!--<a href="index.php?page=reimburse">-->
-      <!-- <a href="#" data-toggle="modal" data-target="#modal-tidak">
-          <i class="fa fa-briefcase"></i> <span>Reimburse</span>
-        </a>
-      </li> -->
-      <!--
-          <li class="treeview <?php echo $utang_piutang; ?>">
-          <a href="#">
-            <i class="fa fa-bank"></i> <span>Kas Bank</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-                <li class="<?php echo $utang; ?>"><a href="index.php?page=utang" class=""><i class="fa fa-circle-o"></i> Pembayaran</a></li>
-                <li class="<?php echo $piutang; ?>">
-                <a href="index.php?page=piutang" class=""><i class="fa fa-circle-o"></i> Penerimaan</a>
-                </li>
-          </ul>
-          </li>-->
       <li class="<?php echo $monitoring_penjualan; ?>">
         <a href="index.php?page=monitoring_penjualan">
           <i class="fa fa-bar-chart"></i> <span>Monitoring Penjualan</span>
@@ -129,33 +125,8 @@
           <i class="fa fa-users"></i> <span>Pelanggan</span>
         </a>
       </li>
-      <!--
-          <li class="treeview <?php echo $kontrak; ?>">
-          <a href="#">
-            <i class="fa fa-book"></i> <span>Kontrak</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-                <li class="<?php echo $kontrak1; ?>"><a href="index.php?page=dokumen_kontrak" class=""><i class="fa fa-circle-o"></i> Dokumen</a></li>
-                <li class="<?php echo $kontrak2; ?>">
-                <a href="index.php?page=tagihan_kontrak" class=""><i class="fa fa-circle-o"></i> Tagihan</a>
-                </li>
-                <li class="<?php echo $kontrak3; ?>">
-                <a href="index.php?page=pembayaran_kontrak" class=""><i class="fa fa-circle-o"></i> Pembayaran</a>
-                </li>
-          </ul>
-          </li>
-          <!--
-          <li>
-          <a href="index.php?page=nota_debit">
-            <i class="fa fa-flask"></i> <span>Nota Debit</span>
-          </a></li>
-          <li>
-          <a href="index.php?page=nota_kredit">
-            <i class="fa fa-compass"></i> <span>Nota Kredit</span>
-          </a></li>-->
+
+      <li>
       <li class="treeview <?php echo $laporan_kas; ?>">
         <a href="#">
           <i class="fa fa-bar-chart"></i> <span>Laporan</span>

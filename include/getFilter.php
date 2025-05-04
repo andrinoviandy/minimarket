@@ -22,13 +22,12 @@ if (isset($_POST['pencarian'])) {
                     <input required name="tgl1" type="date" class="form-control" placeholder="" value=""><br />
                     <label>Sampai Tanggal</label>
                     <input required name="tgl2" type="date" class="form-control" placeholder="" value="">
-
-                    <br />
+                    <!-- <br />
                     <select name="tampil" class="form-control select2" style="width:100%">
                         <option value="">...</option>
                         <option value="1">Tampilkan Detail Barang</option>
                         <option value="0">Jangan Tampilkan Detail Barang</option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
