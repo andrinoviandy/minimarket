@@ -22,10 +22,9 @@
         <div class="box box-success"><!-- /.chat -->
           <div class="box-footer">
             <div class="box-body">
-              <div class="input-group pull pull-left">
-                <button name="tambah_laporan" class="btn btn-success" style="margin-right: 10px;" type="button" onclick="modalBukaTabungan(); return false"><span class="fa fa-plus"></span>&nbsp; Buka Tabungan</button>
-                <button name="tambah_laporan" class="btn btn-info" style="margin-right: 10px;" type="button" onclick="modalSetor(); return false"><span class="fa fa-plus"></span>&nbsp; Setor</button>
-                <button name="tambah_laporan" class="btn btn-danger" type="button" onclick="modalAmbil(); return false"><span class="fa fa-minus"></span>&nbsp; Ambil</button>
+              <div class="input-group pull pull-left" style="padding-right:10px">
+                <button name="tambah_laporan" class="btn btn-success" style="margin-right: 10px;" type="button" onclick="modalSetor(); return false"><span class="fa fa-plus"></span>&nbsp; Setor</button>
+                <button name="tambah_laporan" class="btn btn-success" type="button" onclick="modalAmbil(); return false"><span class="fa fa-minus"></span>&nbsp; Ambil</button>
               </div>
               <div class="pull pull-right">
                 <?php include "include/getFilter.php"; ?>
@@ -80,30 +79,6 @@
 
   </section>
   <!-- /.content -->
-</div>
-
-<div class="modal fade" id="modal-buka-tabungan" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Buka Tabungan Baru</h4>
-      </div>
-      <form method="post" onsubmit="simpanTabungan(); return false;" id="formTabungan">
-        <div class="modal-body">
-          <div id="data-buka-tabungan"></div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" name="simpan">Simpan</button>
-        </div>
-      </form>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
 </div>
 
 <div class="modal fade" id="modal-setor">
@@ -193,44 +168,12 @@
     }
   }
 
-  async function modalBukaTabungan() {
-    await $.get("data/modal-buka-tabungan.php",
-      function(data, textStatus, jqXHR) {
-        $('#data-buka-tabungan').html(data);
-      }
-    );
-    $('#modal-buka-tabungan').modal('show');
-  }
-
-  function simpanTabungan() {
-    var dataform = $('#formTabungan')[0];
-    var data = new FormData(dataform);
-    $.ajax({
-      type: "post",
-      url: "data/simpan-tabungan.php",
-      data: data,
-      enctype: "multipart/form-data",
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        if (response === 'S') {
-          $('#modal-buka-tabungan').modal('hide');
-          dataform.reset();
-          alertSimpan('S')
-          loadMore(load_flag, key, status_b)
-        } else {
-          alertSimpan('F')
-        }
-      }
-    });
-  }
-
   async function modalSetor() {
-    await $.get("data/option-tabungan.php",
-      function(data, textStatus, jqXHR) {
-        $('#data-nasabah').html(data);
-      }
-    );
+    // await $.get("data/option-tabungan.php",
+    //   function(data, textStatus, jqXHR) {
+    //     $('#data-nasabah').html(data);
+    //   }
+    // );
     $('#modal-setor').modal('show');
   }
 

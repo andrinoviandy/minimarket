@@ -874,6 +874,7 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
       let key = '';
       let status_b = '';
       $(document).ready(function() {
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
         // hitungBaris(key)
         loading()
         // setTimeout(function () {
