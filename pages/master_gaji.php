@@ -52,6 +52,7 @@
   <!-- /.content -->
 </div>
 <?php
+/*
 $da = mysqli_fetch_array(mysqli_query($koneksi, "select * from karyawan where id =$_GET[id_ubah]"));
 if (isset($_POST['ubah_riwayat'])) {
   $query = mysqli_query($koneksi, "UPDATE karyawan set nama_karyawan='$_POST[nama_karyawan2]',alamat='$_POST[alamat2]',email='$_POST[email2]' where id=$da[id]");
@@ -88,12 +89,13 @@ if (isset($_POST['ubah_riwayat'])) {
 
   </div>
 </div>
+<?php */ ?>
 
 <script>
   function getData() {
     $.get("data/master_gaji.php",
-      function (data) {
-       $('#data-master').html(data); 
+      function(data) {
+        $('#data-master').html(data);
       }
     );
   }

@@ -687,6 +687,7 @@ if (isset($_GET['id_hapus'])) {
 </div>
 
 <?php
+/*
 if (isset($_POST['tambah_detail'])) {
   $in = mysqli_query($koneksi, "insert into coa_detail values('','" . $_GET['id'] . "','" . $_POST['no_akun'] . "','" . $_POST['nama_akun'] . "','" . $_POST['akun_tipe'] . "','" . $_POST['header'] . "','" . $_POST['saldo_detail'] . "')");
   if ($in) {
@@ -767,6 +768,7 @@ if (isset($_POST['ubah_detail'])) {
     </form>
   </div>
 </div>
+<?php */ ?>
 
 <div class="modal fade" id="modal-pencarian">
   <div class="modal-dialog">
@@ -818,7 +820,6 @@ if (isset($_POST['ubah_detail'])) {
   </div>
   <!-- /.modal-dialog -->
 </div>
-
 
 <div class="modal fade" id="modal-pencarian2">
   <div class="modal-dialog">

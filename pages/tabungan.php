@@ -1,10 +1,10 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Nasabah</h1>
+    <h1>Tabungan</h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Nasabah</li>
+      <li class="active">Tabungan</li>
     </ol>
   </section>
 
@@ -22,13 +22,13 @@
         <div class="box box-success"><!-- /.chat -->
           <div class="box-footer">
             <div class="box-body">
-              <div class="input-group pull pull-left col-xs-1" style="padding-right:10px">
+              <div class="input-group pull pull-left" style="padding-right:10px">
                 <a href="index.php?page=tambah_nasabah">
-                  <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah</button></a>
+                  <button name="tambah_laporan" class="btn btn-success" style="margin-right: 10px;" type="submit"><span class="fa fa-plus"></span>&nbsp; Setor</button></a>
+                  <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-minus"></span>&nbsp; Ambil</button></a>
               </div>
               <div class="pull pull-right">
-                <?php //include "include/getFilter.php"; 
-                ?>
+                <?php include "include/getFilter.php"; ?>
                 <?php include "include/atur_halaman.php"; ?>
               </div>
             </div>

@@ -81,70 +81,6 @@
   </section>
   <!-- /.content -->
 </div>
-<?php
-$da = mysqli_fetch_array(mysqli_query($koneksi, "select *,buku_kas.id as ide from biaya_lain,buku_kas,pilihan_biaya where buku_kas.id=biaya_lain.buku_kas_id and biaya_lain.pilihan_biaya_id=pilihan_biaya.id and biaya_lain.id=$_GET[id_ubah]"));
-
-if (isset($_POST['ubah_riwayat'])) {
-  $up = mysqli_query($koneksi, "update buku_kas set saldo=saldo+$da[harga] where buku_kas.id=$da[ide]");
-  if ($up) {
-    $up2 = mysqli_query($koneksi, "update buku_kas set saldo=saldo-$_POST[harga2] where buku_kas.id=$_POST[buku_kas_id2]");
-
-    $up3 = mysqli_query($koneksi, "update biaya_lain set pilihan_biaya_id='" . $_POST['pilihan_biaya_id2'] . "', harga='" . $_POST['harga2'] . "',jumlah='" . $_POST['jumlah2'] . "', tanggal='" . $_POST['tanggal2'] . "', buku_kas_id=" . $_POST['buku_kas_id2'] . " where id=$_GET[id_ubah]");
-  }
-  if ($up and $up2 and $up3) {
-    echo "<script type='text/javascript'>
-		alert('Perubahan Berhasil Disimpan !');
-		window.location='index.php?page=biaya_lain'
-		</script>";
-  } else {
-    echo "<script type='text/javascript'>
-		alert('Perubahan Gagal Disimpan !');
-		window.location='index.php?page=biaya_lain'
-		</script>";
-  }
-}
-?>
-<div id="openUbah" class="modalDialog">
-  <div>
-    <a href="#" title="Close" class="close">X</a>
-    <h3 align="center">Ubah Biaya Lain</h3>
-    <form method="post">
-      <label>No Akun</label>
-      <select name="buku_kas_id2" class="form-control">
-        <option>-- Pilih No Akun</option>
-        <?php $query = mysqli_query($koneksi, "SELECT id,nama_akun FROM buku_kas");
-        while ($row = mysqli_fetch_array($query)) {
-        ?>
-          <option value="<?php echo $row['id']; ?>" <?php if ($row['id'] == $da['ide']) {
-                                                      echo "selected";
-                                                    } ?>><?php echo $row['nama_akun']; ?></option>
-        <?php } ?>
-      </select>
-      <br />
-      <label>Pembayaran</label>
-      <select name="pilihan_biaya_id2" class="form-control">
-        <option>-- Pilih Biaya --</option>
-        <?php $query1 = mysqli_query($koneksi, "SELECT * FROM pilihan_biaya");
-        while ($row1 = mysqli_fetch_array($query1)) {
-        ?>
-          <option value="<?php echo $row1['id'] ?>" <?php if ($row1['id'] == $da['id']) {
-                                                      echo "selected";
-                                                    } ?>><?php echo $row1['nama_biaya']; ?></option>
-        <?php } ?>
-      </select>
-      <br />
-      <label>Jumlah</label>
-      <input name="jumlah2" class="form-control" type="number" placeholder="" value="<?php echo $da['jumlah']; ?>"><br />
-      <label>Harga</label>
-      <input name="harga2" class="form-control" type="number" placeholder="" value="<?php echo $da['harga']; ?>"><br />
-      <label>Tanggal</label>
-      <input name="tanggal2" class="form-control" type="date" placeholder="" value="<?php echo $da['tanggal']; ?>"><br />
-      <button name="ubah_riwayat" class="btn btn-success" type="submit"><span class="fa fa-check"></span> Simpan </button>
-    </form>
-
-
-  </div>
-</div>
 
 <div class="modal fade" id="modal-tambah">
   <div class="modal-dialog">
@@ -245,7 +181,7 @@ if (isset($_POST['ubah_riwayat'])) {
   <!-- /.modal-dialog -->
 </div>
 
-<script>
+<!-- <script>
   function pilih2(id) {
     $.get("data/pilih2.php", {
         id: id
@@ -355,4 +291,4 @@ if (isset($_POST['ubah_riwayat'])) {
       }
     })
   }
-</script>
+</script> -->

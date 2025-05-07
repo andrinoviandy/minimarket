@@ -609,7 +609,7 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
         }
       } else {
         echo "<script>
-		  window.location='index.php?page=beranda';
+		  window.location='index.php?page=ringkasan';
 		  </script>";
       }
       ?>

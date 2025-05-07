@@ -4,7 +4,6 @@ header("Content-type:application/json");
 
 //koneksi ke database
 require("../config/koneksi.php");
-mysqli_set_charset($koneksi, 'utf8');
 
 $query = mysqli_query($koneksi, "SELECT jumlah_limit FROM limiter");
 list($surat_masuk) = mysqli_fetch_array($query);

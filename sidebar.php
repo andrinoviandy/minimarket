@@ -18,14 +18,14 @@
     <?php include "active.php"; ?>
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header"><strong><em>NAVIGASI</em></strong></li>
-      <li class="<?php echo $act1; ?>">
+      <!-- <li class="<?php echo $act1; ?>">
         <a href="index.php?page=beranda">
           <i class="fa fa-dashboard"></i> <span>Beranda</span>
           <span class="pull-right-container">
 
           </span>
         </a>
-      </li>
+      </li> -->
       <li class="<?php echo $ringkasan; ?>">
         <a href="index.php?page=ringkasan">
           <i class="fa fa-map"></i> <span>RINGKASAN</span>
@@ -115,17 +115,6 @@
           <i class="fa fa-bookmark"></i> <span>Slip Gaji</span>
         </a>
       </li>
-      <li class="<?php echo $pemasok; ?>">
-        <a href="index.php?page=pemasok">
-          <i class="fa fa-money"></i> <span>Pemasok</span>
-        </a>
-      </li>
-      <li class="<?php echo $pembeli; ?>">
-        <a href="index.php?page=pembeli">
-          <i class="fa fa-users"></i> <span>Pelanggan</span>
-        </a>
-      </li>
-
       <li>
       <li class="treeview <?php echo $laporan_kas; ?>">
         <a href="#">
@@ -298,6 +287,17 @@
                 </li>-->
         </ul>
       </li>
+      <li class="<?php echo $pemasok; ?>">
+        <a href="index.php?page=pemasok">
+          <i class="fa fa-money"></i> <span>Supplier</span>
+        </a>
+      </li>
+      <!-- <li class="<?php echo $pembeli; ?>">
+        <a href="index.php?page=pembeli">
+          <i class="fa fa-users"></i> <span>Pelanggan</span>
+        </a>
+      </li> -->
+      <li style="margin-top: 30%;"></li>
       <!-- <li><a href="javascript:void()" onclick="prosesLogout();"><i class="fa fa-close"></i> <span>Logout</span></a></li> -->
       <!-- <li><a href="proses_logout.php" onclick="return confirm('Yakin Akan Keluar Dari Aplikasi ?')"><i class="fa fa-close"></i><span>Logout</span></a></li> -->
     </ul>
