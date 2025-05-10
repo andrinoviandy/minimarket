@@ -28,7 +28,7 @@
                 <button name="tambah_laporan" class="btn btn-danger" type="button" onclick="modalAmbil(); return false"><span class="fa fa-minus"></span>&nbsp; Ambil</button>
               </div>
               <div class="pull pull-right">
-                <?php include "include/getFilter.php"; ?>
+                <?php //include "include/getFilter.php"; ?>
                 <?php include "include/atur_halaman.php"; ?>
               </div>
             </div>
@@ -115,23 +115,13 @@
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Setor Tabungan</h4>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data" onsubmit="simpanSetor(); return false;" id="formSetor">
         <div class="modal-body">
-          <select class="form-control select2" name="pilihan" required style="width:100%">
-            <option value="">...</option>
-          </select>
-          <br /><br />
-          <input type="text" class="form-control" name="kata_kunci" placeholder="Kata Kunci" />
-          <br />
-          <select name="tampil" class="form-control select2" style="width:100%">
-            <option value="">...</option>
-            <option value="1">Tampilkan Detail Barang</option>
-            <option value="0">Tidak Tampilkan Detail Barang</option>
-          </select>
+          <div id="data-modal-setor"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" name="pencarian">Cari</button>
+          <button type="submit" class="btn btn-success" name="simpan_setor">Simpan</button>
         </div>
       </form>
     </div>
@@ -149,23 +139,13 @@
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Ambil Tabungan</h4>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data" onsubmit="simpanAmbil(); return false;" id="formAmbil">
         <div class="modal-body">
-          <select class="form-control select2" name="pilihan" required style="width:100%">
-            <option value="">...</option>
-          </select>
-          <br /><br />
-          <input type="text" class="form-control" name="kata_kunci" placeholder="Kata Kunci" />
-          <br />
-          <select name="tampil" class="form-control select2" style="width:100%">
-            <option value="">...</option>
-            <option value="1">Tampilkan Detail Barang</option>
-            <option value="0">Tidak Tampilkan Detail Barang</option>
-          </select>
+          <div id="data-modal-ambil"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" name="pencarian">Cari</button>
+          <button type="submit" class="btn btn-success" name="simpan_ambil">Simpan</button>
         </div>
       </form>
     </div>
@@ -226,20 +206,71 @@
   }
 
   async function modalSetor() {
-    await $.get("data/option-tabungan.php",
+    await $.get("data/modal-setor.php",
       function(data, textStatus, jqXHR) {
-        $('#data-nasabah').html(data);
+        $('#data-modal-setor').html(data);
       }
     );
     $('#modal-setor').modal('show');
   }
 
+  function simpanSetor() {
+    var dataform = $('#formSetor')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/simpan-setor-ambil.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response === 'S') {
+          $('#modal-setor').modal('hide');
+          dataform.reset();
+          alertSimpan('S')
+          loadMore(load_flag, key, status_b)
+        } else {
+          alertSimpan('F')
+        }
+      }
+    });
+  }
+
   async function modalAmbil() {
-    // await $.get("data/option-tabungan.php",
-    //   function(data, textStatus, jqXHR) {
-    //     $('#data-nasabah').html(data);
-    //   }
-    // );
+    await $.get("data/modal-ambil.php",
+      function(data, textStatus, jqXHR) {
+        $('#data-modal-ambil').html(data);
+      }
+    );
     $('#modal-ambil').modal('show');
+  }
+
+  function simpanAmbil() {
+    var dataform = $('#formAmbil')[0];
+    var data = new FormData(dataform);
+    $.ajax({
+      type: "post",
+      url: "data/simpan-setor-ambil.php",
+      data: data,
+      enctype: "multipart/form-data",
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response === 'S') {
+          $('#modal-ambil').modal('hide');
+          dataform.reset();
+          alertSimpan('S')
+          loadMore(load_flag, key, status_b)
+        } else if (response === 'F') {
+          alertSimpan('F')
+        } else {
+          let resp = response.split("&")
+          console.log(resp, 'resp');
+          
+          alertCustom('F', 'Data Gagal Disimpan !', 'Saldo Kurang ' + resp[1])
+        }
+      }
+    });
   }
 </script>

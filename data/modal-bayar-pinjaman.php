@@ -6,10 +6,10 @@ error_reporting(0);
 ?>
 <div class="form-group">
     <label>Nasabah</label>
-    <select name="nasabah_id" id="nasabah_id" required class="form-control select2" style="width:100%">
+    <select name="pinjaman_id" id="pinjaman_id" required class="form-control select2" style="width:100%">
         <option value="">...</option>
         <?php
-        $query_teknisi = mysqli_query($koneksi, "select * from nasabah order by nama_nasabah ASC");
+        $query_teknisi = mysqli_query($koneksi, "select b.id, a.nama_nasabah, a.nik from nasabah a inner join pinjaman b on a.id = b.nasabah_id and b.flag_lunas = 0 order by a.nama_nasabah ASC");
         while ($data_t = mysqli_fetch_array($query_teknisi)) {
         ?>
             <option value="<?php echo $data_t['id']; ?>"><?php echo $data_t['nama_nasabah'] . " - " . $data_t['nik']; ?></option>
@@ -17,31 +17,31 @@ error_reporting(0);
     </select>
 </div>
 <div class="form-group">
-    <label>Tanggal Buka Tabungan</label>
-    <input type="date" name="tgl_buka_tabungan" required id="tgl_buka_tabungan" class="form-control" />
+    <label>Tanggal Transaksi</label>
+    <input type="date" name="tgl_transaksi" required id="tgl_transaksi" class="form-control" />
 </div>
 <div class="form-group">
-    <label>Jenis Tabungan</label>
-    <select name="jenis_tabungan_id" id="jenis_tabungan_id" required class="form-control select2" style="width:100%" onchange="changeValue(this.value)">
-        <option value="">...</option>
-        <?php
-        $query_jenis = mysqli_query($koneksi, "select * from jenis_tabungan order by jenis_tabungan ASC");
-        $jsArray = "var dtBrg = new Array();";
-        while ($data_t = mysqli_fetch_array($query_jenis)) {
-        ?>
-            <option value="<?php echo $data_t['id']; ?>"><?php echo $data_t['jenis_tabungan']; ?></option>
-        <?php
-            $jsArray .= "dtBrg['" . $data_t['id'] . "'] = {
-                        ketentuan:'" . addslashes('<font color="red">Ketentuan Tabungan : </font>'.$data_t['ketentuan']) . "'};";
-        }
-        ?>
-    </select>
-    <div id="ketentuan"></div>
+    <label>Angsuran</label>
+    <input type="text" name="angsuran" id="angsuran" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
 </div>
-<!-- <div class="form-group">
-    <label>Nominal</label>
-    <input type="text" name="nominal" id="nominal" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"/>
-</div> -->
+<div class="col-lg-12 no-padding">
+    <div class="col-lg-3 no-padding">
+        <div class="form-group">
+            <label>Persen Bunga (%)</label>
+            <input type="text" name="persen_bunga" id="persen_bunga" required class="form-control" onchange="persenBunga(this.value)" />
+        </div>
+    </div>
+    <div class="col-lg-9 no-padding">
+        <div class="form-group">
+            <label>Nilai Bunga</label>
+            <input type="text" name="bunga" id="bunga" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label>Nominal Bayar</label>
+    <input type="text" name="nominal_bayar" id="nominal_bayar" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
+</div>
 <div class="form-group">
     <label>Keterangan</label>
     <input type="text" name="keterangan" id="keterangan" required class="form-control" />
@@ -122,6 +122,27 @@ error_reporting(0);
 </script>
 
 <script>
+    function persenBunga(persen) {
+        if (persen.includes(',')) {
+            alertCustom('W', 'Gunakan Tanda Titik (.) untuk pecahan desimal !', '')
+            $('#persen_bunga').val();
+            $('#bunga').val();
+            $('#nominal_bayar').val();
+        } else {
+            let angsuran = $('#angsuran').val();
+            let bunga = angsuran.replace(/\./g, '') * persen / 100;
+            let nominal_bayar = parseFloat(angsuran.replace(/\./g, '')) + parseFloat(bunga);
+            let formatBunga = bunga.toLocaleString('id-ID', {
+                maximumFractionDigits: 0
+            });
+            let formatBayar = nominal_bayar.toLocaleString('id-ID', {
+                maximumFractionDigits: 0
+            });
+            $('#bunga').val(formatBunga);
+            $('#nominal_bayar').val(formatBayar);
+        }
+    }
+
     <?php
     echo $jsArray;
     ?>
@@ -133,4 +154,14 @@ error_reporting(0);
             $('#ketentuan').html('');
         }
     };
+
+    function pilihTabungan(value) {
+        $.get("data/pilih_tabungan.php", {
+                nasabah_id: value
+            },
+            function(data, textStatus, jqXHR) {
+                $('#option_tabungan').html(data);
+            }
+        );
+    }
 </script>

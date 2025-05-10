@@ -15,9 +15,20 @@ if (isset($_GET['start'])) {
     if (isset($_GET['cari'])) {
         $sql = "select
                         *,
+                        COALESCE(tsa.nominal_setor, 0) - COALESCE(tsa.nominal_ambil, 0) AS nominal,
                         a.id as idd 
                     from
-                        tabungan a left join nasabah b on b.id = a.nasabah_id left join jenis_tabungan c on c.id = a.jenis_tabungan_id 
+                        tabungan a left join nasabah b on b.id = a.nasabah_id left join jenis_tabungan c on c.id = a.jenis_tabungan_id left join 
+                        (
+                        SELECT
+                            tabungan_id,
+                            SUM(CASE WHEN setor_ambil = 1 THEN nominal ELSE 0 END) AS nominal_setor,
+                            SUM(CASE WHEN setor_ambil = 2 THEN nominal ELSE 0 END) AS nominal_ambil
+                        FROM
+                            tabungan_setor_ambil
+                        GROUP BY
+                            tabungan_id
+                        ) tsa ON a.id = tsa.tabungan_id 
                     where b.nik like ('%$_GET[cari]%') 
                         or b.nama_nasabah like ('%$_GET[cari]%') 
                         or c.jenis_tabungan like ('%$_GET[cari]%') 
@@ -27,9 +38,19 @@ if (isset($_GET['start'])) {
     } else {
         $sql = "select
                         *,
+                        COALESCE(tsa.nominal_setor, 0) - COALESCE(tsa.nominal_ambil, 0) AS nominal,
                         a.id as idd 
                     from
-                        tabungan a left join nasabah b on b.id = a.nasabah_id left join jenis_tabungan c on c.id = a.jenis_tabungan_id 
+                        tabungan a left join nasabah b on b.id = a.nasabah_id left join jenis_tabungan c on c.id = a.jenis_tabungan_id LEFT JOIN (
+                        SELECT
+                            tabungan_id,
+                            SUM(CASE WHEN setor_ambil = 1 THEN nominal ELSE 0 END) AS nominal_setor,
+                            SUM(CASE WHEN setor_ambil = 2 THEN nominal ELSE 0 END) AS nominal_ambil
+                        FROM
+                            tabungan_setor_ambil
+                        GROUP BY
+                            tabungan_id
+                        ) tsa ON a.id = tsa.tabungan_id 
                     order by a.tgl_buka_tabungan desc, a.id desc LIMIT $start, $limit";
     }
     $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
@@ -46,7 +67,7 @@ if (isset($_GET['start'])) {
     // untuk jumlah
     if (isset($_GET['cari'])) {
         $sql = "select
-                        count(a.id) 
+                        count(a.id) as jml 
                     from
                         tabungan a left join nasabah b on b.id = a.nasabah_id left join jenis_tabungan c on c.id = a.jenis_tabungan_id 
                     where b.nik like ('%$_GET[cari]%') 

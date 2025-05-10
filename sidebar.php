@@ -100,11 +100,11 @@
           </span>
         </a>
       </li>
-      <li class="<?php echo $monitoring_penjualan; ?>">
+      <!-- <li class="<?php echo $monitoring_penjualan; ?>">
         <a href="index.php?page=monitoring_penjualan">
           <i class="fa fa-bar-chart"></i> <span>Monitoring Penjualan</span>
         </a>
-      </li>
+      </li> -->
       <li class="<?php echo $karyawan; ?>">
         <a href="index.php?page=karyawan">
           <i class="fa fa-user-plus"></i> <span>Karyawan</span>

@@ -4,48 +4,18 @@ include("../include/API.php");
 session_start();
 error_reporting(0);
 ?>
-<div class="form-group">
-    <label>Nasabah</label>
-    <select name="nasabah_id" id="nasabah_id" required class="form-control select2" style="width:100%">
-        <option value="">...</option>
-        <?php
-        $query_teknisi = mysqli_query($koneksi, "select * from nasabah order by nama_nasabah ASC");
-        while ($data_t = mysqli_fetch_array($query_teknisi)) {
-        ?>
-            <option value="<?php echo $data_t['id']; ?>"><?php echo $data_t['nama_nasabah'] . " - " . $data_t['nik']; ?></option>
-        <?php } ?>
-    </select>
-</div>
-<div class="form-group">
-    <label>Tanggal Buka Tabungan</label>
-    <input type="date" name="tgl_buka_tabungan" required id="tgl_buka_tabungan" class="form-control" />
-</div>
-<div class="form-group">
-    <label>Jenis Tabungan</label>
-    <select name="jenis_tabungan_id" id="jenis_tabungan_id" required class="form-control select2" style="width:100%" onchange="changeValue(this.value)">
-        <option value="">...</option>
-        <?php
-        $query_jenis = mysqli_query($koneksi, "select * from jenis_tabungan order by jenis_tabungan ASC");
-        $jsArray = "var dtBrg = new Array();";
-        while ($data_t = mysqli_fetch_array($query_jenis)) {
-        ?>
-            <option value="<?php echo $data_t['id']; ?>"><?php echo $data_t['jenis_tabungan']; ?></option>
-        <?php
-            $jsArray .= "dtBrg['" . $data_t['id'] . "'] = {
-                        ketentuan:'" . addslashes('<font color="red">Ketentuan Tabungan : </font>'.$data_t['ketentuan']) . "'};";
-        }
-        ?>
-    </select>
-    <div id="ketentuan"></div>
-</div>
-<!-- <div class="form-group">
-    <label>Nominal</label>
-    <input type="text" name="nominal" id="nominal" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"/>
-</div> -->
-<div class="form-group">
-    <label>Keterangan</label>
-    <input type="text" name="keterangan" id="keterangan" required class="form-control" />
-</div>
+<select name="tabungan_id" id="tabungan_id" required class="form-control select2" style="width:100%" onchange="pilihJenisTabungan(this.value);">
+    <option value="">...</option>
+    <?php
+    $query_jenis = mysqli_query($koneksi, "select b.*, a.id as idd from tabungan a inner join jenis_tabungan b on b.id = a.jenis_tabungan_id where nasabah_id = '$_GET[nasabah_id]' order by b.jenis_tabungan ASC");
+    while ($data_t = mysqli_fetch_array($query_jenis)) {
+    ?>
+        <option value="<?php echo $data_t['idd']; ?>"><?php echo $data_t['jenis_tabungan']; ?></option>
+    <?php
+    }
+    ?>
+</select>
+<div id="ketentuan"></div>
 <script>
     $(function() {
         //Initialize Select2 Elements
@@ -122,15 +92,13 @@ error_reporting(0);
 </script>
 
 <script>
-    <?php
-    echo $jsArray;
-    ?>
-
-    function changeValue(id_akse) {
-        if (id_akse !== '') {
-            $('#ketentuan').html(dtBrg[id_akse].ketentuan);
-        } else {
-            $('#ketentuan').html('');
-        }
-    };
+    function pilihJenisTabungan(jenis_id) {
+        $.get("data/ketentuan_tabungan.php", {
+                id: jenis_id
+            },
+            function(data, textStatus, jqXHR) {
+                $('#ketentuan').html(data);
+            },
+        );
+    }
 </script>

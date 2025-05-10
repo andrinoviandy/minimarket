@@ -31,8 +31,8 @@ error_reporting(0);
                 </td>
                 <td>
                     <?php
-                    $jm1 = mysqli_num_rows(mysqli_query($koneksi, "select * from biaya_lain where buku_kas_id=" . $data['idd'] . ""));
-                    $jm2 = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id=" . $data['idd'] . ""));
+                    $jm1 = mysqli_num_rows(mysqli_query($koneksi, "select * from biaya_lain where buku_kas_id='" . $data['idd'] . "'"));
+                    $jm2 = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id='" . $data['idd'] . "'"));
                     if ($jm1 == 0 and $jm2 == 0) {
                     ?>
                         <!-- <a href="index.php?page=buku_bank&id_hapus=<?php echo $data['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ? Riwayat Pembayaran Pada Buku Ini Juga Akan Ikut Terhapus !')" class="btn btn-xs btn-danger"> -->

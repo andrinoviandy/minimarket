@@ -41,13 +41,17 @@ $jml2 = $file2;
                 <td width="" align="center"><strong>No</strong>
                     </th>
                 <th width="" valign="top">NIK</th>
-                <th width="" valign="top"><strong>Nama Nasabah</strong></th>
-                <th width="" valign="top">Tanggal Buka Tabungan</th>
-                <th width="" valign="top">Jenis Tabungan</th>
-                <th width="" valign="top">Saldo</th>
+                <th width="" valign="top" class="text-nowrap"><strong>Nama Nasabah</strong></th>
+                <th width="" valign="top" class="text-nowrap">Tanggal Pinjaman</th>
+                <th width="" valign="top" class="text-nowrap">Nominal Pinjam</th>
                 <th width="" valign="top">Keterangan</th>
+                <th width="" valign="top" class="text-nowrap">Asal Dana</th>
                 <th width="" valign="top">Status</th>
                 <th width="" valign="top">Operator</th>
+                <th width="" valign="top" class="text-nowrap">Total Angsuran</th>
+                <th width="" valign="top" class="text-nowrap">Total Kekurangan</th>
+                <th width="" valign="top" class="text-nowrap">Total Angsuran + Bunga</th>
+                <th width="" valign="top">Keuntungan</th>
                 <th width="" align="center" valign="top"><strong>Aksi</strong></th>
             </tr>
         </thead>
@@ -61,17 +65,21 @@ $jml2 = $file2;
                 <td>
                     <?php echo $json[$i]['nama_nasabah'];  ?>
                 </td>
-                <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_buka_tabungan']));  ?></td>
-                <td><?php echo $json[$i]['jenis_tabungan']; ?></td>
-                <td><?php echo number_format($json[$i]['nominal'], 0, ',', '.');  ?></td>
+                <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_pinjam']));  ?></td>
+                <td><?php echo number_format($json[$i]['nominal_pinjam'], 0, ',', '.');  ?></td>
                 <td><?php echo $json[$i]['keterangan'];  ?></td>
-                <td><?php echo $json[$i]['aktif'] == 1 ? 'Aktif' : 'Non_Aktif';  ?></td>
+                <td><?php echo $json[$i]['nama_akun'];  ?></td>
+                <td><?php echo $json[$i]['flag_lunas'] == 0 ? 'Belum Lunas' : 'Lunas';  ?></td>
                 <td><?php echo $json[$i]['operator'];  ?></td>
+                <td><?php echo number_format($json[$i]['total_angsuran'], 0, ',', '.');  ?></td>
+                <td><?php echo number_format($json[$i]['total_kekurangan'], 0, ',', '.');  ?></td>
+                <td><?php echo number_format($json[$i]['total_angsuran_bunga'], 0, ',', '.');  ?></td>
+                <td><?php echo number_format($json[$i]['total_keuntungan'], 0, ',', '.');  ?></td>
                 <td>
                     <!-- href="index.php?page=karyawan&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')" -->
                     <!-- <button class="btn btn-xs btn-danger" onclick="hapusData('<?php echo $json[$i]['idd']; ?>')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></button>
                     &nbsp;-->
-                    <a href="index.php?page=detail_tabungan&id=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-info"><span data-toggle="tooltip" title="Detail" class="fa fa-folder-open"></span></a>
+                    <a href="index.php?page=detail_pinjaman&id=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-info" data-toggle="tooltip" data-title="Detai"><span class="fa fa-folder-open"></span></a>
 
                 </td>
             </tr>

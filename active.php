@@ -797,10 +797,10 @@ if (isset($_GET['page'])) {
 	} else if ($_GET['page'] == 'nasabah') {
 		$nasabah = "active";
 		$simpan_pinjam = "active";
-	} else if ($_GET['page'] == 'tabungan') {
+	} else if ($_GET['page'] == 'tabungan' || $_GET['page'] == 'detail_tabungan') {
 		$tabungan = "active";
 		$simpan_pinjam = "active";
-	} else if ($_GET['page'] == 'pinjaman') {
+	} else if ($_GET['page'] == 'pinjaman' || $_GET['page'] == 'detail_pinjaman') {
 		$pinjaman = "active";
 		$simpan_pinjam = "active";
 	} else if ($_GET['page'] == 'laporan_neraca') {

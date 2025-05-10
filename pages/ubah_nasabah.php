@@ -1,5 +1,5 @@
 <?php
-$data = mysqli_fetch_array(mysqli_query($koneksi, "select * from nasabah where id=" . $_GET['id_ubah'] . ""));
+$data = mysqli_fetch_array(mysqli_query($koneksi, "select * from nasabah where id='" . $_GET['id_ubah'] . "'"));
 if (isset($_POST['tambah_header'])) {
     $Result = mysqli_query($koneksi, "update nasabah set nik='$_POST[nik]',nama_nasabah='$_POST[nama_nasabah]',tempat_lahir='$_POST[tempat_lahir]',tanggal_lahir='$_POST[tanggal_lahir]',alamat='$_POST[alamat]',no_hp='$_POST[no_hp]',email='$_POST[email]' where id=$_GET[id_ubah]");
     if ($Result) {

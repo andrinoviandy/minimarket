@@ -25,7 +25,7 @@ if (isset($_POST['tambah_laporan'])) {
   }
 }
 
-$data = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id=" . $_GET['id'] . ""));
+$data = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id='" . $_GET['id'] . "'"));
 ?>
 
 <?php

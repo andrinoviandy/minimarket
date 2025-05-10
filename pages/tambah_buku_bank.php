@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['tambah_header'])) {
-	$Result = mysqli_query($koneksi, "insert into buku_kas values('','".$_POST['no_akun']."','".$_POST['nama_akun']."','".$_POST['akun_tipe']."','".$_POST['saldo']."')");
+	$Result = mysqli_query($koneksi, "insert into buku_kas values(UUID(),'".$_POST['no_akun']."','".$_POST['nama_akun']."','".$_POST['akun_tipe']."','".$_POST['saldo']."')");
 	if ($Result) {
 		echo "<script type='text/javascript'>
 		alert('Data Berhasil Di Simpan !');

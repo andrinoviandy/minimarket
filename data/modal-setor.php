@@ -6,7 +6,7 @@ error_reporting(0);
 ?>
 <div class="form-group">
     <label>Nasabah</label>
-    <select name="nasabah_id" id="nasabah_id" required class="form-control select2" style="width:100%">
+    <select name="nasabah_id" id="nasabah_id" required class="form-control select2" style="width:100%" onchange="pilihTabungan(this.value)">
         <option value="">...</option>
         <?php
         $query_teknisi = mysqli_query($koneksi, "select * from nasabah order by nama_nasabah ASC");
@@ -17,35 +17,26 @@ error_reporting(0);
     </select>
 </div>
 <div class="form-group">
-    <label>Tanggal Buka Tabungan</label>
-    <input type="date" name="tgl_buka_tabungan" required id="tgl_buka_tabungan" class="form-control" />
+    <label>Jenis Tabungan</label>
+    <div id="option_tabungan">
+        <select required class="form-control select2" style="width:100%">
+            <option value="">...</option>
+        </select>
+    </div>
 </div>
 <div class="form-group">
-    <label>Jenis Tabungan</label>
-    <select name="jenis_tabungan_id" id="jenis_tabungan_id" required class="form-control select2" style="width:100%" onchange="changeValue(this.value)">
-        <option value="">...</option>
-        <?php
-        $query_jenis = mysqli_query($koneksi, "select * from jenis_tabungan order by jenis_tabungan ASC");
-        $jsArray = "var dtBrg = new Array();";
-        while ($data_t = mysqli_fetch_array($query_jenis)) {
-        ?>
-            <option value="<?php echo $data_t['id']; ?>"><?php echo $data_t['jenis_tabungan']; ?></option>
-        <?php
-            $jsArray .= "dtBrg['" . $data_t['id'] . "'] = {
-                        ketentuan:'" . addslashes('<font color="red">Ketentuan Tabungan : </font>'.$data_t['ketentuan']) . "'};";
-        }
-        ?>
-    </select>
-    <div id="ketentuan"></div>
+    <label>Tanggal Transaksi</label>
+    <input type="date" name="tgl_transaksi" required id="tgl_transaksi" class="form-control" />
 </div>
-<!-- <div class="form-group">
+<div class="form-group">
     <label>Nominal</label>
-    <input type="text" name="nominal" id="nominal" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"/>
-</div> -->
+    <input type="text" name="nominal" id="nominal" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
+</div>
 <div class="form-group">
     <label>Keterangan</label>
     <input type="text" name="keterangan" id="keterangan" required class="form-control" />
 </div>
+<input type="hidden" name="setor_ambil" id="setor_ambil" value="1" />
 <script>
     $(function() {
         //Initialize Select2 Elements
@@ -122,15 +113,11 @@ error_reporting(0);
 </script>
 
 <script>
-    <?php
-    echo $jsArray;
-    ?>
-
-    function changeValue(id_akse) {
-        if (id_akse !== '') {
-            $('#ketentuan').html(dtBrg[id_akse].ketentuan);
-        } else {
-            $('#ketentuan').html('');
-        }
-    };
+    function pilihTabungan(value) {
+        $.get("data/pilih_tabungan.php", {nasabah_id : value},
+            function (data, textStatus, jqXHR) {
+                $('#option_tabungan').html(data);   
+            }
+        );
+    }
 </script>

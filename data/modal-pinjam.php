@@ -17,34 +17,27 @@ error_reporting(0);
     </select>
 </div>
 <div class="form-group">
-    <label>Tanggal Buka Tabungan</label>
-    <input type="date" name="tgl_buka_tabungan" required id="tgl_buka_tabungan" class="form-control" />
+    <label>Tanggal Pinjam</label>
+    <input type="date" name="tgl_pinjam" required id="tgl_pinjam" class="form-control" />
 </div>
 <div class="form-group">
-    <label>Jenis Tabungan</label>
-    <select name="jenis_tabungan_id" id="jenis_tabungan_id" required class="form-control select2" style="width:100%" onchange="changeValue(this.value)">
-        <option value="">...</option>
-        <?php
-        $query_jenis = mysqli_query($koneksi, "select * from jenis_tabungan order by jenis_tabungan ASC");
-        $jsArray = "var dtBrg = new Array();";
-        while ($data_t = mysqli_fetch_array($query_jenis)) {
-        ?>
-            <option value="<?php echo $data_t['id']; ?>"><?php echo $data_t['jenis_tabungan']; ?></option>
-        <?php
-            $jsArray .= "dtBrg['" . $data_t['id'] . "'] = {
-                        ketentuan:'" . addslashes('<font color="red">Ketentuan Tabungan : </font>'.$data_t['ketentuan']) . "'};";
-        }
-        ?>
-    </select>
-    <div id="ketentuan"></div>
+    <label>Nominal Pinjam</label>
+    <input type="text" name="nominal_pinjam" id="nominal_pinjam" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
 </div>
-<!-- <div class="form-group">
-    <label>Nominal</label>
-    <input type="text" name="nominal" id="nominal" required class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"/>
-</div> -->
 <div class="form-group">
     <label>Keterangan</label>
     <input type="text" name="keterangan" id="keterangan" required class="form-control" />
+</div>
+<div class="form-group">
+    <label>Asal Dana</label>
+    <select name="buku_kas_id" id="buku_kas_id" class="form-control select2" style="width:100%" required>
+        <option value="">...</option>
+        <?php $query = mysqli_query($koneksi, "SELECT id,nama_akun FROM buku_kas");
+        while ($row = mysqli_fetch_array($query)) {
+        ?>
+            <option value="<?php echo $row['id']; ?>"><?php echo $row['nama_akun']; ?></option>
+        <?php } ?>
+    </select>
 </div>
 <script>
     $(function() {
