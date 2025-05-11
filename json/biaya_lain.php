@@ -81,7 +81,7 @@ if (isset($_GET['id_keuangan'])) {
 				}
 			} else {
 				if (isset($_GET['cari'])) {
-					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where (a.jenis_transaksi like '%$_GET[cari]%' or a.penerima like '%$_GET[cari]%' or a.deskripsi like '%$_GET[cari]%') order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where (a.jenis_transaksi like '%$_GET[cari]%' or a.penerima like '%$_GET[cari]%' or a.deskripsi like '%$_GET[cari]%') order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				} else {
 					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				}
