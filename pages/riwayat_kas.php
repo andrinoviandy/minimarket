@@ -63,7 +63,8 @@ $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where 
                     <!-- /.chat -->
                     <div class="box-footer">
                         <div class="box-body">
-                            <div class="pull pull-right">
+                            <div class="pull pull-right margin-bottom-lg">
+                                <?php include "include/getFilter.php"; ?>
                                 <?php include "include/atur_halaman.php"; ?>
                             </div>
                             <?php include "include/getInputSearch.php"; ?>

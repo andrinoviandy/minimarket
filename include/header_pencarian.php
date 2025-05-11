@@ -1,10 +1,14 @@
 <?php
-if (isset($_GET['kunci']) or isset($_GET['tgl1']) and isset($_GET['tgl2'])) {
+if (isset($_GET['kunci']) || (isset($_GET['tgl1']) && isset($_GET['tgl2']))) {
 ?>
 	<section class="col-lg-12">
 
 		<div class="alert box alert-dismissible">
-			<a onclick="history.back();" type="button" class="close" data-dismiss="alert" aria-hidden="true"><button>&times;</button></a>
+			<a href="?page=<?php if (isset($_GET['id'])) {
+                        echo $_GET['page'] . "&id=" . $_GET['id'];
+                    } else {
+                        echo $_GET['page'];
+                    } ?>" type="button" class="close" data-dismiss="alert" aria-hidden="true"><button>&times;</button></a>
 			<h4><i class="icon fa fa-calendar"></i>Filter By Tanggal</h4>
 			<h4>
 				<?php
