@@ -283,6 +283,8 @@
             if (data == 'S') {
               alertHapus('S');
               loadMore(load_flag, key, status_b)
+            } else if (data == 'TC') {
+              alertCustom('W','Tidak Dapat Dilanjutkan !', 'Saldo untuk pengembalian tidak cukup')
             } else {
               alertHapus('F');
             }
