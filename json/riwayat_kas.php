@@ -16,11 +16,13 @@ if (isset($_GET['start'])) {
         $sql = "select
                         z.* 
                     from 
-                        ((select a.id, a.tgl as tgl_transaksi, a.jenis_transaksi , a.deskripsi, case when a.jenis_transaksi = 'Penerimaan' then a.harga else '-' end as debet, case when a.jenis_transaksi = 'Pembayaran' then a.harga else '-' end as kredit from biaya_lain a 
+                        ((select a.id, a.tgl as tgl_transaksi, a.jenis_transaksi , a.deskripsi as keterangan, case when a.jenis_transaksi = 'Penerimaan' then a.harga else '-' end as debet, case when a.jenis_transaksi = 'Pembayaran' then a.harga else '-' end as kredit, 'biaya_lain' as tabel from biaya_lain a 
                         where a.buku_kas_id = '$_GET[id]')
-                        union (select b.id, b.tgl_pinjam as tgl_transaksi, 'Buka Pinjaman' as jenis_transaksi , b.keterangan, '-' as debet, case when b.nominal_pinjam is not null then b.nominal_pinjam else '-' end as kredit from pinjaman b 
+                        union (select b.id, b.tgl_pinjam as tgl_transaksi, 'Buka Pinjaman' as jenis_transaksi , b.keterangan, '-' as debet, b.nominal_pinjam as kredit, 'pinjaman' as tabel from pinjaman b 
                         where b.buku_kas_id = '$_GET[id]')
-                        union (select c.id, c.tgl_transaksi, 'Bayar Pinjaman' as jenis_transaksi , c.keterangan, case when c.nominal_bayar is not null then c.nominal_bayar else '-' end as debet, '-' as kredit from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]')) z 
+                        union (select c.id, c.tgl_transaksi, 'Bayar Pinjaman' as jenis_transaksi , c.keterangan, c.nominal_bayar as debet, '-' as kredit, 'pinjaman_bayar' as tabel from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]') 
+                        union (select d.id, d.tgl_deposit as tgl_transaksi, 'Mutasi Kas' as jenis_transaksi , d.deskripsi as keterangan, '-' as debet, d.nominal_deposit as kredit, 'deposit' as tabel from deposit d where d.dari_akun_id = '$_GET[id]') 
+                        union (select d.id, d.tgl_deposit as tgl_transaksi, 'Mutasi Kas' as jenis_transaksi , d.deskripsi as keterangan, d.nominal_deposit as debet, '-' as kredit, 'deposit' as tabel from deposit d where d.ke_akun_id = '$_GET[id]')) z 
                     where (z.deskripsi like ('%$_GET[cari]%') 
                         or z.jenis_transaksi like ('%$_GET[cari]%') 
                         or DATE_FORMAT(z.tgl_transaksi, '%d-%m-%Y') like ('%$_GET[cari]%'))
@@ -29,11 +31,13 @@ if (isset($_GET['start'])) {
         $sql = "select
                         z.* 
                     from 
-                        ((select a.id, a.tgl as tgl_transaksi, a.jenis_transaksi , a.deskripsi, case when a.jenis_transaksi = 'Penerimaan' then a.harga else '-' end as debet, case when a.jenis_transaksi = 'Pembayaran' then a.harga else '-' end as kredit from biaya_lain a 
+                        ((select a.id, a.tgl as tgl_transaksi, a.jenis_transaksi , a.deskripsi as keterangan, case when a.jenis_transaksi = 'Penerimaan' then a.harga else '-' end as debet, case when a.jenis_transaksi = 'Pembayaran' then a.harga else '-' end as kredit, 'biaya_lain' as tabel from biaya_lain a 
                         where a.buku_kas_id = '$_GET[id]')
-                        union (select b.id, b.tgl_pinjam as tgl_transaksi, 'Buka Pinjaman' as jenis_transaksi , b.keterangan, '-' as debet, case when b.nominal_pinjam is not null then b.nominal_pinjam else '-' end as kredit from pinjaman b 
+                        union (select b.id, b.tgl_pinjam as tgl_transaksi, 'Buka Pinjaman' as jenis_transaksi , b.keterangan, '-' as debet, b.nominal_pinjam as kredit, 'pinjaman' as tabel from pinjaman b 
                         where b.buku_kas_id = '$_GET[id]')
-                        union (select c.id, c.tgl_transaksi, 'Bayar Pinjaman' as jenis_transaksi , c.keterangan, case when c.nominal_bayar is not null then c.nominal_bayar else '-' end as debet, '-' as kredit from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]')) z 
+                        union (select c.id, c.tgl_transaksi, 'Bayar Pinjaman' as jenis_transaksi , c.keterangan, c.nominal_bayar as debet, '-' as kredit, 'pinjaman_bayar' as tabel from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]') 
+                        union (select d.id, d.tgl_deposit as tgl_transaksi, 'Mutasi Kas' as jenis_transaksi , d.deskripsi as keterangan, '-' as debet, d.nominal_deposit as kredit, 'deposit' as tabel from deposit d where d.dari_akun_id = '$_GET[id]') 
+                        union (select d.id, d.tgl_deposit as tgl_transaksi, 'Mutasi Kas' as jenis_transaksi , d.deskripsi as keterangan, d.nominal_deposit as debet, '-' as kredit, 'deposit' as tabel from deposit d where d.ke_akun_id = '$_GET[id]')) z 
                     order by z.tgl_transaksi desc LIMIT $start, $limit";
     }
     $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
@@ -52,11 +56,13 @@ if (isset($_GET['start'])) {
         $sql = "select
                         count(z.id) as jml 
                     from 
-                        ((select a.id, a.tgl as tgl_transaksi, a.jenis_transaksi , a.deskripsi, case when a.jenis_transaksi = 'Penerimaan' then a.harga else '-' end as debet, case when a.jenis_transaksi = 'Pembayaran' then a.harga else '-' end as kredit from biaya_lain a 
+                        ((select a.id, a.tgl as tgl_transaksi, a.jenis_transaksi , a.deskripsi as keterangan, case when a.jenis_transaksi = 'Penerimaan' then a.harga else '-' end as debet, case when a.jenis_transaksi = 'Pembayaran' then a.harga else '-' end as kredit, 'biaya_lain' as tabel from biaya_lain a 
                         where a.buku_kas_id = '$_GET[id]')
-                        union (select b.id, b.tgl_pinjam as tgl_transaksi, 'Buka Pinjaman' as jenis_transaksi , b.keterangan, '-' as debet, case when b.nominal_pinjam is not null then b.nominal_pinjam else '-' end as kredit from pinjaman b 
+                        union (select b.id, b.tgl_pinjam as tgl_transaksi, 'Buka Pinjaman' as jenis_transaksi , b.keterangan, '-' as debet, b.nominal_pinjam as kredit, 'pinjaman' as tabel from pinjaman b 
                         where b.buku_kas_id = '$_GET[id]')
-                        union (select c.id, c.tgl_transaksi, 'Bayar Pinjaman' as jenis_transaksi , c.keterangan, case when c.nominal_bayar is not null then c.nominal_bayar else '-' end as debet, '-' as kredit from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]')) z 
+                        union (select c.id, c.tgl_transaksi, 'Bayar Pinjaman' as jenis_transaksi , c.keterangan, c.nominal_bayar as debet, '-' as kredit, 'pinjaman_bayar' as tabel from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]') 
+                        union (select d.id, d.tgl_deposit as tgl_transaksi, 'Mutasi Kas' as jenis_transaksi , d.deskripsi as keterangan, '-' as debet, d.nominal_deposit as kredit, 'deposit' as tabel from deposit d where d.dari_akun_id = '$_GET[id]') 
+                        union (select d.id, d.tgl_deposit as tgl_transaksi, 'Mutasi Kas' as jenis_transaksi , d.deskripsi as keterangan, d.nominal_deposit as debet, '-' as kredit, 'deposit' as tabel from deposit d where d.ke_akun_id = '$_GET[id]')) z 
                     where (z.deskripsi like ('%$_GET[cari]%') 
                         or z.jenis_transaksi like ('%$_GET[cari]%') 
                         or DATE_FORMAT(z.tgl_transaksi, '%d-%m-%Y') like ('%$_GET[cari]%'))";
@@ -66,7 +72,9 @@ if (isset($_GET['start'])) {
                         where a.buku_kas_id = '$_GET[id]')
                         union (select b.id from pinjaman b 
                         where b.buku_kas_id = '$_GET[id]')
-                        union (select c.id from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]')) z";
+                        union (select c.id from pinjaman_bayar c join pinjaman a on a.id = c.pinjaman_id where a.buku_kas_id = '$_GET[id]') 
+                        union (select d.id from deposit d where d.dari_akun_id = '$_GET[id]') 
+                        union (select d.id from deposit d where d.ke_akun_id = '$_GET[id]')) z";
     }
 
     $result = mysqli_fetch_array(mysqli_query($koneksi, $sql));

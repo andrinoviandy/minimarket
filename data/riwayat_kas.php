@@ -56,7 +56,7 @@ $jml2 = $file2;
                 <td><?php echo $json[$i]['jenis_transaksi']; ?></td>
                 <td><?php echo $json[$i]['debet'] !== '-' ? number_format($json[$i]['debet'], 0, ',', '.') : '-';  ?></td>
                 <td><?php echo $json[$i]['kredit'] !== '-' ? number_format($json[$i]['kredit'], 0, ',', '.') : '-';  ?></td>
-                <td><?php echo $json[$i]['deskripsi']; ?></td>
+                <td><?php echo $json[$i]['keterangan']; ?></td>
                 <!-- <td>
                     <button class="btn btn-xs btn-info" onclick="editTransaksi('<?php echo $json[$i]['idd']; ?>')"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></button>
                 </td> -->
