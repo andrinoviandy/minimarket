@@ -144,7 +144,7 @@
           </div>
           <label>Deskripsi</label>
           <textarea name="deskripsi" class="form-control" rows="4"></textarea><br />
-          <label>Harga</label>
+          <label>Nominal</label>
           <input name="harga" class="form-control" type="text" placeholder="" value="" required="required" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
         </div>
         <div class="modal-footer">
