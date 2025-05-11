@@ -6,7 +6,8 @@ if (isset($_POST['tambah_header'])) {
     $up1 = mysqli_query($koneksi, "update buku_kas set saldo=saldo-$nom where id='" . $_POST['dari_akun'] . "'");
     $up2 = mysqli_query($koneksi, "update buku_kas set saldo=saldo+$nom where id='" . $_POST['ke_akun'] . "'");
     echo "<script type='text/javascript'>
-		alertSimpan('S')
+		alert('Data Berhasil Di Simpan !');
+		window.location='index.php?page=deposit'
 		</script>";
   }
 }
