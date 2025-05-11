@@ -2,8 +2,8 @@
 include("../config/koneksi.php");
 include("../include/API.php");
 session_start();
-error_reporting(0);
-$cek_saldo = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id=" . $_POST['buku_kas_id'] . ""));
+// error_reporting(0);
+$cek_saldo = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id='" . $_POST['buku_kas_id'] . "'"));
 
 if ($_POST['jenis_transaksi'] == 'Pembayaran') {
     $nom = str_replace(".", "", $_POST['harga']);

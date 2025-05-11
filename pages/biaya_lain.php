@@ -181,7 +181,7 @@
   <!-- /.modal-dialog -->
 </div>
 
-<!-- <script>
+<script>
   function pilih2(id) {
     $.get("data/pilih2.php", {
         id: id
@@ -291,4 +291,4 @@
       }
     })
   }
-</script> -->
+</script>

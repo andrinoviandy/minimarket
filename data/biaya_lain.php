@@ -118,7 +118,7 @@ $jml2 = $file2;
                 <td valign="center"><?php echo date("d M Y", strtotime($json[$i]['tgl'])); ?></td>
                 <td>
                     <?php
-                    $akun = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id=" . $json[$i]['buku_kas_id'] . ""));
+                    $akun = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id='" . $json[$i]['buku_kas_id'] . "'"));
                     echo $akun['nama_akun'];
                     ?>
                 </td>
