@@ -71,10 +71,10 @@ $jml2 = $file2;
                 <td><?php echo $json[$i]['nama_akun'];  ?></td>
                 <td><?php echo $json[$i]['flag_lunas'] == 0 ? 'Belum Lunas' : 'Lunas';  ?></td>
                 <td><?php echo $json[$i]['operator'];  ?></td>
-                <td><?php echo number_format($json[$i]['total_angsuran'], 0, ',', '.');  ?></td>
-                <td><?php echo number_format($json[$i]['total_kekurangan'], 0, ',', '.');  ?></td>
-                <td><?php echo number_format($json[$i]['total_angsuran_bunga'], 0, ',', '.');  ?></td>
-                <td><?php echo number_format($json[$i]['total_keuntungan'], 0, ',', '.');  ?></td>
+                <td><?php echo "Rp".number_format($json[$i]['total_angsuran'], 0, ',', '.');  ?></td>
+                <td><?php echo "Rp".number_format($json[$i]['total_kekurangan'], 0, ',', '.');  ?></td>
+                <td><?php echo "Rp".number_format($json[$i]['total_angsuran_bunga'], 0, ',', '.');  ?></td>
+                <td><?php echo "Rp".number_format($json[$i]['total_keuntungan'], 0, ',', '.');  ?></td>
                 <td>
                     <!-- href="index.php?page=karyawan&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')" -->
                     <!-- <button class="btn btn-xs btn-danger" onclick="hapusData('<?php echo $json[$i]['idd']; ?>')"><span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span></button>

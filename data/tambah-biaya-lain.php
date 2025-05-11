@@ -24,7 +24,7 @@ if ($_POST['jenis_transaksi'] == 'Pembayaran') {
         $Result = mysqli_query($koneksi, "insert into biaya_lain values('','$max[id_max]','" . $_POST['buku_kas_id'] . "','" . $_POST['jenis_transaksi'] . "','" . $_POST['tanggal'] . "','" . $_POST['penerima'] . "','" . $_POST['deskripsi'] . "','" . $nom . "')");
         if ($simpan_keuangan and $Result and $simpan_keuangan_detail) {
             $saldo_kurang = $cek_saldo['saldo'] - $nom;
-            $up = mysqli_query($koneksi, "update buku_kas set saldo='" . $saldo_kurang . "' where id=$_POST[buku_kas_id]");
+            $up = mysqli_query($koneksi, "update buku_kas set saldo='" . $saldo_kurang . "' where id='$_POST[buku_kas_id]'");
             echo "S";
         } else {
             echo "F";
@@ -46,7 +46,7 @@ if ($_POST['jenis_transaksi'] == 'Pembayaran') {
     $Result = mysqli_query($koneksi, "insert into biaya_lain values('','$max[id_max]','" . $_POST['buku_kas_id'] . "','" . $_POST['jenis_transaksi'] . "','" . $_POST['tanggal'] . "','" . $_POST['penerima'] . "','" . $_POST['deskripsi'] . "','" . $nom . "')");
     if ($simpan_keuangan and $Result and $simpan_keuangan_detail) {
         $saldo_kurang = $cek_saldo['saldo'] + $nom;
-        $up = mysqli_query($koneksi, "update buku_kas set saldo='" . $saldo_kurang . "' where id=$_POST[buku_kas_id]");
+        $up = mysqli_query($koneksi, "update buku_kas set saldo='" . $saldo_kurang . "' where id='$_POST[buku_kas_id]'");
         echo "S";
     } else {
         echo "F";

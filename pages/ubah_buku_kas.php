@@ -67,7 +67,7 @@ if (isset($_GET['id_hapus'])) {
 
         <!-- Chat box -->
         <?php
-        $cek1 = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id=" . $_GET['id'] . ""));
+        $cek1 = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id='" . $_GET['id'] . "'"));
         if ($cek1 != 0) { ?>
           <div class="box box-success"><!-- /.chat -->
             <div class="box-footer">
@@ -167,7 +167,7 @@ if (isset($_GET['id_hapus'])) {
                         <td><?php echo "Rp" . number_format($json[$i]['nominal_up'], 2, ',', '.'); ?></td>
                         <td>
                           <?php
-                          $dd = mysqli_fetch_array(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id=$_GET[id] and utang_piutang_id=" . $json[$i]['id_up'] . " order by tgl_bayar DESC LIMIT 1"));
+                          $dd = mysqli_fetch_array(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id='$_GET[id]' and utang_piutang_id=" . $json[$i]['id_up'] . " order by tgl_bayar DESC LIMIT 1"));
                           echo "<b>" . date("d/m/Y", strtotime($dd['tgl_bayar'])) . " : </b><br>Rp" . number_format($dd['nominal'], 2, ',', '.');
                           ?>
                           <hr style="margin:0px" />
@@ -281,7 +281,7 @@ if (isset($_GET['id_hapus'])) {
         <?php } ?>
         <!-- /.box (chat box) -->
         <?php
-        $cek4 = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang_inventory_bayar where buku_kas_id=" . $_GET['id'] . ""));
+        $cek4 = mysqli_num_rows(mysqli_query($koneksi, "select * from utang_piutang_inventory_bayar where buku_kas_id='" . $_GET['id'] . "'"));
         if ($cek4 != 0) {
         ?>
           <div class="box box-success">
@@ -382,7 +382,7 @@ if (isset($_GET['id_hapus'])) {
                         <td><?php echo "Rp" . number_format($json[$i]['nominal_up'], 2, ',', '.'); ?></td>
                         <td>
                           <?php
-                          $dd = mysqli_fetch_array(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id=$_GET[id] and utang_piutang_id=" . $json[$i]['id_up'] . " order by tgl_bayar DESC LIMIT 1"));
+                          $dd = mysqli_fetch_array(mysqli_query($koneksi, "select * from utang_piutang_bayar where buku_kas_id='$_GET[id]' and utang_piutang_id=" . $json[$i]['id_up'] . " order by tgl_bayar DESC LIMIT 1"));
                           echo "<b>" . date("d/m/Y", strtotime($dd['tgl_bayar'])) . " : </b><br>Rp" . number_format($dd['nominal'], 2, ',', '.');
                           ?>
                           <hr style="margin:0px" />
@@ -494,16 +494,17 @@ if (isset($_GET['id_hapus'])) {
           </div>
         <?php } ?>
         <!-- TO DO List --><!-- /.box -->
-        <?php
-        $cek5 = mysqli_num_rows(mysqli_query($koneksi, "select * from biaya_lain where buku_kas_id=" . $_GET['id'] . ""));
-        if ($cek5 != 0) {
-        ?>
-          <div class="box box-success"><!-- /.chat -->
-            <div class="box-footer">
-              <div class="box-header with-border">
-                <h3 class="box-title">Riwayat Penerimaan & Pembayaran </h3>
-                <!--<a href="cetak_buku_kas.php?id=<?php echo $_GET['id']; ?>"><button class="btn btn-success pull pull-right"><span class="fa fa-print"></span> &nbsp;Print Excel</button></a>-->
-              </div>
+        <div class="box box-success"><!-- /.chat -->
+          <div class="box-footer">
+            <div class="box-header with-border">
+              <h3 class="box-title">Riwayat Penerimaan & Pembayaran </h3>
+              <!--<a href="cetak_buku_kas.php?id=<?php echo $_GET['id']; ?>"><button class="btn btn-success pull pull-right"><span class="fa fa-print"></span> &nbsp;Print Excel</button></a>-->
+            </div>
+            <?php
+            $cek5 = mysqli_num_rows(mysqli_query($koneksi, "select * from biaya_lain where buku_kas_id='" . $_GET['id'] . "'"));
+            if ($cek5 != 0) {
+            ?>
+
               <div class="box-body">
                 <a href="cetak_buku_kas.php?id=<?php echo $_GET['id']; ?>"><button class="btn btn-warning pull pull-left"><span class="fa fa-print"></span> &nbsp;Print Excel</button></a>
                 <?php if (isset($_GET['kunci2']) or isset($_GET['tgl_awal'])) { ?>
@@ -576,7 +577,7 @@ if (isset($_GET['id_hapus'])) {
                           <td valign="center"><?php echo date("d M Y", strtotime($json[$i]['tgl'])); ?></td>
                           <td>
                             <?php
-                            $akun = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id=" . $json[$i]['buku_kas_id'] . ""));
+                            $akun = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id='" . $json[$i]['buku_kas_id'] . "'"));
                             echo $akun['nama_akun'];
                             ?>
                           </td>
@@ -594,11 +595,11 @@ if (isset($_GET['id_hapus'])) {
                 <br /><br />
 
               </div>
-            </div>
+            <?php } ?>
           </div>
-        <?php } ?>
+        </div>
         <?php
-        $cek6 = mysqli_num_rows(mysqli_query($koneksi, "select * from reimburse where buku_kas_id=" . $_GET['id'] . ""));
+        $cek6 = mysqli_num_rows(mysqli_query($koneksi, "select * from reimburse where buku_kas_id='" . $_GET['id'] . "'"));
         if ($cek6 != 0) {
         ?>
           <div class="box box-success"><!-- /.chat -->

@@ -3,8 +3,13 @@ include("../config/koneksi.php");
 session_start();
 // error_reporting(0);
 // if ($_POST['setor_ambil'] == 1) {
+$sel = mysqli_fetch_array(mysqli_query($koneksi, "select buku_kas_id from pinjaman where id = '$_POST[pinjaman_id]'"));
+
 $s1 = mysqli_query($koneksi, "insert into pinjaman_bayar(id, pinjaman_id, tgl_transaksi, angsuran, persen_bunga, bunga, nominal_bayar, keterangan, operator) values(UUID(),'" . $_POST['pinjaman_id'] . "','" . $_POST['tgl_transaksi'] . "', '" . str_replace(".", "", $_POST['angsuran']) . "','" . $_POST['persen_bunga'] . "', '" . str_replace(".", "", $_POST['bunga']) . "', '" . str_replace(".", "", $_POST['nominal_bayar']) . "', '" . $_POST['keterangan'] . "', '" . $_SESSION['nama'] . "')");
-if ($s1) {
+
+$up = mysqli_query($koneksi, "update buku_kas set saldo=saldo+'" . str_replace(".", "", $_POST['nominal_bayar']) . "' where id='$sel[buku_kas_id]'");
+
+if ($s1 && $up) {
     echo "S";
 } else {
     echo "F";

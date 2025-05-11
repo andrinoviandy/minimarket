@@ -41,7 +41,7 @@ error_reporting(0);
                     <?php } ?>
                     <button onclick="modalUbah('<?php echo $data['idd']; ?>')" class="btn btn-xs btn-warning"><span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span></button>
                     &nbsp;
-                    <a href="index.php?page=ubah_buku_kas&id=<?php echo $data['idd']; ?>" class="btn btn-xs btn-info">
+                    <a href="index.php?page=riwayat_kas&id=<?php echo $data['idd']; ?>" class="btn btn-xs btn-info">
                         <span data-toggle="tooltip" title="Riwayat Akun" class="fa fa-caret-square-o-right"></span></a><!--&nbsp;<a target="_blank" href="cetak_rekapan_alkes2.php?id=<?php echo $data['idd']; ?>"><span data-toggle="tooltip" title="Print" class="fa fa-print"></span></a>
       -->
                     <!-- Tombol Jual -->

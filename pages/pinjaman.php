@@ -173,8 +173,14 @@
           dataform.reset();
           alertSimpan('S')
           loadMore(load_flag, key, status_b)
-        } else {
+        } else if (response === 'F') {
           alertSimpan('F')
+        } else {
+          if (response.split('&')[0] == 'TC') {
+            alertCustom('W', 'Saldo Pada Kas/Bank Ini Kurang !' , 'Sisa Saldo : ' + response.split('&')[1])
+          } else {
+            alertSimpan('F')
+          }
         }
       }
     });

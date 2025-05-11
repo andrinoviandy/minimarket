@@ -1,10 +1,10 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Deposit</h1>
+    <h1>Transfer Antar Kas</h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Buku Kas</li>
+      <li class="active">Transfer Antar Kas</li>
     </ol>
   </section>
 

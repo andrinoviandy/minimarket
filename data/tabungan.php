@@ -63,7 +63,7 @@ $jml2 = $file2;
                 </td>
                 <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_buka_tabungan']));  ?></td>
                 <td><?php echo $json[$i]['jenis_tabungan']; ?></td>
-                <td><?php echo number_format($json[$i]['nominal'], 0, ',', '.');  ?></td>
+                <td><?php echo "Rp".number_format($json[$i]['nominal'], 0, ',', '.');  ?></td>
                 <td><?php echo $json[$i]['keterangan'];  ?></td>
                 <td><?php echo $json[$i]['aktif'] == 1 ? 'Aktif' : 'Non_Aktif';  ?></td>
                 <td><?php echo $json[$i]['operator'];  ?></td>
