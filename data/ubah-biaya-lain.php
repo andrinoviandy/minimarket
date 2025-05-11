@@ -2,7 +2,7 @@
 include("../config/koneksi.php");
 include("../include/API.php");
 session_start();
-// error_reporting(0);
+error_reporting(0);
 
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from biaya_lain,buku_kas,keuangan,keuangan_detail where buku_kas.id=biaya_lain.buku_kas_id and keuangan.id=biaya_lain.keuangan_id and keuangan.id=keuangan_detail.keuangan_id and biaya_lain.id=" . $_POST['id_ubah'] . ""));
 
