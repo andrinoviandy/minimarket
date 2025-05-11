@@ -6,7 +6,7 @@ error_reporting(0);
 
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from biaya_lain,buku_kas,keuangan,keuangan_detail where buku_kas.id=biaya_lain.buku_kas_id and keuangan.id=biaya_lain.keuangan_id and keuangan.id=keuangan_detail.keuangan_id and biaya_lain.id=" . $_POST['id_ubah'] . ""));
 
-$cek_saldo = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id=" . $_POST['buku_kas_id'] . ""));
+$cek_saldo = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id='" . $_POST['buku_kas_id'] . "'"));
 $nom = str_replace(".", "", $_POST['harga']);
 if ($_POST['jenis_transaksi'] == 'Pembayaran') {
     if ($cek_saldo['saldo'] < $nom) {
