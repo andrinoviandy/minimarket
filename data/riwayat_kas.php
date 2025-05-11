@@ -26,7 +26,6 @@ if (isset($_GET['cari'])) {
     }
 }
 $json = json_decode($file, true);
-$jml = count($json);
 
 $jml2 = $file2;
 
@@ -48,6 +47,7 @@ $jml2 = $file2;
             </tr>
         </thead>
         <?php
+        $jml = count($json);
         for ($i = 0; $i < $jml; $i++) {
         ?>
             <tr>
