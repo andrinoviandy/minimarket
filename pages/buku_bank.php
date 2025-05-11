@@ -28,8 +28,6 @@
               <br /><br><br>
               <div id="table-data">
               </div>
-              <br />
-
             </div>
           </div>
         </div>

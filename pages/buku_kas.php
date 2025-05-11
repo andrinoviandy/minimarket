@@ -52,7 +52,7 @@ if (isset($_POST['tambah_laporan'])) {
         <!-- Chat box -->
         <div class="box box-success"><!-- /.chat -->
           <div class="box-footer">
-            <div class="box-body table-responsive no-padding">
+            <div class="box-body">
               <div class="input-group pull pull-left col-xs-1" style="padding-right:10px">
                 <a href="index.php?page=tambah_buku_kas">
                   <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah</button></a>
@@ -60,8 +60,6 @@ if (isset($_POST['tambah_laporan'])) {
               <br><br><br>
               <div id="table-data">
               </div>
-              <br />
-
             </div>
           </div>
         </div>
