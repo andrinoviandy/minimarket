@@ -1,19 +1,3 @@
-<?php
-$data = mysqli_fetch_array(mysqli_query($koneksi, "select *,alat_pelatihan.id as idd,pembeli.id as id_rumkit from barang_teknisi,barang_teknisi_detail,barang_teknisi_detail_teknisi, barang_dikirim,barang_dikirim_detail, barang_dijual, barang_gudang, barang_gudang_detail,pembeli, tb_teknisi,alat_uji_detail,alat_pelatihan where barang_gudang.id=barang_gudang_detail.barang_gudang_id and barang_gudang_detail.id=barang_dikirim_detail.barang_gudang_detail_id and barang_dijual.id=barang_dikirim.barang_dijual_id and barang_dikirim.id=barang_dikirim_detail.barang_dikirim_id and pembeli.id=barang_dijual.pembeli_id and barang_dikirim_detail.id=barang_teknisi_detail.barang_dikirim_detail_id and barang_teknisi.id=barang_teknisi_detail.barang_teknisi_id and barang_teknisi_detail.id=barang_teknisi_detail_teknisi.barang_teknisi_detail_id and tb_teknisi.id=barang_teknisi_detail_teknisi.teknisi_id and barang_teknisi_detail.id=alat_uji_detail.barang_teknisi_detail_id and alat_uji_detail.id=alat_pelatihan.alat_uji_detail_id and alat_pelatihan.id=" . $_GET['id'] . ""));
-
-if (isset($_POST['tambah_spk_masuk'])) {
-  $Result = mysqli_query($koneksi, "update alat_pelatihan set banyak_peserta='" . $_POST['peserta'] . "', pelatih='" . $_POST['pelatih'] . "', tgl_pelatihan='" . $_POST['tgl_pelatihan'] . "', pelatihan_oleh='" . $_POST['pelatihan_oleh'] . "' where id=" . $_GET['id'] . "");
-
-  if ($Result) {
-
-    echo "<script type='text/javascript'>
-		alert('Silakan Update Data Peserta !');
-		window.location='index.php?page=tambah_peserta_pelatihan&id=$_GET[id]';
-		</script>";
-  }
-}
-?>
-
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">

@@ -25,7 +25,7 @@ error_reporting(0);
             <div class="box-body">
                 <table id="example1" class="table table-responsive">
                     <tr>
-                        <td>Aktiva Lancar</td>
+                        <td>Aset Lancar</td>
                         <td width="10%"><span class="fa fa-times-circle"></span></td>
                     </tr>
                     <tr>
