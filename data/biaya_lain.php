@@ -116,14 +116,8 @@ $jml2 = $file2;
                 <td align="center" valign="center"><?php echo $start += 1; ?></td>
                 <td valign="center"><span class="<?php if($json[$i]['jenis_transaksi'] == 'Penerimaan') {echo "label label-success";} else {echo "label label-warning";} ?>"><?php echo $json[$i]['jenis_transaksi']; ?></span></td>
                 <td valign="center"><?php echo date("d M Y", strtotime($json[$i]['tgl'])); ?></td>
-                <td>
-                    <?php
-                    $akun = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id='" . $json[$i]['buku_kas_id'] . "'"));
-                    echo $akun['nama_akun'];
-                    ?>
-                </td>
+                <td><?php echo $json[$i]['nama_akun']; ?></td>
                 <td><?php echo $json[$i]['penerima']; ?></td>
-
                 <td>
                     <?php echo $json[$i]['deskripsi'];  ?></td>
                 <td><?php echo "Rp" . number_format($json[$i]['harga'], 2, ',', '.'); ?></td>

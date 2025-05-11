@@ -15,15 +15,15 @@ if (isset($_GET['id_keuangan'])) {
 	if (isset($_GET['start'])) {
 		if (isset($_GET['tgl1']) and isset($_GET['tgl2'])) {
 			if (isset($_GET['id'])) {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=" . $_GET['id'] . " and keuangan_id=" . $_GET['id_keuangan'] . " and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.buku_kas_id='" . $_GET['id'] . "' and a.keuangan_id=" . $_GET['id_keuangan'] . " and a.tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 			} else {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain where keuangan_id=" . $_GET['id_keuangan'] . " and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.keuangan_id=" . $_GET['id_keuangan'] . " and a.tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 			}
 		} else {
 			if (isset($_GET['id'])) {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=" . $_GET['id'] . " and keuangan_id=" . $_GET['id_keuangan'] . " order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.buku_kas_id='" . $_GET['id'] . "' and a.keuangan_id=" . $_GET['id_keuangan'] . " order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 			} else {
-				$sql = "select *,biaya_lain.id as idd from biaya_lain where keuangan_id=" . $_GET['id_keuangan'] . " order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+				$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.keuangan_id=" . $_GET['id_keuangan'] . " order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 			}
 		}
 		$result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
@@ -61,29 +61,29 @@ if (isset($_GET['id_keuangan'])) {
 		if (isset($_GET['tgl1']) and isset($_GET['tgl2'])) {
 			if (isset($_GET['id'])) {
 				if (isset($_GET['cari'])) {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=$_GET[id] and (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.buku_kas_id='$_GET[id]' and (a.jenis_transaksi like '%$_GET[cari]%' or a.penerima like '%$_GET[cari]%' or a.deskripsi like '%$_GET[cari]%') and a.tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				} else {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=$_GET[id] and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.buku_kas_id='$_GET[id]' and a.tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				}
 			} else {
 				if (isset($_GET['cari'])) {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain where (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') and tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where (a.jenis_transaksi like '%$_GET[cari]%' or a.penerima like '%$_GET[cari]%' or a.deskripsi like '%$_GET[cari]%') and a.tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				} else {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain where tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.tgl between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				}
 			}
 		} else {
 			if (isset($_GET['id'])) {
 				if (isset($_GET['cari'])) {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=" . $_GET['id'] . " and (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select *,a.id as idd from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.buku_kas_id='" . $_GET['id'] . "' and (a.jenis_transaksi like '%$_GET[cari]%' or a.penerima like '%$_GET[cari]%' or a.deskripsi like '%$_GET[cari]%') order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				} else {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain where buku_kas_id=" . $_GET['id'] . " order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where a.buku_kas_id='" . $_GET['id'] . "' order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				}
 			} else {
 				if (isset($_GET['cari'])) {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain where (jenis_transaksi like '%$_GET[cari]%' or penerima like '%$_GET[cari]%' or deskripsi like '%$_GET[cari]%') order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id where (a.jenis_transaksi like '%$_GET[cari]%' or a.penerima like '%$_GET[cari]%' or a.deskripsi like '%$_GET[cari]%') order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
 				} else {
-					$sql = "select *,biaya_lain.id as idd from biaya_lain order by tgl DESC, biaya_lain.id DESC LIMIT $start, $limit";
+					$sql = "select a.*,a.id as idd, b.nama_akun from biaya_lain a left join buku_kas b on b.id = a.buku_kas_id order by a.tgl DESC, a.id DESC LIMIT $start, $limit";
 				}
 			}
 		}
