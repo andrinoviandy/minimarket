@@ -27,9 +27,9 @@ if ($_POST['jenis_transaksi'] == 'Pembayaran') {
             if ($_POST['coa_id'] == 5) {
                 $simpan_keuangan_detail2 = mysqli_query($koneksi, "insert into keuangan_detail values('','$data[keuangan_id]','3','32','','cr')");
             }
-            $cek_saldo2 = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id=" . $_POST['buku_kas_id'] . ""));
+            $cek_saldo2 = mysqli_fetch_array(mysqli_query($koneksi, "select * from buku_kas where id='" . $_POST['buku_kas_id'] . "'"));
             $saldo_kurang = $cek_saldo2['saldo'] - $nom;
-            $up = mysqli_query($koneksi, "update buku_kas set saldo='" . $saldo_kurang . "' where id=$_POST[buku_kas_id]");
+            $up = mysqli_query($koneksi, "update buku_kas set saldo='" . $saldo_kurang . "' where id='$_POST[buku_kas_id]'");
             echo "S";
         } else {
             echo "HAA";
