@@ -36,7 +36,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bank Mini</title>
+    <title>Mini Market</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- folder js -->
@@ -47,33 +47,6 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
     <!-- jquery 3.6.x -->
     <script src="js/jquery-3.6.0.js"></script>
     <!-- DataTables -->
-    <!-- <script type="text/javascript">
-      // Set timeout variables.
-      var timoutWarning = 60000; // Display warning in 1Mins.
-      var timoutNow = 70000; // Timeout in 2 mins.
-
-      var warningTimer;
-      var timeoutTimer;
-
-      // Start timers.
-      function StartTimers() {
-        warningTimer = setTimeout(timoutWarning);
-        timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
-      }
-
-      // Reset timers.
-      function ResetTimers() {
-        clearTimeout(warningTimer);
-        clearTimeout(timeoutTimer);
-        StartTimers();
-        $("#timeout").dialog('close');
-      }
-
-      // Logout the user and auto reload or use this window.open('http://www.YourPageAdress.com', '_self'); to auto load a page.
-      function IdleTimeout() {
-        window.open(self.location, '_top');
-      }
-    </script> -->
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -94,266 +67,27 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- style custom -->
+    <link rel="stylesheet" href="assets/css/styleCustom.css">
+    <script src="assets/js/styleCustom.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-    <!-- Google Font -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
-    <style>
-      /*css3 design scrollbar*/
-      ::-webkit-scrollbar {
-        width: 15px;
-        height: 15px;
-        border-radius: 10px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: #CCC;
-        border-radius: 10px;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: #2596be;
-        border-radius: 10px;
-      }
-    </style>
-    <style>
-      .modalDialog {
-        position: absolute;
-        font-family: Arial, Helvetica, sans-serif;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 99999;
-        opacity: 0;
-        transition: opacity 200ms ease-in;
-        pointer-events: none;
-
-      }
-
-      .modalDialog:target {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .modalDialog>div {
-        width: 300px;
-        position: relative;
-
-        padding: 5px 20px 13px 20px;
-        border-radius: 10px;
-        background: #fff;
-        background: linear-gradient(#fff, #aaa);
-        margin: 3% auto;
-      }
-
-      .close:hover {
-        background: #00d9ff;
-      }
-
-      .close {
-        background: #F00;
-        color: #FFFFFF;
-        line-height: 25px;
-        position: absolute;
-        text-align: center;
-        top: -10px;
-        right: -12px;
-        width: 24px;
-        text-decoration: none;
-        font-weight: bold;
-        border-radius: 12px;
-        box-shadow: 1px 1px 3px #000;
-      }
-
-      .modalDialog2 {
-        position: absolute;
-        font-family: Arial, Helvetica, sans-serif;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 99999;
-        opacity: 0;
-        transition: opacity 200ms ease-in;
-        pointer-events: none;
-
-      }
-
-      .modalDialog2:target {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .modalDialog2>div {
-        width: 700px;
-        position: relative;
-
-        padding: 5px 20px 13px 20px;
-        border-radius: 10px;
-        background: #fff;
-        background: linear-gradient(#fff, #aaa);
-        margin: 4% auto;
-      }
-
-      .close2:hover {
-        background: #00d9ff;
-      }
-
-      .close2 {
-        background: #F00;
-        color: #FFFFFF;
-        line-height: 25px;
-        position: absolute;
-        text-align: center;
-        top: -10px;
-        right: -12px;
-        width: 24px;
-        text-decoration: none;
-        font-weight: bold;
-        border-radius: 12px;
-        box-shadow: 1px 1px 3px #000;
-      }
-
-      #input {
-        width: 100%;
-        padding: 8px 18px;
-        margin: 3px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-      }
-
-      #buttonn {
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-      }
-    </style>
     <link href='img/logo.png' rel='icon'>
-
-    <script>
-      function tandaPemisahTitik(b) {
-        var _minus = false;
-        if (b < 0) _minus = true;
-        b = b.toString();
-        b = b.replace(".", "");
-        b = b.replace("-", "");
-        c = "";
-        panjang = b.length;
-        j = 0;
-        for (i = panjang; i > 0; i--) {
-          j = j + 1;
-          if (((j % 3) == 1) && (j != 1)) {
-            c = b.substr(i - 1, 1) + "." + c;
-          } else {
-            c = b.substr(i - 1, 1) + c;
-          }
-        }
-        if (_minus) c = "-" + c;
-        return c;
-      }
-
-      function numbersonly(ini, e) {
-        if (e.keyCode >= 49) {
-          if (e.keyCode <= 57) {
-            a = ini.value.toString().replace(".", "");
-            b = a.replace(/[^\d]/g, "");
-            b = (b == "0") ? String.fromCharCode(e.keyCode) : b + String.fromCharCode(e.keyCode);
-            ini.value = tandaPemisahTitik(b);
-            return false;
-          } else if (e.keyCode <= 105) {
-            if (e.keyCode >= 96) {
-              //e.keycode = e.keycode - 47;
-              a = ini.value.toString().replace(".", "");
-              b = a.replace(/[^\d]/g, "");
-              b = (b == "0") ? String.fromCharCode(e.keyCode - 48) : b + String.fromCharCode(e.keyCode - 48);
-              ini.value = tandaPemisahTitik(b);
-              //alert(e.keycode);
-              return false;
-            } else {
-              return false;
-            }
-          } else {
-            return false;
-          }
-        } else if (e.keyCode == 48) {
-          a = ini.value.replace(".", "") + String.fromCharCode(e.keyCode);
-          b = a.replace(/[^\d]/g, "");
-          if (parseFloat(b) != 0) {
-            ini.value = tandaPemisahTitik(b);
-            return false;
-          } else {
-            return false;
-          }
-        } else if (e.keyCode == 95) {
-          a = ini.value.replace(".", "") + String.fromCharCode(e.keyCode - 48);
-          b = a.replace(/[^\d]/g, "");
-          if (parseFloat(b) != 0) {
-            ini.value = tandaPemisahTitik(b);
-            return false;
-          } else {
-            return false;
-          }
-        } else if (e.keyCode == 8 || e.keycode == 46) {
-          a = ini.value.replace(".", "");
-          b = a.replace(/[^\d]/g, "");
-          b = b.substr(0, b.length - 1);
-          if (tandaPemisahTitik(b) != "") {
-            ini.value = tandaPemisahTitik(b);
-          } else {
-            ini.value = "";
-          }
-
-          return false;
-        } else if (e.keyCode == 9) {
-          return true;
-        } else if (e.keyCode == 17) {
-          return true;
-        } else {
-          //alert (e.keyCode);
-          return false;
-        }
-
-      }
-    </script>
   </head>
 
-  <body class="hold-transition skin-blue sidebar-mini fixed">
+  <body class="hold-transition skin-blue sidebar-mini sidebar-collapse fixed">
     <div class="wrapper">
 
       <header class="main-header">
         <!-- Logo -->
         <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>BM</b></span>
+          <span class="logo-mini"><b>MM</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Bank Mini</b></span>
+          <span class="logo-lg"><b>Mini Market</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->

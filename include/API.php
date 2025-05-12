@@ -1,3 +1,3 @@
 <?php 
-$API = "http://localhost/BANK/";
+$API = "http://localhost/minimarket/";
 ?>
