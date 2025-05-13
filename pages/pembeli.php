@@ -1,26 +1,10 @@
-<?php
-if (isset($_GET['id_hapus'])) {
-  $hapus2 = mysqli_query($koneksi, "delete from aksesoris_detail where aksesoris_id=" . $_GET['id_hapus'] . "");
-  $hapus1 = mysqli_query($koneksi, "delete from aksesoris_po where aksesoris_id=" . $_GET['id_hapus'] . "");
-  $hapus = mysqli_query($koneksi, "delete from aksesoris where id=" . $_GET['id_hapus'] . "");
-  if ($hapus and $hapus1 and $hapus2) {
-    echo "<script type='text/javascript'>
-		window.location='index.php?page=aksesoris'
-		</script>";
-  } else {
-    echo "<script type='text/javascript'>
-	alert('Maaf Data Tidak Dapat Dihapus !');	window.location='index.php?page=aksesoris'
-		</script>";
-  }
-}
-?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Pembeli</h1>
+    <h1>Pelanggan</h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Pembeli</li>
+      <li class="active">Pelanggan</li>
     </ol>
   </section>
 
@@ -41,7 +25,7 @@ if (isset($_GET['id_hapus'])) {
           <div class="box-footer">
             <div class="box-body table-responsive no-padding">
               <div class="">
-                <a href="index.php?page=tambah_user"><input type="submit" name="button" id="button" value="Tambah Customer" class="btn btn-success" /></a>
+                <a href="index.php?page=tambah_pembeli"><input type="submit" name="button" id="button" value="Tambah Pelanggan" class="btn btn-success" /></a>
                 <div class="pull pull-right">
                   <?php //include "include/getFilter.php"; 
                   ?>

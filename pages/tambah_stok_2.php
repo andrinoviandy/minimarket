@@ -115,7 +115,7 @@ if (isset($_POST['simpan_barang_baru'])) {
 if (isset($_POST['simpan_akse'])) {
     $nilai_maks = $_GET['id'];
 
-    $simpan_po = mysqli_query($koneksi, "insert into produk_po values('','$_GET[id]','" . $_SESSION['tgl_masuk'] . "','" . $_SESSION['no_po'] . "','" . $_SESSION['stok'] . "')");
+    $simpan_po = mysqli_query($koneksi, "insert into produk_po values('','$_GET[id]','" . $_SESSION['tgl_masuk'] . "','" . $_SESSION['no_po'] . "','" . $_SESSION['stok'] . "', '')");
 
     $max_po = mysqli_fetch_array(mysqli_query($koneksi, "select max(id) as max_po from produk_po"));
 

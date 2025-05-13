@@ -3,9 +3,9 @@ include("../config/koneksi.php");
 include("../include/API.php");
 session_start();
 error_reporting(0);
-$del = mysqli_query($koneksi, "delete from pembelian_detail where id=" . $_POST['id_hapus'] . "");
-if ($del) {
-    // mysqli_query($koneksi, "update barang_pesan set cost_byair=0, cost_cf=0 where id=$_POST[id]");
+$total_harga = ($_POST['qty2'] * str_replace('.', '', $_POST['harga_perunit2'])) - ($_POST['diskon2'] / 100 * ($_POST['qty2'] * str_replace('.', '', $_POST['harga_perunit2'])));
+$Result = mysqli_query($koneksi, "update pembelian_detail set qty=" . $_POST['qty2'] . ", harga_beli=" . str_replace('.', '', $_POST['harga_perunit2']) . ", diskon=" . $_POST['diskon2'] . ", total_harga=" . $total_harga . " where id=" . $_POST['id_ubah'] . "");
+if ($Result) {
     $detail = mysqli_fetch_array(mysqli_query($koneksi, "select sum(total_harga) as total from pembelian_detail where pembelian_id='" . $_POST['id'] . "'"));
     $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from pembelian where id='" . $_POST['id'] . "'"));
 

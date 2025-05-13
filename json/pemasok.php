@@ -6,7 +6,7 @@ header("Content-type:application/json");
 require("../config/koneksi.php");
  
 //menampilkan data dari database, table tb_anggota
-$sql = "select * from principle group by nama_principle";
+$sql = "select * from supplier order by nama_supplier asc";
 $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
  
 //membuat array

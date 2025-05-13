@@ -1,14 +1,6 @@
 <?php
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from produk where id=" . $_GET['id'] . ""));
 
-if (isset($_POST['pencarian'])) {
-    if ($_POST['pilihan'] == 'tgl_po_pesan') {
-        echo "<script>window.location='index.php?page=$_GET[page]&tgl_awal=$_POST[tgl_awal]&tgl_akhir=$_POST[tgl_akhir]&tampil=$_POST[tampil]'</script>";
-    } else {
-        echo "<script>window.location='index.php?page=$_GET[page]&pilihan=$_POST[pilihan]&kunci=$_POST[kata_kunci]&id=$_GET[id]'</script>";
-    }
-}
-
 if (isset($_POST['simpan_perubahan'])) {
     $Result = mysqli_query($koneksi, "update produk set nama_produk='" . $_POST['nama_produk'] . "', kategori_produk_id='" . $_POST['kategori_produk_id'] . "', harga_beli='" . str_replace(".", "", $_POST['harga_beli']) . "', harga_jual='" . str_replace(".", "", $_POST['harga_jual']) . "', satuan='" . $_POST['satuan'] . "' where id=" . $_GET['id'] . "");
     if ($Result) {
@@ -184,45 +176,13 @@ if (isset($_POST['simpan_perubahan'])) {
     <!-- /.content -->
 </div>
 
-<div class="modal fade" id="modal-pencarian">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Pencarian</h4>
-            </div>
-            <form method="post" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <select class="form-control select2" name="pilihan" required style="width:100%">
-                        <option value="">...</option>
-                        <option value="no_po_gudang">Berdasarkan Nomor PO</option>
-                        <option value="no_bath">Berdasarkan Nomor Bath</option>
-                        <option value="no_lot">Berdasarkan Nomor Lot</option>
-                        <option value="no_seri_brg">Berdasarkan No Seri</option>
-                    </select>
-                    <br /><br />
-                    <input type="text" class="form-control" name="kata_kunci" placeholder="Kata Kunci" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" name="pencarian">Cari</button>
-                </div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-
 <div class="modal fade" id="modal-ubah-item">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Ubah Data Barang</h4>
+                <h4 class="modal-title">Ubah Data Detail Produk</h4>
             </div>
             <div id="modal-data-item"></div>
         </div>
@@ -304,7 +264,7 @@ if (isset($_POST['simpan_perubahan'])) {
         var data = new FormData(dataform);
         $.ajax({
             type: "post",
-            url: "data/simpan_ubah_item.php",
+            url: "data/simpan-ubah-detail-produk.php",
             data: data,
             enctype: 'multipart/form-data',
             processData: false,
@@ -312,7 +272,7 @@ if (isset($_POST['simpan_perubahan'])) {
             cache: false,
             success: function(response) {
                 if (response == 'S') {
-                    addRiwayat('UPDATE', 'barang_gudang_detail', $('#idd').val(), 'Mengubah Detail Barang')
+                    addRiwayat('UPDATE', 'produk_detail', $('#idd').val(), 'Mengubah Detail Produk')
                     alertSimpan('S');
                     $('#modal-ubah-item').modal('hide');
                     loading();
@@ -377,14 +337,14 @@ if (isset($_POST['simpan_perubahan'])) {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post("data/hapus_ubah_item.php", {
+                $.post("data/hapus-item-detail-produk.php", {
                         id_hapus: id_hapus,
                         id_po: id_po,
                         id: '<?php echo $_GET['id'] ?>'
                     },
                     function(data) {
                         if (data == 'S') {
-                            addRiwayat('DELETE', 'barang_gudang_detail', id_hapus, 'Menghapus No Seri (ID_PO:' + id_po + ')')
+                            addRiwayat('DELETE', 'produk_detail', id_hapus, 'Menghapus Detail Produk (ID_PO:' + id_po + ')')
                             alertHapus('S')
                             dataStok();
                             loading();

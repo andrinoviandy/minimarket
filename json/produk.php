@@ -13,9 +13,9 @@ $limit = $surat_masuk;
 if (isset($_GET['start'])) {
     $start = mysqli_real_escape_string($koneksi, $_GET['start']);
 	if (isset($_GET['cari'])) {
-		$sql = "select a.*, a.id as idd, COALESCE(b.stok_produk, 0) as stok_produk, c.kategori from produk a left join (select produk_id, count(*) as stok_produk from produk_detail b group by b.produk_id) b on a.id = b.produk_id left join kategori_produk c on c.id = a.kategori_produk_id where (a.nama_produk like '%$_GET[cari]%' or c.kategori like '%$_GET[cari]%') order by a.nama_produk ASC LIMIT $start, $limit";
+		$sql = "select a.*, a.id as idd, COALESCE(b.stok_produk, 0) as stok_produk, c.kategori from produk a left join (select produk_id, count(*) as stok_produk from produk_detail b where b.status_jual = 0 and b.status_rusak = 0 group by b.produk_id) b on a.id = b.produk_id left join kategori_produk c on c.id = a.kategori_produk_id where (a.nama_produk like '%$_GET[cari]%' or c.kategori like '%$_GET[cari]%') order by a.nama_produk ASC LIMIT $start, $limit";
 	} else {
-		$sql = "select a.*, a.id as idd, COALESCE(b.stok_produk, 0) as stok_produk, c.kategori from produk a left join (select produk_id, count(*) as stok_produk from produk_detail b group by b.produk_id) b on a.id = b.produk_id left join kategori_produk c on c.id = a.kategori_produk_id order by a.nama_produk ASC LIMIT $start, $limit";
+		$sql = "select a.*, a.id as idd, COALESCE(b.stok_produk, 0) as stok_produk, c.kategori from produk a left join (select produk_id, count(*) as stok_produk from produk_detail b where b.status_jual = 0 and b.status_rusak = 0 group by b.produk_id) b on a.id = b.produk_id left join kategori_produk c on c.id = a.kategori_produk_id order by a.nama_produk ASC LIMIT $start, $limit";
 	}
 	$result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
 

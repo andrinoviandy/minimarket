@@ -17,7 +17,6 @@ if (isset($_GET['cari'])) {
 }
 $json = json_decode($file, true);
 $jml2 = $file2;
-
 ?>
 <div class="row" style="margin-bottom: 8px;">
     <div class="col-lg-12">
@@ -81,28 +80,32 @@ $jml2 = $file2;
                     </td>
                 <?php } ?>
                 <td align="center">
-                    <?php if ($_GET['status'] == 'Tersedia') {
-                    ?>
-                        <a href="javascript:void()" onclick="modalUbahItem('<?php echo $json[$i]['idd']; ?>')">
-                            <button class="btn btn-warning btn-xs">
-                                <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
-                            </button>
-                        </a>&nbsp;
-                        <?php if (isset($_SESSION['user_administrator'])) { ?>
-                            <!-- <a href="index.php?page=ubah_barang_masuk&id=<?php echo $_GET['id']; ?>&id_hapus=<?php echo $json[$i]['idd']; ?>&id_po=<?php echo $json[$i]['id_po']; ?>" onclick="return confirm('Yakin Akan Menghapus Item Ini ?')"> -->
-                            <a href="javascript:void()" onclick="hapus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['id_po']; ?>')">
-                                <button class="btn btn-danger btn-xs">
-                                    <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                    <?php if (isset($_GET['status'])) { ?>
+                        <?php
+                        if ($_GET['status'] == 'Tersedia' || $_GET['status'] == '') {
+                        ?>
+                            <a href="javascript:void()" onclick="modalUbahItem('<?php echo $json[$i]['idd']; ?>')">
+                                <button class="btn btn-warning btn-xs">
+                                    <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
                                 </button>
-                            </a>
+                            </a>&nbsp;
+                            <?php if (isset($_SESSION['user_administrator'])) { ?>
+                                <a href="javascript:void()" onclick="hapus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['id_po']; ?>')">
+                                    <button class="btn btn-danger btn-xs">
+                                        <span data-toggle="tooltip" title="Hapus" class="ion-android-delete"></span>
+                                    </button>
+                                </a>
+                            <?php } ?>
                         <?php } ?>
                     <?php } ?>
                     <!-- <br />
                     <a href="javascript:void()" onclick="modalUbahBarcode('<?php echo $json[$i]['idd']; ?>');"><small data-toggle="tooltip" title="Buat QRCode" class="label bg-blue" onclick="dataAwal(<?php echo $json[$i]['idd']; ?>)"><span class="fa fa-barcode"></span>&nbsp; Buat QRCode</small></a>
-                    <?php if ($json[$i]['qrcode'] != "") { ?>
+                    <?php //if ($json[$i]['qrcode'] != "") { 
+                    ?>
                         <a href="javascript:void()" onclick="modalCetakBarcode('<?php echo $json[$i]['idd']; ?>')">
                             <small data-toggle="tooltip" title="Cetak QRCode" class="label bg-red"><span class="fa fa-barcode"></span>&nbsp; Cetak QRCode</small></a>
-                    <?php } ?> -->
+                    <?php //} 
+                    ?> -->
                 </td>
 
             </tr>

@@ -7,11 +7,11 @@ $data = mysqli_fetch_array($query);
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Ubah Pembeli</h1>
+      Ubah Pelanggan</h1>
     <ol class="breadcrumb">
       <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active"><a href="index.php?page=barang_masuk">Pembeli</a></li>
-      <li class="active">Ubah Pembeli</li>
+      <li class="active"><a href="index.php?page=barang_masuk">Pelanggan</a></li>
+      <li class="active">Ubah Pelanggan</li>
     </ol>
   </section>
 

@@ -36,7 +36,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mini Market</title>
+    <title>Mini Mart</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- folder js -->
@@ -87,7 +87,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>MM</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Mini Market</b></span>
+          <span class="logo-lg"><b>Mini Mart</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -350,10 +350,9 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
       <!-- /.content-wrapper -->
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2
+          <b>Version</b> 1
         </div>
-        <strong>Copyright &copy; 2018 <a href="#">PT Bima Bhakti Utama</a>.</strong> All rights
-        reserved.
+        <strong>Copyright &copy; 2025 <a href="#">Developed by PruTech PTPU</a>.</strong>
       </footer>
 
       <!-- Control Sidebar -->

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bank | Log In</title>
+  <title>Mini Mart | Log In</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,15 +28,30 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link href='img/logo.png' rel='icon' />
+  <style>
+    .home-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+      color: #444444;
+      z-index: 1000;
+    }
+    .home-icon:hover {
+      color: #1194af ;
+      text-decoration: none;
+    }
+  </style>
 </head>
 
-<body class="hold-transition login-page" style="overflow: hidden; background-image:url('img/background.jpg'); background-repeat:no-repeat; background-position:center; background-size:cover">
+<body class="hold-transition login-page">
+  <a href="<?php echo ((isset($_SERVER['HTTPS'])) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://").$_SERVER['HTTP_HOST']."/kantin"; ?>" class="home-icon fixed"><i class="fa fa-home"></i></a>
   <div class="login-box">
     <div class="login-logo">
       <a href=""><b style="color:#FFF"><img src="img/logo.png" width="70%" /></b></a>
     </div>
     <div class="login-box-body" style="background: rgba(255, 255, 255, 0.6);">
-      <p class="login-box-msg"><strong style="font-size:20px">Bank Mini</strong></p>
+      <p class="login-box-msg"><strong style="font-size:20px">Mini Mart</strong></p>
 
       <form action="proses_login.php" method="post">
         <div class="form-group has-feedback">
