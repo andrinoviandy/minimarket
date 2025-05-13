@@ -51,7 +51,7 @@
       <a href=""><b style="color:#FFF"><img src="img/logo.png" width="70%" /></b></a>
     </div>
     <div class="login-box-body" style="background: rgba(255, 255, 255, 0.6);">
-      <p class="login-box-msg"><strong style="font-size:20px">Mini Mart</strong></p>
+      <p class="login-box-msg"><strong style="font-size:20px">Mili Mart</strong></p>
 
       <form action="proses_login.php" method="post">
         <div class="form-group has-feedback">
