@@ -44,7 +44,7 @@ if ($total_row > 0) {
 	$_SESSION['pass_administrator'] = $pass;
 	$_SESSION['administrator'] = 'Administrator';
 	echo "<script type='text/javascript'>
-	window.location='index.php?page=ringkasan';
+	window.location='index.php?page=produk';
 	</script>";
 	$jam = date("h");
 
@@ -65,7 +65,7 @@ if ($total_row > 0) {
 		$_SESSION['user_customer'] = $user;
 		$_SESSION['pass_customer'] = $pass;
 		echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 		$jam = date("h");
 		mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -87,7 +87,7 @@ if ($total_row > 0) {
 			$_SESSION['pass_teknisi'] = $pass;
 			$_SESSION['teknisi'] = 'teknisi';
 			echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 			$jam = date("h");
 			mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -108,7 +108,7 @@ if ($total_row > 0) {
 				$_SESSION['pass_admin_gudang'] = $pass;
 				$_SESSION['admingudang'] = 'admingudang';
 				echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 				$jam = date("h");
 				mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -129,7 +129,7 @@ if ($total_row > 0) {
 					$_SESSION['pass_admin_teknisi'] = $pass;
 					$_SESSION['adminteknisi'] = 'adminteknisi';
 					echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 					$jam = date("h");
 					mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -172,7 +172,7 @@ if ($total_row > 0) {
 							$_SESSION['pass_admin_po_luar'] = $pass;
 							$_SESSION['adminpoluar'] = 'adminpoluar';
 							echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 							$jam = date("h");
 							mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -193,7 +193,7 @@ if ($total_row > 0) {
 								$_SESSION['pass_admin_po_dalam'] = $pass;
 								$_SESSION['adminpodalam'] = 'adminpodalam';
 								echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 								$jam = date("h");
 								mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -214,7 +214,7 @@ if ($total_row > 0) {
 									$_SESSION['pass_manajer_gudang'] = $pass;
 									$_SESSION['adminmanajergudang'] = 'adminmanajergudang';
 									echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 									$jam = date("h");
 									mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -235,7 +235,7 @@ if ($total_row > 0) {
 										$_SESSION['pass_manajer_teknisi'] = $pass;
 										$_SESSION['adminmanajerteknisi'] = 'adminmanajerteknisi';
 										echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 										$jam = date("h");
 										mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -256,7 +256,7 @@ if ($total_row > 0) {
 											$_SESSION['pass_manajer_keuangan'] = $pass;
 											$_SESSION['adminmanajerkeuangan'] = 'adminmanajerkeuangan';
 											echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 											$jam = date("h");
 											mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -277,7 +277,7 @@ if ($total_row > 0) {
 												$_SESSION['pass_cs'] = $pass;
 												$_SESSION['admincs'] = 'admincs';
 												echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 												$jam = date("h");
 												mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -298,7 +298,7 @@ if ($total_row > 0) {
 													$_SESSION['pass_pjt'] = $pass;
 													$_SESSION['adminpjt'] = 'adminpjt';
 													echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 													$jam = date("h");
 													mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");
@@ -319,7 +319,7 @@ if ($total_row > 0) {
 														$_SESSION['pass_manajer_marketing'] = $pass;
 														$_SESSION['adminmanajermarketing'] = 'adminmanajermarketing';
 														echo "<script type='text/javascript'>
-		window.location='index.php?page=ringkasan';
+		window.location='index.php?page=produk';
 		</script>";
 														$jam = date("h");
 														mysqli_query($koneksi, "insert into riwayat_admin values('','$user','" . date("Y-m-d $jam:i:s") . "','')");

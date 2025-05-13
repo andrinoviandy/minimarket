@@ -343,7 +343,7 @@ else if (isset($_SESSION['adminpodalam']) or isset($_SESSION['adminpoluar'])) {
         }
       } else {
         echo "<script>
-		  window.location='index.php?page=ringkasan';
+		  window.location='index.php?page=produk';
 		  </script>";
       }
       ?>
