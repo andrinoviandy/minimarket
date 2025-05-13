@@ -87,7 +87,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>MM</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Mini Mart</b></span>
+          <span class="logo-lg"><b>Mili Mart</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
