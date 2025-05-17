@@ -36,7 +36,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mili Mart</title>
+    <title>Milu Mart</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- folder js -->
@@ -90,7 +90,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
           </span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg">
-            <img src="img/logo_milu_mart.png" width="60%" />
+            <img src="img/logo_milu_mart2.png" class="gambar-responsive" />
           </span>
         </a>
 
@@ -246,7 +246,6 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
                 <?php } ?>
             </ul>
           </div>
-
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
