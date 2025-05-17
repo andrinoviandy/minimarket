@@ -75,7 +75,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
     <link rel="stylesheet" href="assets/css/styleCustom.css">
     <script src="assets/js/styleCustom.js"></script>
 
-    <link href='img/logo.png' rel='icon'>
+    <link href='img/logo_saja.png' rel='icon'>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini sidebar-collapse fixed">
@@ -85,9 +85,13 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
         <!-- Logo -->
         <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>MM</b></span>
+          <span class="logo-mini">
+            <img src="img/logo_saja.png" width="80%" />
+          </span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Mili Mart</b></span>
+          <span class="logo-lg">
+            <img src="img/logo_milu_mart.png" width="60%" />
+          </span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->

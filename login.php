@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Mili Mart | Log In</title>
+  <title>Milu Mart | Log In</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -27,7 +27,7 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link href='img/logo.png' rel='icon' />
+  <link href='img/logo_saja.png' rel='icon' />
   <style>
     .home-icon {
       position: fixed;
@@ -48,10 +48,10 @@
   <a href="<?php echo ((isset($_SERVER['HTTPS'])) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://").$_SERVER['HTTP_HOST']."/kantin"; ?>" class="home-icon fixed"><i class="fa fa-home"></i></a>
   <div class="login-box">
     <div class="login-logo">
-      <a href=""><b style="color:#FFF"><img src="img/logo.png" width="70%" /></b></a>
+      <a href=""><b style="color:#FFF"><img src="img/logo_milu_mart.png" width="100%" /></b></a>
     </div>
     <div class="login-box-body" style="background: rgba(255, 255, 255, 0.6);">
-      <p class="login-box-msg"><strong style="font-size:20px">Mili Mart</strong></p>
+      <p class="login-box-msg"><strong style="font-size:20px">Hai, Selamat Datang Kembali</strong></p>
 
       <form action="proses_login.php" method="post">
         <div class="form-group has-feedback">
