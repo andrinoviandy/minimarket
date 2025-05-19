@@ -26,10 +26,14 @@ if ($simpan1) {
     } else {
         $detail2 = mysqli_query($koneksi, "insert into penjualan_qty(penjualan_id, produk_id, harga_jual_saat_itu, qty_jual) select $id_penjualan as penjualan_id, produk_id, harga_jual_saat_itu, qty_jual from penjualan_qty_temp where akun_id = " . $_SESSION['id'] . " and status = 0");
         if ($detail2) {
+            $tglNow = date("Y-m-d H:i:s");
+            $pesan = "Saldo kamu di kurangi sebesar Rp. {$_POST['total_harga']} untuk pembelian di milu mart pada $tglNow";
             if (isset($_POST['kategori']) && $_POST['kategori'] == 'S') {
                 mysqli_query($koneksi_kantin, "update ortu set saldo = saldo-$_POST[total_harga] where id_siswa = " . $id_siswa . "");
+                mysqli_query($koneksi_kantin, "insert into notifikasi(id_siswa, id_ortu, pesan, jenis, created_at, updated_at) values ('$id_siswa', (SELECT id from ortu where id_siswa = '$id_siswa'), '$pesan', 'out', current_timestamp(), current_timestamp())");
             } else {
                 mysqli_query($koneksi_kantin, "update guru set saldo = saldo-$_POST[total_harga] where id = " . $id_guru . "");
+                mysqli_query($koneksi_kantin, "insert into notifikasi(id_guru, pesan, jenis, created_at, updated_at) values ('$id_guru', '$pesan', 'out', current_timestamp(), current_timestamp())");
             }
             mysqli_query($koneksi, "delete from penjualan_qty_temp where akun_id = " . $_SESSION['id'] . " and status = 0");
             die('S');
