@@ -30,10 +30,10 @@
                                 <div class="pull pull-left">
                                     <a href="?page=tambah_pembelian"><button name="tambah_laporan" class="btn btn-success" type="button"><span class="fa fa-plus"></span> Tambah</button>
                                     </a>
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak Rekap</button>
+                                    <!-- <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak Rekap</button> -->
                                 </div>
                                 <div class="pull pull-right">
-                                    <?php include "include/getFilter.php"; ?>
+                                    <?php //include "include/getFilter.php"; ?>
                                     <?php include "include/atur_halaman.php"; ?>
                                 </div>
                             </div>

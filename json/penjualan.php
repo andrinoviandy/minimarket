@@ -1,10 +1,9 @@
 <?php
+// error_reporting(0);
 header("Content-type:application/json");
-
+session_start();
 //koneksi ke database
 require("../config/koneksi.php");
-mysqli_set_charset($koneksi, 'utf8');
-
 $query = mysqli_query($koneksi, "SELECT jumlah_limit FROM limiter");
 list($surat_masuk) = mysqli_fetch_array($query);
 //pagging
@@ -13,22 +12,34 @@ $limit = $surat_masuk;
 //menampilkan data dari database, table tb_anggota
 if (isset($_GET['start'])) {
     $start = mysqli_real_escape_string($koneksi, $_GET['start']);
-    if (isset($_GET['tgl1']) && isset($_GET['tgl2'])) {
-        if (isset($_GET['cari'])) {
-            $sql = "select a.*,a.id as idd, b.nama_supplier, b.alamat_supplier from pembelian a left join supplier b on b.id = a.supplier_id where (a.no_po_pesan like '%$_GET[cari]%' or b.nama_supplier like '%$_GET[cari]%' or a.catatan like '%$_GET[cari]%' or a.deskripsi_batal like '%$_GET[cari]%') and a.tgl_po_pesan between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl_po_pesan DESC, a.no_po_pesan DESC LIMIT $start, $limit";
-        } else {
-            $sql = "select a.*,a.id as idd, b.nama_supplier, b.alamat_supplier from pembelian a left join supplier b on b.id = a.supplier_id where a.tgl_po_pesan between '$_GET[tgl1]' and '$_GET[tgl2]' order by a.tgl_po_pesan DESC, a.no_po_pesan DESC LIMIT $start, $limit";
-        }
+    if (isset($_GET['cari'])) {
+        $sql = "select
+                        a.*,
+                        a.id as idd, 
+                        b.nama as nama_siswa,
+                        c.nama as nama_guru,
+                        d.banyak_produk 
+                    from
+                        penjualan a left join kantin.siswa b on b.id = a.id_siswa left join kantin.guru c on c.id = a.id_guru left join (select penjualan_id, sum(qty_jual) as banyak_produk from penjualan_qty_temp where status = 1 group by penjualan_id) d on a.id = d.penjualan_id 
+                    where a.status_jual = 2 and (a.no_po_jual like ('%$_GET[cari]%') 
+                        or b.nama like ('%$_GET[cari]%') 
+                        or c.nama like ('%$_GET[cari]%')) 
+                    order by a.tgl_jual desc";
     } else {
-        if (isset($_GET['cari'])) {
-            $sql = "select a.*,a.id as idd, b.nama_supplier, b.alamat_supplier from pembelian a left join supplier b on b.id = a.supplier_id where (a.no_po_pesan like '%$_GET[cari]%' or b.nama_supplier like '%$_GET[cari]%' or a.catatan like '%$_GET[cari]%' or a.deskripsi_batal like '%$_GET[cari]%') order by a.tgl_po_pesan DESC, a.no_po_pesan DESC LIMIT $start, $limit";
-        } else {
-            $sql = "select a.*,a.id as idd, b.nama_supplier, b.alamat_supplier from pembelian a left join supplier b on b.id = a.supplier_id order by a.tgl_po_pesan DESC, a.no_po_pesan DESC LIMIT $start, $limit";
-        }
+        $sql = "select
+                        a.*,
+                        a.id as idd, 
+                        b.nama as nama_siswa,
+                        c.nama as nama_guru,
+                        d.banyak_produk 
+                    from
+                        penjualan a left join kantin.siswa b on b.id = a.id_siswa left join kantin.guru c on c.id = a.id_guru left join (select penjualan_id, sum(qty_jual) as banyak_produk from penjualan_qty_temp where status = 1 group by penjualan_id) d on a.id = d.penjualan_id 
+                    where a.status_jual  = 2 order by a.tgl_jual desc";
     }
+
+
     $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
 
-    //membuat array
     while ($row = mysqli_fetch_assoc($result)) {
         $ArrAnggota[] = $row;
     }
@@ -38,23 +49,22 @@ if (isset($_GET['start'])) {
     //tutup koneksi ke database
     mysqli_close($koneksi);
 } else {
-    //untuk jumlah
-    if (isset($_GET['tgl1']) && isset($_GET['tgl2'])) {
-        if (isset($_GET['cari'])) {
-            $sql = "select count(a.id) as jml from pembelian a left join supplier b on b.id = a.supplier_id where (a.no_po_pesan like '%$_GET[cari]%' or b.nama_supplier like '%$_GET[cari]%' or a.catatan like '%$_GET[cari]%' or a.deskripsi_batal like '%$_GET[cari]%') and a.tgl_po_pesan between '$_GET[tgl1]' and '$_GET[tgl2]'";
-        } else {
-            $sql = "select count(a.id) as jml from pembelian a left join supplier b on b.id = a.supplier_id where a.tgl_po_pesan between '$_GET[tgl1]' and '$_GET[tgl2]'";
-        }
+    // untuk jumlah
+    if (isset($_GET['cari'])) {
+        $sql = "select
+                            count(a.id) as jml 
+                        from
+                            penjualan a left join kantin.siswa b on b.id = a.id_siswa left join kantin.guru c on c.id = a.id_guru  
+                        where a.status_jual =  2 and (a.no_po_jual like ('%$_GET[cari]%') 
+                            or b.nama like ('%$_GET[cari]%') 
+                            or c.nama like ('%$_GET[cari]%'))";
     } else {
-        if (isset($_GET['cari'])) {
-            $sql = "select count(a.id) as jml from pembelian a left join supplier b on b.id = a.supplier_id where (a.no_po_pesan like '%$_GET[cari]%' or b.nama_supplier like '%$_GET[cari]%' or a.catatan like '%$_GET[cari]%' or a.deskripsi_batal like '%$_GET[cari]%')";
-        } else {
-            $sql = "select count(a.id) as jml from pembelian a left join supplier b on b.id = a.supplier_id";
-        }
+        $sql = "select count(a.id) as jml from penjualan a where a.status_jual = 2";
     }
+
+
     $result = mysqli_fetch_array(mysqli_query($koneksi, $sql));
     echo $result['jml'];
     //tutup koneksi ke database
     mysqli_close($koneksi);
 }
-//batasssssssssssssss

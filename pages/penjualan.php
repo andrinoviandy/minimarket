@@ -30,10 +30,10 @@
                                 <div class="pull pull-left">
                                     <a href="?page=tambah_penjualan"><button name="tambah_laporan" class="btn btn-success" type="button"><span class="fa fa-plus"></span> Tambah</button>
                                     </a>
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak Rekap</button>
+                                    <!-- <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak Rekap</button> -->
                                 </div>
                                 <div class="pull pull-right">
-                                    <?php include "include/getFilter.php"; ?>
+                                    <?php //include "include/getFilter.php"; ?>
                                     <?php include "include/atur_halaman.php"; ?>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
 </div>
 
 <div class="modal fade" id="modal-detailbarang">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -239,7 +239,7 @@
     }
 
     function modalBarang(id) {
-        $.get("data/modal-pembelian-produk.php", {
+        $.get("data/modal-penjualan-produk.php", {
                 id: id
             },
             function(data) {
@@ -263,12 +263,12 @@
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post("data/hapus-pembelian.php", {
+                $.post("data/hapus-penjualan.php", {
                         id_hapus: id
                     },
                     function(data) {
                         if (data == 'S') {
-                            addRiwayat('DELETE', 'pembelian', id, 'Menghapus Data Pembelian')
+                            addRiwayat('DELETE', 'penjualan', id, 'Menghapus Data Penjualan')
                             alertHapus('S');
                             loadMore(load_flag, key, status_b);
                         } else {

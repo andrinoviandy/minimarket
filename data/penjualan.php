@@ -48,15 +48,12 @@ error_reporting(0);
             <thead>
                 <tr>
                     <th align="center">#</th>
-                    <th valign="top"><strong>Tgl PO</strong></th>
-                    <th valign="top">No PO</th>
-                    <th valign="top"><strong>Supplier</strong></th>
-                    <th valign="top" class="text-nowrap"><strong>Alamat Supplier</strong></th>
+                    <th valign="top"><strong>Tgl Transaksi</strong></th>
+                    <th valign="top">No. Nota</th>
+                    <th valign="top" class="text-nowrap"><strong>Nama Pelanggan</strong></th>
                     <th valign="top">Produk</th>
-                    <th align="center" valign="top"><strong>PPN</strong></th>
-                    <th align="center" valign="top" class="text-nowrap"><strong>Cara Pembayaran</strong></th>
+                    <th align="center" valign="top"><strong>Diskon</strong></th>
                     <th align="center" valign="top" class="text-nowrap">Total Harga</th>
-                    <th align="center" valign="top" class="text-nowrap">Total Harga + PPN</th>
                     <th align="center" valign="top"><strong>Aksi</strong></th>
                 </tr>
             </thead>
@@ -64,8 +61,7 @@ error_reporting(0);
                 <?php
                 $jml = count($json);
                 for ($i = 0; $i < $jml; $i++) {
-
-                    if ($json[$i]['status_po_batal'] == 1) {
+                    if ($json[$i]['status_jual'] == 3) {
                         $bg = "bg-danger";
                     } else {
                         $bg = "";
@@ -76,11 +72,10 @@ error_reporting(0);
                             <?php echo $start += 1; ?>
                         </td>
                         <td>
-                            <?php echo date("d/m/Y", strtotime($json[$i]['tgl_po_pesan'])); ?>
+                            <?php echo date("d/m/Y", strtotime($json[$i]['tgl_jual'])); ?>
                         </td>
-                        <td><?php echo $json[$i]['no_po_pesan']; ?></td>
-                        <td><?php echo $json[$i]['nama_supplier']; ?></td>
-                        <td><?php echo $json[$i]['alamat_supplier']; ?></td>
+                        <td><?php echo $json[$i]['no_po_jual']; ?></td>
+                        <td><?php echo ($json[$i]['nama_siswa'] != '' || $json[$i]['nama_siswa'] != NULL) ? $json[$i]['nama_siswa'] : $json[$i]['nama_guru'];  ?></td>
                         <td>
                             <a href="javascript:void();" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
                                 <button class="btn btn-primary btn-xs">
@@ -90,85 +85,33 @@ error_reporting(0);
                             <?php //} 
                             ?>
                         </td>
-                        <td><?php echo $json[$i]['ppn'] . "%"; ?></td>
-                        <td><?php echo $json[$i]['cara_pembayaran']; ?></td>
+                        <td><?php echo $json[$i]['diskon_jual'] . "%"; ?></td>
                         <td><?php echo number_format($json[$i]['total_harga'], 0, ',', '.'); ?></td>
-                        <td><?php echo number_format($json[$i]['total_harga_ppn'], 0, ',', '.'); ?></td>
                         <td align="center">
-                            <?php if ($json[$i]['status_po_batal'] == 0) { ?>
-                                <?php if (isset($_SESSION['pass_administrator']) && $json[$i]['status_lunas'] == 0) { ?>
-                                    <a onclick="hapus(<?php echo $json[$i]['idd'] ?>)">
-                                        <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
-                                            <i class="ion-android-delete"></i>
-                                        </button>
-                                    </a><?php } ?>
-                                <?php
-                                if ($json[$i]['status_lunas'] == 0) {
-                                ?>
-                                    <a href="index.php?page=ubah_pembelian&id=<?php echo $json[$i]['idd']; ?>">
-                                        <button class="btn btn-warning btn-xs">
-                                            <span data-toggle="tooltip" title="Ubah" class="fa fa-folder-open"></span>
-                                        </button>
-                                    </a>
-                                <?php } ?>
-                                <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
-                                    <button class="btn btn-primary btn-xs">
-                                        <span data-toggle="tooltip" title="Cetak" class="fa fa-print">
-                                        </span>
-                                    </button>
-                                </a>
-
-                            <?php
-                            } else { ?>
-                                <!-- <a href="index.php?page=pembelian_alkes&id_pulih=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda yakin akan memulihkan PO ini ?')"> -->
-                                <a onclick="pulihkan(<?php echo $json[$i]['idd']; ?>)" href="#">
-                                    <small data-toggle="tooltip" title="Pulihkan PO" class="btn btn-success btn-xs">Pulihkan PO</small>
-                                </a>
-                                <?php if ($json[$i]['deskripsi_batal'] != '') {
-                                ?><br />
-                                    <a href="#" data-toggle="modal" data-target="#modal-pesanbatal<?php echo $json[$i]['idd']; ?>">
-                                        <button data-toggle="tooltip" title="Lihat Alasan" class="btn btn-primary btn-xs"><span class="fa fa-envelope"></span></button>
-                                    </a>
-                            <?php }
-                            } ?>
+                            <a onclick="hapus('<?php echo $json[$i]['idd'] ?>')">
+                                <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
+                                    <i class="ion-android-delete"></i>
+                                </button>
+                            </a>
+                            <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
+                                <button class="btn btn-primary btn-xs">
+                                    <span data-toggle="tooltip" title="Cetak" class="fa fa-print">
+                                    </span>
+                                </button>
+                            </a>
                         </td>
                     </tr>
-                    <div class="modal fade" id="modal-pesanbatal<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Alasan Pembatalan</h4>
-                                </div>
-                                <form method="post">
-                                    <div class="modal-body">
-                                        <p align="justify">
-                                            <?php echo $json[$i]['deskripsi_batal']; ?>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
-
                     <div class="modal fade" id="modal-cetak-po<?php echo $json[$i]['idd']; ?>">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Cetak PO</h4>
+                                    <h4 class="modal-title">Cetak Penjualan</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <a href="cetak_surat_po_pemesanan2.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Format 1</a>
-                                    <a href="cetak_surat_po_pemesanan_dalam_negeri.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Format 2</a>
+                                    <a href="cetak_struk_penjualan.php?id=<?php echo $json[$i]['idd']; ?>&trx=<?php echo $json[$i]['no_po_jual']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Struk</a>
+                                    <!-- <a href="cetak_surat_po_pemesanan_dalam_negeri.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Invoice</a> -->
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

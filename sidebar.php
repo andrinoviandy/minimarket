@@ -38,11 +38,11 @@
           <i class="fa fa-money"></i> <span>Supplier</span>
         </a>
       </li>
-      <li class="<?php echo $pembeli; ?>">
+      <!-- <li class="<?php echo $pembeli; ?>">
         <a href="index.php?page=pembeli">
           <i class="fa fa-users"></i> <span>Pelanggan</span>
         </a>
-      </li>
+      </li> -->
       <li style="margin-top: 30%;"></li>
       <!-- <li><a href="javascript:void()" onclick="prosesLogout();"><i class="fa fa-close"></i> <span>Logout</span></a></li> -->
       <!-- <li><a href="proses_logout.php" onclick="return confirm('Yakin Akan Keluar Dari Aplikasi ?')"><i class="fa fa-close"></i><span>Logout</span></a></li> -->
