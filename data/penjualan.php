@@ -59,69 +59,75 @@ error_reporting(0);
             </thead>
             <tbody>
                 <?php
-                $jml = count($json);
-                for ($i = 0; $i < $jml; $i++) {
-                    if ($json[$i]['status_jual'] == 3) {
-                        $bg = "bg-danger";
-                    } else {
-                        $bg = "";
-                    }
+                if ($json != null || $json != NULL) {
+                    $jml = count($json);
+                    for ($i = 0; $i < $jml; $i++) {
+                        if ($json[$i]['status_jual'] == 3) {
+                            $bg = "bg-danger";
+                        } else {
+                            $bg = "";
+                        }
                 ?>
-                    <tr class="<?php echo $bg; ?>">
-                        <td align="center">
-                            <?php echo $start += 1; ?>
-                        </td>
-                        <td>
-                            <?php echo date("d/m/Y", strtotime($json[$i]['tgl_jual'])); ?>
-                        </td>
-                        <td><?php echo $json[$i]['no_po_jual']; ?></td>
-                        <td><?php echo ($json[$i]['nama_siswa'] != '' || $json[$i]['nama_siswa'] != NULL) ? $json[$i]['nama_siswa'] : $json[$i]['nama_guru'];  ?></td>
-                        <td>
-                            <a href="javascript:void();" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
-                                <button class="btn btn-primary btn-xs">
-                                    <span class="fa fa-folder-open"></span>
-                                </button>
-                            </a>
-                            <?php //} 
-                            ?>
-                        </td>
-                        <td><?php echo $json[$i]['diskon_jual'] . "%"; ?></td>
-                        <td><?php echo number_format($json[$i]['total_harga'], 0, ',', '.'); ?></td>
-                        <td align="center">
-                            <a onclick="hapus('<?php echo $json[$i]['idd'] ?>')">
-                                <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
-                                    <i class="ion-android-delete"></i>
-                                </button>
-                            </a>
-                            <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
-                                <button class="btn btn-primary btn-xs">
-                                    <span data-toggle="tooltip" title="Cetak" class="fa fa-print">
-                                    </span>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                    <div class="modal fade" id="modal-cetak-po<?php echo $json[$i]['idd']; ?>">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Cetak Penjualan</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <a href="cetak_struk_penjualan.php?id=<?php echo $json[$i]['idd']; ?>&trx=<?php echo $json[$i]['no_po_jual']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Struk</a>
-                                    <!-- <a href="cetak_surat_po_pemesanan_dalam_negeri.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Invoice</a> -->
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <tr class="<?php echo $bg; ?>">
+                            <td align="center">
+                                <?php echo $start += 1; ?>
+                            </td>
+                            <td>
+                                <?php echo date("d/m/Y", strtotime($json[$i]['tgl_jual'])); ?>
+                            </td>
+                            <td><?php echo $json[$i]['no_po_jual']; ?></td>
+                            <td><?php echo ($json[$i]['nama_siswa'] != '' || $json[$i]['nama_siswa'] != NULL) ? $json[$i]['nama_siswa'] : $json[$i]['nama_guru'];  ?></td>
+                            <td>
+                                <a href="javascript:void();" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
+                                    <button class="btn btn-primary btn-xs">
+                                        <span class="fa fa-folder-open"></span>
+                                    </button>
+                                </a>
+                                <?php //} 
+                                ?>
+                            </td>
+                            <td><?php echo $json[$i]['diskon_jual'] . "%"; ?></td>
+                            <td><?php echo number_format($json[$i]['total_harga'], 0, ',', '.'); ?></td>
+                            <td align="center">
+                                <a onclick="hapus('<?php echo $json[$i]['idd'] ?>')">
+                                    <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
+                                        <i class="ion-android-delete"></i>
+                                    </button>
+                                </a>
+                                <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
+                                    <button class="btn btn-primary btn-xs">
+                                        <span data-toggle="tooltip" title="Cetak" class="fa fa-print">
+                                        </span>
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="modal-cetak-po<?php echo $json[$i]['idd']; ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Cetak Penjualan</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <a href="cetak_struk_penjualan.php?id=<?php echo $json[$i]['idd']; ?>&trx=<?php echo $json[$i]['no_po_jual']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Struk</a>
+                                        <!-- <a href="cetak_surat_po_pemesanan_dalam_negeri.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Invoice</a> -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 
+                                    </div>
                                 </div>
+                                <!-- /.modal-content -->
                             </div>
-                            <!-- /.modal-content -->
+                            <!-- /.modal-dialog -->
                         </div>
-                        <!-- /.modal-dialog -->
-                    </div>
+                    <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td align="center" colspan="11">Tidak Ada Data</td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>
