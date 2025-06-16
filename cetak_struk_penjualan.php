@@ -92,12 +92,14 @@
             <?php
             require("config/koneksi.php");
             $query = mysqli_query($koneksi, "select b.nama_produk, a.qty_jual, a.harga_jual_saat_itu as harga_satuan from penjualan_qty a left join produk b on b.id = a.produk_id where a.penjualan_id = " . $_GET['id'] . " order by a.id asc");
+            $total = 0;
             while ($data = mysqli_fetch_array($query)) {
+                $total += $data['qty_jual'] * $data['harga_satuan'];
             ?>
                 <tr class="no-break">
                     <td><?php echo $data['nama_produk']; ?></td>
                     <td align="center"><?php echo $data['qty_jual']; ?></td>
-                    <td style="text-align: right;"><?php echo number_format($data['harga_satuan'],0,',','.') ?></td>
+                    <td style="text-align: right;"><?php echo number_format($data['harga_satuan'], 0, ',', '.') ?></td>
                 </tr>
             <?php } ?>
             <!-- Ulangi blok <tr> ini sesuai jumlah barang -->
@@ -108,7 +110,7 @@
     <hr>
 
     <div style="text-align: right;">
-        <strong>Total : Rp130.000</strong>
+        <strong>Total : Rp<?php echo number_format($total, 0, ',', '.') ?></strong>
     </div>
 
     <div class="center">
