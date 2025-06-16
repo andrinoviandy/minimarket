@@ -37,6 +37,7 @@ error_reporting(0);
         }
     }
     $json = json_decode($file, true);
+    var_dump($json); die();
     $jml2 = $file2;
 
     ?>
