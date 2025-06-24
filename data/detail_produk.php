@@ -58,29 +58,30 @@ $jml2 = $file2;
             </tr>
         </thead>
         <?php
-        $jml = count($json);
-        for ($i = 0; $i < $jml; $i++) {
+        if ($json != null || $json != NULL) {
+            $jml = count($json);
+            for ($i = 0; $i < $jml; $i++) {
         ?>
-            <tr>
-                <td align="center"><?php echo $start += 1 ?></td>
-                <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_masuk'])); ?></td>
-                <td><?php echo $json[$i]['no_po_pesan']; ?></td>
-                <td><?php echo $json[$i]['stok_masuk']; ?></td>
-                <td><?php echo $json[$i]['deskripsi']; ?></td>
-                <td><?php echo $json[$i]['qrcode']; ?></td>
-                <td><?php
-                    if ($json[$i]['tgl_expired'] == '0000-00-00' || $json[$i]['tgl_expired'] == '') {
-                        echo "-";
-                    } else {
-                        echo date("d-m-Y", strtotime($json[$i]['tgl_expired']));
-                    } ?></td>
-                <td><?php echo $json[$i]['stok_terjual']; ?></td>
-                <td><?php echo $json[$i]['stok_rusak']; ?></td>
-                <td align="center">
-                    <?php if (isset($_GET['status'])) { ?>
-                        <?php
-                        //if ($_GET['status'] == 'Tersedia' || $_GET['status'] == '') {
-                        ?>
+                <tr>
+                    <td align="center"><?php echo $start += 1 ?></td>
+                    <td><?php echo date("d-m-Y", strtotime($json[$i]['tgl_masuk'])); ?></td>
+                    <td><?php echo $json[$i]['no_po_pesan']; ?></td>
+                    <td><?php echo $json[$i]['stok_masuk']; ?></td>
+                    <td><?php echo $json[$i]['deskripsi']; ?></td>
+                    <td><?php echo $json[$i]['qrcode']; ?></td>
+                    <td><?php
+                        if ($json[$i]['tgl_expired'] == '0000-00-00' || $json[$i]['tgl_expired'] == '') {
+                            echo "-";
+                        } else {
+                            echo date("d-m-Y", strtotime($json[$i]['tgl_expired']));
+                        } ?></td>
+                    <td><?php echo $json[$i]['stok_terjual']; ?></td>
+                    <td><?php echo $json[$i]['stok_rusak']; ?></td>
+                    <td align="center">
+                        <?php if (isset($_GET['status'])) { ?>
+                            <?php
+                            //if ($_GET['status'] == 'Tersedia' || $_GET['status'] == '') {
+                            ?>
                             <a href="javascript:void()" onclick="modalUbahItem('<?php echo $json[$i]['idd']; ?>')">
                                 <button class="btn btn-warning btn-xs">
                                     <span data-toggle="tooltip" title="Ubah" class="fa fa-edit"></span>
@@ -93,9 +94,10 @@ $jml2 = $file2;
                                     </button>
                                 </a>
                             <?php } ?>
-                        <?php //} ?>
-                    <?php } ?>
-                    <!-- <br />
+                            <?php //} 
+                            ?>
+                        <?php } ?>
+                        <!-- <br />
                     <a href="javascript:void()" onclick="modalUbahBarcode('<?php echo $json[$i]['idd']; ?>');"><small data-toggle="tooltip" title="Buat QRCode" class="label bg-blue" onclick="dataAwal(<?php echo $json[$i]['idd']; ?>)"><span class="fa fa-barcode"></span>&nbsp; Buat QRCode</small></a>
                     <?php //if ($json[$i]['qrcode'] != "") { 
                     ?>
@@ -103,8 +105,13 @@ $jml2 = $file2;
                             <small data-toggle="tooltip" title="Cetak QRCode" class="label bg-red"><span class="fa fa-barcode"></span>&nbsp; Cetak QRCode</small></a>
                     <?php //} 
                     ?> -->
-                </td>
+                    </td>
 
+                </tr>
+            <?php } ?>
+        <?php } else { ?>
+            <tr>
+                <td align="center" colspan="10">Tidak Ada Data</td>
             </tr>
         <?php } ?>
     </table>
