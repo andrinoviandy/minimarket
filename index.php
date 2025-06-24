@@ -1,8 +1,9 @@
 <?php require("config/koneksi.php"); ?>
+<?php require("include/helper.php"); ?>
 <?php
 error_reporting(0);
 session_start();
-if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrator']) or isset($_SESSION['user_customer']) and isset($_SESSION['pass_customer']) or isset($_SESSION['user_teknisi']) and isset($_SESSION['pass_teknisi']) or isset($_SESSION['user_admin_gudang']) and isset($_SESSION['pass_admin_gudang']) or isset($_SESSION['user_admin_teknisi']) and isset($_SESSION['pass_admin_teknisi']) or isset($_SESSION['user_admin_keuangan']) and isset($_SESSION['pass_admin_keuangan']) or isset($_SESSION['user_admin_po_dalam']) and isset($_SESSION['pass_admin_po_dalam']) or isset($_SESSION['user_admin_po_luar']) and isset($_SESSION['pass_admin_po_luar']) or isset($_SESSION['user_manajer_gudang']) or isset($_SESSION['user_manajer_teknisi']) or isset($_SESSION['user_manajer_keuangan']) or isset($_SESSION['user_manajer_marketing']) or isset($_SESSION['user_cs']) or isset($_SESSION['user_pjt'])) {
+if (isset($_SESSION['id']) and isset($_SESSION['nama']) and isset($_SESSION['user']) and isset($_SESSION['role_id']) and isset($_SESSION['role'])) {
 ?>
   <?php
   function tgl_indo($tanggal)
@@ -75,7 +76,7 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
     <link rel="stylesheet" href="assets/css/styleCustom.css">
     <script src="assets/js/styleCustom.js"></script>
 
-    <link href='img/logo_saja.png' rel='icon'>
+    <link href='img/logo_milmart.png' rel='icon'>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini sidebar-collapse fixed">
@@ -86,11 +87,11 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
         <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">
-            <img src="img/logo_saja.png" width="80%" />
+            <img src="img/logo_milmart.png" width="80%" />
           </span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg">
-            <img src="img/logo_milu_mart2.png" class="gambar-responsive" />
+            <img src="img/milmart_white.png" class="gambar-responsive" />
           </span>
         </a>
 
@@ -250,26 +251,8 @@ if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrat
       </header>
       <!-- Left side column. contains the logo and sidebar -->
       <?php
-      if (isset($_SESSION['user_administrator']) and isset($_SESSION['pass_administrator'])) {
+      if (isset($_SESSION['role_id']) and $_SESSION['role_id'] == 1) {
         require('sidebar.php');
-      } else if (isset($_SESSION['user_customer']) and isset($_SESSION['pass_customer'])) {
-        require('sidebar_user.php');
-      } else if (isset($_SESSION['user_teknisi']) and isset($_SESSION['pass_teknisi'])) {
-        require('sidebar_teknisi.php');
-      } else if (isset($_SESSION['user_admin_gudang']) and isset($_SESSION['pass_admin_gudang']) or isset($_SESSION['user_manajer_gudang']) and isset($_SESSION['pass_manajer_gudang'])) {
-        require('sidebar_admin_gudang.php');
-      } else if (isset($_SESSION['user_admin_teknisi']) and isset($_SESSION['pass_admin_teknisi']) or isset($_SESSION['user_manajer_teknisi']) and isset($_SESSION['pass_manajer_teknisi'])) {
-        require('sidebar_admin_teknisi.php');
-      } else if (isset($_SESSION['user_admin_keuangan']) and isset($_SESSION['pass_admin_keuangan']) or isset($_SESSION['user_manajer_keuangan']) and isset($_SESSION['pass_manajer_keuangan'])) {
-        require('sidebar_admin_keuangan.php');
-      } else if (isset($_SESSION['user_manajer_marketing']) and isset($_SESSION['pass_manajer_marketing'])) {
-        require('sidebar_admin_marketing.php');
-      } else if (isset($_SESSION['user_admin_po_dalam']) or isset($_SESSION['user_admin_po_luar'])) {
-        require('sidebar_po2.php');
-      } else if (isset($_SESSION['user_cs']) or isset($_SESSION['pass_cs'])) {
-        require('sidebar_cs.php');
-      } else if (isset($_SESSION['user_pjt']) or isset($_SESSION['pass_pjt'])) {
-        require('sidebar_pjt.php');
       }
       ?>
 

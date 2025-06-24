@@ -276,6 +276,7 @@ if (isset($_POST['simpan_perubahan'])) {
                     alertSimpan('S');
                     $('#modal-ubah-item').modal('hide');
                     loading();
+                    dataStok();
                     loadMore(load_flag, key, status_b)
                 } else if (response == 'SA') {
                     alertCustom('F', 'Tidak Dapat Dilanjutkan', 'No Seri Sudah Terdaftar !');
@@ -361,7 +362,7 @@ if (isset($_POST['simpan_perubahan'])) {
     }
 
     function dataStok() {
-        $.get("data/detail-data-produk.php", {
+        $.get("data/detail-data-produk-new.php", {
                 id: '<?php echo $_GET['id']; ?>'
             },
             function(data) {

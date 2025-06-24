@@ -158,12 +158,9 @@ if (isset($_GET['id_hapus'])) {
                                 <br /><br />
                                 <div id="data-barang-pesan"></div>
                                 <center>
-                                    <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['adminpodalam'])) { ?>
-                                        <!-- onclick="simpanData();" -->
-                                        <a href="index.php?page=ubah_pembelian&id=<?php echo $_GET['id']; ?>">
-                                        <button name="simpan_barang" class="btn btn-success" type="button"><span class="fa fa-check"></span> Kembali</button>
-                                        </a>
-                                    <?php } ?>
+                                    <a href="index.php?page=ubah_pembelian&id=<?php echo $_GET['id']; ?>">
+                                        <button name="simpan_barang" class="btn btn-warning" type="button"><span class="fa fa-arrow-left"></span> Kembali</button>
+                                    </a>
                                 </center>
                                 </form>
                             </div>
@@ -228,10 +225,9 @@ if (isset($_GET['id_hapus'])) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['adminpodalam'])) { ?>
-                        <button name="simpan_tambah_aksesoris" class="btn btn-success" type="submit">
-                            <span class="fa fa-plus"></span> Simpan</button>
-                    <?php } ?>
+                    <button name="simpan_tambah_aksesoris" class="btn btn-success" type="submit">
+                        <span class="fa fa-plus"></span> Simpan
+                    </button>
                 </div>
             </form>
         </div>

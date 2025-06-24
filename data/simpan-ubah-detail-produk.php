@@ -1,11 +1,15 @@
 <?php
 include("../config/koneksi.php");
 include("../include/API.php");
+include("../include/helper.php");
 session_start();
 // error_reporting(0);
-
-$u = mysqli_query($koneksi, "update produk_detail set qrcode='" . $_POST['qrcode'] . "', tgl_expired='" . $_POST['tgl_expired'] . "' where id=" . $_POST['id_ubah'] . "");
-if ($u) {
+$stmt = $koneksi->prepare("update produk_detail set qrcode = ?, tgl_expired = ? where id = ?");
+$params = [$_POST['qrcode'], $_POST['tgl_expired'], $_POST['id_ubah']];
+$types = getBindTypes($params);
+$stmt->bind_param($types, ...$params);
+$update = $stmt->execute();
+if ($update) {
     echo "S";
 } else {
     echo "F";

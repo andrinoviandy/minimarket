@@ -18,6 +18,8 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
 
+  <link rel="stylesheet" href="dist/sweetalert2/sweetalert2.min.css">
+  <script src="dist/sweetalert2/sweetalert2.min.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -27,7 +29,7 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link href='img/logo_saja.png' rel='icon' />
+  <link href='img/logo_milmart.png' rel='icon' />
   <style>
     .home-icon {
       position: fixed;
@@ -37,23 +39,24 @@
       color: #444444;
       z-index: 1000;
     }
+
     .home-icon:hover {
-      color: #1194af ;
+      color: #1194af;
       text-decoration: none;
     }
   </style>
 </head>
 
 <body class="hold-transition login-page">
-  <a href="<?php echo ((isset($_SERVER['HTTPS'])) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://").$_SERVER['HTTP_HOST']."/kantin"; ?>" class="home-icon fixed"><i class="fa fa-home"></i></a>
+  <a href="<?php echo ((isset($_SERVER['HTTPS'])) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/kantin"; ?>" class="home-icon fixed"><i class="fa fa-home"></i></a>
   <div class="login-box">
     <div class="login-logo">
-      <a href=""><b style="color:#FFF"><img src="img/logo_milu_mart.png" width="100%" /></b></a>
+      <a href=""><b style="color:#FFF"><img src="img/logo_new.png" width="70%" /></b></a>
     </div>
     <div class="login-box-body" style="background: rgba(255, 255, 255, 0.6);">
       <p class="login-box-msg"><strong style="font-size:20px">Hai, Selamat Datang Kembali</strong></p>
 
-      <form action="proses_login.php" method="post">
+      <form method="post" onsubmit="prosesLogin(); return false;" id="formData">
         <div class="form-group has-feedback">
           <input name="username" type="text" class="form-control" placeholder="UserName" autofocus>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -94,6 +97,8 @@
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- iCheck -->
   <script src="plugins/iCheck/icheck.min.js"></script>
+  <script src="js/showLoading.js"></script>
+  <script src="js/alert.js"></script>
   <script>
     $(function() {
       $('input').iCheck({
@@ -102,6 +107,29 @@
         increaseArea: '20%' // optional
       });
     });
+
+    function prosesLogin() {
+      showLoading2(1);
+      var dataform = $('#formData')[0];
+      var data = new FormData(dataform);
+      $.ajax({
+        type: "post",
+        url: "proses_login.php",
+        data: data,
+        enctype: "multipart/form-data",
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          if (response == 'S') {
+            showLoading2(0)
+            dataform.reset();
+            window.location.href = 'index.php?page=produk';
+          } else {
+            alertCustom('F', 'Login Gagal !', 'Periksa Username dan Password ')
+          }
+        }
+      });
+    }
   </script>
 </body>
 

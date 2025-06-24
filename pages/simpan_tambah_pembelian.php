@@ -205,7 +205,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <?php if (isset($_SESSION['user_administrator']) or isset($_SESSION['adminpodalam'])) { ?><button name="simpan_tambah_aksesoris2" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button><?php } ?>
+                    <button name="simpan_tambah_aksesoris2" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Simpan</button>
                 </div>
             </form>
         </div>

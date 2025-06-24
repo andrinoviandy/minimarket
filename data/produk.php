@@ -33,7 +33,8 @@ $jml2 = $file2;
                 <th>Satuan</th>
                 <th valign="top" class="text-nowrap">Harga Beli</th>
                 <th valign="top" class="text-nowrap">Harga Jual</th>
-                <th align="center" valign="top">Stok</th>
+                <th align="center" valign="top">Stok Belum Ada QrCode</th>
+                <th align="center" valign="top">Stok Gudang</th>
                 <th align="center" valign="top"><strong>Aksi</strong></th>
             </tr>
         </thead>
@@ -55,7 +56,8 @@ $jml2 = $file2;
                 </td>
                 <td><?php echo "Rp " . number_format($json[$i]['harga_beli'], 0, ',', '.') . ",-"; ?></td>
                 <td><?php echo "Rp " . number_format($json[$i]['harga_jual'], 0, ',', '.') . ",-"; ?></td>
-                <td><?php echo $json[$i]['stok_produk']; ?></td>
+                <td><?php echo $json[$i]['stok_belum_qrcode']; ?></td>
+                <td><?php echo $json[$i]['stok']; ?></td>
                 <td>
                     <a href="index.php?page=detail_produk&id=<?php echo $json[$i]['idd']; ?>">
                         <button class="btn btn-info btn-xs">

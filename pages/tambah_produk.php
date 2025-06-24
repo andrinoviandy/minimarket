@@ -1,11 +1,24 @@
 <?php
 if (isset($_POST['tambah_laporan'])) {
-    $Result = mysqli_query($koneksi, "insert into produk values('','" . $_POST['kategori_produk_id'] . "','" . $_POST['nama_produk'] . "','" . str_replace(".", "", $_POST['harga_beli']) . "','" . str_replace(".", "", $_POST['harga_jual']) . "', '" . $_POST['satuan'] . "')");
+    mysqli_begin_transaction($koneksi);
+    $stmt = $koneksi->prepare("
+        INSERT INTO produk (
+            kategori_produk_id, nama_produk, harga_beli, harga_jual, satuan
+        )
+        VALUES (?, ?, ?, ?, ?)
+        ");
+    $params = [$_POST['kategori_produk_id'], $_POST['nama_produk'], str_replace(".", "", $_POST['harga_beli']), str_replace(".", "", $_POST['harga_jual']), $_POST['satuan']];
+    $types = getBindTypes($params);
+    $stmt->bind_param($types, ...$params);
+    $Result = $stmt->execute();
     if ($Result) {
+        mysqli_commit($koneksi);
         echo "<script type='text/javascript'>
-		alert('Data Berhasil Di Tambah !');
+		Swal.fire('Data Berhasil Disimpan');
         window.location='index.php?page=produk';
 		</script>";
+    } else {
+        mysqli_rollback($koneksi);
     }
 }
 ?>

@@ -13,35 +13,29 @@ $limit = $surat_masuk;
 
 if (isset($_GET['start'])) {
     $start = mysqli_real_escape_string($koneksi, $_GET['start']);
-    if ($_GET['status'] == 'Tersedia') {
+    if ($_GET['status'] == 'ada_qrcode') {
         if (isset($_GET['cari'])) {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) >= 0) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
         } else {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " order by a.created_at LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) >= 0) and a.produk_id=" . $_GET['id'] . " order by a.created_at DESC LIMIT $start, $limit";
         }
-    } else if ($_GET['status'] == 'Terjual') {
+    } else if ($_GET['status'] == 'belum_qrcode') {
         if (isset($_GET['cari'])) {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=1 and a.status_rusak=0 and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where (a.qrcode is null or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
         } else {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=1 and a.status_rusak=0 and a.produk_id=" . $_GET['id'] . " order by a.created_at LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where (a.qrcode is null or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " order by a.created_at DESC LIMIT $start, $limit";
         }
-    } else if ($_GET['status'] == 'Rusak') {
+    } else if ($_GET['status'] == 'kadaluarsa') {
         if (isset($_GET['cari'])) {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_rusak=1 and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.tgl_expired is not null and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
         } else {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_rusak=1 and a.produk_id=" . $_GET['id'] . " order by a.created_at LIMIT $start, $limit";
-        }
-    } else if ($_GET['status'] == 'Expired') {
-        if (isset($_GET['cari'])) {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
-        } else {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.produk_id=" . $_GET['id'] . " order by a.created_at LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.tgl_expired is not null and a.produk_id=" . $_GET['id'] . " order by a.created_at DESC LIMIT $start, $limit";
         }
     } else {
         if (isset($_GET['cari'])) {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) >= 0) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%') order by a.created_at DESC LIMIT $start, $limit";
         } else {
-            $sql = "select a.*, a.id as idd, b.id as id_po, b.stok_masuk, b.tgl_masuk, b.no_po from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " order by a.created_at LIMIT $start, $limit";
+            $sql = "select a.*, a.id as idd from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) >= 0) and a.produk_id=" . $_GET['id'] . " order by a.created_at DESC LIMIT $start, $limit";
         }
     }
     $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
@@ -57,35 +51,29 @@ if (isset($_GET['start'])) {
     mysqli_close($koneksi);
 } else {
     //untuk jumlah
-    if ($_GET['status'] == 'Tersedia') {
+    if ($_GET['status'] == 'ada_qrcode') {
         if (isset($_GET['cari'])) {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
+            $sql = "select count(a.id) as jml from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
         } else {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . "";
+            $sql = "select count(a.id) as jml from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0) and a.produk_id=" . $_GET['id'] . "";
         }
-    } else if ($_GET['status'] == 'Terjual') {
+    } else if ($_GET['status'] == 'belum_qrcode') {
         if (isset($_GET['cari'])) {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=1 and a.status_rusak=0 and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
+            $sql = "select count(a.id) as jml from produk_detail a where (a.qrcode is null or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
         } else {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=1 and a.status_rusak=0 and a.produk_id=" . $_GET['id'] . "";
+            $sql = "select count(a.id) as jml from produk_detail a where (a.qrcode is null or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . "";
         }
-    } else if ($_GET['status'] == 'Rusak') {
+    } else if ($_GET['status'] == 'kadaluarsa') {
         if (isset($_GET['cari'])) {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_rusak=1 and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
+            $sql = "select count(a.id) as jml from produk_detail a where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.tgl_expired is not null and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
         } else {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_rusak=1 and a.produk_id=" . $_GET['id'] . "";
-        }
-    } else if ($_GET['status'] == 'Expired') {
-        if (isset($_GET['cari'])) {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
-        } else {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.produk_id=" . $_GET['id'] . "";
+            $sql = "select count(a.id) as jml from produk_detail a where (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) < 0) and a.tgl_expired is not null and a.produk_id=" . $_GET['id'] . "";
         }
     } else {
         if (isset($_GET['cari'])) {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
+            $sql = "select count(a.id) as jml from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0) and a.produk_id=" . $_GET['id'] . " and (a.qrcode like '%$_GET[cari]%' or DATE_FORMAT(a.tgl_expired, '%d-%m-%Y') like '%$_GET[cari]%')";
         } else {
-            $sql = "select count(a.id) as jml from produk_detail a left join produk_po b on b.id = a.produk_po_id where a.status_jual=0 and a.status_rusak=0 and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0 or a.tgl_expired = '0000-00-00' or a.tgl_expired is null) and a.produk_id=" . $_GET['id'] . "";
+            $sql = "select count(a.id) as jml from produk_detail a where a.qrcode is not null and a.tgl_expired is not null and (TIMESTAMPDIFF(DAY, NOW(), a.tgl_expired) > 0) and a.produk_id=" . $_GET['id'] . "";
         }
     }
     $result = mysqli_fetch_array(mysqli_query($koneksi, $sql));

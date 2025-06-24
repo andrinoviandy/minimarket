@@ -115,11 +115,14 @@ if (isset($_POST['simpan_perubahan'])) {
                             <h3 class="box-title">Detail Alkes</h3>
                         </div>
                         <div class="box-body">
+                            <a href="index.php?page=pembelian">
+                                <button name="simpan_barang" class="btn btn-warning" type="button"><span class="fa fa-arrow-left"></span> Kembali</button>
+                            </a>
                             <a href="index.php?page=detail_pembelian_produk&id=<?php echo $_GET['id']; ?>">
                                 <button class="btn btn-success"><span class="fa fa-edit"></span> &nbsp;Kelola</button>
                             </a>
                             <?php if ($data['status_lunas'] !== 1) { ?>
-                            <a href="#" data-toggle="modal" data-target="#modal-batalpo2"><button data-toggle="" title="Batalkan PO" class="btn btn-danger"><i class="fa fa-close"></i> Batalkan PO</button></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-batalpo2"><button data-toggle="" title="Batalkan PO" class="btn btn-danger"><i class="fa fa-close"></i> Batalkan PO</button></a>
                             <?php } ?>
                             <strong class="pull pull-right">
                                 <table>

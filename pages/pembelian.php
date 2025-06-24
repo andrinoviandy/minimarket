@@ -33,7 +33,8 @@
                                     <!-- <button class="btn btn-info" data-toggle="modal" data-target="#modal-cetak"><span class="fa fa-print"></span> Cetak Rekap</button> -->
                                 </div>
                                 <div class="pull pull-right">
-                                    <?php //include "include/getFilter.php"; ?>
+                                    <?php //include "include/getFilter.php"; 
+                                    ?>
                                     <?php include "include/atur_halaman.php"; ?>
                                 </div>
                             </div>
@@ -132,6 +133,21 @@
 
                 </div>
             </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-status">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" align="center">Status Pembelian</h4>
+            </div>
+            <div id="data-status"></div>
         </div>
         <!-- /.modal-content -->
     </div>
@@ -308,5 +324,40 @@
                 );
             }
         })
+    }
+
+    function ubahStatus() {
+        var dataform = $('#formUbah')[0];
+        var data = new FormData(dataform);
+        $.ajax({
+            type: "post",
+            url: "data/ubah-status-pembelian.php",
+            data: data,
+            enctype: "multipart/form-data",
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response == 'S') {
+                    $('#modal-status').modal('hide');
+                    dataform.reset();
+                    loadMore(load_flag, key, status_b);
+                    alertSimpan('S')
+                } else {
+                    alertSimpan('F')
+                }
+            }
+        });
+    }
+
+    async function modalStatus(id, status) {
+        await $.get("data/status-pembelian.php", {
+                id: id,
+                status: status
+            },
+            function(data) {
+                $('#data-status').html(data);
+            }
+        );
+        $('#modal-status').modal('show')
     }
 </script>

@@ -57,7 +57,8 @@ error_reporting(0);
                     <th align="center" valign="top" class="text-nowrap"><strong>Cara Pembayaran</strong></th>
                     <th align="center" valign="top" class="text-nowrap">Total Harga</th>
                     <th align="center" valign="top" class="text-nowrap">Total Harga + PPN</th>
-                    <th align="center" valign="top"><strong>Aksi</strong></th>
+                    <th align="center" valign="top">Status</th>
+                    <td align="center" valign="top"><strong>Aksi</strong></td>
                 </tr>
             </thead>
             <tbody>
@@ -95,43 +96,51 @@ error_reporting(0);
                             <td><?php echo $json[$i]['cara_pembayaran']; ?></td>
                             <td><?php echo number_format($json[$i]['total_harga'], 0, ',', '.'); ?></td>
                             <td><?php echo number_format($json[$i]['total_harga_ppn'], 0, ',', '.'); ?></td>
-                            <td align="center">
-                                <?php if ($json[$i]['status_po_batal'] == 0) { ?>
-                                    <?php if (isset($_SESSION['pass_administrator']) && $json[$i]['status_lunas'] == 0) { ?>
-                                        <a onclick="hapus(<?php echo $json[$i]['idd'] ?>)">
-                                            <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
-                                                <i class="ion-android-delete"></i>
-                                            </button>
-                                        </a><?php } ?>
-                                    <?php
-                                    if ($json[$i]['status_lunas'] == 0) {
-                                    ?>
-                                        <a href="index.php?page=ubah_pembelian&id=<?php echo $json[$i]['idd']; ?>">
-                                            <button class="btn btn-warning btn-xs">
-                                                <span data-toggle="tooltip" title="Ubah" class="fa fa-folder-open"></span>
-                                            </button>
-                                        </a>
+                            <td><div class="<?php echo $json[$i]['status'] == 0 ? "btn btn-xs btn-default" : "btn btn-xs btn-success"; ?>"><?php echo $json[$i]['status'] == 0 ? 'Belum Masuk Stok' : 'Sudah Masuk Stok'; ?></div></td>
+                            <td align="center" style="width: 150px;">
+                                <div class="row text-nowrap">
+                                    <?php if ($json[$i]['status_po_batal'] == 0) { ?>
+                                        <?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1 && $json[$i]['status_lunas'] == 0) { ?>
+                                            <a onclick="hapus(<?php echo $json[$i]['idd'] ?>)">
+                                                <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
+                                                    <span class="ion-android-delete"> Hapus</span>
+                                                </button>
+                                            </a><?php } ?>
+                                        <?php
+                                        if ($json[$i]['status_lunas'] == 0) {
+                                        ?>
+                                            <a href="index.php?page=ubah_pembelian&id=<?php echo $json[$i]['idd']; ?>">
+                                                <button class="btn btn-warning btn-xs">
+                                                    <span data-toggle="tooltip" title="Detail" class="fa fa-folder-open"> Detail</span>
+                                                </button>
+                                            </a>
+                                        <?php } ?>
+                                </div>
+                                <div class="row text-nowrap">
+                                    <?php if ($json[$i]['status'] == 0) { ?>
+                                    <button class="btn btn-info btn-xs" onclick="modalStatus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['status']; ?>'); return false;">
+                                        <span data-toggle="tooltip" title="Status" class="fa fa-check-circle"> Status</span>
+                                    </button>
                                     <?php } ?>
                                     <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
                                         <button class="btn btn-primary btn-xs">
-                                            <span data-toggle="tooltip" title="Cetak" class="fa fa-print">
+                                            <span data-toggle="tooltip" title="Cetak" class="fa fa-print"> Cetak
                                             </span>
                                         </button>
                                     </a>
-
-                                <?php
-                                } else { ?>
-                                    <!-- <a href="index.php?page=pembelian_alkes&id_pulih=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda yakin akan memulihkan PO ini ?')"> -->
-                                    <a onclick="pulihkan(<?php echo $json[$i]['idd']; ?>)" href="#">
-                                        <small data-toggle="tooltip" title="Pulihkan PO" class="btn btn-success btn-xs">Pulihkan PO</small>
+                                </div>
+                            <?php } else { ?>
+                                <!-- <a href="index.php?page=pembelian_alkes&id_pulih=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda yakin akan memulihkan PO ini ?')"> -->
+                                <a onclick="pulihkan(<?php echo $json[$i]['idd']; ?>)" href="#">
+                                    <small data-toggle="tooltip" title="Pulihkan PO" class="btn btn-success btn-xs">Pulihkan PO</small>
+                                </a>
+                                <?php if ($json[$i]['deskripsi_batal'] != '') {
+                                ?><br />
+                                    <a href="#" data-toggle="modal" data-target="#modal-pesanbatal<?php echo $json[$i]['idd']; ?>">
+                                        <button data-toggle="tooltip" title="Lihat Alasan" class="btn btn-primary btn-xs"><span class="fa fa-envelope"></span></button>
                                     </a>
-                                    <?php if ($json[$i]['deskripsi_batal'] != '') {
-                                    ?><br />
-                                        <a href="#" data-toggle="modal" data-target="#modal-pesanbatal<?php echo $json[$i]['idd']; ?>">
-                                            <button data-toggle="tooltip" title="Lihat Alasan" class="btn btn-primary btn-xs"><span class="fa fa-envelope"></span></button>
-                                        </a>
-                                <?php }
-                                } ?>
+                            <?php }
+                                    } ?>
                             </td>
                         </tr>
                         <div class="modal fade" id="modal-pesanbatal<?php echo $json[$i]['idd']; ?>">

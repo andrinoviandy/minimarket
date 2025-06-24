@@ -2,6 +2,12 @@
 if (isset($_GET['page'])) {
 	if ($_GET['page'] == 'beranda') {
 		$act1 = "active";
+	} else if ($_GET['page'] == 'produk') {
+		$produk = "active";
+	} else if ($_GET['page'] == 'pembelian' || $_GET['page'] == 'ubah_pembelian' || $_GET['page'] == 'detail_pembelian_produk') {
+		$pembelian = "active";
+	} else if ($_GET['page'] == 'penjualan') {
+		$penjualan = "active";
 	} else if ($_GET['page'] == 'barang_masuk') {
 		$gudang = "active";
 		$act2 = "active";

@@ -7,7 +7,7 @@
         <img src="img/logo.png" class="" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p><?php echo $_SESSION['nama'] ?></p>
+        <p class="text-nowrap"><?php echo $_SESSION['nama'] . " (" . $_SESSION['role'] . ")" ?></p>
         <a href="#"><i class="fa fa-circle text-success"></i> <?php echo $_SESSION['waktu_login'] ?></a>
       </div>
     </div>
