@@ -2,7 +2,11 @@
 $data = mysqli_fetch_array(mysqli_query($koneksi, "select * from produk where id=" . $_GET['id'] . ""));
 
 if (isset($_POST['simpan_perubahan'])) {
-    $Result = mysqli_query($koneksi, "update produk set nama_produk='" . $_POST['nama_produk'] . "', kategori_produk_id='" . $_POST['kategori_produk_id'] . "', harga_beli='" . str_replace(".", "", $_POST['harga_beli']) . "', harga_jual='" . str_replace(".", "", $_POST['harga_jual']) . "', satuan='" . $_POST['satuan'] . "' where id=" . $_GET['id'] . "");
+    $stmt = $koneksi->prepare("update produk set nama_produk = ?, kategori_produk_id = ?, harga_beli = ?, harga_jual = ?, satuan = ? where id = ?");
+    $params = [$_POST['nama_produk'], $_POST['kategori_produk_id'], str_replace(".", "", $_POST['harga_beli']), str_replace(".", "", $_POST['harga_jual']), $_POST['satuan'], $_GET['id']];
+    $stmt->bind_param("siddsi", ...$params);
+    $Result = $stmt->execute();
+    // $Result = mysqli_query($koneksi, "update produk set nama_produk='" . $_POST['nama_produk'] . "', kategori_produk_id='" . $_POST['kategori_produk_id'] . "', harga_beli='" . str_replace(".", "", $_POST['harga_beli']) . "', harga_jual='" . str_replace(".", "", $_POST['harga_jual']) . "', satuan='" . $_POST['satuan'] . "' where id=" . $_GET['id'] . "");
     if ($Result) {
         echo "<script>
       Swal.fire({
@@ -10,7 +14,7 @@ if (isset($_POST['simpan_perubahan'])) {
           confirmButton: 'bg-green',
           cancelButton: 'bg-white',
         },
-        title: 'Data Berhasil Diubah',
+        title: 'Data Berhasil Diubah !',
         icon: 'success',
         confirmButtonText: 'OK',
       }).then(() => {
