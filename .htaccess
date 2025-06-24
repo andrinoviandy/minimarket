@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Deteksi akses dari browser (User-Agent browser umum)
+    RewriteCond %{HTTP_USER_AGENT} ^Mozilla [NC]
+
+    # Jika Referer kosong (akses langsung) ATAU
+    # Referer bukan dari domain kamu
+    RewriteCond %{HTTP_REFERER} ^$ [OR]
+    RewriteCond %{HTTP_REFERER} !^https?://(www\.)?smk1hilpay\.com [NC]
+    RewriteCond %{HTTP_REFERER} !^http://localhost [NC]
+
+    # Blokir folder json/, data/, pages/
+    RewriteRule ^(json|data|pages|cetak)/.*$ - [F,L]
+</IfModule>
