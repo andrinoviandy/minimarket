@@ -11,8 +11,7 @@ error_reporting(0);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-
+    <title>Document</title>
 </head>
 
 <body>
@@ -22,15 +21,15 @@ error_reporting(0);
     if (isset($_GET['cari'])) {
         $search = str_replace(" ", "%20", $_GET['cari']);
         if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&cari=" . $search . "");
             $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "");
         } else {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start&cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
             $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
         }
     } else {
         if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=$start");
+            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "");
             $file2 = file_get_contents($API . "json/$_GET[page].php");
         } else {
             $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
@@ -38,103 +37,140 @@ error_reporting(0);
         }
     }
     $json = json_decode($file, true);
-    $jml = count($json);
-
     $jml2 = $file2;
 
     ?>
     <div>
         <em><?php echo "Jumlah Data Yang Ditemukan : " . $jml2 ?></em>
     </div>
-    <div class="table-responsive no-padding">
-        <table width="100%" id="" class="table table-bordered table-hover">
+    <div class="table-responsive p-0">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <td width="3%" align="center"><strong>No</strong>
-                        </th>
-                    <th width="" valign="top">ID</th>
-                    <th width="10%" valign="top"><strong>Tanggal </strong></th>
-                    <th width="" valign="top">No PO</th>
-                    <th width="" valign="top">No_Kontrak</th>
-                    <th width="" valign="top">Barang</th>
-                    <th width="" valign="top">Klien</th>
-                    <th width="" valign="top"><strong>Deskripsi</strong></th>
-                    <th width="" valign="top">Nominal</th>
-                    <th valign="top">Status</th>
-                    <th width="" align="center" valign="top"><strong>Aksi</strong></th>
+                    <th align="center">#</th>
+                    <th valign="top"><strong>Tgl Transaksi</strong></th>
+                    <th valign="top">No. Nota</th>
+                    <th valign="top" class="text-nowrap"><strong>Nama Pelanggan</strong></th>
+                    <th valign="top">Produk</th>
+                    <th align="center" valign="top"><strong>Diskon</strong></th>
+                    <th align="center" valign="top" class="text-nowrap">Total Piutang</th>
+                    <th align="center" valign="top" class="text-nowrap">Total Pembayaran</th>
+                    <th align="center" valign="top" class="text-nowrap">Sisa Piutang</th>
+                    <th align="center" valign="top"><strong>Aksi</strong></th>
                 </tr>
             </thead>
-            <?php
-            for ($i = 0; $i < $jml; $i++) {
-                $dd = mysqli_fetch_array(mysqli_query($koneksi, "select no_kontrak, (select id from barang_dijual where status_deal = 1 and no_po_jual = '" . $json[$i]['no_faktur_no_po'] . "') as id_jual, (select count(*) over() from barang_dijual where no_po_jual = '" . $json[$i]['no_faktur_no_po'] . "') as jml from barang_dijual where no_po_jual='" . $json[$i]['no_faktur_no_po'] . "'"));
-            ?>
-                <tr>
-                    <td align="center"><?php echo $start += 1; ?></td>
-                    <td><?php echo "PI" . $json[$i]['idd']; ?></td>
-
-                    <td>
-                        <?php echo date("d M Y", strtotime($json[$i]['tgl_input']));  ?><br />
-                        <font style="font-size:11px"><?php if ($json[$i]['jatuh_tempo'] != 0000 - 00 - 00) {
-                                                            echo "Jatuh Tempo : " . date("d M Y", strtotime($json[$i]['jatuh_tempo']));
-                                                        }  ?></font>
-                    </td>
-                    <td>
-                        <?php echo $json[$i]['no_faktur_no_po']; ?>
-                    </td>
-                    <td>
-                        <?php echo $dd['no_kontrak']; ?>
-                    </td>
-                    <td><a href="#" onclick="modalDetailBarang('<?php echo $dd['id_jual'] ?>'); return false;"><small data-toggle="tooltip" title="Detail Barang" class="label bg-primary"><span class="fa fa-folder-open"></span></small></a></td>
-                    <td><?php echo $json[$i]['klien']; ?></td>
-                    <td><?php echo $json[$i]['deskripsi']; ?></td>
-                    <?php if ($dd['id_jual'] != '') { ?>
-                        <td><?php echo "Rp" . number_format($json[$i]['nominal'], 2, ',', '.'); ?>
-                            <hr / style="margin:0px; padding:0px">
-                            <font style="font-size:10px">
+            <tbody>
+                <?php
+                if ($json != null || $json != NULL) {
+                    $jml = count($json);
+                    for ($i = 0; $i < $jml; $i++) {
+                        // if ($json[$i]['status_jual'] == 0) {
+                        //     $bg = "bg-danger";
+                        // } else {
+                        //     $bg = "";
+                        // }
+                ?>
+                        <tr class="<?php echo $bg; ?>">
+                            <td align="center">
+                                <?php echo $start += 1; ?>
+                            </td>
+                            <td>
+                                <?php echo date("d/m/Y", strtotime($json[$i]['tgl_jual'])); ?>
+                            </td>
+                            <td><?php echo $json[$i]['no_po_jual']; ?></td>
+                            <td>
                                 <?php
-                                $t_b = mysqli_fetch_array(mysqli_query($koneksi, "select sum(nominal) as total from utang_piutang_bayar where utang_piutang_id=" . $json[$i]['idd'] . ""));
-                                if ($t_b['total'] == 0) {
-                                    echo "Belum Ada Pembayaran";
-                                } else {
-                                    echo "Sisa Hutang : Rp" . number_format($json[$i]['nominal'] - $t_b['total'], 2, ',', '.');
+                                if ($json[$i]['nama_siswa'] != '' || $json[$i]['nama_siswa'] != NULL) {
+                                    echo $json[$i]['nama_siswa'];
+                                }
+                                if ($json[$i]['nama_guru'] != '' || $json[$i]['nama_guru'] != NULL) {
+                                    echo $json[$i]['nama_guru'];
+                                }
+                                if ($json[$i]['nama_pelanggan'] != '' || $json[$i]['nama_pelanggan'] != NULL) {
+                                    echo $json[$i]['nama_pelanggan'];
                                 }
                                 ?>
-                            </font>
-                        </td>
-                        <?php if ($json[$i]['status_lunas'] == 0) {
-                            if ($t_b['total'] == 0) {
-                                $b = "btn-danger";
-                            } else {
-                                $b = "btn-warning";
-                            }
-                        } else {
-                            $b = "btn-success";
-                        } ?>
-                        <td class="<?php echo $b; ?>" align="center"><?php if ($json[$i]['status_lunas'] == 0) {
-                                                                            echo "Belum Lunas";
-                                                                        } else {
-                                                                            echo "Sudah Lunas";
-                                                                        } ?></td>
-                        <td>
-                            <?php if ($json[$i]['status_lunas'] == 0) { ?>
-                                <a href="index.php?page=bayar_piutang&id=<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Bayar" class="label bg-green"><span class="fa fa-plus"></span> Pembayaran</small></a>
-                            <?php } else { ?>
-                                <a href="index.php?page=bayar_piutang&id=<?php echo $json[$i]['idd']; ?>"><small data-toggle="tooltip" title="Batalkan" class="label bg-yellow">Riwayat Pembayaran</small></a>
-                            <?php } ?>
-                        </td>
-                    <?php } else { ?>
-                        <td colspan="3" align="center">
-                            <?php if ($dd['jml'] == 0) {
-                                echo "<font color='red'><em><strong>PO Telah Dihapus</strong></em></font>";
-                            } else { ?>
-                                <small class="label bg-red">Belum Deal</small>
-                            <?php } ?>
-                        </td>
+                            </td>
+                            <td>
+                                <a href="javascript:void();" onclick="modalBarang('<?php echo $json[$i]['idd']; ?>')">
+                                    <button class="btn btn-primary btn-xs">
+                                        <span class="fa fa-folder-open"></span>
+                                    </button>
+                                </a>
+                                <?php //} 
+                                ?>
+                            </td>
+                            <td><?php echo $json[$i]['diskon_jual'] . "%"; ?></td>
+                            <td><?php echo number_format($json[$i]['total_harga'], 0, ',', '.'); ?></td>
+                            <td><?php echo number_format($json[$i]['total_pembayaran'], 0, ',', '.'); ?>
+                            </td>
+                            <td>
+                                <?php
+                                if ($json[$i]['total_pembayaran'] >= $json[$i]['total_harga']) {
+                                    echo "<span class='badge bg-green'>Lunas</span>";
+                                } else {
+                                    echo number_format($json[$i]['total_harga'] - $json[$i]['total_pembayaran'], 0, ',', '.');
+                                }
+                                ?>
+                            </td>
+                            <td align="center">
+                                <div class="text-nowrap">
+
+                                    <?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1) { ?>
+                                        <a onclick="hapus('<?php echo $json[$i]['idd'] ?>')">
+                                            <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
+                                                <i class="ion-android-delete"></i>
+                                            </button>
+                                        </a>
+                                    <?php } ?>
+                                    <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
+                                        <button class="btn btn-primary btn-xs">
+                                            <span data-toggle="tooltip" title="Cetak" class="fa fa-print">
+                                            </span>
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="text-nowrap">
+                                    <button class="btn btn-success btn-xs" onclick="modalBayarPiutang('<?php echo $json[$i]['idd']; ?>','<?php echo $json[$i]['no_po_jual']; ?>'); return false;">
+                                        <span data-toggle="tooltip" title="Bayar" class="fa fa-receipt">
+                                            Bayar
+                                        </span>
+                                    </button>
+                                    <button class="btn btn-xs btn-primary" onclick="modalRiwayat('<?php echo $json[$i]['idd']; ?>'); return false;">Riwayat</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="modal-cetak-po<?php echo $json[$i]['idd']; ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Cetak Penjualan</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <a href="cetak_struk_penjualan.php?id=<?php echo $json[$i]['idd']; ?>&trx=<?php echo $json[$i]['no_po_jual']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Struk</a>
+                                        <!-- <a href="cetak_surat_po_pemesanan_dalam_negeri.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Invoice</a> -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
                     <?php } ?>
-                </tr>
-            <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td align="center" colspan="11">Tidak Ada Data</td>
+                    </tr>
+                <?php } ?>
+            </tbody>
         </table>
     </div>
+
 </body>
 
 </html>

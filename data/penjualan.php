@@ -89,11 +89,13 @@ error_reporting(0);
                             <td><?php echo $json[$i]['diskon_jual'] . "%"; ?></td>
                             <td><?php echo number_format($json[$i]['total_harga'], 0, ',', '.'); ?></td>
                             <td align="center">
-                                <a onclick="hapus('<?php echo $json[$i]['idd'] ?>')">
-                                    <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
-                                        <i class="ion-android-delete"></i>
-                                    </button>
-                                </a>
+                                <?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1) { ?>
+                                    <a onclick="hapus('<?php echo $json[$i]['idd'] ?>')">
+                                        <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
+                                            <i class="ion-android-delete"></i>
+                                        </button>
+                                    </a>
+                                <?php } ?>
                                 <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
                                     <button class="btn btn-primary btn-xs">
                                         <span data-toggle="tooltip" title="Cetak" class="fa fa-print">

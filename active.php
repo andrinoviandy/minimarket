@@ -8,6 +8,8 @@ if (isset($_GET['page'])) {
 		$pembelian = "active";
 	} else if ($_GET['page'] == 'penjualan' || $_GET['page'] == 'tambah_penjualan') {
 		$penjualan = "active";
+	} else if ($_GET['page'] == 'piutang') {
+		$piutang = "active";
 	} else if ($_GET['page'] == 'barang_masuk') {
 		$gudang = "active";
 		$act2 = "active";

@@ -60,6 +60,15 @@ if ($simpan1) {
                 $up2->bind_param("is", $id_guru, $pesan);
                 $up2->execute();
             }
+
+            $q_stok = $koneksi->prepare("select * from penjualan_qty_temp where akun_id = ? and status = 0");
+            $q_stok->bind_param("i", $_SESSION['id']);
+            $q_stok->execute();
+            $result = $q_stok->get_result();
+            while ($dt = $result->fetch_assoc()) {
+                mysqli_query($koneksi, "update produk set stok = stok - $dt[qty_jual] where id = $dt[produk_id]");
+            }
+
             mysqli_query($koneksi, "delete from penjualan_qty_temp where akun_id = " . $_SESSION['id'] . " and status = 0");
 
             mysqli_commit($koneksi);

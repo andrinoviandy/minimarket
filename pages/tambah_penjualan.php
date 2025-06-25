@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="pull pull-right">
                                     <div class="text-right">
-                                        <font style="font-size: 20px;" class="text-right">Grand Total</font>
+                                        <font style="font-size: 20px;" class="text-right text-nowrap">Grand Total</font>
                                     </div>
                                     <div class="text-right text-green">
                                         <font style="font-size: 50px; font-family:Arial, Helvetica, sans-serif; font-weight:bolder" class="text-right">
@@ -123,7 +123,7 @@
                         <div class="box box-body">
                             <table class="table">
                                 <tr>
-                                    <td style="font-weight: bold; font-size: 18px">Sub Total</td>
+                                    <td style="font-weight: bold; font-size: 18px" class="text-nowrap">Sub Total</td>
                                     <td style="font-weight: bold; font-size: 18px; color: green" align="right"><input id="nilai_grand_total" type="hidden" name="nilai_grand_total">
                                         <div id="sub_total"></div>
                                     </td>
@@ -143,15 +143,19 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="font-weight: bold; font-size: 18px">Grand Total</td>
+                                    <td style="font-weight: bold; font-size: 18px" class="text-nowrap">Grand Total</td>
                                     <td style="font-weight: bold; font-size: 24px; color: green" align="right">
                                         <input id="nilai_kalkulasi_grand_total" type="hidden" name="nilai_kalkulasi_grand_total">
                                         <div id="kalkulasi_grand_total"></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="font-weight: bold; font-size: 18px">Bayar</td>
-                                    <td style="font-weight: bold; font-size: 18px" align="right" onclick="modalBayar()"><button class="btn btn-success"><span class="fa fa-check"></span> Bayar</button></td>
+                                    <td style="font-weight: bold; font-size: 18px" align="left">
+                                        <button onclick="modalKredit()" class="btn btn-warning"><span class="fa fa-file"></span> Kredit</button>
+                                    </td>
+                                    <td style="font-weight: bold; font-size: 18px" align="right">
+                                        <button onclick="modalBayar()" class="btn btn-success"><span class="fa fa-check"></span> Bayar</button>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -242,6 +246,29 @@
     <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="modal-kredit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Kredit Pembayaran</h4>
+            </div>
+            <!-- <form method="post" onsubmit="simpanDeposit(); return false;" id="formPinjam"> -->
+            <div class="modal-body">
+                <div id="data-pelanggan"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" name="simpan" id="btnSubmit" onclick="simpanKredit(); return false;"><span class="fa fa-save"></span> Simpan</button>
+            </div>
+            <!-- </form> -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <div class="modal fade" id="modal-pin" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" style="width: 350px;">
         <div class="modal-content">
@@ -257,22 +284,22 @@
                     <table width="100%">
                         <tr>
                             <td>
-                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-1" readonly/>
+                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-1" readonly />
                             </td>
                             <td>
-                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-2" readonly/>
+                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-2" readonly />
                             </td>
                             <td>
-                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-3" readonly/>
+                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-3" readonly />
                             </td>
                             <td>
-                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-4" readonly/>
+                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-4" readonly />
                             </td>
                             <td>
-                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-5" readonly/>
+                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-5" readonly />
                             </td>
                             <td>
-                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-6" readonly/>
+                                <input style="font-size: 30px; width: 50px; height: 50px; text-align:center" type="text" class="form-control pin-input" maxlength="1" id="angka-6" readonly />
                             </td>
                         </tr>
                     </table>
@@ -422,6 +449,23 @@
         $('#modal-bayar').modal('show');
     }
 
+    async function modalKredit() {
+        $('#data-pelanggan').html('')
+        await $.get("data/select-pelanggan.php",
+            function(data) {
+                $('#data-pelanggan').html(data)
+            }
+        );
+
+        $('#modal-kredit').off('shown.bs.modal').on('shown.bs.modal', function() {
+            const input = $('#kode_pelanggan');
+            input.val('')
+            input.focus();
+        });
+
+        $('#modal-kredit').modal('show');
+    }
+
     $('#modal-bayar').on('shown.bs.modal', function() {
         $('#kode_siswa').focus();
     });
@@ -514,9 +558,9 @@
 
     async function modalPIN() {
         // $('#modal-pin').off('shown.bs.modal').on('shown.bs.modal', function() {
-            // const input = $('#angka-1');
-            // input.val('')
-            // input.focus();
+        // const input = $('#angka-1');
+        // input.val('')
+        // input.focus();
         // });
         for (let i = 1; i <= 6; i++) {
             $(`#angka-${i}`).val('');
@@ -526,9 +570,9 @@
 
     function clickPIN(params) {
         for (let i = 1; i <= 6; i++) {
-        let input = $(`#angka-${i}`);
+            let input = $(`#angka-${i}`);
             if (i == 6) {
-                $('#btnPinOK').prop('disabled',false)
+                $('#btnPinOK').prop('disabled', false)
             }
             if (input.val() === '') {
                 input.val(params).focus();
@@ -539,18 +583,18 @@
 
     function deletePIN() {
         for (let i = 6; i >= 1; i--) {
-        let input = $(`#angka-${i}`);
-        $('#btnPinOK').prop('disabled',true)
-        if (input.val() != '') {
-            input.val('');
-            $(`#angka-${i-1}`).focus().select()
-            break;
+            let input = $(`#angka-${i}`);
+            $('#btnPinOK').prop('disabled', true)
+            if (input.val() != '') {
+                input.val('');
+                $(`#angka-${i-1}`).focus().select()
+                break;
             }
         }
     }
 
     function deleteAllPIN() {
-        $('#btnPinOK').prop('disabled',true)
+        $('#btnPinOK').prop('disabled', true)
         for (let i = 1; i <= 6; i++) {
             let input = $(`#angka-${i}`);
             input.val('');
@@ -566,33 +610,32 @@
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         return hashHex;
     }
-    
+
     async function pinOK() {
         showLoading2(1)
         let gabung_pin = '';
         for (let i = 1; i <= 6; i++) {
-            gabung_pin = gabung_pin + $(`#angka-${i}`).val() 
+            gabung_pin = gabung_pin + $(`#angka-${i}`).val()
         }
         const payload = {
             id_siswa: parseInt($('#id_siswa').val()),
             kategori: $('#kategori_siswa').val(),
             pin: await hashPIN(gabung_pin),
         }
-        await $.get("data/cek-pin-siswa.php", 
-                    payload
-                ,
-                function(data) {
-                    showLoading(2)
-                    if (data == 'S') {
-                        $('#valid-pin').html('<font style="color: green; font-weight: bold">PIN VALID</font>')
-                        $('#modal-pin').modal('hide')
-                        $('#btnSubmit').prop('disabled', false)
-                    } else {
-                        alertCustom('F', 'PIN Tidak Cocok !', 'Dicoba Kembali')
-                        deleteAllPIN()
-                    }
+        await $.get("data/cek-pin-siswa.php",
+            payload,
+            function(data) {
+                showLoading(2)
+                if (data == 'S') {
+                    $('#valid-pin').html('<font style="color: green; font-weight: bold">PIN VALID</font>')
+                    $('#modal-pin').modal('hide')
+                    $('#btnSubmit').prop('disabled', false)
+                } else {
+                    alertCustom('F', 'PIN Tidak Cocok !', 'Dicoba Kembali')
+                    deleteAllPIN()
                 }
-            );
+            }
+        );
     }
 
     async function getDataTab1() {
@@ -622,7 +665,7 @@
         var menit = pad(now.getMinutes());
         var detik = pad(now.getSeconds());
 
-        var noFaktur = 'TRX-' + tahun + bulan + tanggal + '-' + jam + menit + detik;
+        var noFaktur = 'TRJ-' + tahun + bulan + tanggal + '-' + jam + menit + detik;
         $('#no_nota').val(noFaktur);
     }
 
@@ -786,6 +829,41 @@
                 function(data, textStatus, jqXHR) {
                     if (data == 'S') {
                         $('#modal-bayar').modal('hide')
+                        alertSimpan('S')
+                        kosongkan()
+                        kosongkanFormBayar()
+                        perbaruiHarga()
+                        generateNoFaktur();
+                        $('#barcode').focus();
+                        loadMore(load_flag, key, status_b);
+                    } else {
+                        alertSimpan('F')
+                    }
+                    getDataTab1()
+                }
+            );
+        }
+    }
+
+    async function simpanKredit() {
+        if ($('#id_pelanggan').val() == '') {
+            return alertCustom('W', 'Pelanggan Wajib Diisi !');
+        }
+        const confirm = await alertConfirm('Apakah Anda Yakin Transaksi Ini Pembayaran Melalui Kredit/Cicilan ?', 'Klik Ya Untuk Lanjut', 'bg-yellow text-white');
+        if (confirm) {
+            const payload = {
+                no_nota: $('#no_nota').val(),
+                id_pelanggan: $('#id_pelanggan').val(),
+                kategori: $('#kategori_siswa').val(),
+                diskon_jual: $('#nilai_diskon').val(),
+                total_harga: $('#nilai_kalkulasi_grand_total').val(),
+                tgl_jatuh_tempo: $('#tgl_jatuh_tempo').val(),
+                status: 3,
+            }
+            $.post("data/simpan-penjualan-kredit.php", payload,
+                function(data, textStatus, jqXHR) {
+                    if (data == 'S') {
+                        $('#modal-kredit').modal('hide')
                         alertSimpan('S')
                         kosongkan()
                         kosongkanFormBayar()

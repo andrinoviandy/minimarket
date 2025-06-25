@@ -72,7 +72,7 @@ if (isset($_POST['tambah_aksesoris'])) {
                                 Tanggal PO
                                 <input name="tgl_po" class="form-control" type="date" placeholder="" required autofocus="autofocus"><br />
                                 No PO
-                                <input name="no_po" class="form-control" type="text" placeholder="No. PO" required><br />
+                                <input name="no_po" id="no_po" class="form-control" type="text" placeholder="No. PO" required readonly><br />
                                 PPN
                                 <input name="ppn" class="form-control" type="number" placeholder="PPN (Example : 10%)"><br />
                                 Cara Pembayaran
@@ -195,3 +195,26 @@ if (isset($_POST['tambah_aksesoris'])) {
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<script>
+    function pad(num) {
+        return num < 10 ? '0' + num : num;
+    }
+
+    function generateNoFaktur() {
+        var now = new Date();
+        var tahun = now.getFullYear();
+        var bulan = pad(now.getMonth() + 1); // getMonth() dimulai dari 0
+        var tanggal = pad(now.getDate());
+        var jam = pad(now.getHours());
+        var menit = pad(now.getMinutes());
+        var detik = pad(now.getSeconds());
+
+        var noFaktur = 'TRP-' + tahun + bulan + tanggal + '-' + jam + menit + detik;
+        $('#no_po').val(noFaktur);
+    }
+
+    $(document).ready(function () {
+        generateNoFaktur()
+    });
+</script>
