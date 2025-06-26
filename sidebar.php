@@ -45,7 +45,7 @@
       </li>
       <li class="<?php echo $pemasok; ?>">
         <a href="index.php?page=pemasok">
-          <i class="fa fa-money"></i> <span>Supplier</span>
+          <i class="fa fa-users"></i> <span>Supplier</span>
         </a>
       </li>
       <li class="treeview <?php echo $laporan; ?>">
@@ -74,7 +74,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=user" class=""><i class="fa fa-circle-o"></i> Manage User</a></li>
+          <li class="<?php echo $user; ?>"><a href="index.php?page=user" class=""><i class="fa fa-circle-o"></i> Manage User</a></li>
         </ul>
       </li>
       <!-- <li class="<?php echo $pembeli; ?>">

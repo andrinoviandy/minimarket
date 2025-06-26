@@ -96,7 +96,9 @@ error_reporting(0);
                             <td><?php echo $json[$i]['cara_pembayaran']; ?></td>
                             <td><?php echo number_format($json[$i]['total_harga'], 0, ',', '.'); ?></td>
                             <td><?php echo number_format($json[$i]['total_harga_ppn'], 0, ',', '.'); ?></td>
-                            <td><div class="<?php echo $json[$i]['status'] == 0 ? "btn btn-xs btn-default" : "btn btn-xs btn-success"; ?>"><?php echo $json[$i]['status'] == 0 ? 'Belum Masuk Stok' : 'Sudah Masuk Stok'; ?></div></td>
+                            <td>
+                                <div class="<?php echo $json[$i]['status'] == 0 ? "btn btn-xs btn-default" : "btn btn-xs btn-success"; ?>"><?php echo $json[$i]['status'] == 0 ? 'Belum Masuk Stok' : 'Sudah Masuk Stok'; ?></div>
+                            </td>
                             <td align="center" style="width: 150px;">
                                 <div class="row text-nowrap">
                                     <?php if ($json[$i]['status_po_batal'] == 0) { ?>
@@ -118,9 +120,9 @@ error_reporting(0);
                                 </div>
                                 <div class="row text-nowrap">
                                     <?php if ($json[$i]['status'] == 0) { ?>
-                                    <button class="btn btn-info btn-xs" onclick="modalStatus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['status']; ?>'); return false;">
-                                        <span data-toggle="tooltip" title="Status" class="fa fa-check-circle"> Status</span>
-                                    </button>
+                                        <button class="btn btn-info btn-xs" onclick="modalStatus('<?php echo $json[$i]['idd']; ?>', '<?php echo $json[$i]['status']; ?>'); return false;">
+                                            <span data-toggle="tooltip" title="Status" class="fa fa-check-circle"> Status</span>
+                                        </button>
                                     <?php } ?>
                                     <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
                                         <button class="btn btn-primary btn-xs">
@@ -135,12 +137,13 @@ error_reporting(0);
                                     <small data-toggle="tooltip" title="Pulihkan PO" class="btn btn-success btn-xs">Pulihkan PO</small>
                                 </a>
                                 <?php if ($json[$i]['deskripsi_batal'] != '') {
-                                ?><br />
+                                ?>
+                                    <br />
                                     <a href="#" data-toggle="modal" data-target="#modal-pesanbatal<?php echo $json[$i]['idd']; ?>">
                                         <button data-toggle="tooltip" title="Lihat Alasan" class="btn btn-primary btn-xs"><span class="fa fa-envelope"></span></button>
                                     </a>
-                            <?php }
-                                    } ?>
+                                <?php } ?>
+                            <?php } ?>
                             </td>
                         </tr>
                         <div class="modal fade" id="modal-pesanbatal<?php echo $json[$i]['idd']; ?>">

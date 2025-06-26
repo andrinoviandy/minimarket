@@ -2,10 +2,10 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Produk</h1>
+            Manage User</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Produk</li>
+            <li class="active">Manage User</li>
         </ol>
     </section>
 
@@ -28,12 +28,10 @@
                         <div class="box-body table-responsive no-padding">
                             <div class="">
                                 <div class="input-group pull pull-left col-xs-1" style="padding-right:10px">
-                                    <a href="index.php?page=tambah_produk">
-                                        <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah Produk</button></a>
+                                    <a href="index.php?page=tambah_user">
+                                        <button name="tambah_laporan" class="btn btn-success" type="submit"><span class="fa fa-plus"></span> Tambah User</button></a>
                                 </div>
                                 <div class="pull pull-right">
-                                    <?php //include "include/rekapBulanan.php";
-                                    ?>
                                     <?php include "include/atur_halaman.php"; ?>
                                 </div>
                             </div>
@@ -163,13 +161,13 @@
         );
     }
 
-    function hapus(id, nm_brg) {
+    function hapus(id) {
         Swal.fire({
             customClass: {
                 confirmButton: 'bg-red',
                 cancelButton: 'bg-white',
             },
-            title: 'Anda Yakin Akan Menghapus Barang Ini ?',
+            title: 'Anda Yakin Akan Menghapus User Ini ?',
             text: 'Data Akan Dihapus Secara Permanen',
             icon: 'question',
             showCancelButton: true,
@@ -177,12 +175,12 @@
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post("data/hapus-barang-masuk.php", {
+                $.post("data/hapus-user.php", {
                         id_hapus: id
                     },
                     function(data) {
                         if (data == 'S') {
-                            addRiwayat('DELETE', 'barang_gudang', id, 'Menghapus Barang (Nama : ' + nm_brg + ')')
+                            addRiwayat('DELETE', 'user', id, 'Menghapus user')
                             alertHapus('S');
                             loadMore(load_flag, key, status_b);
                         } else if (data == 'T') {

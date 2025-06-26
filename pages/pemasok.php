@@ -47,22 +47,27 @@ if (isset($_GET['id_hapus'])) {
                   include("include/API.php");
                   $file = file_get_contents($API . "json/pemasok.php");
                   $json = json_decode($file, true);
-                  $jml = count($json);
-                  for ($i = 0; $i < $jml; $i++) {
-                    //echo "Nama Barang ke-".$i." : " . $json[$i]['nama_brg'] . "<br />";
-                    //echo 'Nama Anggota ke-3 : ' . $json['2']['nama_brg'];
-                    #C33 
+                  if ($json != null || $json != NULL) {
+                    $jml = count($json);
+                    for ($i = 0; $i < $jml; $i++) {
+                      //echo "Nama Barang ke-".$i." : " . $json[$i]['nama_brg'] . "<br />";
+                      //echo 'Nama Anggota ke-3 : ' . $json['2']['nama_brg'];
+                      #C33 
                   ?>
 
+                      <tr>
+                        <td align="center" valign="center"><?php echo $i + 1; ?></td>
+                        <td valign="center"><?php echo $json[$i]['nama_supplier']; ?></td>
+                        <td><?php echo $json[$i]['alamat_supplier']; ?></td>
+                        <td>
+                          <?php echo $json[$i]['telp_supplier'];  ?></td>
+                        <td><?php echo $json[$i]['fax_supplier'];  ?></td>
+                        <td><?php echo $json[$i]['attn_supplier'];  ?></td>
+                      </tr>
+                    <?php } ?>
+                  <?php } else { ?>
                     <tr>
-                      <td align="center" valign="center"><?php echo $i + 1; ?></td>
-                      <td valign="center"><?php echo $json[$i]['nama_supplier']; ?></td>
-                      <td><?php echo $json[$i]['alamat_suppplier']; ?></td>
-
-                      <td>
-                        <?php echo $json[$i]['telp_supplier'];  ?></td>
-                      <td><?php echo $json[$i]['fax_supplier'];  ?></td>
-                      <td><?php echo $json[$i]['attn_supplier'];  ?></td>
+                      <td align="center" colspan="6">Tidak Ada Data</td>
                     </tr>
                   <?php } ?>
                 </table>

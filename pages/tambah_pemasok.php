@@ -1,13 +1,12 @@
 <?php
 if (isset($_POST['tambah_header'])) {
-  $Result = mysqli_query($koneksi, "insert into supplier values('','" . $_POST['nama_pemasok'] . "','" . $_POST['alamat'] . "','" . $_POST['telp'] . "','" . $_POST['fax'] . "','" . $_POST['attn'] . "')");
   $stmt = $koneksi->prepare("
         INSERT INTO supplier (
             nama_supplier, alamat_supplier, telp_supplier, fax_supplier, attn_supplier
         )
         VALUES (?, ?, ?, ?, ?)
         ");
-  $params = [$_POST['nama_pemasok'], $_POST['alamat'], $_POST['telp'], $_POST['fax'], $_POST['attn_supplier']];
+  $params = [$_POST['nama_pemasok'], $_POST['alamat'], $_POST['telp'], $_POST['fax'], $_POST['attn']];
   $types = getBindTypes($params);
   $stmt->bind_param($types, ...$params);
   $Result = $stmt->execute();
