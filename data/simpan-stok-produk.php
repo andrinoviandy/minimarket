@@ -7,8 +7,8 @@ session_start();
 mysqli_begin_transaction($koneksi);
 
 try {
-    $queryProduk = $koneksi->prepare("insert into produk_detail(no_po_pesan, deskripsi, produk_id, tgl_masuk, stok_masuk) values(?, ?, ?, ?, ?)");
-    $paramsProduk = [$_POST['no_po_pesan'], $_POST['deskripsi'], $_POST['produk_id'], $_POST['tgl_masuk'], $_POST['stok_masuk']];
+    $queryProduk = $koneksi->prepare("insert into produk_detail(no_po_pesan, deskripsi, produk_id, tgl_masuk, stok_masuk, tgl_expired, qrcode) values(?, ?, ?, ?, ?, ?, ?)");
+    $paramsProduk = [$_POST['no_po_pesan'], $_POST['deskripsi'], $_POST['produk_id'], $_POST['tgl_masuk'], $_POST['stok_masuk'], $_POST['tgl_expired'], $_POST['qrcode']];
     $typeProduk = getBindTypes($paramsProduk);
     $queryProduk->bind_param($typeProduk, ...$paramsProduk);
     $update = $queryProduk->execute();

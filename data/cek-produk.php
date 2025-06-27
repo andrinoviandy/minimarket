@@ -3,7 +3,7 @@ include("../config/koneksi.php");
 include("../include/API.php");
 session_start();
 // error_reporting(0);
-$sql = "select a.qrcode, b.id as produk_id, b.nama_produk, b.harga_beli from produk_detail a inner join produk b on b.id = a.produk_id where a.qrcode = '" . $_GET['qrcode'] . "' order by b.nama_produk asc";
+$sql = "select a.qrcode, b.id as produk_id, b.nama_produk, b.harga_beli from produk_detail a inner join produk b on b.id = a.produk_id where a.qrcode = '" . $_GET['qrcode'] . "' and b.stok != 0 order by b.nama_produk asc";
 
 $result = mysqli_query($koneksi, $sql) or die("Error " . mysqli_error($koneksi));
 

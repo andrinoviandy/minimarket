@@ -17,6 +17,30 @@ if (isset($_GET['page'])) {
 	} else if ($_GET['page'] == 'user') {
 		$pengaturan = "active";
 		$user = "active";
+	} else if ($_GET['page'] == 'laporan_pembelian') {
+		$laporan = "active";
+		$laporan_pembelian = "active";
+	} else if ($_GET['page'] == 'laporan_penjualan') {
+		$laporan = "active";
+		$laporan_penjualan = "active";
+	} else if ($_GET['page'] == 'stok_limit') {
+		$laporan = "active";
+		$stok_limit = "active";
+	} else if ($_GET['page'] == 'produk_kadaluarsa') {
+		$laporan = "active";
+		$produk_kadaluarsa = "active";
+	} else if ($_GET['page'] == 'produk_terlaris') {
+		$laporan = "active";
+		$produk_terlaris = "active";
+	} else if ($_GET['page'] == 'stok_harian') {
+		$laporan = "active";
+		$stok_harian = "active";
+	} else if ($_GET['page'] == 'piutang') {
+		$laporan = "active";
+		$piutang = "active";
+	} else if ($_GET['page'] == 'laba_rugi') {
+		$laporan = "active";
+		$laba_rugi = "active";
 	} else {
 		$act1 = "active";
 	}

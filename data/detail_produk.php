@@ -44,7 +44,7 @@ $jml2 = $file2;
 <div class="table-responsive no-padding">
     <table width="100%" id="" class="table table-bordered table-hover">
         <thead>
-            <tr>
+            <tr class="text-nowrap">
                 <th width="2%">No</th>
                 <th><strong>Tgl Masuk</strong></th>
                 <th>No PO</th>

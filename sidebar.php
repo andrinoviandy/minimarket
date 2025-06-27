@@ -56,14 +56,14 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=laporan_pembelian" class=""><i class="fa fa-circle-o"></i> Pembelian</a></li>
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=laporan_pembelian" class=""><i class="fa fa-circle-o"></i> Penjualan</a></li>
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=stok_limit" class=""><i class="fa fa-circle-o"></i> Stok Limit</a></li>
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=produk_kadaluarsa" class=""><i class="fa fa-circle-o"></i> Produk Kadaluarsa</a></li>
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=produk_terlaris" class=""><i class="fa fa-circle-o"></i> Produk Terlaris</a></li>
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=stok_harian" class=""><i class="fa fa-circle-o"></i> Stok Harian</a></li>
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=laporan_piutang" class=""><i class="fa fa-circle-o"></i> Piutang</a></li>
-          <li class="<?php echo $kategori; ?>"><a href="index.php?page=laporan_laba_rugi" class=""><i class="fa fa-circle-o"></i> Laba Rugi</a></li>
+          <li class="<?php echo $laporan_pembelian; ?>"><a href="index.php?page=laporan_pembelian" class=""><i class="fa fa-circle-o"></i> Pembelian</a></li>
+          <li class="<?php echo $laporan_penjualan; ?>"><a href="index.php?page=laporan_penjualan" class=""><i class="fa fa-circle-o"></i> Penjualan</a></li>
+          <li class="<?php echo $stok_limit; ?>"><a href="index.php?page=stok_limit" class=""><i class="fa fa-circle-o"></i> Stok Limit</a></li>
+          <li class="<?php echo $produk_kadaluarsa; ?>"><a href="index.php?page=produk_kadaluarsa" class=""><i class="fa fa-circle-o"></i> Produk Kadaluarsa</a></li>
+          <li class="<?php echo $produk_terlaris; ?>"><a href="index.php?page=produk_terlaris" class=""><i class="fa fa-circle-o"></i> Produk Terlaris</a></li>
+          <li class="<?php echo $stok_harian; ?>"><a href="index.php?page=stok_harian" class=""><i class="fa fa-circle-o"></i> Stok Harian</a></li>
+          <li class="<?php echo $piutang; ?>"><a href="index.php?page=laporan_piutang" class=""><i class="fa fa-circle-o"></i> Piutang</a></li>
+          <li class="<?php echo $laba_rugi; ?>"><a href="index.php?page=laporan_laba_rugi" class=""><i class="fa fa-circle-o"></i> Laba Rugi</a></li>
         </ul>
       </li>
       <li class="treeview <?php echo $pengaturan; ?>">

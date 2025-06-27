@@ -85,6 +85,8 @@
                                                     <th valign="bottom">Nomor PO</th>
                                                     <th valign="bottom">Stok</th>
                                                     <th valign="bottom">Deskripsi</th>
+                                                    <th valign="bottom">BarCode/QrCode</th>
+                                                    <th valign="bottom">Tanggal Expired</th>
                                                 </tr>
                                             </thead>
                                             <?php
@@ -95,9 +97,11 @@
                                                     <input type="hidden" name="produk_id" value="<?php echo $_GET['id']; ?>" />
                                                     <input id="" name="tgl_masuk" class="form-control" type="date" placeholder="" autofocus="autofocus" size="3" required />
                                                 </td>
-                                                <td><input id="" name="no_po_pesan" class="form-control" type="text" placeholder="" size="4" required /></td>
-                                                <td><input id="no_po" name="stok_masuk" class="form-control" type="text" placeholder="" size="1" required="required" /></td>
-                                                <td><input id="deskripsi" name="deskripsi" class="form-control" type="text" placeholder="" required="required" /></td>
+                                                <td><input id="no_po_pesan" name="no_po_pesan" class="form-control" type="text" placeholder="" size="10" required readonly/></td>
+                                                <td><input name="stok_masuk" class="form-control" type="text" placeholder="" size="1" required="required" /></td>
+                                                <td><input name="deskripsi" class="form-control" type="text" placeholder="" required="required" /></td>
+                                                <td><input name="qrcode" class="form-control" type="text" /></td>
+                                                <td><input name="tgl_expired" class="form-control" type="date" placeholder="" /></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -174,4 +178,25 @@
             }
         });
     }
+
+    function pad(num) {
+        return num < 10 ? '0' + num : num;
+    }
+    
+    function generateNoFaktur() {
+        var now = new Date();
+        var tahun = now.getFullYear();
+        var bulan = pad(now.getMonth() + 1); // getMonth() dimulai dari 0
+        var tanggal = pad(now.getDate());
+        var jam = pad(now.getHours());
+        var menit = pad(now.getMinutes());
+        var detik = pad(now.getSeconds());
+
+        var noFaktur = 'TRP-' + tahun + bulan + tanggal + '-' + jam + menit + detik;
+        $('#no_po_pesan').val(noFaktur);
+    }
+
+    $(document).ready(function () {
+        generateNoFaktur()
+    });
 </script>

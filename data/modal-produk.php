@@ -24,9 +24,9 @@ session_start();
         </thead>
         <?php
         if (isset($_GET['keyword']) && $_GET['keyword'] != '') {
-            $sql = "select a.*, b.kategori from produk a left join kategori_produk b on b.id = a.kategori_produk_id where (a.nama_produk like '%$_GET[keyword]%' or b.kategori like '%$_GET[keyword]%') order by a.nama_produk asc limit $_GET[start], $_GET[limit]";
+            $sql = "select a.*, b.kategori from produk a left join kategori_produk b on b.id = a.kategori_produk_id where (a.nama_produk like '%$_GET[keyword]%' or b.kategori like '%$_GET[keyword]%') and a.stok != 0 order by a.nama_produk asc limit $_GET[start], $_GET[limit]";
         } else {
-            $sql = "select a.*, b.kategori from produk a left join kategori_produk b on b.id = a.kategori_produk_id order by a.nama_produk asc limit $_GET[start], $_GET[limit]";
+            $sql = "select a.*, b.kategori from produk a left join kategori_produk b on b.id = a.kategori_produk_id where a.stok != 0 order by a.nama_produk asc limit $_GET[start], $_GET[limit]";
         }
         $q = mysqli_query($koneksi, $sql);
         $nn = 0;
