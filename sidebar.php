@@ -62,7 +62,7 @@
           <li class="<?php echo $produk_kadaluarsa; ?>"><a href="index.php?page=produk_kadaluarsa" class=""><i class="fa fa-circle-o"></i> Produk Kadaluarsa</a></li>
           <li class="<?php echo $produk_terlaris; ?>"><a href="index.php?page=produk_terlaris" class=""><i class="fa fa-circle-o"></i> Produk Terlaris</a></li>
           <li class="<?php echo $stok_harian; ?>"><a href="index.php?page=stok_harian" class=""><i class="fa fa-circle-o"></i> Stok Harian</a></li>
-          <li class="<?php echo $piutang; ?>"><a href="index.php?page=laporan_piutang" class=""><i class="fa fa-circle-o"></i> Piutang</a></li>
+          <li class="<?php echo $laporan_piutang; ?>"><a href="index.php?page=laporan_piutang" class=""><i class="fa fa-circle-o"></i> Piutang</a></li>
           <li class="<?php echo $laba_rugi; ?>"><a href="index.php?page=laporan_laba_rugi" class=""><i class="fa fa-circle-o"></i> Laba Rugi</a></li>
         </ul>
       </li>

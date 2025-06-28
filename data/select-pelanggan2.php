@@ -4,9 +4,8 @@ include("../include/API.php");
 session_start();
 // error_reporting(0);
 ?>
-<label>Pelanggan</label>
-<select name="id_pelanggan" id="id_pelanggan" class="form-control select2" required style="width: 100%;">
-    <option value="">...</option>
+<select name="id_pelanggan" id="id_pelanggan" class="form-control select2">
+    <option value="all">Semua</option>
     <?php
     $q = mysqli_query($koneksi, "select a.* from (
     (select id, nama_pelanggan as nama, 'pelanggan' as frm from pelanggan) 
@@ -19,9 +18,7 @@ session_start();
         <option value="<?php echo $d['id'] . "-" . $d['frm']; ?>"><?php echo $d['nama']; ?></option>
     <?php } ?>
 </select>
-<br><br>
-<label>Tanggal Jatuh Tempo</label>
-<input type="date" name="tgl_jatuh_tempo" id="tgl_jatuh_tempo" class="form-control" />
+&nbsp;
 <script>
     $(function() {
         //Initialize Select2 Elements

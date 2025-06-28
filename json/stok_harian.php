@@ -38,8 +38,12 @@ if (isset($_GET['start'])) {
     }
 
 
-    $result = mysqli_fetch_array(mysqli_query($koneksi, $sql));
-    echo $result['jml'];
+    $result = mysqli_fetch_assoc(mysqli_query($koneksi, $sql));
+    if ($result = mysqli_fetch_assoc(mysqli_query($koneksi, $sql))) { 
+        echo $result['jml'];
+    } else {
+        echo 0;
+    }
     //tutup koneksi ke database
     mysqli_close($koneksi);
 }

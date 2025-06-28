@@ -20,21 +20,11 @@ error_reporting(0);
 
     if (isset($_GET['cari'])) {
         $search = str_replace(" ", "%20", $_GET['cari']);
-        if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&cari=" . $search . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "");
-        } else {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
-        }
+        $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&cari=" . $search . "&id_pelanggan=" . $_GET['id_pelanggan'] . "&status_jatuh_tempo=" . $_GET['status_jatuh_tempo'] . "&status_lunas=" . $_GET['status_lunas']);
+        $file2 = file_get_contents($API . "json/$_GET[page].php?cari=" . $search . "&id_pelanggan=" . $_GET['id_pelanggan'] . "&status_jatuh_tempo=" . $_GET['status_jatuh_tempo'] . "&status_lunas=" . $_GET['status_lunas']);
     } else {
-        if (!isset($_GET['tgl1']) && !isset($_GET['tgl2'])) {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php");
-        } else {
-            $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
-            $file2 = file_get_contents($API . "json/$_GET[page].php?tgl1=" . $_GET['tgl1'] . "&tgl2=" . $_GET['tgl2'] . "");
-        }
+        $file = file_get_contents($API . "json/$_GET[page].php?start=" . $start . "&id_pelanggan=" . $_GET['id_pelanggan'] . "&status_jatuh_tempo=" . $_GET['status_jatuh_tempo'] . "&status_lunas=" . $_GET['status_lunas']);
+        $file2 = file_get_contents($API . "json/$_GET[page].php?id_pelanggan=" . $_GET['id_pelanggan'] . "&status_jatuh_tempo=" . $_GET['status_jatuh_tempo'] . "&status_lunas=" . $_GET['status_lunas']);
     }
     $json = json_decode($file, true);
     $jml2 = $file2;
@@ -57,7 +47,8 @@ error_reporting(0);
                     <th align="center" valign="top" class="text-nowrap">Total Piutang</th>
                     <th align="center" valign="top" class="text-nowrap">Sudah Dibayar</th>
                     <th align="center" valign="top" class="text-nowrap">Sisa Piutang</th>
-                    <th align="center" valign="top"><strong>Aksi</strong></th>
+                    <th align="center" valign="top" class="text-nowrap">Jatuh Tempo</th>
+                    <th align="center" valign="top" class="text-nowrap">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -110,61 +101,24 @@ error_reporting(0);
                             </td>
                             <td>
                                 <?php
+                                // if ($json[$i]['total_pembayaran'] >= $json[$i]['total_harga']) {
+                                //     echo "<span class='badge bg-green'>Lunas</span>";
+                                // } else {
+                                echo number_format($json[$i]['total_harga'] - $json[$i]['total_pembayaran'], 0, ',', '.');
+                                // }
+                                ?>
+                            </td>
+                            <td><?php echo $json[$i]['jatuh_tempo']; ?></td>
+                            <td>
+                                <?php
                                 if ($json[$i]['total_pembayaran'] >= $json[$i]['total_harga']) {
                                     echo "<span class='badge bg-green'>Lunas</span>";
                                 } else {
-                                    echo number_format($json[$i]['total_harga'] - $json[$i]['total_pembayaran'], 0, ',', '.');
+                                    echo "<span class='badge bg-red text-nowrap'>Belum Lunas</span>";
                                 }
                                 ?>
                             </td>
-                            <td align="center">
-                                <div class="text-nowrap">
-
-                                    <?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1) { ?>
-                                        <a onclick="hapus('<?php echo $json[$i]['idd'] ?>')">
-                                            <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
-                                                <i class="ion-android-delete"></i>
-                                            </button>
-                                        </a>
-                                    <?php } ?>
-                                    <a href="#" data-toggle="modal" data-target="#modal-cetak-po<?php echo $json[$i]['idd']; ?>">
-                                        <button class="btn btn-primary btn-xs">
-                                            <span data-toggle="tooltip" title="Cetak" class="fa fa-print">
-                                            </span>
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="text-nowrap">
-                                    <button class="btn btn-success btn-xs" onclick="modalBayarPiutang('<?php echo $json[$i]['idd']; ?>','<?php echo $json[$i]['no_po_jual']; ?>'); return false;">
-                                        <span data-toggle="tooltip" title="Bayar" class="fa fa-receipt">
-                                            Bayar
-                                        </span>
-                                    </button>
-                                    <button class="btn btn-xs btn-primary" onclick="modalRiwayat('<?php echo $json[$i]['idd']; ?>'); return false;">Riwayat</button>
-                                </div>
-                            </td>
                         </tr>
-                        <div class="modal fade" id="modal-cetak-po<?php echo $json[$i]['idd']; ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Cetak Penjualan</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <a href="cetak_struk_penjualan.php?id=<?php echo $json[$i]['idd']; ?>&trx=<?php echo $json[$i]['no_po_jual']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Struk</a>
-                                        <!-- <a href="cetak_surat_po_pemesanan_dalam_negeri.php?id=<?php echo $json[$i]['idd']; ?>" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Invoice</a> -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
                     <?php } ?>
                 <?php } else { ?>
                     <tr>
@@ -174,7 +128,27 @@ error_reporting(0);
             </tbody>
         </table>
     </div>
-
+    <div class="col-lg-12">
+        <div class="pull pull-right">
+            <table class="table text-bold">
+                <tr>
+                    <td>Total Piutang</td>
+                    <td> : </td>
+                    <td align="right"><?php echo number_format($json[0]['total_harga_all'], 0, ',', '.'); ?></td>
+                </tr>
+                <tr>
+                    <td>Sudah Dibayar</td>
+                    <td> : </td>
+                    <td align="right"><?php echo number_format($json[0]['total_pembayaran_all'], 0, ',', '.'); ?></td>
+                </tr>
+                <tr>
+                    <td>Sisa Piutang</td>
+                    <td> : </td>
+                    <td align="right"><?php echo number_format($json[0]['total_harga_all'] - $json[0]['total_pembayaran_all'], 0, ',', '.'); ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>

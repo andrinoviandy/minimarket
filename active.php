@@ -35,9 +35,9 @@ if (isset($_GET['page'])) {
 	} else if ($_GET['page'] == 'stok_harian') {
 		$laporan = "active";
 		$stok_harian = "active";
-	} else if ($_GET['page'] == 'piutang') {
+	} else if ($_GET['page'] == 'laporan_piutang') {
 		$laporan = "active";
-		$piutang = "active";
+		$laporan_piutang = "active";
 	} else if ($_GET['page'] == 'laba_rugi') {
 		$laporan = "active";
 		$laba_rugi = "active";
