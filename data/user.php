@@ -60,7 +60,7 @@ $jml2 = $file2;
                 </td>
                 <td>
                     <div class="row text-nowrap">
-                        <?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1 && $json[$i]['status_lunas'] == 0) { ?>
+                        <?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1 && $json[$i]['id'] != 1) { ?>
                             <a onclick="hapus(<?php echo $json[$i]['idd'] ?>)">
                                 <button data-toggle="tooltip" title="Hapus" class="btn btn-danger btn-xs">
                                     <span class="ion-android-delete"> Hapus</span>
