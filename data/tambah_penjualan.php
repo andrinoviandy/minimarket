@@ -47,21 +47,27 @@ if (isset($_GET['status']) && $_GET['status'] == '0') {
                 </tr>
             </thead>
             <?php
-            $jml = count($json);
-            for ($i = 0; $i < $jml; $i++) {
+            if ($json != null || $json != NULL) {
+                $jml = count($json);
+                for ($i = 0; $i < $jml; $i++) {
             ?>
+                    <tr>
+                        <td align="center"><?php echo $start += 1; ?></td>
+                        <td><?php echo $json[$i]['nama_produk'];  ?></td>
+                        <td><?php echo $json[$i]['qty_jual'];  ?></td>
+                        <td><?php echo $json[$i]['satuan'];  ?></td>
+                        <td><?php echo "Rp" . number_format($json[$i]['harga_jual_saat_itu'], 0, ',', '.');  ?></td>
+                        <td><?php echo "Rp" . number_format($json[$i]['sub_total'], 0, ',', '.');  ?></td>
+                        <td>
+                            <!-- href="index.php?page=karyawan&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')" -->
+                            <button class="btn btn-xs btn-danger" onclick="hapus('<?php echo $json[$i]['idd']; ?>')"><span data-toggle="tooltip" title="Hapus" class="fa fa-close"></span> Hapus</button>
+                            <!-- <a href="index.php?page=detail_pinjaman&id=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-info" data-toggle="tooltip" data-title="Detai"><span class="fa fa-folder-open"></span></a> -->
+                        </td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
                 <tr>
-                    <td align="center"><?php echo $start += 1; ?></td>
-                    <td><?php echo $json[$i]['nama_produk'];  ?></td>
-                    <td><?php echo $json[$i]['qty_jual'];  ?></td>
-                    <td><?php echo $json[$i]['satuan'];  ?></td>
-                    <td><?php echo "Rp" . number_format($json[$i]['harga_jual_saat_itu'], 0, ',', '.');  ?></td>
-                    <td><?php echo "Rp" . number_format($json[$i]['sub_total'], 0, ',', '.');  ?></td>
-                    <td>
-                        <!-- href="index.php?page=karyawan&id_hapus=<?php echo $json[$i]['idd']; ?>" onclick="return confirm('Anda Yakin Akan Menghapus Item Ini ?')" -->
-                        <button class="btn btn-xs btn-danger" onclick="hapus('<?php echo $json[$i]['idd']; ?>')"><span data-toggle="tooltip" title="Hapus" class="fa fa-close"></span> Hapus</button>
-                        <!-- <a href="index.php?page=detail_pinjaman&id=<?php echo $json[$i]['idd']; ?>" class="btn btn-xs btn-info" data-toggle="tooltip" data-title="Detai"><span class="fa fa-folder-open"></span></a> -->
-                    </td>
+                    <td align="center" colspan="7">Belum Ada Data</td>
                 </tr>
             <?php } ?>
         </table>
