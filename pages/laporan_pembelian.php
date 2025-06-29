@@ -37,15 +37,9 @@
                                             <td><input type="date" name="tgl2" id="tgl2" class="form-control" value="<?php if (isset($_GET['tgl2'])) {
                                                                                                                             echo $_GET['tgl2'];
                                                                                                                         } ?>" /></td>
-                                            <?php if (isset($_GET['tgl1'])) { ?>
-                                                <td>
-                                                    <a href="?page=laporan_laba_rugi"><button name="lihat2" type="button" class="btn btn-warning">Ulangi</button></a>
-                                                </td>
-                                            <?php } ?>
-                                            <?php if (!isset($_GET['tgl1'])) { ?>
-                                                <td><button name="lihat" type="submit" class="btn btn-success" onclick="lihatData(); return false;">Lihat</button></td>
-                                            <?php } ?>
-                                            <?php if (isset($_GET['tgl1'])) { ?>
+                                            <td>&nbsp;<button name="lihat" type="submit" class="btn btn-success" onclick="lihatData(); return false;">Lihat</button></td>
+                                            <td>&nbsp;<button class="btn btn-info" onclick="cetakLaporan(); return false;">Export</button></td>
+                                            <!-- <?php if (isset($_GET['tgl1'])) { ?>
                                                 <td>
                                                     <a target="_blank"><span class="">
                                                             <div data-toggle="tooltip" title="Cetak Excel" class="btn btn-info" name="cetak_excel"><span class="fa fa-file-excel-o"></span></div>
@@ -56,7 +50,7 @@
                                                             <div data-toggle="tooltip" title="Print" class="btn btn-danger" name="cetak_pdf"><span class="fa fa-print"></span></div>
                                                         </span></a>
                                                 </td>
-                                            <?php } ?>
+                                            <?php } ?> -->
                                         </tr>
                                     </table>
                                 </div>
@@ -463,7 +457,7 @@
             }
         })
     }
-    
+
     function lihatData() {
         showLoading2(1);
         setTimeout(() => {
@@ -472,6 +466,10 @@
             tglPembelian2 = $('#tgl2').val()
             loadMore(load_flag, key, status_b);
         }, 1000);
+    }
+
+    function cetakLaporan() {
+        window.location.href = 'cetak_laporan_pembelian.php?tglPembelian1=' + tglPembelian1 + '&tglPembelian2=' + tglPembelian2
     }
 
     $(document).ready(function() {

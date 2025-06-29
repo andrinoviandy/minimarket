@@ -24,7 +24,11 @@ if (isset($_GET['start'])) {
                     union 
                         (select tgl_pembayaran as tgl, no_pembayaran as no_transaksi, 'Pembayaran Piutang' as uraian, nominal_pembayaran as pemasukan, '-' as pengeluaran from piutang) 
                     union 
-                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0)) 
+                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0)
+                    union 
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, '-' as pemasukan, nominal as pengeluaran from biaya_lain where jenis_transaksi = 1)
+                    union    
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, nominal as pemasukan, '-' as pengeluaran from biaya_lain where jenis_transaksi = 0)) 
                     a where DATE(a.tgl) between '$_GET[tglArus1]' and '$_GET[tglArus2]' and (a.no_transaksi like ('%$_GET[cari]%') 
                         or a.uraian like ('%$_GET[cari]%')) 
                     order by a.tgl desc";
@@ -40,7 +44,11 @@ if (isset($_GET['start'])) {
                     union 
                         (select tgl_pembayaran as tgl, no_pembayaran as no_transaksi, 'Pembayaran Piutang' as uraian, nominal_pembayaran as pemasukan, '-' as pengeluaran from piutang) 
                     union 
-                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0)) 
+                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0) 
+                    union 
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, '-' as pemasukan, nominal as pengeluaran from biaya_lain where jenis_transaksi = 1)
+                    union    
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, nominal as pemasukan, '-' as pengeluaran from biaya_lain where jenis_transaksi = 0)) 
                     a where DATE(a.tgl) between '$_GET[tglArus1]' and '$_GET[tglArus2]' order by a.tgl desc";
     }
 
@@ -67,7 +75,11 @@ if (isset($_GET['start'])) {
                     union 
                         (select tgl_pembayaran as tgl, no_pembayaran as no_transaksi, 'Pembayaran Piutang' as uraian, nominal_pembayaran as pemasukan, '-' as pengeluaran from piutang) 
                     union 
-                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0)) 
+                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0) 
+                    union 
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, '-' as pemasukan, nominal as pengeluaran from biaya_lain where jenis_transaksi = 1)
+                    union    
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, nominal as pemasukan, '-' as pengeluaran from biaya_lain where jenis_transaksi = 0)) 
                     a where DATE(a.tgl) between '$_GET[tglArus1]' and '$_GET[tglArus2]' and (a.no_transaksi like ('%$_GET[cari]%') 
                         or a.uraian like ('%$_GET[cari]%'))";
     } else {
@@ -77,7 +89,12 @@ if (isset($_GET['start'])) {
                     union 
                         (select tgl_pembayaran as tgl, no_pembayaran as no_transaksi, 'Pembayaran Piutang' as uraian, nominal_pembayaran as pemasukan, '-' as pengeluaran from piutang) 
                     union 
-                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0)) a where DATE(a.tgl) between '$_GET[tglArus1]' and '$_GET[tglArus2]'";
+                        (select tgl_po_pesan as tgl, no_po_pesan as no_transaksi, 'Pembelian Barang' as uraian, '-' as pemasukan, total_harga as pengeluaran from pembelian where status_po_batal = 0) 
+                    union 
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, '-' as pemasukan, nominal as pengeluaran from biaya_lain where jenis_transaksi = 1)
+                    union    
+                        (select tgl, nomor as no_transaksi, deskripsi as uraian, nominal as pemasukan, '-' as pengeluaran from biaya_lain where jenis_transaksi = 0)) 
+                    a where DATE(a.tgl) between '$_GET[tglArus1]' and '$_GET[tglArus2]'";
     }
 
 

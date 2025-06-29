@@ -38,14 +38,7 @@
                                             <td><input type="date" name="tgl2" id="tgl2" class="form-control" value="<?php if (isset($_GET['tgl2'])) {
                                                                                                                             echo $_GET['tgl2'];
                                                                                                                         } ?>" /></td>
-                                            <?php if (isset($_GET['tgl1'])) { ?>
-                                                <td>
-                                                    <a href="?page=laporan_laba_rugi"><button name="lihat2" type="button" class="btn btn-warning">Ulangi</button></a>
-                                                </td>
-                                            <?php } ?>
-                                            <?php if (!isset($_GET['tgl1'])) { ?>
-                                                <td><button name="lihat" type="submit" class="btn btn-success" onclick="lihatData(); return false;">Lihat</button></td>
-                                            <?php } ?>
+                                            <td><button name="lihat" type="submit" class="btn btn-success" onclick="lihatData(); return false;">Lihat</button></td>
                                             <?php if (isset($_GET['tgl1'])) { ?>
                                                 <td>
                                                     <a target="_blank"><span class="">
@@ -64,6 +57,9 @@
                                 <div class="pull pull-right">
                                     <?php //include "include/getFilter.php"; 
                                     ?>
+                                    <button name="lihat" type="button" class="btn btn-success" onclick="modalTambah(); return false;">
+                                        <span class="fa fa-plus"></span> Pemasukan/Pengeluaran
+                                    </button>
                                     <?php include "include/atur_halaman.php"; ?>
                                 </div>
                             </div>
@@ -168,35 +164,45 @@
     <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="modal-bayar-piutang">
-    <div class="modal-dialog modal-sm">
+<div class="modal fade" id="modal-pemasukan-pengeluaran">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" align="center">Bayar Piutang</h4>
+                <h4 class="modal-title" align="center">Tambah Pemasukan / Pengeluaran</h4>
             </div>
-            <form method="post">
+            <form method="post" onsubmit="simpanData(); return false;" id="formData">
                 <div class="modal-body">
-                    <label>No Nota</label>
-                    <input type="hidden" disabled name="id_penjualan" id="id_penjualan" class="form-control" />
-                    <input type="text" disabled name="no_nota" id="no_nota" class="form-control" />
+                    <label>No Transaksi</label>
+                    <input type="text" readonly name="nomor" id="nomor" class="form-control" />
                     <br>
-                    <label>No. Pembayaran</label>
-                    <input type="text" id="no_pembayaran" name="no_pembayaran" readonly class="form-control" />
+                    <label>Tanggal</label>
+                    <input type="date" required name="tgl" id="tgl" class="form-control" />
                     <br>
-                    <label>Tanggal Pembayaran</label>
-                    <input type="date" name="tgl_pembayaran" id="tgl_pembayaran" class="form-control" />
+                    <label>Jenis Transaksi</label>
+                    <select class="form-control select2" required name="jenis_transaksi" id="jenis_transaksi" style="width: 100%;" onchange="pilihJenisTransaksi(this.value); return false;">
+                        <option value="">...</option>
+                        <option value="0">Pemasukan</option>
+                        <option value="1">Pengeluaran</option>
+                    </select>
+                    <br><br>
+                    <label>Kategori</label>
+                    <div id="data-kategori">
+                        <select class="form-control select2" style="width: 100%;" required>
+                            <option value="">...</option>
+                        </select>
+                    </div>
                     <br>
-                    <label>Nominal Pembayaran</label>
-                    <input type="text" name="nominal_pembayaran" id="nominal_pembayaran" class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
+                    <label>Nominal</label>
+                    <input type="text" required name="nominal" id="nominal" class="form-control" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" />
                     <br>
                     <label>Deskripsi</label>
-                    <textarea rows="4" class="form-control" name="deskripsi" id="deskripsi"></textarea>
+                    <textarea rows="4" class="form-control" required name="deskripsi" id="deskripsi"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success pull-right" onclick="simpanBayarPiutang(); return false;">Simpan Pembayaran</button>
+                    <button type="submit" class="btn btn-success pull-right">Simpan Pembayaran</button>
                 </div>
             </form>
         </div>
@@ -292,6 +298,39 @@
 <script>
     let tglArus1, tglArus2;
 
+    function pilihJenisTransaksi(id) {
+        $.get("data/select-kategori.php", {
+                id: id
+            },
+            function(data, textStatus, jqXHR) {
+                $('#data-kategori').html(data);
+            }
+        );
+    }
+
+    function simpanData() {
+        var dataform = $('#formData')[0];
+        var data = new FormData(dataform);
+        $.ajax({
+            type: "post",
+            url: "data/simpan-biaya-lain.php",
+            data: data,
+            enctype: "multipart/form-data",
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response == 'S') {
+                    $('#modal-pemasukan-pengeluaran').modal('hide');
+                    dataform.reset();
+                    loadMore(load_flag, key, status_b);
+                    alertSimpan('S')
+                } else {
+                    alertSimpan('F')
+                }
+            }
+        });
+    }
+
     function cetakRekapan() {
         var tgl1 = $('#tglRekap1').val();
         var tgl2 = $('#tglRekap2').val();
@@ -356,7 +395,7 @@
         return num < 10 ? '0' + num : num;
     }
 
-    async function modalBayarPiutang(id, no_nota) {
+    async function modalTambah(id, no_nota) {
         var now = new Date();
         var tahun = now.getFullYear();
         var bulan = pad(now.getMonth() + 1); // getMonth() dimulai dari 0
@@ -365,22 +404,10 @@
         var menit = pad(now.getMinutes());
         var detik = pad(now.getSeconds());
 
-        var noFaktur = 'PTG-' + tahun + bulan + tanggal + '-' + jam + menit + detik;
+        var noFaktur = 'TRL-' + tahun + bulan + tanggal + '-' + jam + menit + detik;
+        $('#nomor').val(noFaktur)
 
-        $('#id_penjualan').val(id),
-            $('#no_nota').val(no_nota),
-            $('#no_pembayaran').val(noFaktur)
-
-        $('#modal-bayar-piutang').modal('show');
-        // await $.get("data/data-bayar-piutang.php", {
-        //     id: id,
-        //     no_nota: no_nota,
-        //     no_pembayaran: noFaktur
-        //   },
-        //   function(data) {
-        //     $('#data-bayar-piutang').html(data);
-        //   }
-        // );
+        $('#modal-pemasukan-pengeluaran').modal('show');
     }
 
     function simpanBayarPiutang() {
@@ -464,7 +491,7 @@
             }
         })
     }
-    
+
     function lihatData() {
         showLoading2(1);
         setTimeout(() => {

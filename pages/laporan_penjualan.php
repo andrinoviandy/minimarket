@@ -37,26 +37,9 @@
                                             <td><input type="date" name="tgl2" id="tgl2" class="form-control" value="<?php if (isset($_GET['tgl2'])) {
                                                                                                                             echo $_GET['tgl2'];
                                                                                                                         } ?>" /></td>
-                                            <?php if (isset($_GET['tgl1'])) { ?>
-                                                <td>
-                                                    <a href="?page=laporan_laba_rugi"><button name="lihat2" type="button" class="btn btn-warning">Ulangi</button></a>
-                                                </td>
-                                            <?php } ?>
-                                            <?php if (!isset($_GET['tgl1'])) { ?>
-                                                <td><button name="lihat" type="submit" class="btn btn-success" onclick="lihatData(); return false;">Lihat</button></td>
-                                            <?php } ?>
-                                            <?php if (isset($_GET['tgl1'])) { ?>
-                                                <td>
-                                                    <a target="_blank"><span class="">
-                                                            <div data-toggle="tooltip" title="Cetak Excel" class="btn btn-info" name="cetak_excel"><span class="fa fa-file-excel-o"></span></div>
-                                                        </span></a>
-                                                </td>
-                                                <td>
-                                                    <a href="print_laporan_laba_rugi.php?tgl1=<?php echo $_GET['tgl1'] ?>&tgl2=<?php echo $_GET['tgl2'] ?>" target="_blank"><span class="">
-                                                            <div data-toggle="tooltip" title="Print" class="btn btn-danger" name="cetak_pdf"><span class="fa fa-print"></span></div>
-                                                        </span></a>
-                                                </td>
-                                            <?php } ?>
+
+                                            <td>&nbsp;<button name="lihat" type="submit" class="btn btn-success" onclick="lihatData(); return false;">Lihat</button></td>
+                                            <td>&nbsp;<button class="btn btn-info" onclick="cetakLaporan(); return false;">Export</button></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -463,7 +446,7 @@
             }
         })
     }
-    
+
     function lihatData() {
         showLoading2(1);
         setTimeout(() => {
@@ -472,6 +455,10 @@
             tglPenjualan2 = $('#tgl2').val()
             loadMore(load_flag, key, status_b);
         }, 1000);
+    }
+
+    function cetakLaporan() {
+        window.location.href = 'cetak_laporan_penjualan.php?tglPenjualan1=' + tglPenjualan1 + '&tglPenjualan2=' + tglPenjualan2
     }
 
     $(document).ready(function() {

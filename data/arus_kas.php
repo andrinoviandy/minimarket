@@ -52,8 +52,8 @@ error_reporting(0);
                     <th valign="top">No. Transaksi</th>
                     <th valign="top" class="text-nowrap"><strong>Uraian</strong></th>
                     <!-- <th valign="top">Barang</th> -->
-                    <th valign="top">Pemasukan</th>
-                    <th valign="top">Pengeluaran</th>
+                    <td valign="top" align="right"><strong>Pemasukan</strong></td>
+                    <td valign="top" align="right"><strong>Pengeluaran</strong></td>
                 </tr>
             </thead>
             <tbody>
