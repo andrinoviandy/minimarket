@@ -21,7 +21,7 @@ if (isset($_GET['start'])) {
                         p.nama_pelanggan as nama_pelanggan,
                         d.banyak_produk 
                     from
-                        penjualan a left join smkhilpa_kantinsiswa b on b.id = a.id_siswa left join smkhilpa_kantinguru c on c.id = a.id_guru left join pelanggan p on p.id = a.id_pelanggan left join (select penjualan_id, sum(qty_jual) as banyak_produk from penjualan_qty group by penjualan_id) d on a.id = d.penjualan_id 
+                        penjualan a left join smkhilpa_kantin.siswa b on b.id = a.id_siswa left join smkhilpa_kantin.guru c on c.id = a.id_guru left join pelanggan p on p.id = a.id_pelanggan left join (select penjualan_id, sum(qty_jual) as banyak_produk from penjualan_qty group by penjualan_id) d on a.id = d.penjualan_id 
                     where a.status_jual = 3 and (a.no_po_jual like ('%$_GET[cari]%') 
                         or b.nama like ('%$_GET[cari]%') 
                         or p.nama_pelanggan like ('%$_GET[cari]%') 
@@ -36,7 +36,7 @@ if (isset($_GET['start'])) {
                         p.nama_pelanggan as nama_pelanggan,
                         d.total_pembayaran 
                     from
-                        penjualan a left join smkhilpa_kantinsiswa b on b.id = a.id_siswa left join smkhilpa_kantinguru c on c.id = a.id_guru left join pelanggan p on p.id = a.id_pelanggan left join (select penjualan_id, sum(nominal_pembayaran) as total_pembayaran from piutang group by penjualan_id) d on a.id = d.penjualan_id 
+                        penjualan a left join smkhilpa_kantin.siswa b on b.id = a.id_siswa left join smkhilpa_kantin.guru c on c.id = a.id_guru left join pelanggan p on p.id = a.id_pelanggan left join (select penjualan_id, sum(nominal_pembayaran) as total_pembayaran from piutang group by penjualan_id) d on a.id = d.penjualan_id 
                     where a.status_jual  = 3 order by a.tgl_jual desc LIMIT $start, $limit";
     }
 
@@ -57,7 +57,7 @@ if (isset($_GET['start'])) {
         $sql = "select
                             count(a.id) as jml 
                         from
-                            penjualan a left join smkhilpa_kantinsiswa b on b.id = a.id_siswa left join smkhilpa_kantinguru c on c.id = a.id_guru 
+                            penjualan a left join smkhilpa_kantin.siswa b on b.id = a.id_siswa left join smkhilpa_kantin.guru c on c.id = a.id_guru 
                             left join pelanggan p on p.id = a.id_pelanggan 
                         where a.status_jual = 3 and (a.no_po_jual like ('%$_GET[cari]%') 
                             or b.nama like ('%$_GET[cari]%') 
