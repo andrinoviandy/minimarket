@@ -95,7 +95,7 @@ error_reporting(0);
                     <?php } ?>
                 <?php } else { ?>
                     <tr>
-                        <td align="center" colspan="6">Tidak Ada Data</td>
+                        <td align="center" colspan="7">Tidak Ada Data</td>
                     </tr>
                 <?php } ?>
             </tbody>

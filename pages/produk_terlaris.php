@@ -91,7 +91,7 @@
                                         <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
                                         <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
                                     </ul>
-                                    <?php include "include/getInfoPagingData.php"; ?>
+                                    <?php //include "include/getInfoPagingData.php"; ?>
                                 </center>
                             </section>
                         </div>

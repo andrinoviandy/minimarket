@@ -69,7 +69,7 @@
                             <div id="table" style="margin-top: 10px;"></div>
                             <section class="col-lg-12">
                                 <center>
-                                    <ul class="pagination" style="display: none;">
+                                    <ul class="pagination">
                                         <button class="btn btn-default" id="paging-1"><a><i class="fa fa-angle-double-left"></i></a></button>
                                         <button class="btn btn-default" id="paging-2"><a><i class="fa fa-angle-double-right"></i></a></button>
                                     </ul>
