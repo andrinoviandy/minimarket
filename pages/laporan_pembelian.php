@@ -324,7 +324,7 @@
     }
 
     function modalBarang(id) {
-        $.get("data/modal-penjualan-produk.php", {
+        $.get("data/modal-pembelian-produk.php", {
                 id: id
             },
             function(data) {
